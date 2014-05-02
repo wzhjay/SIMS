@@ -53,7 +53,7 @@ $autoload['packages'] = array();
 */
 
 
-$autoload['libraries'] = array('template');
+$autoload['libraries'] = array('template', 'database', 'form_validation', 'email', 'tank_auth');
 
 
 /*

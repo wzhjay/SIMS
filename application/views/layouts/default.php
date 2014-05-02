@@ -17,7 +17,7 @@
 </header>
 <body>
 	<div class='container'>
-		<!-- <?php echo $template['body']; ?> -->
+		<?php echo $template['body']; ?>
 	</div>
 	<?php $this->load->view('partials/footer') ?>
 </body>
