@@ -7,6 +7,7 @@
 
 	<!-- css files -->
 	<link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>assets/bootstrap/css/bootstrap.css"/>
+	<link type='text/css' rel="stylesheet" href="<?php echo base_url() ?>assets/tabulous/tabulous.css" >
 	<link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>assets/css/docs.css"/>
 
 	<!-- js files -->
@@ -17,7 +18,7 @@
 	<?php $this->load->view('partials/header') ?>
 </header>
 <body>
-	<div class='container'>
+	<div class='sims-body'>
 		<?php echo $template['body']; ?>
 	</div>
 	<?php $this->load->view('partials/footer') ?>
