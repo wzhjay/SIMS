@@ -7,6 +7,7 @@
 
 	<!-- css files -->
 	<link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>assets/bootstrap/css/bootstrap.css"/>
+	<link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>assets/css/docs.css"/>
 
 	<!-- js files -->
 	<script type="text/javascript" src="<?php echo base_url() ?>assets/js/jquery.min.js"></script>

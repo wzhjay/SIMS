@@ -1,0 +1,83 @@
+/*!
+ * Wang Zihao
+ * wzhjay@gmail.com
+ * 02.05.2014
+ */
+
+body {
+margin: 0;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 16px;
+line-height: 22px;
+color: #869690;
+background-color: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+margin: 11px 0;
+font-family: inherit;
+font-weight: 300;
+line-height: 22px;
+color: inherit;
+text-rendering: optimizelegibility;
+}
+
+/*  header  */
+/*  nav bae  */
+.navbar-default {
+background-color: #ffffff;
+border-color: #e7e7e7;
+}
+
+#top-nav.navbar .nav > li > a {
+font-family: inherit;
+padding: 6px 12px;
+margin: 0px;
+text-transform: uppercase;
+font-weight: 400;
+font-size: 16px;
+-webkit-transition: background-color 200ms ease;
+-moz-transition: background-color 200ms ease;
+-o-transition: background-color 200ms ease;
+transition: background-color 200ms ease;
+}
+
+.navbar .nav > li > a {
+float: none;
+color: #869690;
+text-decoration: none;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+color: #3fbf79;
+background-color: transparent;
+}
+
+.nav > li > a {
+display: block;
+}
+
+.navbar-default .navbar-brand:hover {
+color: #3fbf79;
+}
+
+.navbar-collapse .nav > li{
+width: inherit;
+text-align: center;
+color: #777777;
+}
+
+/*  footer  */
+#footer {
+margin-top: 20px;
+padding: 20px 0px;
+background: #f3f3f3;
+text-align: center;
+}
+
+/*  banner carousel */
+#sims-banner .item img{
+    display: block;
+    width: 100%;
+    height: auto;
+}
