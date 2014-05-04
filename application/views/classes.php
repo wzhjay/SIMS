@@ -29,7 +29,7 @@
     <div class="container" id="sims-classes-tabs">
 	    <div id="tabs">
 			<ul>
-				<li><a href="#tabs-1" title="所以班级" class="tabulous_active">所以班级</a></li>
+				<li><a href="#tabs-1" title="所有班级" class="tabulous_active">所有班级</a></li>
 				<li><a href="#tabs-2" title="学员管理">学员管理</a></li>
 				<li><a href="#tabs-3" title="添加班级">添加班级</a></li>
 				<li><a href="#tabs-4" title="班级管理">班级管理</a></li>

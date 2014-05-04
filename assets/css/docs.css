@@ -123,19 +123,13 @@ margin-right: 40px;
 margin-top: 60px;
 }
 
-/* students */
-
 .sims-docs-header {
 margin-bottom: 10px;
-font-size: 20px;
+font-size: 24px;
+margin-top: 30px
 }
 
-.sims-docs-header {
-padding-top: 50px;
-padding-bottom: 50px;
-font-size: 24px;
-text-align: left;
-}
+/* students */
 
 #sims-students-header {
 position: relative;
@@ -174,6 +168,62 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#563d7c', endC
 }
 
 #sims-classes-tabs {
+margin-top: -66px;
+position: relative;
+}
+
+/* exams */
+
+#sims-exams-tabs > #tabs li a,#tabs2 li a,#tabs3 li a,#tabs4 li a,#tabs5 li a {
+	display: block;
+	padding: 17px 30px;
+	background: #d35400;
+	text-decoration: none;
+	color: #F0E0D4;
+}
+
+#sims-exams-header {
+position: relative;
+padding: 30px 15px;
+color: #F0E0D4;
+text-align: center;
+text-shadow: 0 1px 0 rgba(0,0,0,.1);
+background-color: #e67e22;
+background-image: -webkit-linear-gradient(top,#e67e22 0,#f39c12 100%);
+background-image: linear-gradient(to bottom,#e67e22 0,#f39c12 100%);
+background-repeat: repeat-x;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#563d7c', endColorstr='#6F5499', GradientType=0);
+}
+
+#sims-exams-tabs {
+margin-top: -66px;
+position: relative;
+}
+
+/* system */
+
+#sims-system-tabs > #tabs li a,#tabs2 li a,#tabs3 li a,#tabs4 li a,#tabs5 li a {
+	display: block;
+	padding: 17px 30px;
+	background: #0F73B4;
+	text-decoration: none;
+	color: #D1F0F0;
+}
+
+#sims-system-header {
+position: relative;
+padding: 30px 15px;
+color: #D1F0F0;
+text-align: center;
+text-shadow: 0 1px 0 rgba(0,0,0,.1);
+background-color: #2980b9;
+background-image: -webkit-linear-gradient(top,#2980b9 0,#3498DB 100%);
+background-image: linear-gradient(to bottom,#2980b9 0,#3498DB 100%);
+background-repeat: repeat-x;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#563d7c', endColorstr='#6F5499', GradientType=0);
+}
+
+#sims-system-tabs {
 margin-top: -66px;
 position: relative;
 }
