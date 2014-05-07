@@ -14,7 +14,7 @@
 	<script>
 		$(document).ready(function($) {
 			$('#tabs').tabulous({
-		      effect: 'flip'
+		      effect: 'scale'
 		    });
 		});
 	</script>
@@ -35,13 +35,13 @@
 			</ul>
 
 			<div id="tabs_container">
-				<div id="tabs-1">
+				<div class="tab_container" id="tabs-1">
 					    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus.</p><p>Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
 				</div>
-				<div id="tabs-2">
+				<div class="tab_container" id="tabs-2">
 					    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor.</p>
 				</div>
-				<div id="tabs-3">
+				<div class="tab_container" id="tabs-3">
 					    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.</p><p> Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales.</p>
 				</div>
 			</div><!--End tabs container-->
