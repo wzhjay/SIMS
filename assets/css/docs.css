@@ -7,7 +7,7 @@
 body {
 margin: 0;
 font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 16px;
+font-size: 14px;
 line-height: 22px;
 color: #869690;
 background-color: #ffffff;
@@ -77,7 +77,8 @@ color: #777777;
 
 /*  footer  */
 #footer {
-margin-top: 20px;
+margin-top: 50px;
+margin-bottom: 50px;
 padding: 20px 0px;
 background: #f3f3f3;
 text-align: center;
@@ -153,15 +154,11 @@ background-repeat: repeat-x;
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#563d7c', endColorstr='#6F5499', GradientType=0);
 }
 
-/* classes */
+#reg_datepicker {
+	width: 100%;
+}	
 
-#sims-classes-tabs > #tabs li a,#tabs2 li a,#tabs3 li a,#tabs4 li a,#tabs5 li a {
-	display: block;
-	padding: 17px 30px;
-	background: #0A7560;
-	text-decoration: none;
-	color: #C3E7E0;
-}
+/* classes */
 
 #sims-classes-header {
 position: relative;
@@ -183,14 +180,6 @@ position: relative;
 
 /* exams */
 
-#sims-exams-tabs > #tabs li a,#tabs2 li a,#tabs3 li a,#tabs4 li a,#tabs5 li a {
-	display: block;
-	padding: 17px 30px;
-	background: #d35400;
-	text-decoration: none;
-	color: #F0E0D4;
-}
-
 #sims-exams-header {
 position: relative;
 padding: 30px 15px;
@@ -211,14 +200,6 @@ position: relative;
 
 /* system */
 
-#sims-system-tabs > #tabs li a,#tabs2 li a,#tabs3 li a,#tabs4 li a,#tabs5 li a {
-	display: block;
-	padding: 17px 30px;
-	background: #0F73B4;
-	text-decoration: none;
-	color: #D1F0F0;
-}
-
 #sims-system-header {
 position: relative;
 padding: 30px 15px;
@@ -235,4 +216,37 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#563d7c', endC
 #sims-system-tabs {
 margin-top: -66px;
 position: relative;
+}
+
+
+/* tab content */
+
+.tab_content {
+margin-top: 14px;
+position: relative;
+padding-left: 40px;
+padding-right: 40px;
+}
+
+.tab_content a {
+color: #fff;
+font-weight: 100;
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.tab-content > .tab-pane {
+padding-top: 50px;
+}
+
+.nav-tabs {
+border-bottom: none;
+}
+
+.row {
+padding-bottom: 15px;
+}
+
+.form-control {
+height: 25px;
+font-size: 11px;
 }

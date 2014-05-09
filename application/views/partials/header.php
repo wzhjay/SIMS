@@ -32,6 +32,7 @@
             <li><a href="<?php echo $this->config->base_url(); ?>index.php/exams">考试管理</a></li>
             <li><a href="<?php echo $this->config->base_url(); ?>index.php/system">系统管理</a></li>
           </ul>
-        </div>
+    </div>
+  </div>
 </nav>
 <hr>
