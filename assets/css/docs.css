@@ -250,3 +250,13 @@ padding-bottom: 15px;
 height: 25px;
 font-size: 11px;
 }
+
+.row a {
+	color: #666666;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+label {
+	font-weight: 200;
+}

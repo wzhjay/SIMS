@@ -23,6 +23,7 @@
 			$('#my_tab a').click(function (e) {
 			  $(this).tab('show')
 			});
+			$('#student_info_form').parsley();
 		});
 	</script>
 </head>

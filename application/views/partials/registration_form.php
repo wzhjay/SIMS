@@ -3,8 +3,8 @@
  * wzhjay@gmail.com
  * 08.05.2014 
  -->
-
-<div class="highlight" role="form">
+<div class="highlight">
+<form role="form">
 	<div class="row">
 		<div class="col-xs-4">
 			<label for="input_reg_ic">IC Number</label>
@@ -46,5 +46,11 @@
 		</div>
 	</div>
 	<hr>
-	<button class="btn btn-default" id="reg_new_submit">Submit</button>
+</form>
+<div class="row">
+	<div class="col-xs-10"></div>
+	<div class="col-xs-2">
+		<a class="button glow button-rounded button-flat" id="reg_new_submit">press me</a>
+	</div>
+</div>
 </div>
