@@ -260,3 +260,8 @@ font-size: 11px;
 label {
 	font-weight: 200;
 }
+
+.parsley-errors-list li {
+	color: #F86E6E;
+	font-weight: 200;
+}
