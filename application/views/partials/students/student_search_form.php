@@ -11,9 +11,10 @@
 				<div class="col-xs-2">
 					<label for="input_student_search_ic">请输入学员IC/名字：</label>
 				</div>
-				<div class="col-xs-6">
+				<div class="col-xs-4">
 					<input class="form-control" id="input_student_search_ic" placeholder="IC Number">
 				</div>
+				<div class="col-xs-2"></div>
 			</div>
 		</form>
 		<div class="col-xs-2">
