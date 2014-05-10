@@ -20,6 +20,9 @@
 			$('#input_student_bd').datepicker({
 				format: 'dd/mm/yyyy'
 			});
+			$('#input_student_exams_time').datepicker({
+				format: 'dd/mm/yyyy'
+			});
 			$('#my_tab a').click(function (e) {
 			  $(this).tab('show')
 			});
@@ -47,14 +50,14 @@
 		<div class="tab-content">
 		  	<div class="tab-pane fade in active" id="tab-1">
 		  		<h3 id="new-student-info">输入学员基本信息</h3><hr>
-				<?php $this->load->view('partials/student_info_form') ?>
+				<?php $this->load->view('partials/students/student_info_form') ?>
 			</div>
 		  	<div class="tab-pane fade" id="tab-2">
 		  		<h3 id="new-reg-info">输入新的注册信息</h3><hr>
-				<?php $this->load->view('partials/registration_form') ?>
+				<?php $this->load->view('partials/students/registration_form') ?>
 				<br><br>
 				<h3 id="new-reg-info">查询所有注册信息</h3><hr>
-				<?php $this->load->view('partials/registration_search') ?>
+				<?php $this->load->view('partials/students/registration_search') ?>
 		  	</div>
 		  <div class="tab-pane fade" id="tab-3">
 		  	
@@ -63,10 +66,12 @@
 		  	
 		  </div>
 		  <div class="tab-pane fade" id="tab-5">
-		  	
+		  		<h3 id="new-student-info">查询学员信息</h3><hr>
+				<?php $this->load->view('partials/students/student_search_form') ?>
 		  </div>
 		  <div class="tab-pane fade" id="tab-6">
-		  	
+		  		<h3 id="new-student-info">输入学生成绩信息</h3><hr>
+				<?php $this->load->view('partials/students/students_input_exams_records_form') ?>
 		  </div>
 		</div>
 	</div>
