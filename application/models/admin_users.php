@@ -1,20 +1,14 @@
-<!-- 
- * Wang Zihao
- * wzhjay@gmail.com
- * 08.05.2014 
- -->
-
-
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Students extends CI_Model
+class Admin_users extends CI_Model
 {
-	private $table_admin_user	= 'admin_users';		
+	private $table_admin_users	= 'admin_users';		
 	private $table_users		= 'users';
 
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->model('apis');
 	}
 
 	/**
@@ -25,8 +19,10 @@ class Students extends CI_Model
 	 */
 	function get_all_admin_users()
 	{
-		$query = $this->db->get($this->table_name);
-		if ($query->num_rows() > 0) return $query->row();
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->get($this->table_users);
+			if ($query->num_rows() > 0) return $query->row_array();
+		}
 		return NULL;
 	}
 }

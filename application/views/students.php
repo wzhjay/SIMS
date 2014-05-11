@@ -8,31 +8,9 @@
 
 	<script>
 		$(document).ready(function($) {
-			$('#input_reg_search_from').datepicker({
-				format: 'dd/mm/yyyy'
-			});
-			$('#input_reg_search_to').datepicker({
-				format: 'dd/mm/yyyy'
-			});
-			$('#input_reg_date').datepicker({
-				format: 'dd/mm/yyyy'
-			});
-			$('#input_student_bd').datepicker({
-				format: 'dd/mm/yyyy'
-			});
-			$('#input_student_exams_time').datepicker({
-				format: 'dd/mm/yyyy'
-			});
-			$('#input_student_ato_search_from').datepicker({
-				format: 'dd/mm/yyyy'
-			});
-			$('#input_student_ato_search_to').datepicker({
-				format: 'dd/mm/yyyy'
-			});
 			$('#my_tab a').click(function (e) {
 			  $(this).tab('show')
 			});
-			$('#student_info_form').parsley();
 		});
 	</script>
 </head>

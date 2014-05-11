@@ -3,6 +3,15 @@
  * wzhjay@gmail.com
  * 10.05.2014 
  -->
+ <head>
+	<meta charset="utf-8">
+
+	<script>
+		$(document).ready(function($) {
+
+		});
+	</script>
+</head>
 <div class="highlight">
 	<form role="form">
 		<div class="row">

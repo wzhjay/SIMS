@@ -3,6 +3,20 @@
  * wzhjay@gmail.com
  * 08.05.2014 
  -->
+ <head>
+	<meta charset="utf-8">
+
+	<script>
+		$(document).ready(function($) {
+			$('#input_reg_search_from').datepicker({
+				format: 'dd/mm/yyyy'
+			});
+			$('#input_reg_search_to').datepicker({
+				format: 'dd/mm/yyyy'
+			});
+		});
+	</script>
+</head>
 <div class="highlight">
 	<div class="row">
 		<form role="form">

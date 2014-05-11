@@ -30,6 +30,13 @@ border: 1px solid #e1e1e8;
 border-radius: 4px;
 }
 
+.loading {
+height: 100px;
+background-image: url("../img/loading.gif");
+background-repeat:no-repeat;
+background-position: center center;
+}
+
 /*  header  */
 /*  nav bae  */
 .navbar-default {

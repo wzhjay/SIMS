@@ -3,6 +3,40 @@
  * wzhjay@gmail.com
  * 09.05.2014 
  -->
+ <head>
+	<meta charset="utf-8">
+
+	<script>
+		$(document).ready(function($) {
+			event.preventDefault();
+			$('#student_info_form').parsley();
+			$('#input_student_bd').datepicker({
+				format: 'dd/mm/yyyy'
+			});
+			$('#student_new_submit').on('click', function() {
+				var target = $('#test_results');
+				target.append('<div class="loading"></div>');
+				$.ajax({
+			    	type:"post",
+			        url:window.api_url + "getAllAdminUsers",
+			        data:{},
+			        success:function(json){
+			        	target.children().remove();
+			            if(json != null) {
+			            	var reply = $.parseJSON(json);
+			            	// alert(JSON.stringify(reply));
+			            	target.append('<p>' + reply.username + '</p>');
+			            	target.append('<p>' + reply.email + '</p>');
+			            }else{
+			            	//alert(message);
+			            }
+			        },
+			        
+			    });//End ajax
+			})
+		});
+	</script>
+</head>
 <div class="highlight">
 <form role="form" id="student_info_form">
 	<h4>基本信息</h4><hr>
@@ -156,4 +190,5 @@
 		<a class="button glow button-rounded button-flat" id="student_new_submit">Submit</a>
 	</div>
 </div>
+<div id="test_results"></div>
 </div>

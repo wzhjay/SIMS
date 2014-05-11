@@ -3,6 +3,17 @@
  * wzhjay@gmail.com
  * 08.05.2014 
  -->
+ <head>
+	<meta charset="utf-8">
+
+	<script>
+		$(document).ready(function($) {
+			$('#input_reg_date').datepicker({
+				format: 'dd/mm/yyyy'
+			});
+		});
+	</script>
+</head>
 <div class="highlight">
 <form role="form">
 	<div class="row">

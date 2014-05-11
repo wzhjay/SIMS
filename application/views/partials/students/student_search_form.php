@@ -3,7 +3,14 @@
  * wzhjay@gmail.com
  * 10.05.2014 
  -->
+<head>
+	<meta charset="utf-8">
 
+	<script>
+		$(document).ready(function($) {
+		});
+	</script>
+</head>
 <div class="highlight">
 	<div class="row">
 		<form role="form">
