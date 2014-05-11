@@ -13,27 +13,6 @@
 			$('#input_student_bd').datepicker({
 				format: 'dd/mm/yyyy'
 			});
-			$('#student_new_submit').on('click', function() {
-				var target = $('#test_results');
-				target.append('<div class="loading"></div>');
-				$.ajax({
-			    	type:"post",
-			        url:window.api_url + "getAllAdminUsers",
-			        data:{},
-			        success:function(json){
-			        	target.children().remove();
-			            if(json != null) {
-			            	var reply = $.parseJSON(json);
-			            	// alert(JSON.stringify(reply));
-			            	target.append('<p>' + reply.username + '</p>');
-			            	target.append('<p>' + reply.email + '</p>');
-			            }else{
-			            	//alert(message);
-			            }
-			        },
-			        
-			    });//End ajax
-			})
 		});
 	</script>
 </head>
@@ -190,5 +169,4 @@
 		<a class="button glow button-rounded button-flat" id="student_new_submit">Submit</a>
 	</div>
 </div>
-<div id="test_results"></div>
 </div>

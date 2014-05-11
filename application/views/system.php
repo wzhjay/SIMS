@@ -31,7 +31,8 @@
 
 			<div class="tab-content">
 			  	<div class="tab-pane fade in active" id="tab-1">
-			  		
+			  		<h3>查询管理员</h3><hr>
+					<?php $this->load->view('partials/systems/system_all_search_form') ?>
 				</div>
 			  	<div class="tab-pane fade" id="tab-2">
 			  		
