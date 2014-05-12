@@ -35,7 +35,27 @@
 			    		var reply = $.parseJSON(json);
 			    		for (var key in reply) {
 			    			if (reply.hasOwnProperty(key)) {
-			    				roles.append('<option id="admin_role'+ reply[key].id +'">' + reply[key].role + '</option>');
+			    				roles.append('<option id="admin_role_'+ reply[key].id +'">' + reply[key].role + '</option>');
+			    			}
+			    		}
+			        }else{
+			        //alert(message);
+			        }
+			    },
+			});//End ajax
+			
+			var branches = $('#input_system_assigned_branch');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getAllBranches",
+			    data:{},
+			    success:function(json){
+			    	branches.children().remove();
+			    	if(json != null) {
+			    		var reply = $.parseJSON(json);
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			    				branches.append('<option id="admin_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
 			    			}
 			    		}
 			        }else{
@@ -54,13 +74,17 @@
 					<label for="input_system_unassigned_role_users">新注册未分配权限的管理员</label>
 					<select class="form-control" id="input_system_unassigned_role_users"></select>
 				</div>
-				<div class="col-xs-4">
+				<div class="col-xs-2">
 					<label for="input_system_assigned_role">权限分配</label>
 					<select class="form-control" id="input_system_assigned_role"></select>
 				</div>
+				<div class="col-xs-3">
+					<label for="input_system_assigned_branch">分部</label>
+					<select class="form-control" id="input_system_assigned_branch"></select>
+				</div>
 			</div>
 		</form>
-		<div class="col-xs-2">
+		<div class="col-xs-1">
 		</div>
 		<div class="col-xs-2">
 			<a class="button glow button-rounded button-flat" id="system_admin_role_assign_btn">Assign</a>

@@ -7,15 +7,15 @@ class Api extends CI_Controller
 		parent::__construct();
 
 		$this->template->title('Welcome to SIMS')
-				->set('currentSection', 'api');
-		$this->load->model('admin_users');
+				->set('currentSection', 'apis');
+		$this->load->model('apis');
 	}
 
 	/**
 	 * Get all admin users
 	 */
 	function getAllAdminUsers() {
-		$users = $this->admin_users->get_all_admin_users();
+		$users = $this->apis->get_all_admin_users();
 		if($users != NULL) {
 			echo json_encode($users);
 		}
@@ -26,7 +26,7 @@ class Api extends CI_Controller
 	 * Get all new registered users, which unassigned rolw yet
 	 */
 	function getAllUnassignedRoleUsers() {
-		$users = $this->admin_users->get_all_unassigned_role_users();
+		$users = $this->apis->get_all_unassigned_role_users();
 		if($users != NULL) {
 			echo json_encode($users);
 		}
@@ -37,9 +37,20 @@ class Api extends CI_Controller
 	 * Get all admin's roles
 	 */
 	function getAllAdminRoles() {
-		$roles = $this->admin_users->get_all_admin_roles();
+		$roles = $this->apis->get_all_admin_roles();
 		if($roles != NULL) {
 			echo json_encode($roles);
+		}
+		return NULL;
+	}
+
+	/**
+	 * Get all branches
+	 */
+	function getAllBranches() {
+		$branches = $this->apis->get_all_branches();
+		if($branches != NULL) {
+			echo json_encode($branches);
 		}
 		return NULL;
 	}
