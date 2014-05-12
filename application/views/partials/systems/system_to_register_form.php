@@ -8,5 +8,4 @@
 			<a class="button glow button-rounded button-flat" id="system_admin_go_register_page" href="<?php echo $this->config->base_url(); ?>index.php/auth/register">Go</a>
 		</div>
 	</div>
-	<div id="system_admin_search_results"></div>
 </div>

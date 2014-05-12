@@ -28,6 +28,8 @@
 			  	<div class="tab-pane fade in active" id="tab-1">
 			  		<h3>注册新的管理员</h3><hr>
 			  		<?php $this->load->view('partials/systems/system_to_register_form') ?>
+			  		<h3>分配新注册管理员权限</h3><hr>
+			  		<?php $this->load->view('partials/systems/system_assign_new_admin_role_form') ?>
 			  	</div>
 			  	<div class="tab-pane fade" id="tab-2">
 			  		<h3>查询管理员</h3><hr>
