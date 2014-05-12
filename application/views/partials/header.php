@@ -18,7 +18,7 @@
                     echo '<ul class="dropdown-menu" role="menu">';
                     echo '<li><a href="#">Region</a></li>';
                     echo '<li><a href="#">Chatting Room</a></li>';
-                    echo '<li><a href="#">Change Password</a></li>';
+                    echo '<li><a href='.$this->config->base_url().'index.php/auth/change_password>Change Password</a></li>';
                     echo '<li class="divider"></li>';
                     echo '<li><a href="#">Profile</a></li>';
                     echo '<li class="divider"></li>';
@@ -30,7 +30,7 @@
             <li><a href="<?php echo $this->config->base_url(); ?>index.php/students">学员管理</a></li>
             <li><a href="<?php echo $this->config->base_url(); ?>index.php/classes">班级管理</a></li>
             <li><a href="<?php echo $this->config->base_url(); ?>index.php/exams">考试管理</a></li>
-            <li><a href="<?php echo $this->config->base_url(); ?>index.php/system">系统管理</a></li>
+            <li><a href="<?php echo $this->config->base_url(); ?>index.php/systems">系统管理</a></li>
           </ul>
     </div>
   </div>

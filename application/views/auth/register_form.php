@@ -35,6 +35,9 @@ $captcha = array(
 	'maxlength'	=> 8,
 );
 ?>
+<?php $this->load->view('partials/systems/system_banner') ?>
+<br><br>
+<div class="container">
 <?php echo form_open($this->uri->uri_string()); ?>
 <table>
 	<?php if ($use_username) { ?>
@@ -98,3 +101,4 @@ $captcha = array(
 </table>
 <?php echo form_submit('register', 'Register'); ?>
 <?php echo form_close(); ?>
+</div>

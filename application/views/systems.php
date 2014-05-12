@@ -15,28 +15,24 @@
 	</script>
 </head>
 <body>
-	<div class="sims-docs-header" id="sims-system-header">
-      <div class="container">
-        <h1>System</h1>
-        <p>Global CSS settings, fundamental HTML elements styled and enhanced with extensible classes, and an advanced grid system.</p>
-      </div>
-    </div>
+	<?php $this->load->view('partials/systems/system_banner') ?>
     <div class="container" id="sims-system-tabs">
     	<div class="container tab_content">
 			<ul class="nav nav-tabs" id="my_tab">
-			  <li class="active"><a href="#tab-1" data-toggle="tab">管理员</a></li>
-			  <li><a href="#tab-2" data-toggle="tab">创建管理员</a></li>
+			  <li class="active"><a href="#tab-1" data-toggle="tab">创建管理员</a></li>
+			  <li><a href="#tab-2" data-toggle="tab">管理员</a></li>
 			  <li><a href="#tab-3" data-toggle="tab">数据库</a></li>
 			</ul>
 
 			<div class="tab-content">
 			  	<div class="tab-pane fade in active" id="tab-1">
+			  		<h3>注册新的管理员</h3><hr>
+			  		<?php $this->load->view('partials/systems/system_to_register_form') ?>
+			  	</div>
+			  	<div class="tab-pane fade" id="tab-2">
 			  		<h3>查询管理员</h3><hr>
 					<?php $this->load->view('partials/systems/system_all_search_form') ?>
 				</div>
-			  	<div class="tab-pane fade" id="tab-2">
-			  		
-			  	</div>
 			  <div class="tab-pane fade" id="tab-3">
 			  	
 			  </div>

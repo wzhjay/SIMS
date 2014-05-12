@@ -70,17 +70,11 @@ $captcha = array(
 	'maxlength'	=> 8,
 );
 ?>
-<?php echo form_open($this->uri->uri_string()); ?>
 
 <body>
-	<div id="sims-banner" class="owl-carousel owl-theme">
- 
-		<div class="item"><img src="http://www.owlgraphic.com/owlcarousel/demos/assets/fullimage1.jpg" alt="The Last of us"></div>
-		<div class="item"><img src="http://www.owlgraphic.com/owlcarousel/demos/assets/fullimage2.jpg" alt="GTA V"></div>
-		<div class="item"><img src="http://www.owlgraphic.com/owlcarousel/demos/assets/fullimage3.jpg" alt="Mirror Edge"></div>
-	 
-	</div>
-
+<?php $this->load->view('partials/banner') ?>
+	<div class="container">
+	<?php echo form_open($this->uri->uri_string()); ?>
 	<table>
 		<tr>
 			<td><?php echo form_label($login_label, $login['id']); ?></td>
@@ -134,12 +128,13 @@ $captcha = array(
 				<?php echo form_checkbox($remember); ?>
 				<?php echo form_label('Remember me', $remember['id']); ?>
 				<?php echo anchor('/auth/forgot_password/', 'Forgot password'); ?>
-				<?php if ($this->config->item('allow_registration', 'tank_auth')) echo anchor('/auth/register/', 'Register'); ?>
+				<!-- <?php if ($this->config->item('allow_registration', 'tank_auth')) echo anchor('/auth/register/', 'Register'); ?> -->
 			</td>
 		</tr>
 	</table>
 	<?php echo form_submit('submit', 'Let me in'); ?>
 	<?php echo form_close(); ?>
+	</div>
 </body>
 
 </html>

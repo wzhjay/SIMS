@@ -118,15 +118,18 @@ class Auth extends CI_Controller
 	 */
 	function register()
 	{
-		if ($this->tank_auth->is_logged_in()) {									// logged in
-			redirect('');
+		// if ($this->tank_auth->is_logged_in()) {									// logged in
+		// 	redirect('');
 
-		} elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
-			redirect('/auth/send_again/');
+		// } elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
+		// 	redirect('/auth/send_again/');
 
-		} elseif (!$this->config->item('allow_registration', 'tank_auth')) {	// registration is off
-			$this->_show_message($this->lang->line('auth_message_registration_disabled'));
+		// } elseif (!$this->config->item('allow_registration', 'tank_auth')) {	// registration is off
+		// 	$this->_show_message($this->lang->line('auth_message_registration_disabled'));
 
+		// } else {
+		if(!$this->tank_auth->is_logged_in()) {
+			redirect('/auth/login/');
 		} else {
 			$use_username = $this->config->item('use_username', 'tank_auth');
 			if ($use_username) {
@@ -368,7 +371,7 @@ class Auth extends CI_Controller
 				}
 			}
 			//$this->load->view('auth/change_password_form', $data);
-			$this->template->build('auth/change_password_form'.$data);
+			$this->template->build('auth/change_password_form', $data);
 		}
 	}
 

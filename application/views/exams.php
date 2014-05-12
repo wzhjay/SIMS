@@ -16,12 +16,7 @@
 	</script>
 </head>
 <body>
-	<div class="sims-docs-header" id="sims-exams-header">
-      <div class="container">
-        <h1>Exams</h1>
-        <p>Global CSS settings, fundamental HTML elements styled and enhanced with extensible classes, and an advanced grid system.</p>
-      </div>
-    </div>
+    <?php $this->load->view('partials/exams/exam_banner') ?>
     <div class="container" id="sims-exams-tabs">
     	<div class="container tab_content">
 			<ul class="nav nav-tabs" id="my_tab">

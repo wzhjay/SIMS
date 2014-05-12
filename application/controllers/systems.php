@@ -6,7 +6,7 @@
  
  <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class System extends CI_Controller
+class Systems extends CI_Controller
 {
 	function __construct()
 	{
@@ -24,7 +24,7 @@ class System extends CI_Controller
 		} else {
 			$data['user_id']	= $this->tank_auth->get_user_id();
 			$data['username']	= $this->tank_auth->get_username();
-			$this->template->build('system', $data);
+			$this->template->build('systems', $data);
 		}
 	}
 }
