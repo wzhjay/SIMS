@@ -4,6 +4,40 @@
 	<script>
 		$(document).ready(function($) {
 			event.preventDefault();
+			load_users();
+			load_roles();
+			load_branches();
+
+			$('#system_admin_role_assign_btn').on('click', function() {
+				event.preventDefault();
+				var user_id = $('option:selected', '#input_system_unassigned_role_users').attr('id').substring(9, 10);
+				var role_id = $('option:selected', '#input_system_assigned_role').attr('id').substring(11, 12);
+				var branch_id = $('option:selected', '#input_system_assigned_branch').attr('id').substring(13, 14);
+				var status_id = 1; // activate
+				// alert(user_id + " " + roel_id + " " + branch_id + " " + status_id);
+				$.ajax({
+					type:"post",
+				    url:window.api_url + "createNewAdmin",
+				    data:{user_id:user_id,role_id:role_id,branch_id:branch_id,status_id:status_id},
+				    success:function(json){
+				    	if(json != null) {
+					    	var reply = $.parseJSON(json);
+					    	alert(reply);
+					    	if(reply == '1') {
+					    		load_users();
+					        }else{
+					        	alert("fail to call sql query");
+					        }
+					    }
+					    else {
+					    	alert("fail to call insert user api");
+					    }
+				    },
+				});//End ajax
+			});
+		});
+
+		function load_users() {
 			var users = $('#input_system_unassigned_role_users');
 			$.ajax({
 				type:"post",
@@ -19,11 +53,13 @@
 			            	}
 			            }
 			        }else{
-			        //alert(message);
+			        	alert("fail to load users");
 			        }
 			    },
 			});//End ajax
+		}
 
+		function load_roles() {
 			var roles = $('#input_system_assigned_role');
 			$.ajax({
 				type:"post",
@@ -39,11 +75,13 @@
 			    			}
 			    		}
 			        }else{
-			        //alert(message);
+			        	alert("fail to load roles");
 			        }
 			    },
 			});//End ajax
-			
+		}
+
+		function load_branches() {
 			var branches = $('#input_system_assigned_branch');
 			$.ajax({
 				type:"post",
@@ -59,11 +97,11 @@
 			    			}
 			    		}
 			        }else{
-			        //alert(message);
+			        	alert("fail to load braches");
 			        }
 			    },
 			});//End ajax
-		});
+		}
 	</script>
 </head>
 <div class="highlight">

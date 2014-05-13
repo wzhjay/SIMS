@@ -12,10 +12,10 @@
 	<!-- css files -->
 	<link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>assets/bootstrap/css/bootstrap.css"/>
 	<link type='text/css' rel="stylesheet" href="<?php echo base_url() ?>assets/datepicker/css/datepicker3.css" >
-	<link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>assets/css/docs.css"/>
 	<link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>assets/parsley/parsley.css"/>
 	<link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>assets/buttons/font-awesome.css"/>
 	<link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>assets/buttons/buttons.css"/>
+	<link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>assets/css/docs.css"/>
 
 	<!-- js files -->
 	<script type="text/javascript" src="<?php echo base_url() ?>assets/js/jquery.min.js"></script>

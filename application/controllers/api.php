@@ -12,14 +12,14 @@ class Api extends CI_Controller
 	}
 
 	/**
-	 * Get all admin users
+	 * Get all users from users table
 	 */
-	function getAllAdminUsers() {
+	function getAllUsers() {
 		$users = $this->apis->get_all_admin_users();
 		if($users != NULL) {
 			echo json_encode($users);
 		}
-		return NULL;
+		echo NULL;
 	}
 
 	/**
@@ -30,7 +30,7 @@ class Api extends CI_Controller
 		if($users != NULL) {
 			echo json_encode($users);
 		}
-		return NULL;
+		echo NULL;
 	}
 
 	/**
@@ -41,7 +41,7 @@ class Api extends CI_Controller
 		if($roles != NULL) {
 			echo json_encode($roles);
 		}
-		return NULL;
+		echo NULL;
 	}
 
 	/**
@@ -52,6 +52,32 @@ class Api extends CI_Controller
 		if($branches != NULL) {
 			echo json_encode($branches);
 		}
-		return NULL;
+		echo NULL;
+	}
+
+	/**
+	 * Get all branches
+	 */
+	function createNewAdmin() {
+		$user_id = $this->input->post('user_id');
+		$role_id = $this->input->post('role_id');
+		$branch_id = $this->input->post('branch_id');
+		$status_id = $this->input->post('status_id');
+		$success = $this->apis->assign_role_branch_to_new_admin_user($user_id, $role_id, $branch_id, $status_id);
+		if($success) {
+			echo 1;
+		}
+		else echo 0;
+	}
+
+	/**
+	 * Get all admin users, combine with their branch, role, status
+	 */
+	function getAllAdminUsers() {
+		$admins = $this->apis->get_all_admins();
+		if($admins != NULL) {
+			echo json_encode($admins);
+		}
+		echo NULL;
 	}
 }

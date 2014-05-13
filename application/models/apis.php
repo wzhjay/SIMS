@@ -11,12 +11,12 @@ class Apis extends CI_Model
 	}
 
 	/**
-	 * Get all admin users
+	 * Get all users from users table
 	 *
 	 * @param	none
 	 * @return	object
 	 */
-	function get_all_admin_users()
+	function get_all_users()
 	{
 		if($this->session->userdata('session_id')) {
 			$query = $this->db->get($this->table_users);
@@ -66,4 +66,33 @@ class Apis extends CI_Model
 		}
 		return NULL;
 	}
+
+	/**
+	 * create new admin user, map/assign role and branch to new registered users
+	 *
+	 * @param	user_id, role_id, branch_id
+	 * @return	boolean
+	 */
+	function assign_role_branch_to_new_admin_user($user_id, $role_id, $branch_id, $status_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query("INSERT INTO admin_users (user_id, role_id, branch_id, status_id) VALUES ($user_id, $role_id, $branch_id, $status_id)");
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FLASE;
+	}
+
+	/**
+	 * get all admin users
+	 *
+	 * @param	none
+	 * @return	array
+	 */
+	function get_all_admins() {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query("SELECT * FROM admin_users a, users u, branch b, admin_role r, status s WHERE (a.user_id = u.id) AND (a.branch_id = b.id) AND (a.role_id = r.id) AND (a.status_id = s.id) GROUP BY r.id ORDER BY r.id");
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
 }
