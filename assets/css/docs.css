@@ -276,3 +276,7 @@ label {
 #system_all_admin_table_body > tr > th {
 	font-weight: 200;
 }
+
+#system_search_admin_table_body > tr > th {
+	font-weight: 200;
+}

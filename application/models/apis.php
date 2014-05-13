@@ -95,4 +95,18 @@ class Apis extends CI_Model
 		return NULL;
 	}
 
+	/**
+	 * search admin users by username or email
+	 *
+	 * @param	key_word
+	 * @return	array
+	 */
+	function search_admins_by_username_email($key_word) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query("SELECT * FROM admin_users a, users u, branch b, admin_role r, status s WHERE (a.user_id = u.id) AND (a.branch_id = b.id) AND (a.role_id = r.id) AND (a.status_id = s.id) AND ((u.username LIKE '%".$key_word."%') OR (u.email LIKE '%".$key_word."%')) GROUP BY r.id ORDER BY r.id");
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
 }

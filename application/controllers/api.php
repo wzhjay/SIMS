@@ -80,4 +80,16 @@ class Api extends CI_Controller
 		}
 		echo NULL;
 	}
+
+	/**
+	 * Search admin user by username or email
+	 */
+	function searchAdminUser() {
+		$key_word = $this->input->post('key_word');
+		$admins = $this->apis->search_admins_by_username_email($key_word);
+		if($admins != NULL) {
+			echo json_encode($admins);
+		}
+		echo NULL;
+	}
 }
