@@ -44,9 +44,11 @@
 				            var table_body = $('#system_search_admin_table_body');
 				            for (var key in reply) {
 					    		if (reply.hasOwnProperty(key)) {
-					            	table_body.append('<tr id="user_id_'+ reply[key].user_id +'">' + '<th>' + reply[key].username + '</th>' + '<th>' + reply[key].email + '</th>' + '<th>' + reply[key].name + '</th>' + '<th>' + reply[key].role + '</th>' + '<th>' + reply[key].status + '</th>' + '</tr>');
+					            	table_body.append('<tr id="user_id_'+ reply[key].user_id +'_search">' + '<th>' + reply[key].username + '</th>' + '<th>' + reply[key].email + '</th>' + '<th>' + reply[key].name + '</th>' + '<th>' + reply[key].role + '</th>' + '<th>' + reply[key].status + '</th>' + '<th><a class="button glow button-rounded button-flat admin-edit" id="admin_edit_' + reply[key].user_id + '_search" data-toggle="modal" data-target="#admin-edit-model">Edit</a></th>' + '<th><a class="button glow button-rounded button-flat admin-delete" id="admin_delete_' + reply[key].user_id + '_search" data-toggle="modal" data-target="#admin-del-model">Del</a></th>' + '</tr>');
 					            }
 					        }
+					        edit_click_setting(); 	// function in system_all_admin_form.php
+			    			del_click_setting();	// function in system_all_admin_form.php
 						}
 			        }else {
 			        	alert("fail to call search api");

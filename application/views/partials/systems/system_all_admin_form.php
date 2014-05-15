@@ -25,57 +25,64 @@
 			    				admins.append('<tr id="user_id_'+ reply[key].user_id +'">' + '<th>' + reply[key].username + '</th>' + '<th>' + reply[key].email + '</th>' + '<th>' + reply[key].name + '</th>' + '<th>' + reply[key].role + '</th>' + '<th>' + reply[key].status + '</th>' + '<th><a class="button glow button-rounded button-flat admin-edit" id="admin_edit_' + reply[key].user_id + '" data-toggle="modal" data-target="#admin-edit-model">Edit</a></th>' + '<th><a class="button glow button-rounded button-flat admin-delete" id="admin_delete_' + reply[key].user_id + '" data-toggle="modal" data-target="#admin-del-model">Del</a></th>' + '</tr>');
 			    			}
 			    		}
-
-			    		$.each($('.admin-edit'), function(i, v) {
-							$(v).on('click', function() {
-								var unsername = $(this).closest('tr').find('th').first().text();
-								var el_id = $(this).attr('id').split('_');
-								var user_id = el_id[2];
-								// alert(user_id);
-								var modalBody = $('#adminEdit').closest('.modal-content').find('.modal-body');
-								modalBody.children().remove();
-								modalBody.append(
-									'<div class="row">' + 
-										'<div class="col-xs-4">'+ 
-											'<label>用户名</label>' +
-											'<div>' + unsername + '</div>' +
-										'</div>' + 
-										'<div class="col-xs-4">' + 
-											'<label for="input_system_assigned_role_edit">权限分配</label>' + 
-											'<select class="form-control" id="input_system_assigned_role_edit"></select>' + 
-										'</div>' +
-										'<div class="col-xs-4">' +
-											'<label for="input_system_assigned_branch_edit">分部</label>' +
-											'<select class="form-control" id="input_system_assigned_branch_edit"></select>' + 
-										'</div>' +
-									'</div>');
-								load_roles_edit();
-								load_branches_edit();
-							});
-						});
-
-						$.each($('.admin-delete'), function(i, v) {
-							$(v).on('click', function() {
-								var unsername = $(this).closest('tr').find('th').first().text();
-								var el_id = $(this).attr('id').split('_');
-								var user_id = el_id[2];
-								// alert(user_id);
-								var modalBody = $('#adminDel').closest('.modal-content').find('.modal-body');
-								modalBody.children().remove();
-								modalBody.append(
-									'<div class="row">' + 
-										'<div class="col-xs-4">'+
-											'<label>用户名</label>' +
-											'<div>' + unsername + '</div>' +
-										'</div>' + 
-									'</div>');
-							});
-						});
+			    		edit_click_setting();
+			    		del_click_setting();
+						
 			        }else{
 			        	alert("fail to load braches");
 			        }
 			    },
 			});//End ajax
+		}
+
+		function edit_click_setting() {
+			$.each($('.admin-edit'), function(i, v) {
+				$(v).on('click', function() {
+					var unsername = $(this).closest('tr').find('th').first().text();
+					var el_id = $(this).attr('id').split('_');
+					var user_id = el_id[2];
+					// alert(user_id);
+					var modalBody = $('#adminEdit').closest('.modal-content').find('.modal-body');
+					modalBody.children().remove();
+					modalBody.append(
+						'<div class="row">' + 
+							'<div class="col-xs-4">'+ 
+								'<label>用户名</label>' +
+								'<div>' + unsername + '</div>' +
+							'</div>' + 
+							'<div class="col-xs-4">' + 
+								'<label for="input_system_assigned_role_edit">权限分配</label>' + 
+								'<select class="form-control" id="input_system_assigned_role_edit"></select>' + 
+							'</div>' +
+							'<div class="col-xs-4">' +
+								'<label for="input_system_assigned_branch_edit">分部</label>' +
+								'<select class="form-control" id="input_system_assigned_branch_edit"></select>' + 
+							'</div>' +
+						'</div>');
+					load_roles_edit();
+					load_branches_edit();
+				});
+			});
+		}
+
+		function del_click_setting() {
+			$.each($('.admin-delete'), function(i, v) {
+				$(v).on('click', function() {
+				var unsername = $(this).closest('tr').find('th').first().text();
+				var el_id = $(this).attr('id').split('_');
+				var user_id = el_id[2];
+				// alert(user_id);
+				var modalBody = $('#adminDel').closest('.modal-content').find('.modal-body');
+				modalBody.children().remove();
+				modalBody.append(
+					'<div class="row">' + 
+						'<div class="col-xs-4">'+
+							'<label>用户名</label>' +
+							'<div>' + unsername + '</div>' +
+						'</div>' + 
+					'</div>');
+					});
+				});
 		}
 
 		function load_roles_edit() {
