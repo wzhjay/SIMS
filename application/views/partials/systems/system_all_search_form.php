@@ -15,7 +15,7 @@
 			        data:{key_word:key_word},
 			        success:function(json){
 			        	target.children().remove();
-			        	target.append('<p>No User found</p>');
+			        	target.append('<p>No user found</p>');
 			            if(json != null) {
 			            	var reply = $.parseJSON(json);
 			            	if(reply.length > 0 ) {

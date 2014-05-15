@@ -109,4 +109,17 @@ class Apis extends CI_Model
 		return NULL;
 	}
 
+	/**
+	 * get all the courses from course table
+	 *
+	 * @param	none
+	 * @return	array
+	 */
+	function get_all_courses() {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query("SELECT * FROM course ORDER BY id");
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
 }

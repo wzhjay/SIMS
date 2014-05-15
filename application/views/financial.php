@@ -1,0 +1,41 @@
+<!-- 
+ * Wang Zihao
+ * wzhjay@gmail.com
+ * 15.05.2014 
+ -->
+
+<head>
+	<meta charset="utf-8">
+	<script>
+		$(document).ready(function($) {
+			$('#my_tab a').click(function (e) {
+			  $(this).tab('show')
+			});
+		});
+	</script>
+</head>
+<body>
+	<?php $this->load->view('partials/financial/financial_banner') ?>
+    <div class="container" id="sims-financial-tabs">
+    	<div class="container tab_content">
+			<ul class="nav nav-tabs" id="my_tab">
+			  <li class="active"><a href="#tab-1" data-toggle="tab">收入部分</a></li>
+			  <li><a href="#tab-2" data-toggle="tab">支出部分</a></li>
+			  <li><a href="#tab-3" data-toggle="tab">查询收费信息</a></li>
+			</ul>
+
+			<div class="tab-content">
+			  	<div class="tab-pane fade in active" id="tab-1">
+			  		<h3>输入新的收入信息</h3><hr>
+					<?php $this->load->view('partials/financial/financial_income_form') ?>
+			  	</div>
+			  	<div class="tab-pane fade" id="tab-2">
+			  		
+				</div>
+			  <div class="tab-pane fade" id="tab-3">
+			  	
+			  </div>
+			</div>
+		</div>
+    </div>
+</body>

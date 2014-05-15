@@ -205,6 +205,27 @@ margin-top: -66px;
 position: relative;
 }
 
+
+/* financial */
+
+#sims-financial-header {
+position: relative;
+padding: 30px 15px;
+color: #AFC4D3;
+text-align: center;
+text-shadow: 0 1px 0 rgba(0,0,0,.1);
+background-color: #34495e;
+background-image: -webkit-linear-gradient(top,#34495e 0,#2C3E50 100%);
+background-image: linear-gradient(to bottom,#34495e 0,#2C3E50 100%);
+background-repeat: repeat-x;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#563d7c', endColorstr='#6F5499', GradientType=0);
+}
+
+#sims-financial-tabs {
+margin-top: -66px;
+position: relative;
+}
+
 /* system */
 
 #sims-system-header {

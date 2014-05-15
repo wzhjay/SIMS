@@ -92,4 +92,15 @@ class Api extends CI_Controller
 		}
 		echo NULL;
 	}
+
+	/**
+	 * get all the course information
+	 */
+	function getAllCourses() {
+		$courses = $this->apis->get_all_courses();
+		if($courses != NULL) {
+			echo json_encode($courses);
+		}
+		echo NULL;
+	}
 }

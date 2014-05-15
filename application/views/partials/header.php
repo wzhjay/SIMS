@@ -30,6 +30,7 @@
             <li><a href="<?php echo $this->config->base_url(); ?>index.php/students">学员管理</a></li>
             <li><a href="<?php echo $this->config->base_url(); ?>index.php/classes">班级管理</a></li>
             <li><a href="<?php echo $this->config->base_url(); ?>index.php/exams">考试管理</a></li>
+            <li><a href="<?php echo $this->config->base_url(); ?>index.php/financial">收支管理</a></li>
             <li><a href="<?php echo $this->config->base_url(); ?>index.php/systems">系统管理</a></li>
           </ul>
     </div>
