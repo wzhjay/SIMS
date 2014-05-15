@@ -26,15 +26,17 @@
 
 			<div class="tab-content">
 			  	<div class="tab-pane fade in active" id="tab-1">
-			  		<h3>输入新的收入信息</h3><hr>
+			  		<h3>添加新的收入信息</h3><hr>
 					<?php $this->load->view('partials/financial/financial_income_form') ?>
 			  	</div>
 			  	<div class="tab-pane fade" id="tab-2">
-			  		
+			  		<h3>添加新的支出信息</h3><hr>
+					<?php $this->load->view('partials/financial/financial_expense_form') ?>
 				</div>
-			  <div class="tab-pane fade" id="tab-3">
-			  	
-			  </div>
+			  	<div class="tab-pane fade" id="tab-3">
+			  		<h3>查询收费信息</h3><hr>
+					<?php $this->load->view('partials/financial/financial_search_income_form') ?>
+			  	</div>
 			</div>
 		</div>
     </div>

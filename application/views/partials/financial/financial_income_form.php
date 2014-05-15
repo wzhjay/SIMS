@@ -3,7 +3,7 @@
 
 	<script>
 		$(document).ready(function($) {
-			$('#input_reg_date').datepicker({
+			$('#input_financial_receipt_date').datepicker({
 				format: 'dd/mm/yyyy'
 			});
 
