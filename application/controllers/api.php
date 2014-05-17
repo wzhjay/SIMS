@@ -11,16 +11,6 @@ class Api extends CI_Controller
 		$this->load->model('apis');
 	}
 
-	/**
-	 * Get all users from users table
-	 */
-	function getAllUsers() {
-		$users = $this->apis->get_all_admin_users();
-		if($users != NULL) {
-			echo json_encode($users);
-		}
-		echo NULL;
-	}
 
 	/**
 	 * Get all new registered users, which unassigned rolw yet
@@ -71,9 +61,20 @@ class Api extends CI_Controller
 	}
 
 	/**
-	 * Get all admin users, combine with their branch, role, status
+	 * Get all admin users from admin_users table only
 	 */
 	function getAllAdminUsers() {
+		$admins = $this->apis->get_all_admin_users();
+		if($admins != NULL) {
+			echo json_encode($admins);
+		}
+		echo NULL;
+	}
+
+	/**
+	 * Get all admin users, combine with their branch, role, status
+	 */
+	function getAllAdmins() {
 		$admins = $this->apis->get_all_admins();
 		if($admins != NULL) {
 			echo json_encode($admins);
@@ -132,5 +133,36 @@ class Api extends CI_Controller
 		else {
 			echo 0;
 		}
+	}
+
+	/**
+	 *  create new registration for student
+	 */
+	function createNewRegister() {
+		$ic = $this->input->post('ic');
+		$reg_date = $this->input->post('reg_date');
+		$student_branch_id = $this->input->post('student_branch_id');
+		$reg_branch_id = $this->input->post('reg_branch_id');
+		$reg_op_id = $this->input->post('reg_op_id');
+		$reg_no = $this->input->post('reg_no');
+		$start_date_wanted = $this->input->post('start_date_wanted');
+		$remark = $this->input->post('remark');
+		$success = $this->apis->create_new_registration($ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $remark);
+		if($success) {
+			echo 1;
+		}
+		else echo 0;
+	}
+
+	/**
+	 *  get single registration info by IC number
+	 */
+	function getRegistrationByIC() {
+		$ic = $this->input->post('ic');
+		$reg_info = $this->apis->get_registration_by_ic($ic);
+		if($reg_info != NULL) {
+			echo json_encode($reg_info);
+		}
+		echo NULL;
 	}
 }

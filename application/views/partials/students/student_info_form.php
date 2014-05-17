@@ -9,56 +9,116 @@
 	<script>
 		$(document).ready(function($) {
 			event.preventDefault();
-			$('#student_info_form').parsley();
-			$('#input_student_bd').datepicker({
+			$('#student_new_info_form').parsley();
+			$('#input_student_new_bd').datepicker({
 				format: 'dd/mm/yyyy'
 			});
+
+			$('#student_new_ic_check').on('click', function() {
+				check_student_ic();
+			});
 		});
+
+		function check_student_ic() {
+			var ic = $('#input_student_new_ic').val();
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getRegistrationByIC",
+			    data:{ic:ic},
+			    success:function(json){
+			    	var modalBody = $('#student_ic_check_modal_label').closest('.modal-content').find('.modal-body');
+			    	modalBody.children().remove();
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+				    	for (var key in reply) {
+					    	if (reply.hasOwnProperty(key)) {
+								modalBody.append(
+									'<div class="row">' + 
+										'<div class="col-xs-4" id="student_new_ic_check_model_ic">'+ 
+											'<label>IC Number Input</label>' +
+											'<div class="form-control">' + ic + '</div>' +
+										'</div>' + 
+										'<div class="col-xs-4">' + 
+											'<label for="student_new_ic_check_model_reg_date">注册日期</label>' + 
+											'<div class="form-control" id="student_new_ic_check_model_reg_date">' + reply[key].reg_date + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-4">' +
+											'<label for="student_new_ic_check_model_reg_no">注册表号码</label>' +
+											'<div class="form-control" id="student_new_ic_check_model_reg_no">'+ reply[key].reg_no + '</div>' + 
+										'</div>' +
+									'</div>'
+								);
+					        }
+				    	}
+				    }
+				    else {
+				    	if(ic.trim() == "") {
+				    		ic='NULL';
+				    	};
+						modalBody.append(
+							'<div class="row">' + 
+								'<div class="col-xs-4" id="student_new_ic_check_model_ic">'+ 
+									'<label>IC Number Input</label>' +
+									'<div class="form-control">' + ic + '</div>' +
+								'</div>' + 
+								'<div class="col-xs-8">' + 
+									'<label>Sorry, no related registration info found!<br>Please input valid IC number.</label>' + 
+							'</div>'
+						);
+					}
+			    }
+			});//End ajax
+		}
 	</script>
 </head>
 <div class="highlight">
-<form role="form" id="student_info_form">
+<form role="form" id="student_new_info_form">
 	<h4>基本信息</h4><hr>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_ic">IC Number</label>
-			<input class="form-control" id="input_student_ic" data-parsley-trigger="blur" required>
+			<label for="input_student_new_ic">IC Number</label>
+			<input class="form-control" id="input_student_new_ic" data-parsley-trigger="blur" required>
 		</div>
-		<div class="col-xs-4">
-			<label for="input_student_fn">First Name</label>
-			<input class="form-control" id="input_student_fn" data-parsley-trigger="blur" required>
-		</div>
-		<div class="col-xs-4">
-			<label for="input_student_ln">Last Name</label>
-			<input class="form-control" id="input_student_ln" data-parsley-trigger="blur" required>
+		<div class="col-xs-2">
+			<a class="button glow button-rounded button-flat" id="student_new_ic_check" data-toggle="modal" data-target="#admin-check-modal">Check</a>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_on">Other Name</label>
-			<input class="form-control" id="input_student_on">
+			<label for="input_student_new_fn">First Name</label>
+			<input class="form-control" id="input_student_new_fn" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_tel">Tel</label>
-			<input class="form-control" id="input_student_tel">
+			<label for="input_student_new_ln">Last Name</label>
+			<input class="form-control" id="input_student_new_ln" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_tel_home">Tel Home</label>
-			<input class="form-control" id="input_student_tel_home">
+			<label for="input_student_new_on">Other Name</label>
+			<input class="form-control" id="input_student_new_on">
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_gender">Gender</label>
-			<select class="form-control" id="input_student_gender">
+			<label for="input_student_new_tel">Tel</label>
+			<input class="form-control" id="input_student_new_tel">
+		</div>
+		<div class="col-xs-4">
+			<label for="input_student_new_tel_home">Tel Home</label>
+			<input class="form-control" id="input_student_new_tel_home">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_student_new_gender">Gender</label>
+			<select class="form-control" id="input_student_new_gender">
 		      <option value="NA">请选择</option>
 		      <option value="M">Male（男）</option>
 		      <option value="F">Female（女）</option>
 		    </select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_sal">Salutation</label>
-			<select class="form-control" id="input_student_sal">
+			<label for="input_student_new_sal">Salutation</label>
+			<select class="form-control" id="input_student_new_sal">
 				<option>Mr</option>
 				<option>Mrs</option>
 				<option>Ms</option>
@@ -67,18 +127,18 @@
 			</select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_bd">Birthday</label>
-			<input class="form-control" id="input_student_bd">
+			<label for="input_student_new_bd">Birthday</label>
+			<input class="form-control" id="input_student_new_bd">
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_age">Age</label>
-			<input class="form-control" id="input_student_age">
+			<label for="input_student_new_age">Age</label>
+			<input class="form-control" id="input_student_new_age">
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_ic_type">IC Type</label>
-			<select class="form-control" id="input_student_ic_type">
+			<label for="input_student_new_ic_type">IC Type</label>
+			<select class="form-control" id="input_student_new_ic_type">
 		      <option value="0">请选择</option>
 		      <option value="1">NRIC</option>
 		      <option value="2">FIN</option>
@@ -87,8 +147,8 @@
 		    </select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_citizenship">Citizenship</label>
-			<select class="form-control" id="input_student_citizenship">
+			<label for="input_student_new_citizenship">Citizenship</label>
+			<select class="form-control" id="input_student_new_citizenship">
 				<option value="0">请选择</option>
                 <option value="SG">新加坡公民</option>
                 <option value="PR">新加坡PR</option>
@@ -101,8 +161,8 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_nationality">Nationality</label>
-			<select class="form-control" id="input_student_nationality">
+			<label for="input_student_new_nationality">Nationality</label>
+			<select class="form-control" id="input_student_new_nationality">
 	            <option value="NA">请选择</option>
 	            <option value="SG">Singapore Citizen </option>
 	            <option value="CN">Chinese </option>
@@ -336,8 +396,8 @@
 			</select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_race">Race</label>
-			<select class="form-control" id="input_student_race">
+			<label for="input_student_new_race">Race</label>
+			<select class="form-control" id="input_student_new_race">
             	<option value="NA">请选择</option>
 	            <option value="CN">Chinese(华人)</option>
 	            <option value="MY">Malay(马来)</option>
@@ -347,8 +407,8 @@
 			</select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_cnlevel">华文学历</label>
-			<select class="form-control" id="input_student_cnlevel">
+			<label for="input_student_new_cnlevel">华文学历</label>
+			<select class="form-control" id="input_student_new_cnlevel">
 	            <option value="NA">请选择</option>
 	            <option value="01">No Formal Qualification &amp; Lowe</option>
 	            <option value="11">Primary PSLE</option>
@@ -365,8 +425,8 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_edulevel">教育水平</label>
-				<select class="form-control" id="input_student_edulevel">
+			<label for="input_student_new_edulevel">教育水平</label>
+				<select class="form-control" id="input_student_new_edulevel">
 	            <option value="NA">请选择</option>
 	            <option value="01">No Formal Qualification &amp; Lower Primary </option>
 	            <option value="11">Primary PSLE</option>
@@ -396,20 +456,20 @@
 	<h4>工作信息</h4><hr>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_empstatus">工作状态</label>
-			<select class="form-control" id="input_student_empstatus">
+			<label for="input_student_new_empstatus">工作状态</label>
+			<select class="form-control" id="input_student_new_empstatus">
 	            <option value="NA">请选择</option>
 	            <option value="Employed">Employed</option>
 	            <option value="Unemployed">Unemployed</option>
           </select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_comn">公司名称</label>
-			<input class="form-control" id="input_student_comn" value="NA">
+			<label for="input_student_new_comn">公司名称</label>
+			<input class="form-control" id="input_student_new_comn" value="NA">
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_com_status">公司注册类型</label>
-			<select class="form-control" id="input_student_com_status">
+			<label for="input_student_new_com_status">公司注册类型</label>
+			<select class="form-control" id="input_student_new_com_status">
                 <option value="NA">请选择</option>
                 <option value="ROC">Registry of Company</option>
                 <option value="ROB">Registry of Business</option>
@@ -420,12 +480,12 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_com_reg_no">公司注册号</label>
-			<input class="form-control" id="input_student_com_reg_no" value="NA">
+			<label for="input_student_new_com_reg_no">公司注册号</label>
+			<input class="form-control" id="input_student_new_com_reg_no" value="NA">
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_industry">行业</label>
-			<select class="form-control" id="input_student_industry">
+			<label for="input_student_new_industry">行业</label>
+			<select class="form-control" id="input_student_new_industry">
                 <option value="NA">请选择</option>
                 <option value="1">Others</option>
                 <option value="2">Aerospace</option>
@@ -459,8 +519,8 @@
             </select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_designation">职称</label>
-			<select class="form-control" id="input_student_designation">
+			<label for="input_student_new_designation">职称</label>
+			<select class="form-control" id="input_student_new_designation">
                 <option value="NA">请选择</option>
                 <option value="1">Legislators, Senior Officials and Mangers</option>
                 <option value="2">Professionals</option>
@@ -477,8 +537,8 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_sal_range">薪水范围</label>
-			<select class="form-control" id="input_student_sal_range">
+			<label for="input_student_new_sal_range">薪水范围</label>
+			<select class="form-control" id="input_student_new_sal_range">
                 <option value="NA">请选择</option>
                 <option value="00">Unemployed</option>
                 <option value="01">Below $1,000</option>
@@ -492,8 +552,8 @@
             </select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_lang">使用语言</label>
-			<select class="form-control" id="input_student_lang">
+			<label for="input_student_new_lang">使用语言</label>
+			<select class="form-control" id="input_student_new_lang">
 	            <option value="NA">请选择</option>
 	            <option value="Chinese">Chinese(中文)</option>
 	            <option value="English">English(英语)</option>
@@ -511,4 +571,22 @@
 		<a class="button glow button-rounded button-flat" id="student_new_submit">Submit</a>
 	</div>
 </div>
+</div>
+
+
+<!-- IC Check Modal -->
+<div class="modal fade" id="admin-check-modal" tabindex="-1" role="dialog" aria-labelledby="student_ic_check_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="student_ic_check_modal_label">Registered Student Check</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

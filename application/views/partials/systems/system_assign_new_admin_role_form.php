@@ -35,6 +35,7 @@
 					    else {
 					    	alert("fail to call insert user api");
 					    }
+					    load_admin_users();
 				    },
 				});//End ajax
 			});

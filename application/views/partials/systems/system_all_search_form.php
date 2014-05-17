@@ -65,7 +65,7 @@
 				<label for="input_system_admin_search_username">请输入管理员用户名/邮件关键字：</label>
 			</div>
 			<div class="col-xs-4">
-				<input class="form-control" id="input_system_admin_search_username" placeholder="keyworkd in username/email">
+				<input class="form-control" id="input_system_admin_search_username" value="keyworkd in username/email">
 			</div>
 			<div class="col-xs-2"></div>
 			<div class="col-xs-2">

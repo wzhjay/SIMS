@@ -11,13 +11,14 @@
 				update_admin_role_branch();
 				$('#admin-edit-model').modal('hide');
 				load_admin_users();
-				// search_admin_user();
+				search_admin_user();
 			});
 
 			$('#system_admin_del_submit').on('click', function() {
 				delete_single_admin();
 				$('#admin-del-model').modal('hide');
 				load_admin_users();
+				search_admin_user();
 			});
 		});
 
@@ -25,7 +26,7 @@
 			var admins = $('#system_all_admin_table_body');
 			$.ajax({
 				type:"post",
-			    url:window.api_url + "getAllAdminUsers",
+			    url:window.api_url + "getAllAdmins",
 			    data:{},
 			    success:function(json){
 			    	admins.children().remove();

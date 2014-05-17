@@ -16,10 +16,10 @@ class Apis extends CI_Model
 	 * @param	none
 	 * @return	object
 	 */
-	function get_all_users()
+	function get_all_admin_users()
 	{
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->get($this->table_users);
+			$query = $this->db->query("SELECT * FROM users WHERE users.id IN (SELECT user_id FROM admin_users) ORDER BY users.id");
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -75,7 +75,7 @@ class Apis extends CI_Model
 	 */
 	function assign_role_branch_to_new_admin_user($user_id, $role_id, $branch_id, $status_id) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query("INSERT INTO admin_users (user_id, role_id, branch_id, status_id) VALUES ($user_id, $role_id, $branch_id, $status_id)");
+			$query = $this->db->query('INSERT INTO admin_users (user_id, role_id, branch_id, status_id) VALUES ("'.$user_id.'", "'.$role_id.'", "'.$branch_id.'", "'.$status_id.'")');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FLASE;
@@ -89,7 +89,7 @@ class Apis extends CI_Model
 	 */
 	function get_all_admins() {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query("SELECT * FROM admin_users a, users u, branch b, admin_role r, status s WHERE (a.user_id = u.id) AND (a.branch_id = b.id) AND (a.role_id = r.id) AND (a.status_id = s.id) GROUP BY r.id ORDER BY r.id");
+			$query = $this->db->query("SELECT * FROM admin_users a, users u, branch b, admin_role r, status s WHERE (a.user_id = u.id) AND (a.branch_id = b.id) AND (a.role_id = r.id) AND (a.status_id = s.id) ORDER BY a.id");
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -137,11 +137,45 @@ class Apis extends CI_Model
 		return FLASE;
 	}
 
+	/**
+	 * delete single admin user by user_id
+	 *
+	 * @param	user_id
+	 * @return	bool
+	 */
 	function delete_single_admin_user($user_id) {
 		if($this->session->userdata('session_id')) {
 			$query = $this->db->query('DELETE FROM admin_users WHERE user_id = "'.$user_id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FLASE;
+	}
+
+	/**
+	 * insert new reg info into registration table
+	 *
+	 * @param	user_id
+	 * @return	bool
+	 */
+	function create_new_registration($ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $remark) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('INSERT INTO registration (ic, reg_date, student_branch_id, reg_branch_id, reg_op_id, reg_no, start_date_wanted, remark) VALUES ("'.$ic.'", "'.$reg_date.'", "'.$student_branch_id.'", "'.$reg_branch_id.'", "'.$reg_op_id.'", "'.$reg_no.'", "'.$start_date_wanted.'", "'.$remark.'")');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FLASE;
+	}
+
+	/**
+	 * get registration info from regstration table where ic equals to given ic
+	 *
+	 * @param	ic
+	 * @return	array or NULL
+	 */
+	function get_registration_by_ic($ic) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM registration WHERE ic = "'.$ic.'"');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
 	}
 }
