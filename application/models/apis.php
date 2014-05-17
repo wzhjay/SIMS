@@ -178,4 +178,18 @@ class Apis extends CI_Model
 		}
 		return NULL;
 	}
+
+	/**
+	 * search registration info by setting time range
+	 *
+	 * @param	from, to
+	 * @return	array or NULL
+	 */
+	function search_reg_info($from, $to) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT r.ic, r.reg_date, r.reg_no, b1.name AS reg_branch, b2.name AS assigned_branch, r.start_date_wanted, r.remark, u.username  FROM registration r, branch b1, branch b2, users u WHERE (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (r.reg_branch_id = b1.id) AND (r.student_branch_id = b2.id) AND (r.reg_op_id = u.id) ORDER BY -DATE(r.reg_date)');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
 }

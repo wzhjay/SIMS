@@ -165,4 +165,19 @@ class Api extends CI_Controller
 		}
 		echo NULL;
 	}
+
+	/**
+	 *  search registration info
+	 */
+	function searchRegistrationInfo() {
+		$from = $this->input->post('from');
+		$to = $this->input->post('to');
+		// $from = '2014-05-12';
+		// $to = '2014-06-07';
+		$courses = $this->apis->search_reg_info($from, $to);
+		if($courses != NULL) {
+			echo json_encode($courses);
+		}
+		echo NULL;
+	}
 }

@@ -301,3 +301,7 @@ label {
 #system_search_admin_table_body > tr > th {
 	font-weight: 200;
 }
+
+#reg_search_results_table_body > tr > th {
+	font-weight: 200;
+}
