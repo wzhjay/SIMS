@@ -7,7 +7,18 @@
 			
 			load_admin_users();
 
+			$('#system_update_admin_submit').on('click', function() {
+				update_admin_role_branch();
+				$('#admin-edit-model').modal('hide');
+				load_admin_users();
+				// search_admin_user();
+			});
 
+			$('#system_admin_del_submit').on('click', function() {
+				delete_single_admin();
+				$('#admin-del-model').modal('hide');
+				load_admin_users();
+			});
 		});
 
 		function load_admin_users() {
@@ -46,9 +57,9 @@
 					modalBody.children().remove();
 					modalBody.append(
 						'<div class="row">' + 
-							'<div class="col-xs-4">'+ 
+							'<div class="col-xs-4" id="input_system_assigned_user_edit">'+ 
 								'<label>用户名</label>' +
-								'<div>' + unsername + '</div>' +
+								'<div id="sys_admin_edit_' + user_id +'">' + unsername + '</div>' +
 							'</div>' + 
 							'<div class="col-xs-4">' + 
 								'<label for="input_system_assigned_role_edit">权限分配</label>' + 
@@ -76,9 +87,9 @@
 				modalBody.children().remove();
 				modalBody.append(
 					'<div class="row">' + 
-						'<div class="col-xs-4">'+
+						'<div class="col-xs-4" id="input_system_assigned_user_del">'+
 							'<label>用户名</label>' +
-							'<div>' + unsername + '</div>' +
+							'<div id="sys_admin_del_' + user_id + '">' + unsername + '</div>' +
 						'</div>' + 
 					'</div>');
 					});
@@ -128,6 +139,54 @@
 			    },
 			});//End ajax
 		}
+
+		function update_admin_role_branch() {
+			var new_role_id = $('#input_system_assigned_role_edit option:selected').attr('id').substring(11,12);
+			var new_branch_id = $('#input_system_assigned_branch_edit option:selected').attr('id').substring(13,14);
+			var user = $('#input_system_assigned_user_edit').find('div').attr('id').split('_');
+			var user_id = user[3];
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "updateAdminRoleBranch",
+			    data:{user_id:user_id, role_id:new_role_id, branch_id:new_branch_id},
+			    success:function(json){
+			        if(json != null) {
+			        	var reply = $.parseJSON(json);
+			            if(reply == '1') {
+
+			            }
+			            else {
+
+			            }
+			        }else {
+			        	alert("fail to call update admin api");
+					}
+			    }
+			});//End ajax
+		}
+
+		function delete_single_admin() {
+			var user = $('#input_system_assigned_user_del').find('div').attr('id').split('_');
+			var user_id = user[3];
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "deleteSingleAdminUser",
+			    data:{user_id:user_id},
+			    success:function(json){
+			        if(json != null) {
+			        	var reply = $.parseJSON(json);
+			            if(reply == '1') {
+
+			            }
+			            else {
+
+			            }
+			        }else {
+			        	alert("fail to call update admin api");
+					}
+			    }
+			});//End ajax
+		}
 	</script>
 </head>
 <div class="highlight">
@@ -159,7 +218,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="system_update_admin_submit">Save changes</button>
       </div>
     </div>
   </div>
@@ -177,7 +236,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Confirm</button>
+        <button type="button" class="btn btn-primary" id="system_admin_del_submit">Confirm</button>
       </div>
     </div>
   </div>

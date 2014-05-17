@@ -103,4 +103,34 @@ class Api extends CI_Controller
 		}
 		echo NULL;
 	}
+
+	/**
+	 * update admin's role and branch
+	 */
+	function updateAdminRoleBranch() {
+		$user_id = $this->input->post('user_id');
+		$new_role_id = $this->input->post('role_id');
+		$new_branch_id = $this->input->post('branch_id');
+		$success = $this->apis->update_single_admin_role_branch($user_id, $new_role_id, $new_branch_id);
+		if($success) {
+			echo 1;
+		}
+		else {
+			echo 0;
+		}
+	}
+
+	/**
+	 * delete single admin user
+	 */
+	function deleteSingleAdminUser() {
+		$user_id = $this->input->post('user_id');
+		$success = $this->apis->delete_single_admin_user($user_id);
+		if($success) {
+			echo 1;
+		}
+		else {
+			echo 0;
+		}
+	}
 }

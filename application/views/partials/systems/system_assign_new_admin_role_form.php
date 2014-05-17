@@ -10,9 +10,12 @@
 
 			$('#system_admin_role_assign_btn').on('click', function() {
 				event.preventDefault();
-				var user_id = $('option:selected', '#input_system_unassigned_role_users').attr('id').substring(9, 10);
-				var role_id = $('option:selected', '#input_system_assigned_role').attr('id').substring(11, 12);
-				var branch_id = $('option:selected', '#input_system_assigned_branch').attr('id').substring(13, 14);
+				var user = $('option:selected', '#input_system_unassigned_role_users').attr('id').split('_');
+				var user_id = user[2];
+				var role = $('option:selected', '#input_system_assigned_role').attr('id').split('_');
+				var role_id = role[2];
+				var branch = $('option:selected', '#input_system_assigned_branch').attr('id').split('_');
+				var branch_id = branch[2];
 				var status_id = 1; // activate
 				// alert(user_id + " " + roel_id + " " + branch_id + " " + status_id);
 				$.ajax({
@@ -22,7 +25,7 @@
 				    success:function(json){
 				    	if(json != null) {
 					    	var reply = $.parseJSON(json);
-					    	alert(reply);
+					    	// alert(reply);
 					    	if(reply == '1') {
 					    		load_users();
 					        }else{

@@ -122,4 +122,26 @@ class Apis extends CI_Model
 		}
 		return NULL;
 	}
+
+	/**
+	 * get all the courses from course table
+	 *
+	 * @param	user_id, new_role, new_branch_id
+	 * @return	bool
+	 */
+	function update_single_admin_role_branch($user_id, $new_role_id, $new_branch_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('UPDATE admin_users SET role_id = "'.$new_role_id.'", branch_id = "'.$new_branch_id.'" WHERE user_id = "'.$user_id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FLASE;
+	}
+
+	function delete_single_admin_user($user_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('DELETE FROM admin_users WHERE user_id = "'.$user_id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FLASE;
+	}
 }
