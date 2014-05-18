@@ -9,10 +9,10 @@
 	<script>
 		$(document).ready(function($) {
 			$('#input_student_ato_search_from').datepicker({
-				format: 'dd/mm/yyyy'
+				format: 'yyyy-mm-dd'
 			});
 			$('#input_student_ato_search_to').datepicker({
-				format: 'dd/mm/yyyy'
+				format: 'yyyy-mm-dd'
 			});
 		});
 	</script>

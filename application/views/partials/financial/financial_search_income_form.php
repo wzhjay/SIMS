@@ -4,10 +4,10 @@
 	<script>
 		$(document).ready(function($) {
 			$('#input_financial_search_from').datepicker({
-				format: 'dd/mm/yyyy'
+				format: 'yyyy-mm-dd'
 			});
 			$('#input_financial_search_to').datepicker({
-				format: 'dd/mm/yyyy'
+				format: 'yyyy-mm-dd'
 			});
 		});
 	</script>

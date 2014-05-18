@@ -1,19 +1,14 @@
-<!-- 
- * Wang Zihao
- * wzhjay@gmail.com
- * 08.05.2014 
- -->
  <head>
 	<meta charset="utf-8">
 
 	<script>
 		$(document).ready(function($) {
 			$('#input_reg_date').datepicker({
-				format: 'dd/mm/yyyy'
+				format: 'yyyy-mm-dd'
 			});
 
 			$('#input_reg_start_date').datepicker({
-				format: 'dd/mm/yyyy'
+				format: 'yyyy-mm-dd'
 			});
 
 			reg_load_admin_users();
@@ -73,13 +68,13 @@
 
 		function insert_new_reg() {
 			var ic = $('#input_reg_ic').val();
-			var reg_date = moment($('#input_reg_date').val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+			var reg_date = $('#input_reg_date').val();
 			var reg_branch = $('#input_reg_branch option:selected').attr('id').split('_');
 			var reg_branch_id = reg_branch[2];
 			var reg_no = $('#input_reg_no').val();
 			var reg_op = $('#input_reg_op option:selected').attr('id').split('_');
 			var reg_op_id = reg_op[2];
-			var reg_start_date = moment($('#input_reg_start_date').val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+			var reg_start_date = $('#input_reg_start_date').val();
 			var reg_branch_stu = $('#input_reg_branch_student option:selected').attr('id').split('_');
 			var reg_branch_stu_id = reg_branch_stu[2];
 			var remark = $('#input_reg_remark').val();

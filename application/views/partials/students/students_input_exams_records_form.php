@@ -9,7 +9,7 @@
 	<script>
 		$(document).ready(function($) {
 			$('#input_student_exams_time').datepicker({
-				format: 'dd/mm/yyyy'
+				format: 'yyyy-mm-dd'
 			});
 		});
 	</script>

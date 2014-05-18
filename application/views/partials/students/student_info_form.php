@@ -1,9 +1,4 @@
-<!-- 
- * Wang Zihao
- * wzhjay@gmail.com
- * 09.05.2014 
- -->
- <head>
+<head>
 	<meta charset="utf-8">
 
 	<script>
@@ -11,7 +6,7 @@
 			event.preventDefault();
 			$('#student_new_info_form').parsley();
 			$('#input_student_new_bd').datepicker({
-				format: 'dd/mm/yyyy'
+				format: 'yyyy-mm-dd'
 			});
 
 			$('#student_new_ic_check').on('click', function() {
@@ -80,7 +75,19 @@
 			<input class="form-control" id="input_student_new_ic" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-2">
+			<br>
 			<a class="button glow button-rounded button-flat" id="student_new_ic_check" data-toggle="modal" data-target="#admin-check-modal">Check</a>
+		</div>
+		<div class="col-xs-2"></div>
+		<div class="col-xs-4">
+			<label for="input_student_new_ic_type">IC Type</label>
+			<select class="form-control" id="input_student_new_ic_type">
+		      <option value="0">请选择</option>
+		      <option value="1">NRIC</option>
+		      <option value="2">FIN</option>
+		      <option value="3">Passport</option>
+		      <option value="4">Workpermit</option>
+		    </select>
 		</div>
 	</div>
 	<div class="row">
@@ -135,16 +142,6 @@
 		<div class="col-xs-4">
 			<label for="input_student_new_age">Age</label>
 			<input class="form-control" id="input_student_new_age">
-		</div>
-		<div class="col-xs-4">
-			<label for="input_student_new_ic_type">IC Type</label>
-			<select class="form-control" id="input_student_new_ic_type">
-		      <option value="0">请选择</option>
-		      <option value="1">NRIC</option>
-		      <option value="2">FIN</option>
-		      <option value="3">Passport</option>
-		      <option value="4">Workpermit</option>
-		    </select>
 		</div>
 		<div class="col-xs-4">
 			<label for="input_student_new_citizenship">Citizenship</label>
@@ -453,6 +450,31 @@
 			</select>
 		</div>
 	</div>
+	<h4>住址信息</h4><hr>
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_student_new_blk">BLK</label>
+			<input class="form-control" id="input_student_new_blk">
+		</div>
+		<div class="col-xs-4">
+			<label for="input_student_new_street">Street</label>
+			<input class="form-control" id="input_student_new_street">
+		</div>
+		<div class="col-xs-4">
+			<label for="input_student_new_floor_unit">#Floor-Unit No.</label>
+			<input class="form-control" id="input_student_new_floor_unit">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_student_new_building">Building Name</label>
+			<input class="form-control" id="input_student_new_building">
+		</div>
+		<div class="col-xs-4">
+			<label for="input_student_new_postcode">Postcode</label>
+			<input class="form-control" id="input_student_new_postcode">
+		</div>
+	</div>
 	<h4>工作信息</h4><hr>
 	<div class="row">
 		<div class="col-xs-4">
@@ -574,7 +596,7 @@
 </div>
 
 
-<!-- IC Check Modal -->
+<!-- Student New IC Check Modal -->
 <div class="modal fade" id="admin-check-modal" tabindex="-1" role="dialog" aria-labelledby="student_ic_check_modal_label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

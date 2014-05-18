@@ -5,10 +5,10 @@
 		$(document).ready(function($) {
 			event.preventDefault();
 			$('#input_reg_search_from').datepicker({
-				format: 'dd/mm/yyyy'
+				format: 'yyyy-mm-dd'
 			});
 			$('#input_reg_search_to').datepicker({
-				format: 'dd/mm/yyyy'
+				format: 'yyyy-mm-dd'
 			});
 
 			$('#reg_search_submit').on('click', function() {
@@ -21,10 +21,10 @@
 			var from = '2000-01-01';
 			var to  = '2100-01-01';
 			if($('#input_reg_search_from').val().trim() != "") {
-				from = moment($('#input_reg_search_from').val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+				from = $('#input_reg_search_from').val();
 			}
 			if($('#input_reg_search_to').val().trim() != "") {
-				to = moment($('#input_reg_search_to').val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+				to = $('#input_reg_search_to').val();
 			}
 			var target = $('#reg_search_results');
 			target.children().remove();

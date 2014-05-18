@@ -4,7 +4,7 @@
 	<script>
 		$(document).ready(function($) {
 			$('#input_financial_receipt_date').datepicker({
-				format: 'dd/mm/yyyy'
+				format: 'yyyy-mm-dd'
 			});
 
 			load_course_type();

@@ -9,7 +9,7 @@
 	<script>
 		$(document).ready(function($) {
 			$('#input_student_exams_time').datepicker({
-				format: 'dd/mm/yyyy'
+				format: 'yyyy-mm-dd'
 			});
 		});
 	</script>
@@ -21,6 +21,11 @@
 				<label for="input_student_exams_ic">请输入学员IC</label>
 				<input class="form-control" id="input_student_exams_ic">
 			</div>
+			<div class="col-xs-2">
+				<br>
+				<a class="button glow button-rounded button-flat" id="student_exam_ic_check" data-toggle="modal" data-target="#student-exam-modal">Check</a>
+			</div>
+			<div class="col-xs-2"></div>
 			<div class="col-xs-4">
 				<label for="input_student_exams_time">考试时间</label>
 				<input class="form-control" id="input_student_exams_time">
@@ -171,4 +176,21 @@
 			<a class="button glow button-rounded button-flat" id="student_exam_submit">Submit</a>
 		</div>
 	</div>
+</div>
+
+<!-- Student Exam IC Check Modal -->
+<div class="modal fade" id="student-exam-modal" tabindex="-1" role="dialog" aria-labelledby="student_exam_ic_check_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="student_exam_ic_check_modal_label">Student Information</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
