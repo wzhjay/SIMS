@@ -180,4 +180,127 @@ class Api extends CI_Controller
 		}
 		echo NULL;
 	}
+
+	/**
+	 *  create ato info by student
+	 */
+	function createATOInfo() {
+		$ic = $this->input->post('ic').trim(" ");
+		$pre_post = $this->input->post('pre_post');
+		$recommend_level = $this->input->post('recommend_level');
+		$class_start_date = $this->input->post('class_start_date');
+		$class_end_date = $this->input->post('class_end_date');
+		$class_code = $this->input->post('class_code');
+		$attendance = $this->input->post('attendance');
+		$el = $this->input->post('el');
+		$er = $this->input->post('er');
+		$en = $this->input->post('en');
+		$es = $this->input->post('es');
+		$ew = $this->input->post('ew');
+		$exam_location = $this->input->post('exam_location');
+		$exam_date = $this->input->post('exam_date');
+		$exam_time = $this->input->post('exam_time');
+		$ato_branch_id = $this->input->post('ato_branch_id');
+		$ato_op_id = $this->input->post('ato_op_id');
+		$remark = $this->input->post('remark');
+		
+		// create
+		$create = $this->apis->create_new_ato(
+			$ic,
+			$pre_post,
+			$recommend_level,
+			$class_start_date, 
+			$class_end_date, 
+			$class_code, 
+			$attendance, 
+			$el, 
+			$er, 
+			$en, 
+			$es, 
+			$ew, 
+			$exam_location, 
+			$exam_date, 
+			$exam_time, 
+			$ato_branch_id,
+		    $ato_op_id,
+			$remark);
+		if($create) {
+			echo 1;
+		}
+		else echo 0;
+	}
+
+	/**
+	 *  update ato info by student ic
+	 */
+	function updateATOInfo() {
+		// $ic = $this->input->post('ic').trim(" ");
+		$id = $this->input->post('id');
+		$pre_post = $this->input->post('pre_post');
+		$recommend_level = $this->input->post('recommend_level');
+		$class_start_date = $this->input->post('class_start_date');
+		$class_end_date = $this->input->post('class_end_date');
+		$class_code = $this->input->post('class_code');
+		$attendance = $this->input->post('attendance');
+		$el = $this->input->post('el');
+		$er = $this->input->post('er');
+		$en = $this->input->post('en');
+		$es = $this->input->post('es');
+		$ew = $this->input->post('ew');
+		$exam_location = $this->input->post('exam_location');
+		$exam_date = $this->input->post('exam_date');
+		$exam_time = $this->input->post('exam_time');
+		$ato_branch_id = $this->input->post('ato_branch_id');
+		$ato_op_id = $this->input->post('ato_op_id');
+		$remark = $this->input->post('remark');
+
+		// update
+		$update = $this->apis->update_ato(
+			$id,
+			$pre_post,
+			$recommend_level,
+			$class_start_date, 
+			$class_end_date, 
+			$class_code, 
+			$attendance, 
+			$el, 
+			$er, 
+			$en, 
+			$es, 
+			$ew, 
+			$exam_location, 
+			$exam_date, 
+			$exam_time, 
+			$ato_branch_id,
+			$ato_op_id,
+			$remark);
+		if($update) {
+			echo 2;
+		}
+		else echo 0;
+	}
+
+	/**
+	 *  get student all ato info by givening student's ic
+	 */
+	function getStudentATOInfoByIC() {
+		$ic = $this->input->post('ic').trim(" ");
+		$atos = $this->apis->get_student_atos_by_ic($ic);
+		if($atos != NULL) {
+			echo json_encode($atos);
+		}
+		echo NULL;
+	}
+
+	/**
+	 *  get ato info by givening id
+	 */
+	function getATOInfoByID() {
+		$id = $this->input->post('id');
+		$ato = $this->apis->get_ato_info_by_id($id);
+		if($ato != NULL) {
+			echo json_encode($ato);
+		}
+		echo NULL;
+	}
 }

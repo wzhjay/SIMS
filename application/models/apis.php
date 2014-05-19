@@ -154,7 +154,7 @@ class Apis extends CI_Model
 	/**
 	 * insert new reg info into registration table
 	 *
-	 * @param	user_id
+	 * @param	$ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $remark
 	 * @return	bool
 	 */
 	function create_new_registration($ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $remark) {
@@ -188,6 +188,80 @@ class Apis extends CI_Model
 	function search_reg_info($from, $to) {
 		if($this->session->userdata('session_id')) {
 			$query = $this->db->query('SELECT r.ic, r.reg_date, r.reg_no, b1.name AS reg_branch, b2.name AS assigned_branch, r.start_date_wanted, r.remark, u.username  FROM registration r, branch b1, branch b2, users u WHERE (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (r.reg_branch_id = b1.id) AND (r.student_branch_id = b2.id) AND (r.reg_op_id = u.id) ORDER BY -DATE(r.reg_date)');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
+	 * insert info to ato table
+	 *
+	 * @param	$ic, $pre_post, $recommend_level, $class_start_date,  $class_end_date, $class_code, $attendance, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $remark
+	 * @return	bool
+	 */
+	function create_new_ato($ic, $pre_post, $recommend_level, $class_start_date,  $class_end_date, $class_code, $attendance, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $ato_branch_id, $ato_op_id, $remark) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('INSERT INTO ato (ic, pre_post, recommend_level, class_start_date,  class_end_date, class_code, attendance, el, er, en, es, ew, exam_location, exam_date, exam_time, branch_id, branch_op_id, created, modified, remark) VALUES ("'.$ic.'", "'.$pre_post.'", "'.$recommend_level.'", "'.$class_start_date.'", "'.$class_end_date.'", "'.$class_code.'", "'.$attendance.'", "'.$el.'", "'.$er.'", "'.$en.'", "'.$es.'", "'.$ew.'", "'.$exam_location.'", "'.$exam_date.'", "'.$exam_time.'", "'.$ato_branch_id.'", "'.$ato_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$remark.'")');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FLASE;
+	}
+
+	/**
+	 * update ato table
+	 *
+	 * @param	$ic, $pre_post, $recommend_level, $class_start_date,  $class_end_date, $class_code, $attendance, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $remark
+	 * @return	bool where ato.id = get id by ic
+	 */
+	function update_ato($id, $pre_post, $recommend_level, $class_start_date,  $class_end_date, $class_code, $attendance, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $ato_branch_id, $ato_op_id, $remark) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('UPDATE ato SET pre_post = "'.$pre_post.'", recommend_level = "'.$recommend_level.'", class_start_date = "'.$class_start_date.'", class_end_date = "'.$class_end_date.'", class_code = "'.$class_code.'", attendance = "'.$attendance.'", el = "'.$el.'", er = "'.$er.'", en = "'.$en.'", es = "'.$es.'", ew = "'.$ew.'", exam_location = "'.$exam_location.'", exam_date = "'.$exam_date.'", exam_time = "'.$exam_time.'", branch_id = "'.$ato_branch_id.'", branch_op_id = "'.$ato_op_id.'", modified = "'.date('Y-m-d H:i:s').'", remark = "'.$remark.'" WHERE id = "'.$id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FLASE;
+	}
+
+	/**
+	 * get ato id by ic 
+	 *
+	 * @param	$ic
+	 * @return	id or NULL
+	 */
+	function get_ato_id_by_ic($ic) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT id FROM ato WHERE ic = "'.$ic.'"');
+			if ($query->num_rows() > 0)
+			{
+			   $row = $query->row(); 
+			   return $row->id;
+			}
+		}
+		return NULL;
+	}
+
+	/**
+	 * get ato info by ic 
+	 *
+	 * @param	$ic
+	 * @return	array or NULL
+	 */
+	function get_student_atos_by_ic($ic) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM ato WHERE ic = "'.$ic.'"');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
+	 * get ato info by id
+	 *
+	 * @param	id
+	 * @return	array or NULL
+	 */
+	function get_ato_info_by_id($id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM ato WHERE id = "'.$id.'"');
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;

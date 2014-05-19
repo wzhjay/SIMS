@@ -305,3 +305,13 @@ label {
 #reg_search_results_table_body > tr > th {
 	font-weight: 200;
 }
+
+.modal-lg {
+width: 900px;
+}
+
+.modal-dialog a {
+color: #666666;
+text-decoration: none;
+cursor: pointer;
+}
