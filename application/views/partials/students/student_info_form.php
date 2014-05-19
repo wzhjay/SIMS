@@ -71,6 +71,16 @@
 	<h4>基本信息</h4><hr>
 	<div class="row">
 		<div class="col-xs-4">
+			<label for="input_student_new_source">学生来源</label>
+			<select class="form-control" id="input_student_new_source">
+            	<option value="SSA">SSA</option>
+	            <option value="Link1" selected="selected">Link1</option>
+    	        <option value="Changchun">Changchun</option>
+          </select>
+		</div>
+	</div><hr>
+	<div class="row">
+		<div class="col-xs-4">
 			<label for="input_student_new_ic">IC Number</label>
 			<input class="form-control" id="input_student_new_ic" data-parsley-trigger="blur" required>
 		</div>
