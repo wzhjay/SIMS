@@ -266,4 +266,18 @@ class Apis extends CI_Model
 		}
 		return NULL;
 	}
+
+	/**
+	 * get student info from student table only, by given ic number
+	 *
+	 * @param	ic
+	 * @return	array or NULL
+	 */
+	function get_student_info_by_ic($ic) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM student WHERE ic = "'.$ic.'"');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
 }

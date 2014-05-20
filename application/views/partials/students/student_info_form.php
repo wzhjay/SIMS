@@ -16,9 +16,11 @@
 
 		function check_student_ic() {
 			var ic = $('#input_student_new_ic').val();
+
+			// check if student bisic info exist, can update basic indo for this student
 			$.ajax({
 				type:"post",
-			    url:window.api_url + "getRegistrationByIC",
+			    url:window.api_url + "getStundentByIC",
 			    data:{ic:ic},
 			    success:function(json){
 			    	var modalBody = $('#student_ic_check_modal_label').closest('.modal-content').find('.modal-body');
@@ -29,40 +31,169 @@
 					    	if (reply.hasOwnProperty(key)) {
 								modalBody.append(
 									'<div class="row">' + 
-										'<div class="col-xs-4" id="student_new_ic_check_model_ic">'+ 
+										'Stundet info existed!' + 
+									'</div>' +
+									'<div class="row">' + 
+										'<div class="col-xs-3" id="student_new_ic_check_model_ic">'+ 
 											'<label>IC Number Input</label>' +
 											'<div class="form-control">' + ic + '</div>' +
 										'</div>' + 
-										'<div class="col-xs-4">' + 
-											'<label for="student_new_ic_check_model_reg_date">注册日期</label>' + 
-											'<div class="form-control" id="student_new_ic_check_model_reg_date">' + reply[key].reg_date + '</div>' + 
+										'<div class="col-xs-3">' + 
+											'<label for="student_new_ic_check_model_student_name">Name</label>' + 
+											'<div class="form-control" id="student_new_ic_check_model_student_name">' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</div>' + 
 										'</div>' +
-										'<div class="col-xs-4">' +
-											'<label for="student_new_ic_check_model_reg_no">注册表号码</label>' +
-											'<div class="form-control" id="student_new_ic_check_model_reg_no">'+ reply[key].reg_no + '</div>' + 
+										'<div class="col-xs-3">' +
+											'<label for="student_new_ic_check_model_student_tel">Tel</label>' +
+											'<div class="form-control" id="student_new_ic_check_model_reg_no">'+ reply[key].tel + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-2">' +
+											'<br>' +
+											'<a class="button glow button-rounded button-flat" id="student_new_ic_check_modal_update_' + reply[key].id + '">Update</a>' + 
 										'</div>' +
 									'</div>'
 								);
 					        }
+
+					        $('#stundet-check-modal a').on('click', function() {
+								var el_id = $(this).attr('id').split('_');
+								var student_id = el_id[6];
+								
+								$('#input_student_new_source').val(reply[key].source);
+								(reply[key].gov_letter == "YES") ? $('#input_student_new_gov_letter').prop('checked', true) : $('#input_student_new_gov_letter').prop('checked', false);
+								$('#input_student_new_ic').val(reply[key].ic);
+								$('#input_student_new_ic_type option[value="'+reply[key].ic_type+'"]').attr('selected', 'selected');
+
+								$('#input_student_new_fn').val(reply[key].firstname);
+								$('#input_student_new_ln').val(reply[key].lastname);
+								$('#input_student_new_on').val(reply[key].othername);
+								$('#input_student_new_tel').val(reply[key].tel);
+								$('#input_student_new_tel_home').val(reply[key].tel_home);
+								$('#input_student_new_gender').val(reply[key].gender);
+								$('#input_student_new_sal option[value="'+reply[key].salutation+'"]').attr('selected', 'selected');
+								$('#input_student_new_bd').val(reply[key].birthday);
+								$('#input_student_new_age').val(reply[key].age);
+								$('#input_student_new_citizenship option[value="'+reply[key].citizenship+'"]').attr('selected', 'selected');
+								$('#input_student_new_nationality option[value="'+reply[key].nationality+'"]').attr('selected', 'selected');
+								$('#input_student_new_race option[value="'+reply[key].race+'"]').attr('selected', 'selected');
+								$('#input_student_new_cnlevel option[value="'+reply[key].cn_level+'"]').attr('selected', 'selected');
+								$('#input_student_new_edulevel option[value="'+reply[key].edu_level+'"]').attr('selected', 'selected');
+								$('#input_student_new_lang option[value="'+reply[key].lang+'"]').attr('selected', 'selected');
+
+								// address
+								$('#input_student_new_blk').val(reply[key].block);
+								$('#input_student_new_street').val(reply[key].street);
+								$('#input_student_new_floor_unit').val(reply[key].floor_unit_no);
+								$('#input_student_new_building').val(reply[key].building);
+								$('#input_student_new_postcode').val(reply[key].postcode);
+
+								// employment
+								$('#input_student_new_empstatus option[value="'+reply[key].emp_status+'"]').attr('selected', 'selected');
+								$('#input_student_new_comn').val(reply[key].company_name);
+								$('#input_student_new_com_type option[value="'+reply[key].company_type+'"]').attr('selected', 'selected');
+								$('#input_student_new_com_reg_no').val(reply[key].company_reg_no);
+								$('#input_student_new_industry option[value="'+reply[key].industry+'"]').attr('selected', 'selected');
+								$('#input_student_new_designation option[value="'+reply[key].designation+'"]').attr('selected', 'selected');
+								$('#input_student_new_sal_range option[value="'+reply[key].salary_range+'"]').attr('selected', 'selected');
+
+								$('#stundet-check-modal').modal('hide');
+							});
 				    	}
 				    }
 				    else {
-				    	if(ic.trim() == "") {
-				    		ic='NULL';
-				    	};
-						modalBody.append(
-							'<div class="row">' + 
-								'<div class="col-xs-4" id="student_new_ic_check_model_ic">'+ 
-									'<label>IC Number Input</label>' +
-									'<div class="form-control">' + ic + '</div>' +
-								'</div>' + 
-								'<div class="col-xs-8">' + 
-									'<label>Sorry, no related registration info found!<br>Please input valid IC number.</label>' + 
-							'</div>'
-						);
+				    	// check from registration table, insert bisic info for this new student
+				    	$.ajax({
+							type:"post",
+						    url:window.api_url + "getRegistrationByIC",
+						    data:{ic:ic},
+						    success:function(json){
+						    	var modalBody = $('#student_ic_check_modal_label').closest('.modal-content').find('.modal-body');
+						    	modalBody.children().remove();
+						    	if(json.trim() != "") {
+						    		var reply = $.parseJSON(json);
+							    	for (var key in reply) {
+								    	if (reply.hasOwnProperty(key)) {
+											modalBody.append(
+												'<div class="row">' + 
+													'Stundet had registered, please insert basic info!' + 
+												'</div>' +
+												'<div class="row">' + 
+													'<div class="col-xs-4" id="student_new_ic_check_model_ic">'+ 
+														'<label>IC Number Input</label>' +
+														'<div class="form-control">' + ic + '</div>' +
+													'</div>' + 
+													'<div class="col-xs-4">' + 
+														'<label for="student_new_ic_check_model_reg_date">注册日期</label>' + 
+														'<div class="form-control" id="student_new_ic_check_model_reg_date">' + reply[key].reg_date + '</div>' + 
+													'</div>' +
+													'<div class="col-xs-4">' +
+														'<label for="student_new_ic_check_model_reg_no">注册表号码</label>' +
+														'<div class="form-control" id="student_new_ic_check_model_reg_no">'+ reply[key].reg_no + '</div>' + 
+													'</div>' +
+												'</div>'
+											);
+								        }
+							    	}
+							    }
+							    else {
+							    	// no result found in student and registartion table
+							    	if(ic.trim() == "") {
+							    		ic='NULL';
+							    	};
+									modalBody.append(
+										'<div class="row">' + 
+											'<div class="col-xs-4" id="student_new_ic_check_model_ic">'+ 
+												'<label>IC Number Input</label>' +
+												'<div class="form-control">' + ic + '</div>' +
+											'</div>' + 
+											'<div class="col-xs-8">' + 
+												'<label>Sorry, no related registration info found!<br>Please input valid IC number.</label>' + 
+										'</div>'
+									);
+								}
+						    }
+						});//End ajax
 					}
 			    }
 			});//End ajax
+		}
+
+
+		function create_student_info() {
+			var source = $('#input_student_new_source').val();
+			var gov_letter = $('#input_student_new_gov_letter').is(':checked') ? 'YES' : 'NO';
+			var ic = $('#input_student_new_ic').val();
+			var ic_type = $('#input_student_new_ic_type').val();
+			var firstname = $('#input_student_new_fn').val();
+			var lastname = $('#input_student_new_ln').val();
+			var othername = $('#input_student_new_on').val();
+			var tel = $('#input_student_new_tel').val();
+			var tel_home = $('#input_student_new_tel_home').val();
+			var gender = $('#input_student_new_gender').val();
+			var salutation = $('#input_student_new_sal').val();
+			var birthday = $('#input_student_new_bd').val();
+			var age = $('#input_student_new_age').val();
+			var citizenship = $('#input_student_new_citizenship').val();
+			var nationality = $('#input_student_new_nationality').val();
+			var race = $('#input_student_new_race').val();
+			var cn_level = $('#input_student_new_cnlevel').val();
+			var edu_level = $('#input_student_new_edulevel').val();
+			var lang = $('#input_student_new_lang').val();
+
+			// address
+			var block = $('#input_student_new_blk').val();
+			var street = $('#input_student_new_street').val();
+			var floor_unit_no = $('#input_student_new_floor_unit').val();
+			var building = $('#input_student_new_building').val();
+			var postcode = $('#input_student_new_postcode').val();
+
+			// employment
+			var emp_status = $('#input_student_new_empstatus').val();
+			var company_name = $('#input_student_new_comn').val();
+			var company_type = $('#input_student_new_com_type').val();
+			var company_reg_no = $('#input_student_new_com_reg_no').val();
+			var industry = $('#input_student_new_industry').val();
+			var designation = $('#input_student_new_designation').val();
+			var salary_range = $('#input_student_new_sal_range').val();
 		}
 	</script>
 </head>
@@ -76,7 +207,15 @@
             	<option value="SSA">SSA</option>
 	            <option value="Link1" selected="selected">Link1</option>
     	        <option value="Changchun">Changchun</option>
-          </select>
+          	</select>
+		</div>
+		<div class="col-xs-4">
+			<br>
+			<div class="checkbox">
+		    	<label for="input_student_new_gov_letter">
+		    		<input type="checkbox" id="input_student_new_gov_letter"> 是否有政府信
+		    	</label>
+			</div>
 		</div>
 	</div><hr>
 	<div class="row">
@@ -86,17 +225,17 @@
 		</div>
 		<div class="col-xs-2">
 			<br>
-			<a class="button glow button-rounded button-flat" id="student_new_ic_check" data-toggle="modal" data-target="#admin-check-modal">Check</a>
+			<a class="button glow button-rounded button-flat" id="student_new_ic_check" data-toggle="modal" data-target="#stundet-check-modal">Check</a>
 		</div>
-		<div class="col-xs-2"></div>
+		<div class="col-xs-2">Check if this student had registered!</div>
 		<div class="col-xs-4">
 			<label for="input_student_new_ic_type">IC Type</label>
 			<select class="form-control" id="input_student_new_ic_type">
-		      <option value="0">请选择</option>
-		      <option value="1">NRIC</option>
-		      <option value="2">FIN</option>
-		      <option value="3">Passport</option>
-		      <option value="4">Workpermit</option>
+		      <option value="NA">请选择</option>
+		      <option value="NRIC">NRIC</option>
+		      <option value="FIN">FIN</option>
+		      <option value="Passport">Passport</option>
+		      <option value="Workpermit">Workpermit</option>
 		    </select>
 		</div>
 	</div>
@@ -136,11 +275,12 @@
 		<div class="col-xs-4">
 			<label for="input_student_new_sal">Salutation</label>
 			<select class="form-control" id="input_student_new_sal">
-				<option>Mr</option>
-				<option>Mrs</option>
-				<option>Ms</option>
-				<option>Miss</option>
-				<option>Dr</option>
+				<option value="NA">请选择</option>
+				<option value="Mr">Mr</option>
+				<option value="Mrs">Mrs</option>
+				<option value="Ms">Ms</option>
+				<option value="Miss">Miss</option>
+				<option value="Dr">Dr</option>
 			</select>
 		</div>
 		<div class="col-xs-4">
@@ -156,7 +296,7 @@
 		<div class="col-xs-4">
 			<label for="input_student_new_citizenship">Citizenship</label>
 			<select class="form-control" id="input_student_new_citizenship">
-				<option value="0">请选择</option>
+				<option value="NA">请选择</option>
                 <option value="SG">新加坡公民</option>
                 <option value="PR">新加坡PR</option>
                 <option value="EP">Employment pass</option>
@@ -410,23 +550,23 @@
 	            <option value="MY">Malay(马来)</option>
 	            <option value="IN">Indian(印度)</option>
 	            <option value="EU">Eurasian(欧洲)</option>
-	            <option value="XX">Other(其他)</option>
+	            <option value="Other">Other(其他)</option>
 			</select>
 		</div>
 		<div class="col-xs-4">
 			<label for="input_student_new_cnlevel">华文学历</label>
 			<select class="form-control" id="input_student_new_cnlevel">
 	            <option value="NA">请选择</option>
-	            <option value="01">No Formal Qualification &amp; Lowe</option>
-	            <option value="11">Primary PSLE</option>
-	            <option value="20">Lower Secondary</option>
-	            <option value="31">'N' Level or equivalent</option>
-	            <option value="32">'O' Level or equivalent</option>
-	            <option value="41">'A' Level or equivalent</option>
-	            <option value="70">Professional Qualification &amp; O</option>
-	            <option value="80">University First Degree</option>
-	            <option value="90">University Post-graduate Diplo</option>
-	            <option value="XX">Not Reported</option>
+	            <option value="No Formal Qualification &amp; Lowe">No Formal Qualification &amp; Lowe</option>
+	            <option value="Primary PSLE">Primary PSLE</option>
+	            <option value="Lower Secondary">Lower Secondary</option>
+	            <option value="'N' Level or equivalent">'N' Level or equivalent</option>
+	            <option value="'O' Level or equivalent">'O' Level or equivalent</option>
+	            <option value="'A' Level or equivalent">'A' Level or equivalent</option>
+	            <option value="Professional Qualification &amp; O">Professional Qualification &amp; O</option>
+	            <option value="University First Degree">University First Degree</option>
+	            <option value="University Post-graduate Diplo">University Post-graduate Diplo</option>
+	            <option value="Not Reported">Not Reported</option>
             </select>
 		</div>
 	</div>
@@ -435,29 +575,40 @@
 			<label for="input_student_new_edulevel">教育水平</label>
 				<select class="form-control" id="input_student_new_edulevel">
 	            <option value="NA">请选择</option>
-	            <option value="01">No Formal Qualification &amp; Lower Primary </option>
-	            <option value="11">Primary PSLE</option>
-	            <option value="20">Lower Secondary</option>
-	            <option value="35">ITE Skills Certification (ISC)</option>
-	            <option value="31">'N' Level or equivalent</option>
-	            <option value="32">'O' Level or equivalent</option>
-	            <option value="41">'A' Level or equivalent</option>
-	            <option value="51">NITEC/Post Nitec</option>
-	            <option value="54">WSQ Certificate</option>
-	            <option value="52">Higher NITEC</option>
-	            <option value="55">WSQ Higher Certificate</option>
-	            <option value="53">Master NITEC</option>
-	            <option value="61">Polytechnic Diploma</option>
-	            <option value="73">WSQ Advance Certificate</option>
-	            <option value="74">WSQ Diploma</option>
-	            <option value="75">WSQ Specialist Diploma</option>
-	            <option value="70">Professional Qualification &amp; Other Diploma</option>
-	            <option value="80">University First Degree</option>
-	            <option value="92">WSQ Graduate Certificate</option>
-	            <option value="93">WSQ Graduate Diploma</option>
-	            <option value="90">University Post-graduate Diploma &amp; Degree/Master/Doctorate</option>
-	            <option value="XX">Not Reported</option>
+	            <option value="No Formal Qualification &amp; Lower Primary">No Formal Qualification &amp; Lower Primary </option>
+	            <option value="Primary PSLE">Primary PSLE</option>
+	            <option value="Lower Secondary">Lower Secondary</option>
+	            <option value="ITE Skills Certification (ISC)">ITE Skills Certification (ISC)</option>
+	            <option value="'N' Level or equivalent">'N' Level or equivalent</option>
+	            <option value="'O' Level or equivalent">'O' Level or equivalent</option>
+	            <option value="'A' Level or equivalent">'A' Level or equivalent</option>
+	            <option value="NITEC/Post Nitec">NITEC/Post Nitec</option>
+	            <option value="WSQ Certificate">WSQ Certificate</option>
+	            <option value="Higher NITEC">Higher NITEC</option>
+	            <option value="WSQ Higher Certificate">WSQ Higher Certificate</option>
+	            <option value="Master NITEC">Master NITEC</option>
+	            <option value="Polytechnic Diploma">Polytechnic Diploma</option>
+	            <option value="WSQ Advance Certificate">WSQ Advance Certificate</option>
+	            <option value="WSQ Diploma">WSQ Diploma</option>
+	            <option value="WSQ Specialist Diploma">WSQ Specialist Diploma</option>
+	            <option value="Professional Qualification &amp; Other Diploma">Professional Qualification &amp; Other Diploma</option>
+	            <option value="University First Degree">University First Degree</option>
+	            <option value="WSQ Graduate Certificate">WSQ Graduate Certificate</option>
+	            <option value="WSQ Graduate Diploma">WSQ Graduate Diploma</option>
+	            <option value="University Post-graduate Diploma &amp; Degree/Master/Doctorate">University Post-graduate Diploma &amp; Degree/Master/Doctorate</option>
+	            <option value="Not Reported">Not Reported</option>
 			</select>
+		</div>
+		<div class="col-xs-4">
+			<label for="input_student_new_lang">使用语言</label>
+			<select class="form-control" id="input_student_new_lang">
+	            <option value="NA">请选择</option>
+	            <option value="Chinese">Chinese(中文)</option>
+	            <option value="English">English(英语)</option>
+	            <option value="Malay">Malay(马来语)</option>
+	            <option value="Tamil">Tamil(泰米尔语)</option>
+	            <option value="Others">Others(其他)</option>
+            </select>
 		</div>
 	</div>
 	<h4>住址信息</h4><hr>
@@ -500,13 +651,13 @@
 			<input class="form-control" id="input_student_new_comn" value="NA">
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_com_status">公司注册类型</label>
-			<select class="form-control" id="input_student_new_com_status">
+			<label for="input_student_new_com_type">公司注册类型</label>
+			<select class="form-control" id="input_student_new_com_type">
                 <option value="NA">请选择</option>
                 <option value="ROC">Registry of Company</option>
                 <option value="ROB">Registry of Business</option>
                 <option value="UENO">Other Unique Establishments (UENO)</option>
-                <option value="OTHERS" selected="selected">Others - None of the Above</option>
+                <option value="OTHERS">Others - None of the Above</option>
 	          </select>
 		</div>
 	</div>
@@ -519,51 +670,52 @@
 			<label for="input_student_new_industry">行业</label>
 			<select class="form-control" id="input_student_new_industry">
                 <option value="NA">请选择</option>
-                <option value="1">Others</option>
-                <option value="2">Aerospace</option>
-                <option value="3">Bio-Medical Sciences</option>
-                <option value="4">Business Process Outsourcing</option>
-                <option value="5">Chemicals</option>
-                <option value="6">Creative</option>
-                <option value="7">Construction</option>
-                <option value="8">Electronics</option>
-                <option value="9">Environment</option>
-                <option value="10">Finance</option>
-                <option value="11">Food Mfg &amp; Processing</option>
-                <option value="12">Government / Public Services</option>
-                <option value="13">Healthcare</option>
-                <option value="14">Horticulture</option>
-                <option value="15">Hospitality</option>
-                <option value="16">Infocomm Technology</option>
-                <option value="17">Logistics and Transportation</option>
-                <option value="18">Marine</option>
-                <option value="19">Maritime</option>
-                <option value="20">Precision ?Engineering</option>
-                <option value="21">Printing</option>
-                <option value="22">Professional Services</option>
-                <option value="23">Process</option>
-                <option value="24">Repair and Servicing</option>
-                <option value="25">Retail</option>
-                <option value="26">Security</option>
-                <option value="27">Social &amp; Community Services</option>
-                <option value="28">Sports and Recreation</option>
-                <option value="29">Textile</option>
+                <option value="Aerospace">Aerospace</option>
+                <option value="Bio-Medical Sciences">Bio-Medical Sciences</option>
+                <option value="Business Process Outsourcing">Business Process Outsourcing</option>
+                <option value="Chemicals">Chemicals</option>
+                <option value="Creative">Creative</option>
+                <option value="Construction">Construction</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Environment">Environment</option>
+                <option value="Finance">Finance</option>
+                <option value="Food Mfg &amp; Processing">Food Mfg &amp; Processing</option>
+                <option value="Government / Public Services">Government / Public Services</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Horticulture">Horticulture</option>
+                <option value="Hospitality">Hospitality</option>
+                <option value="Infocomm Technology">Infocomm Technology</option>
+                <option value="Logistics and Transportation">Logistics and Transportation</option>
+                <option value="Marine">Marine</option>
+                <option value="Maritime">Maritime</option>
+                <option value="Precision ?Engineering">Precision ?Engineering</option>
+                <option value="Printing">Printing</option>
+                <option value="Professional Services">Professional Services</option>
+                <option value="Process">Process</option>
+                <option value="Repair and Servicing">Repair and Servicing</option>
+                <option value="Retail">Retail</option>
+                <option value="Security">Security</option>
+                <option value="Social &amp; Community Services">Social &amp; Community Services</option>
+                <option value="Sports and Recreation">Sports and Recreation</option>
+                <option value="Textile">Textile</option>
+                <option value="Others">Others</option>
             </select>
 		</div>
 		<div class="col-xs-4">
 			<label for="input_student_new_designation">职称</label>
 			<select class="form-control" id="input_student_new_designation">
                 <option value="NA">请选择</option>
-                <option value="1">Legislators, Senior Officials and Mangers</option>
-                <option value="2">Professionals</option>
-                <option value="3">Associate Professionals and Technicians</option>
-                <option value="4">Clerical Workers</option>
-                <option value="5">Service Works and Shop and Market Sales Workers</option>
-                <option value="6">Agricultural and Fishery Workers</option>
-                <option value="7">Production Craftsmen &amp; Related Workers</option>
-                <option value="8">Plan and Machine Operators and Assemblers</option>
-                <option value="9">Cleaners, Laborers and Related Workers</option>
-                <option value="10">Workers not classified by Occupation</option>
+                <option value="Legislators, Senior Officials and Mangers">Legislators, Senior Officials and Mangers</option>
+                <option value="Professionals">Professionals</option>
+                <option value="Associate Professionals and Technicians">Associate Professionals and Technicians</option>
+                <option value="Clerical Workers">Clerical Workers</option>
+                <option value="Service Works and Shop and Market Sales Workers">Service Works and Shop and Market Sales Workers</option>
+                <option value="Agricultural and Fishery Workers">Agricultural and Fishery Workers</option>
+                <option value="Production Craftsmen &amp; Related Workers">Production Craftsmen &amp; Related Workers</option>
+                <option value="Plan and Machine Operators and Assemblers">Plan and Machine Operators and Assemblers</option>
+                <option value="Cleaners, Laborers and Related Workers">Cleaners, Laborers and Related Workers</option>
+                <option value="Workers not classified by Occupation">Workers not classified by Occupation</option>
+                <option value="Others">Others</option>
             </select>
 		</div>
 	</div>
@@ -572,26 +724,15 @@
 			<label for="input_student_new_sal_range">薪水范围</label>
 			<select class="form-control" id="input_student_new_sal_range">
                 <option value="NA">请选择</option>
-                <option value="00">Unemployed</option>
-                <option value="01">Below $1,000</option>
-                <option value="02">$1,000 - $1,400</option>
-                <option value="03a">$1,401 - $1,700</option>
-                <option value="03b">$1,701 - $2,000</option>
-                <option value="04">$2,000 - $2,499</option>
-                <option value="05">$2,500 - $2,999</option>
-                <option value="06">$3,000 - $3,499</option>
-                <option value="07">$3,500 and above</option>
-            </select>
-		</div>
-		<div class="col-xs-4">
-			<label for="input_student_new_lang">使用语言</label>
-			<select class="form-control" id="input_student_new_lang">
-	            <option value="NA">请选择</option>
-	            <option value="Chinese">Chinese(中文)</option>
-	            <option value="English">English(英语)</option>
-	            <option value="Malay">Malay(马来语)</option>
-	            <option value="Tamil">Tamil(泰米尔语)</option>
-	            <option value="O">Others(其他)</option>
+                <option value="Unemployed">Unemployed</option>
+                <option value="Below $1,000">Below $1,000</option>
+                <option value="$1,000 - $1,400">$1,000 - $1,400</option>
+                <option value="$1,401 - $1,700">$1,401 - $1,700</option>
+                <option value="$1,701 - $2,000">$1,701 - $2,000</option>
+                <option value="$2,000 - $2,499">$2,000 - $2,499</option>
+                <option value="$2,500 - $2,999">$2,500 - $2,999</option>
+                <option value="$3,000 - $3,499">$3,000 - $3,499</option>
+                <option value="$3,500 and above">$3,500 and above</option>
             </select>
 		</div>
 	</div>
@@ -607,7 +748,7 @@
 
 
 <!-- Student New IC Check Modal -->
-<div class="modal fade" id="admin-check-modal" tabindex="-1" role="dialog" aria-labelledby="student_ic_check_modal_label" aria-hidden="true">
+<div class="modal fade" id="stundet-check-modal" tabindex="-1" role="dialog" aria-labelledby="student_ic_check_modal_label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

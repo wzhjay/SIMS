@@ -303,4 +303,16 @@ class Api extends CI_Controller
 		}
 		echo NULL;
 	}
+
+	/**
+	 *  get student basic info by givening ic
+	 */
+	function getStundentByIC() {
+		$ic = $this->input->post('ic');
+		$student = $this->apis->get_student_info_by_ic($ic);
+		if($student != NULL) {
+			echo json_encode($student);
+		}
+		echo NULL;
+	}
 }

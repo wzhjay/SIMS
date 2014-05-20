@@ -243,7 +243,7 @@
 										'<div class="col-xs-4"></div>' +
 										'<div class="col-xs-2">' +
 											'<br>' +
-											'<a class="button glow button-rounded button-flat" id="student_ato_ic_check_model_update_' + reply[key].id + '">Update</a>' + 
+											'<a class="button glow button-rounded button-flat" id="student_ato_ic_check_modal_update_' + reply[key].id + '">Update</a>' + 
 										'</div>' +
 									'</div>' +
 									'<hr>'
@@ -301,12 +301,12 @@
 								$('#input_ato_exam_date').val(reply[key].exam_date);
 								$('#input_ato_remark').val(reply[key].remark);
 
-								$('#input_ato_pre_post option[value='+reply[key].pre_post+']').attr('selected', 'selected');
-								$('#input_ato_recommend_level option[value='+reply[key].recommend_level+']').attr('selected', 'selected');
-								$('#input_ato_exam_location option[value='+reply[key].exam_location+']').attr('selected', 'selected');
-								$('#input_ato_exam_time option[value='+reply[key].exam_time+']').attr('selected', 'selected');
-								$('#input_ato_branch option[id=ato_branch_'+reply[key].branch_id+']').attr('selected', 'selected');
-								$('#input_ato_op option[id=ato_user_'+reply[key].branch_op_id+']').attr('selected', 'selected');
+								$('#input_ato_pre_post option[value="'+reply[key].pre_post+'"]').attr('selected', 'selected');
+								$('#input_ato_recommend_level option[value="'+reply[key].recommend_level+'"]').attr('selected', 'selected');
+								$('#input_ato_exam_location option[value="'+reply[key].exam_location+'"]').attr('selected', 'selected');
+								$('#input_ato_exam_time option[value="'+reply[key].exam_time+'"]').attr('selected', 'selected');
+								$('#input_ato_branch option[id="ato_branch_'+reply[key].branch_id+'"]').attr('selected', 'selected');
+								$('#input_ato_op option[id="ato_user_'+reply[key].branch_op_id+'"]').attr('selected', 'selected');
 			            	}
 			            }
 			        }else{
