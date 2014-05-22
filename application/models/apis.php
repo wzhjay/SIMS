@@ -335,4 +335,18 @@ class Apis extends CI_Model
 		}
 		return NULL;
 	}
+
+	/**
+	 * search students by ic number(equal, one result), from table registration, student
+	 *
+	 * @param	key word (ic)
+	 * @return	array or NULL
+	 */
+	function search_students_by_ic($ic) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT *  FROM registration r, student s WHERE (r.ic = s.ic) AND (s.ic = "'.$ic.'") ORDER BY -DATE(r.reg_date)');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;	
+	}
 }

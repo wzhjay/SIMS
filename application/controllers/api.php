@@ -410,6 +410,9 @@ class Api extends CI_Controller
 		else echo 0;
 	}
 
+	/**
+	 *  update new student record id
+	 */
 	function getStudentRecordID() {
 		$id = $this->input->post('id');
 		$record = $this->apis->get_student_record_by_id($id);
@@ -417,5 +420,17 @@ class Api extends CI_Controller
 			echo json_encode($record);
 		}
 		echo NULL;	
+	}
+
+	/**
+	 *  search student info by ic
+	 */
+	function searchStudentInfo() {
+		$ic = $this->input->post('ic');
+		$students = $this->apis->search_students_by_ic($ic);
+		if($students != NULL) {
+			echo json_encode($students);
+		}
+		echo NULL;
 	}
 }
