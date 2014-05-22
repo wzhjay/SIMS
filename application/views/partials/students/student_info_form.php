@@ -12,6 +12,14 @@
 			$('#student_new_ic_check').on('click', function() {
 				check_student_ic();
 			});
+
+			$('#student_new_create').on('click', function() {
+
+			});
+
+			$('#student_new_update').on('click', function() {
+				
+			});
 		});
 
 		function check_student_ic() {
@@ -20,7 +28,7 @@
 			// check if student bisic info exist, can update basic indo for this student
 			$.ajax({
 				type:"post",
-			    url:window.api_url + "getStundentByIC",
+			    url:window.api_url + "getStudentByIC",
 			    data:{ic:ic},
 			    success:function(json){
 			    	var modalBody = $('#student_ic_check_modal_label').closest('.modal-content').find('.modal-body');
@@ -44,7 +52,7 @@
 										'</div>' +
 										'<div class="col-xs-3">' +
 											'<label for="student_new_ic_check_model_student_tel">Tel</label>' +
-											'<div class="form-control" id="student_new_ic_check_model_reg_no">'+ reply[key].tel + '</div>' + 
+											'<div class="form-control" id="student_new_ic_check_model_student_tel">'+ reply[key].tel + '</div>' + 
 										'</div>' +
 										'<div class="col-xs-2">' +
 											'<br>' +
@@ -146,7 +154,8 @@
 												'<div class="form-control">' + ic + '</div>' +
 											'</div>' + 
 											'<div class="col-xs-8">' + 
-												'<label>Sorry, no related registration info found!<br>Please input valid IC number.</label>' + 
+												'<label>Sorry, no related registration info found!<br>Please input valid IC number or register fisrt.</label>' + 
+											'</div>' + 
 										'</div>'
 									);
 								}
@@ -739,9 +748,12 @@
 </form>
 <hr>
 <div class="row">
-	<div class="col-xs-10"></div>
+	<div class="col-xs-8"></div>
 	<div class="col-xs-2">
-		<a class="button glow button-rounded button-flat" id="student_new_submit">Submit</a>
+		<a class="button glow button-rounded button-flat" id="student_new_create">Create</a>
+	</div>
+	<div class="col-xs-2">
+		<a class="button glow button-rounded button-flat" id="student_new_update">Update</a>
 	</div>
 </div>
 </div>

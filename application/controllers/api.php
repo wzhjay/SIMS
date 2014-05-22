@@ -307,12 +307,74 @@ class Api extends CI_Controller
 	/**
 	 *  get student basic info by givening ic
 	 */
-	function getStundentByIC() {
+	function getStudentByIC() {
 		$ic = $this->input->post('ic');
 		$student = $this->apis->get_student_info_by_ic($ic);
 		if($student != NULL) {
 			echo json_encode($student);
 		}
 		echo NULL;
+	}
+
+	/**
+	 *  get student records info by givening ic
+	 */
+	function getStudentRecordsByIC() {
+		$ic = $this->input->post('ic');
+		$records = $this->apis->get_student_records_by_ic($ic);
+		if($records != NULL) {
+			echo json_encode($records);
+		}
+		echo NULL;
+	}
+
+	/**
+	 *  create new student exam record
+	 */
+	function createStudentExamRecord() {
+		$ic = $this->input->post('ic').trim(" ");
+		$exam_date = $this->input->post('exam_date');
+		$er = $this->input->post('er');
+		$el = $this->input->post('el');
+		$es = $this->input->post('es');
+		$ew = $this->input->post('ew');
+		$en = $this->input->post('en');
+		$cmp = $this->input->post('cmp');
+		$con = $this->input->post('con');
+		$wri = $this->input->post('wri');
+		$wpn = $this->input->post('wpn');
+		$branch_id = $this->input->post('branch_id');
+		$branch_op_id = $this->input->post('branch_op_id');
+		$remark = $this->input->post('remark');
+		
+		// create
+		$create = $this->apis->create_new_student_exam_record(
+			$ic,
+			$exam_date,
+			$er,
+			$el, 
+			$es, 
+			$ew, 
+			$en, 
+			$cmp, 
+			$con, 
+			$wri, 
+			$wpn, 
+			$branch_id, 
+			$branch_op_id, 
+			$remark);
+		if($create) {
+			echo 1;
+		}
+		else echo 0;
+	}
+
+	function getStudentRecordID() {
+		$id = $this->input->post('id');
+		$record = $this->apis->get_student_record_by_id($id);
+		if($record != NULL) {
+			echo json_encode($record);
+		}
+		echo NULL;	
 	}
 }

@@ -280,4 +280,45 @@ class Apis extends CI_Model
 		}
 		return NULL;
 	}
+
+	/**
+	 * get student records from student_record table, by given ic number
+	 *
+	 * @param	ic
+	 * @return	array or NULL
+	 */
+	function get_student_records_by_ic($ic) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM student_record WHERE student_ic = "'.$ic.'" ORDER BY id');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
+	 * create new student records, insert into student_record table
+	 * @param	$ic, $exam_date, $er, $el, $es, $ew, $en, $cmp, $con, $wri, $wpn, $branch_id, $branch_op_id, $remark
+	 * @return	bool
+	 */
+	function create_new_student_exam_record($ic, $exam_date, $er, $el, $es, $ew, $en, $cmp, $con, $wri, $wpn, $branch_id, $branch_op_id, $remark) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('INSERT INTO student_record (student_ic, exam_date, el_best, er_best,  en_best, es_best, ew_best, cmp, con, wri, wpn, branch_id, branch_op_id, created, modified, remark) VALUES ("'.$ic.'", "'.$exam_date.'", "'.$el.'", "'.$er.'", "'.$en.'", "'.$es.'", "'.$ew.'", "'.$cmp.'", "'.$con.'", "'.$wri.'", "'.$wpn.'", "'.$branch_id.'", "'.$branch_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$remark.'")');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FLASE;
+	}
+
+	/**
+	 * get record info by id
+	 *
+	 * @param	id
+	 * @return	array or NULL
+	 */
+	function get_student_record_by_id($id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM student_record WHERE id = "'.$id.'"');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
 }
