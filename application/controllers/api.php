@@ -369,6 +369,47 @@ class Api extends CI_Controller
 		else echo 0;
 	}
 
+	/**
+	 *  update new student exam record
+	 */
+	function updateStudentExamRecord() {
+		$id = $this->input->post('id');
+		$exam_date = $this->input->post('exam_date');
+		$er = $this->input->post('er');
+		$el = $this->input->post('el');
+		$es = $this->input->post('es');
+		$ew = $this->input->post('ew');
+		$en = $this->input->post('en');
+		$cmp = $this->input->post('cmp');
+		$con = $this->input->post('con');
+		$wri = $this->input->post('wri');
+		$wpn = $this->input->post('wpn');
+		$branch_id = $this->input->post('branch_id');
+		$branch_op_id = $this->input->post('branch_op_id');
+		$remark = $this->input->post('remark');
+		
+		// update
+		$update = $this->apis->update_student_exam_record(
+			$id,
+			$exam_date,
+			$er,
+			$el, 
+			$es, 
+			$ew, 
+			$en, 
+			$cmp, 
+			$con, 
+			$wri, 
+			$wpn, 
+			$branch_id, 
+			$branch_op_id, 
+			$remark);
+		if($update) {
+			echo 2;
+		}
+		else echo 0;
+	}
+
 	function getStudentRecordID() {
 		$id = $this->input->post('id');
 		$record = $this->apis->get_student_record_by_id($id);

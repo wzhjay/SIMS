@@ -2,7 +2,7 @@
 	<meta charset="utf-8">
 
 	<script>
-		var update_selected_id = 0;
+		var update_selected_ato_id = 0;
 		$(document).ready(function($) {
 			$('#input_ato_class_start_date').datepicker({
 				format: 'yyyy-mm-dd'
@@ -22,7 +22,7 @@
 			});
 
 			$('#ato_update_submit').on('click', function() {
-				update_ato_info(update_selected_id);
+				update_ato_info(update_selected_ato_id);
 			});
 
 			$('#student_ato_ic_check').on('click', function() {
@@ -253,7 +253,7 @@
 				    	$('#student-ato-modal a').on('click', function() {
 							var el_id = $(this).attr('id').split('_');
 							var ato_id = el_id[6];
-							update_selected_id = ato_id;	// assign global var for late update submit
+							update_selected_ato_id = ato_id;	// assign global var for late update submit
 
 							load_ato_info(ato_id);
 							$('#student-ato-modal').modal('hide');

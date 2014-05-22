@@ -7,6 +7,7 @@
 	<meta charset="utf-8">
 
 	<script>
+		var update_selected_record_id = 0;
 		$(document).ready(function($) {
 			$('#input_student_exam_record_time').datepicker({
 				format: 'yyyy-mm-dd'
@@ -20,12 +21,12 @@
 			});
 
 			$('#student_exam_record_update').on('click', function() {
-				
+				update_student_exam_record(update_selected_record_id);
 			});
 
 			$('#student_exam_ic_check').on('click', function() {
 				student_exam_record_check_student_by_ic();
-			})
+			});
 		});
 
 		function create_student_exam_record() {
@@ -74,10 +75,55 @@
 			});//End ajax
 		}
 
-		function clear_student_exam_form() {
-			var ic = $('#input_student_exam_record_ic').val();
+		function update_student_exam_record(record_id) {
 			var exam_date = $('#input_student_exam_record_time').val();
+			var er = $('#input_student_exam_record_er').val();
+			var el = $('#input_student_exam_record_el').val();
+			var es = $('#input_student_exam_record_es').val();
+			var ew = $('#input_student_exam_record_ew').val();
+			var en = $('#input_student_exam_record_en').val();
+			var cmp = $('#input_student_level_cmp').val();
+			var con = $('#input_student_level_con').val();
+			var wri = $('#input_student_level_wri').val();
+			var wpn = $('#input_student_level_wpn').val();
+			var branch = $('#input_student_exam_record_branch option:selected').attr('id').split('_');
+			var branch_id = branch[2];
+			var branch_op = $('#input_student_exam_record_op option:selected').attr('id').split('_');
+			var branch_op_id = branch_op[2];
 			var remark = $('#input_student_exam_record_remark').val();
+
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "updateStudentExamRecord",
+			    data:{	id:record_id,
+			    		exam_date:exam_date, 
+			    		er:er, 
+			    		el:el, 
+			    		es:es, 
+			    		ew:ew, 
+			    		en:en,
+			    		cmp:cmp,
+			    		con:con,
+			    		wri:wri,
+			    		wpn:wpn,
+			    		branch_id:branch_id,
+			    		branch_op_id:branch_op_id,
+			    		remark:remark},
+			    success:function(json){
+			    	if(json.trim() == '2') {
+					    alert("update record success!");
+					    clear_student_exam_form();
+					}else{
+						alert("fail to update record");
+					}
+			    }
+			});//End ajax
+		}
+
+		function clear_student_exam_form() {
+			var ic = $('#input_student_exam_record_ic').val('');
+			var exam_date = $('#input_student_exam_record_time').val('');
+			var remark = $('#input_student_exam_record_remark').val('');
 			$('#input_student_exam_record_er option[value="NA"]').attr('selected', 'selected');
 			$('#input_student_exam_record_el option[value="NA"]').attr('selected', 'selected');
 			$('#input_student_exam_record_es option[value="NA"]').attr('selected', 'selected');
@@ -228,6 +274,7 @@
 					        $('#student-exam-record-modal a').on('click', function() {
 								var el_id = $(this).attr('id').split('_');
 								var record_id = el_id[6];
+								update_selected_record_id = record_id;	// assign global var for late update submit
 
 								load_exam_record(record_id);
 
