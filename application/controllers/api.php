@@ -433,4 +433,17 @@ class Api extends CI_Controller
 		}
 		echo NULL;
 	}
+
+	/**
+	 *  search ato info by time
+	 */
+	function searchATOInfo() {
+		$from = $this->input->post('from');
+		$to = $this->input->post('to');
+		$atos = $this->apis->search_atos_by_time($from, $to);
+		if($atos != NULL) {
+			echo json_encode($atos);
+		}
+		echo NULL;
+	}
 }

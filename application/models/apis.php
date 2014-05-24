@@ -347,6 +347,20 @@ class Apis extends CI_Model
 			$query = $this->db->query('SELECT *  FROM registration r, student s WHERE (r.ic = s.ic) AND (s.ic = "'.$ic.'") ORDER BY -DATE(r.reg_date)');
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
+		return NULL;
+	}
+
+	/**
+	 * search ato info by time
+	 *
+	 * @param	from, to
+	 * @return	array or NULL
+	 */
+	function search_atos_by_time($from, $to) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT *  FROM ato a, student s WHERE (a.ic = s.ic) AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") ORDER BY -DATE(a.exam_date)');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
 		return NULL;	
 	}
 }
