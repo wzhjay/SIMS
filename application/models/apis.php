@@ -363,4 +363,29 @@ class Apis extends CI_Model
 		}
 		return NULL;	
 	}
+
+	/**
+	 * search ato info by time
+	 *
+	 * @param	$code, $type, $level, $status, $start_from, $start_to, $end_from, $end_to
+	 * @return	array or NULL
+	 */
+	function search_class_by_multiple_var($code, $type, $level, $status, $branch_id, $start_from, $start_to, $end_from, $end_to) {
+		if($this->session->userdata('session_id')) {
+			if($code == 'NA') { $code == "";}
+			if($type == 'NA') { $type == "";}
+			if($level == 'NA') { $level == "";}
+			if($status == 'NA') { $status == "";}
+
+			if($branch_id == 'ALL') {
+				$query1 = $this->db->query('SELECT *  FROM class c WHERE (c.code LIKE '%".$code."%') AND (c.type LIKE '%".$type."%') AND (c.level LIKE '%".$level."%') AND (c.status LIKE '%".$status."%') AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.start_date)');
+				if ($query1->num_rows() > 0) return $query1->result_array();
+			}
+			else {
+				$query2 = $this->db->query('SELECT *  FROM class c WHERE (c.branch_id == "'.$branch_id.'") AND (c.code LIKE '%".$code."%') AND (c.type LIKE '%".$type."%') AND (c.level LIKE '%".$level."%') AND (c.status LIKE '%".$status."%') AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.start_date)');
+				if ($query2->num_rows() > 0) return $query2->result_array();
+			}
+		}
+		return NULL;
+	}
 }

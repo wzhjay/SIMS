@@ -10,7 +10,31 @@
 			$('#input_class_end_date').datepicker({
 				format: 'yyyy-mm-dd'
 			});
+
+			class_load_branches();
 		});
+
+		function class_load_branches() {
+			var branches = $('#input_class_branch');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getAllBranches",
+			    data:{},
+			    success:function(json){
+			    	branches.children().remove();
+			    	if(json != null) {
+			    		var reply = $.parseJSON(json);
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			    				branches.append('<option id="class_new_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+			    			}
+			    		}
+			        }else{
+			        	alert("fail to load braches");
+			        }
+			    }
+			});//End ajax
+		}
 	</script>
 </head>
 <div class="highlight">
@@ -23,6 +47,11 @@
 		<div class="col-xs-2">
 			<br>
 			<a class="button glow button-rounded button-flat" id="class_class_code_check" data-toggle="modal" data-target="#class-new-modal">Check</a>
+		</div>
+		<div class="col-xs-2"></div>
+		<div class="col-xs-4">
+			<label for="input_class_branch">Branch</label>
+			<select class="form-control" id="input_class_branch"></select>
 		</div>
 	</div>
 	<div class="row">

@@ -446,4 +446,25 @@ class Api extends CI_Controller
 		}
 		echo NULL;
 	}
+
+	/**
+	 *  search class info by multiple variables
+	 */
+	function searchClassInfo() {
+		$code = $this->input->post('code');
+		$type = $this->input->post('type');
+		$level = $this->input->post('level');
+		$status = $this->input->post('status');
+		$branch_id = $this->input->post('branch_id');
+		$start_from = $this->input->post('start_from');
+		$start_to = $this->input->post('start_to');
+		$end_from = $this->input->post('end_from');
+		$end_to = $this->input->post('end_to');
+		$atos = $this->apis->search_class_by_multiple_var($code, $type, $level, $status, $branch_id, $start_from, $start_to, $end_from, $end_to);
+		
+		if($results != NULL) {
+			echo json_encode($results);
+		}
+		echo NULL;
+	}
 }
