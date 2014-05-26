@@ -103,7 +103,7 @@
 											'<div class="panel panel-default">' + 
 												'<div class="panel-heading">' +
 													'<h4 class="panel-title">' +
-														'<a data-toggle="collapse" data-parent="class_search_collapse_'+key+'" href="#class_search_collapse_body_'+key+'">Search Class ' + num + '  /  Class Name: ' + reply[key].class_name + '  /  Class Code: ' + reply[key].code + '</a>' + 
+														'<a data-toggle="collapse" data-parent="class_search_collapse_'+key+'" href="#class_search_collapse_body_'+key+'">Class ' + num + '  /  Class Name: <b>' + reply[key].class_name + '</b>  /  Class Code: <b>' + reply[key].code + '</b>  /  Class Status: <b>' + reply[key].status + '</b></a>' +
 													' </h4>' +
 												'</div>' +
 												'<div id="class_search_collapse_body_'+key+'" class="panel-collapse collapse in">' + 
@@ -117,9 +117,6 @@
 														'</div>' +
 														'<div class="col-xs-3">' +
 															'<div>Location ' + reply[key].location + '</div>' + 
-														'</div>' +
-														'<div class="col-xs-3">' +
-															'<div>Status: '+ reply[key].status + '</div>' + 
 														'</div>' +
 													'</div>' +
 													'<div class="row">' + 

@@ -575,4 +575,15 @@ class Api extends CI_Controller
 		}
 		else echo 0;
 	}
+
+	/**
+	 *  get all class info
+	 */
+	function getAllClassInfo() {
+		$classes = $this->apis->get_all_class_info();
+		if($classes != NULL) {
+			echo json_encode($classes);
+		}
+		echo NULL;
+	}
 }

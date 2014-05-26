@@ -30,6 +30,8 @@
 			  		<h3>查询班级信息</h3><hr>
 					<?php $this->load->view('partials/classes/class_search_form') ?>
 					<br><br>
+					<h3>所有班级</h3><hr>
+					<?php $this->load->view('partials/classes/class_all_class_form') ?>
 				</div>
 			  	<div class="tab-pane fade" id="tab-2">
 			  	

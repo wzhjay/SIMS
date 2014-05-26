@@ -378,11 +378,11 @@ class Apis extends CI_Model
 			if($status == 'NA') { $status = "";}
 
 			if($branch_id == 'ALL') {
-				$query1 = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.start_date)');
+				$query1 = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.created)');
 				if ($query1->num_rows() > 0) return $query1->result_array();
 			}
 			else {
-				$query2 = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.branch_id = "'.$branch_id.'") AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.start_date)');
+				$query2 = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.branch_id = "'.$branch_id.'") AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.created)');
 				if ($query2->num_rows() > 0) return $query2->result_array();
 			}
 		}
@@ -440,6 +440,20 @@ class Apis extends CI_Model
 	function get_class_info_by_id($class_id) {
 		if($this->session->userdata('session_id')) {
 			$query = $this->db->query('SELECT *  FROM class c WHERE (c.class_id = "'.$class_id.'")');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
+	 * get all class info from class and branch table
+	 *
+	 * @param	null
+	 * @return	array or NULL
+	 */
+	function get_all_class_info() {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) ORDER BY c.created');
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
