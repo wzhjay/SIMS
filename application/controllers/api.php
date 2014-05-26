@@ -467,4 +467,112 @@ class Api extends CI_Controller
 		}
 		echo NULL;
 	}
+
+	/**
+	 *  create new class
+	 */
+	function createNewClass() {
+		$code = $this->input->post('code').trim(" ");
+		$class_name = $this->input->post('class_name');
+		$branch_id = $this->input->post('branch_id');
+		$type = $this->input->post('type');
+		$level = $this->input->post('level');
+		$status = $this->input->post('status');
+		$location = $this->input->post('location');
+		$start_date = $this->input->post('start_date');
+		$end_date = $this->input->post('end_date');
+		$start_time = $this->input->post('start_time');
+		$end_time = $this->input->post('end_time');
+		$teacher_name = $this->input->post('teacher_name');
+		$teacher_tel = $this->input->post('teacher_tel');
+		$remark = $this->input->post('remark');
+		
+		// create
+		$create = $this->apis->create_new_class(
+			$code,
+			$class_name,
+			$branch_id,
+			$type,
+			$level, 
+			$status, 
+			$location, 
+			$start_date, 
+			$end_date, 
+			$start_time, 
+			$end_time, 
+			$teacher_name, 
+			$teacher_tel, 
+			$remark);
+		if($create) {
+			echo 1;
+		}
+		else echo 0;
+	}
+
+	/**
+	 *  get class info by code
+	 */
+	function getClassInfoByCode() {
+		$code = $this->input->post('code');
+		$classes = $this->apis->get_class_info_by_code($code);
+		if($classes != NULL) {
+			echo json_encode($classes);
+		}
+		echo NULL;
+	}
+
+	/**
+	 *  get class info by class_id, for update
+	 */
+	function getClassInfoByID() {
+		$class_id = $this->input->post('class_id');
+		$class = $this->apis->get_class_info_by_id($class_id);
+		if($class != NULL) {
+			echo json_encode($class);
+		}
+		echo NULL;
+	}
+
+	/**
+	 *  update class info by class_id
+	 */
+	function updateClassByID() {
+		$class_id = $this->input->post('class_id');
+		$code = $this->input->post('code').trim(" ");
+		$class_name = $this->input->post('class_name');
+		$branch_id = $this->input->post('branch_id');
+		$type = $this->input->post('type');
+		$level = $this->input->post('level');
+		$status = $this->input->post('status');
+		$location = $this->input->post('location');
+		$start_date = $this->input->post('start_date');
+		$end_date = $this->input->post('end_date');
+		$start_time = $this->input->post('start_time');
+		$end_time = $this->input->post('end_time');
+		$teacher_name = $this->input->post('teacher_name');
+		$teacher_tel = $this->input->post('teacher_tel');
+		$remark = $this->input->post('remark');
+		
+		// update
+		$update = $this->apis->update_class_by_id(
+			$class_id,
+			$code,
+			$class_name,
+			$branch_id,
+			$type,
+			$level, 
+			$status, 
+			$location, 
+			$start_date, 
+			$end_date, 
+			$start_time, 
+			$end_time, 
+			$teacher_name, 
+			$teacher_tel, 
+			$remark);
+		if($update) {
+			echo 2;
+		}
+		else echo 0;
+	}
 }

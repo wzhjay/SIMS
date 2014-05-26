@@ -382,9 +382,65 @@ class Apis extends CI_Model
 				if ($query1->num_rows() > 0) return $query1->result_array();
 			}
 			else {
-				$query2 = $this->db->query('SELECT *  FROM class c WHERE (c.branch_id == "'.$branch_id.'") AND (c.code LIKE '%".$code."%') AND (c.type LIKE '%".$type."%') AND (c.level LIKE '%".$level."%') AND (c.status LIKE '%".$status."%') AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.start_date)');
+				$query2 = $this->db->query('SELECT *  FROM class c WHERE (c.branch_id = "'.$branch_id.'") AND (c.code LIKE '%".$code."%') AND (c.type LIKE '%".$type."%') AND (c.level LIKE '%".$level."%') AND (c.status LIKE '%".$status."%') AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.start_date)');
 				if ($query2->num_rows() > 0) return $query2->result_array();
 			}
+		}
+		return NULL;
+	}
+
+	/**
+	 * create new class, inseart new data into class table
+	 *
+	 * @param	$code, $class_name, $branch_id, $type, $level, $status, $location, $start_date, $end_date, $start_time, $end_time, $teacher_name, $teacher_tel, $remark
+	 * @return	bool
+	 */
+	function create_new_class($code, $class_name, $branch_id, $type, $level, $status, $location, $start_date, $end_date, $start_time, $end_time, $teacher_name, $teacher_tel, $remark) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('INSERT INTO class (code, class_name, type, level,  start_date, end_date, start_time, end_time, teacher_name, teacher_tel, location, branch_id, status, created, modified, remark) VALUES ("'.$code.'", "'.$class_name.'", "'.$type.'", "'.$level.'", "'.$start_date.'", "'.$end_date.'", "'.$start_time.'", "'.$end_time.'", "'.$teacher_name.'", "'.$teacher_tel.'", "'.$location.'", "'.$branch_id.'", "'.$status.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$remark.'")');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FLASE;
+	}
+
+	/**
+	 * update existed class by given class_id
+	 *
+	 * @param	$class_id, $code, $class_name, $branch_id, $type, $level, $status, $location, $start_date, $end_date, $start_time, $end_time, $teacher_name, $teacher_tel, $remark
+	 * @return	bool
+	 */
+	function update_class_by_id($class_id, $code, $class_name, $branch_id, $type, $level, $status, $location, $start_date, $end_date, $start_time, $end_time, $teacher_name, $teacher_tel, $remark) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('UPDATE class SET code = "'.$code.'", class_name = "'.$class_name.'", branch_id = "'.$branch_id.'", type = "'.$type.'", level = "'.$level.'", status = "'.$status.'", location = "'.$location.'", start_date = "'.$start_date.'", end_date = "'.$end_date.'", start_time = "'.$start_time.'", end_time = "'.$end_time.'", teacher_name = "'.$teacher_name.'", teacher_tel = "'.$teacher_tel.'", modified = "'.date('Y-m-d H:i:s').'", remark = "'.$remark.'" WHERE class_id = "'.$class_id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FLASE;
+	}
+
+	/**
+	 * get class info by code from class and branch table
+	 *
+	 * @param	$code
+	 * @return	array or NULL
+	 */
+	function get_class_info_by_code($code) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.code = "'.$code.'") ORDER BY c.class_id');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
+	 * get class info by id from class table
+	 *
+	 * @param	$class_id
+	 * @return	array or NULL
+	 */
+	function get_class_info_by_id($class_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT *  FROM class c WHERE (c.class_id = "'.$class_id.'")');
+			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
 	}
