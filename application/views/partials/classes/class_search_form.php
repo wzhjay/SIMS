@@ -36,7 +36,7 @@
 			    data:{},
 			    success:function(json){
 			    	branches.children().remove();
-			    	branches.append('<option value="class_search_branch_ALL">ALL</option>');
+			    	branches.append('<option id="class_search_branch_ALL">ALL</option>');
 			    	if(json != null) {
 			    		var reply = $.parseJSON(json);
 			    		for (var key in reply) {
@@ -62,7 +62,7 @@
  			var start_from = '2000-01-01';
 			var start_to  = '2100-01-01';
 			var end_from = '2000-01-01';
-			var end_to  = '2100-01-01';
+			var end_to = '2100-01-01';
 			
 			if($('#input_class_search_start_from').val().trim() != "") {
 				start_from = $('#input_class_search_start_from').val();
@@ -95,8 +95,74 @@
 			    		if(reply.length > 0) {
 			    			target.empty();
 				    		for (var key in reply) {
+				    			var num = parseInt(key) + 1;
 				    			if (reply.hasOwnProperty(key)) {
-				            		target.append();
+				            		// target.append(JSON.stringify(reply[key]));
+				            		target.append(
+										'<div class="panel-group" id="class_search_collapse_'+key+'">' +
+											'<div class="panel panel-default">' + 
+												'<div class="panel-heading">' +
+													'<h4 class="panel-title">' +
+														'<a data-toggle="collapse" data-parent="class_search_collapse_'+key+'" href="#class_search_collapse_body_'+key+'">Search Class ' + num + '  /  Class Name: ' + reply[key].class_name + '  /  Class Code: ' + reply[key].code + '</a>' + 
+													' </h4>' +
+												'</div>' +
+												'<div id="class_search_collapse_body_'+key+'" class="panel-collapse collapse in">' + 
+												'<div class="panel-body">' + 
+													'<div class="row">' + 
+														'<div class="col-xs-3">'+ 
+															'<div>Type: ' + reply[key].type + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-3">' +
+															'<div>Level ' + reply[key].level + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-3">' +
+															'<div>Location ' + reply[key].location + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-3">' +
+															'<div>Status: '+ reply[key].status + '</div>' + 
+														'</div>' +
+													'</div>' +
+													'<div class="row">' + 
+														'<div class="col-xs-3">' +
+															'<div>Start Date: '+ reply[key].start_date + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-3">' +
+															'<div>End Date: '+ reply[key].end_date + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-3">'+ 
+															'<div>Start Time: ' + reply[key].start_time + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-3">'+ 
+															'<div>End Time: ' + reply[key].end_time + '</div>' +
+														'</div>' + 
+													'</div>' + 
+													'<hr>' + 
+													'<div class="row">' + 
+														'<div class="col-xs-4">'+ 
+															'<div>Teacher: ' + reply[key].teacher_name + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-4">' +
+															"<div>Teacher's Tel: " + reply[key].teacher_tel +'</div>' + 
+														'</div>' +
+														'<div class="col-xs-4">' +
+															"<div>Branch: " + reply[key].name +'</div>' + 
+														'</div>' +
+													'</div>' + 
+													'<div class="row">' + 
+														'<div class="col-xs-4">'+ 
+															'<div>Created: ' + reply[key].created + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-4">' +
+															'<div>Modified: ' + reply[key].modified + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-4">' +
+															'<div>Remark: '+ reply[key].remark + '</div>' + 
+														'</div>' +
+													'</div>' + 
+												'</div>' + 
+											'</div>' +
+										'</div>'
+									);
 				            	}
 				            }
 			        	}

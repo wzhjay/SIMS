@@ -460,7 +460,7 @@ class Api extends CI_Controller
 		$start_to = $this->input->post('start_to');
 		$end_from = $this->input->post('end_from');
 		$end_to = $this->input->post('end_to');
-		$atos = $this->apis->search_class_by_multiple_var($code, $type, $level, $status, $branch_id, $start_from, $start_to, $end_from, $end_to);
+		$results = $this->apis->search_class_by_multiple_var($code, $type, $level, $status, $branch_id, $start_from, $start_to, $end_from, $end_to);
 		
 		if($results != NULL) {
 			echo json_encode($results);

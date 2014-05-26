@@ -109,21 +109,21 @@
 													'</div>' + 
 													'<hr>' + 
 													'<div class="row">' + 
-														'<div class="col-xs-2">'+ 
+														'<div class="col-xs-3">'+ 
 															'<div>Exam Location: ' + reply[key].exam_location + '</div>' +
 														'</div>' + 
-														'<div class="col-xs-2">' +
+														'<div class="col-xs-3">' +
 															'<div>Exam Time: ' + reply[key].exam_time +'</div>' + 
 														'</div>' +
 													'</div>' + 
 													'<div class="row">' + 
-														'<div class="col-xs-3">'+ 
+														'<div class="col-xs-4">'+ 
 															'<div>Created: ' + reply[key].created + '</div>' +
 														'</div>' + 
-														'<div class="col-xs-3">' +
+														'<div class="col-xs-4">' +
 															'<div>Modified: ' + reply[key].modified + '</div>' + 
 														'</div>' +
-														'<div class="col-xs-6">' +
+														'<div class="col-xs-4">' +
 															'<div>Remark: '+ reply[key].remark + '</div>' + 
 														'</div>' +
 													'</div>' + 
