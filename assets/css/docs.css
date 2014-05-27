@@ -315,3 +315,13 @@ color: #666666;
 text-decoration: none;
 cursor: pointer;
 }
+
+select[multiple], select[size] {
+height: 300px;
+overflow-y: scroll; 
+}
+
+#class_search_class_student_management_class_section ul {
+height: 300px;
+overflow-y: scroll; 
+}

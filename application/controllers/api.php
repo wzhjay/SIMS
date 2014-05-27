@@ -435,6 +435,18 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  search student info by keyword in ic/first name/last name
+	 */
+	function searchStudentInfoByKeyword() {
+		$keyword = $this->input->post('keyword');
+		$students = $this->apis->search_students_by_keyword($keyword);
+		if($students != NULL) {
+			echo json_encode($students);
+		}
+		echo NULL;
+	}
+
+	/**
 	 *  search ato info by time
 	 */
 	function searchATOInfo() {

@@ -2,6 +2,8 @@
 	<meta charset="utf-8">
 
 	<script>
+		var selected_class_management_id = 0;
+		var selected_class_delete_id = 0;
 		$(document).ready(function($) {
 			event.preventDefault();
 
@@ -26,6 +28,10 @@
  			});
 
  			class_search_load_branches();
+
+ 			$('#input_class_search_class_student_management_student_search').on('click', function() {
+ 				search_student_by_ic_name();
+ 			});
 		});
 
 		function class_search_load_branches() {
@@ -103,8 +109,18 @@
 											'<div class="panel panel-default">' + 
 												'<div class="panel-heading">' +
 													'<h4 class="panel-title">' +
-														'<a data-toggle="collapse" data-parent="class_search_collapse_'+key+'" href="#class_search_collapse_body_'+key+'">Class ' + num + '  /  Class Name: <b>' + reply[key].class_name + '</b>  /  Class Code: <b>' + reply[key].code + '</b>  /  Class Status: <b>' + reply[key].status + '</b></a>' +
-													' </h4>' +
+														'<div class="row">' +
+															'<div class="col-xs-8">' +
+																'<a data-toggle="collapse" data-parent="class_search_collapse_'+key+'" href="#class_search_collapse_body_'+key+'">Class Name: <b>' + reply[key].class_name + '</b>  /  Class Code: <b>' + reply[key].code + '</b>  /  Class Status: <b>' + reply[key].status + '</b></a>' +
+															'</div>' + 
+															'<div class="col-xs-2">' +
+																'<a class="button glow button-rounded button-flat" id="class_search_student_management_'+reply[key].class_id+'" data-toggle="modal" data-target="#class-student-management-modal">Manage</a>' + 
+															'</div>' + 
+															'<div class="col-xs-2">' +
+																'<a class="button glow button-rounded button-flat" id="class_search_class_delete_'+reply[key].class_id+'" data-toggle="modal" data-target="#class-delete-modal">Delete</a>' + 
+															'</div>' + 
+														'</div>' + 
+													'</h4>' +
 												'</div>' +
 												'<div id="class_search_collapse_body_'+key+'" class="panel-collapse collapse in">' + 
 												'<div class="panel-body">' + 
@@ -113,10 +129,10 @@
 															'<div>Type: ' + reply[key].type + '</div>' +
 														'</div>' + 
 														'<div class="col-xs-3">' +
-															'<div>Level ' + reply[key].level + '</div>' + 
+															'<div>Level: ' + reply[key].level + '</div>' + 
 														'</div>' +
 														'<div class="col-xs-3">' +
-															'<div>Location ' + reply[key].location + '</div>' + 
+															'<div>Location: ' + reply[key].location + '</div>' + 
 														'</div>' +
 													'</div>' +
 													'<div class="row">' + 
@@ -159,6 +175,83 @@
 												'</div>' + 
 											'</div>' +
 										'</div>'
+									);
+				            	}
+
+				            	$('#class_search_results .button').on('click', function() {
+					 				var el_id = $(this).attr('id').split('_');
+					 				var class_id = el_id[4];
+					 				if(el_id[3] == "management") {
+					 					// menegement class student
+					 					selected_class_management_id = class_id;
+					 				} else if(el_id[3] == "delete") {
+					 					// delete class
+					 					selected_class_delete_id = class_id;
+					 					var modalBody = $('#class_delete_modal_label').closest('.modal-content').find('.modal-body');
+					 					modalBody.empty();
+					 					modalBody.append(
+					 						'<div class="row">'+
+									      		'<div class="col-xs-8">' +
+									      			'<div class="highlight">'+
+										      			'<div class="row">' + 
+															'<div class="col-xs-4">'+ 
+																'<div>Name: ' + reply[key].class_name + '</div>' +
+															'</div>' + 
+															'<div class="col-xs-4">' +
+																'<div>Code: ' + reply[key].code + '</div>' + 
+															'</div>' +
+															'<div class="col-xs-4">' +
+																'<div>Status: ' + reply[key].status + '</div>' + 
+															'</div>' +
+														'</div>' +
+										      			'<div class="row">' + 
+															'<div class="col-xs-4">'+ 
+																'<div>Type: ' + reply[key].type + '</div>' +
+															'</div>' + 
+															'<div class="col-xs-4">' +
+																'<div>Level: ' + reply[key].level + '</div>' + 
+															'</div>' +
+															'<div class="col-xs-4">' +
+																'<div>Location: ' + reply[key].location + '</div>' + 
+															'</div>' +
+														'</div>' +
+													'</div>' +
+									      		'</div>' +
+									      		'<div class="col-xs-4">' +
+									      			'<H4>Sure you want to delete this class?</h4>' +
+									      		'</div>' +
+									      	'</div>'
+									    );
+					 				}
+					 			});
+				            }
+			        	}
+			        }
+			    },
+			});//End ajax
+ 		}
+
+ 		function search_student_by_ic_name() {
+ 			var keyword = $('#input_class_search_class_student_management_ic_name').val();
+ 			var target = $('#class_search_class_student_management_class_section select');
+			target.empty();
+			target.append('<div class="loading"></div>');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "searchStudentInfoByKeyword",
+			    data:{keyword:keyword},
+			    success:function(json){
+			    	target.empty();
+			    	target.append('<li class="list-group-item">No Student Found</li>');
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		if(reply.length > 0) {
+			    			target.empty();
+				    		for (var key in reply) {
+				    			if (reply.hasOwnProperty(key)) {
+				            		// target.append(JSON.stringify(reply[key]));
+				            		target.append(
+				            			'<option>IC: ' + reply[key].ic + ' (' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ')' +'</option>'
 									);
 				            	}
 				            }
@@ -251,5 +344,85 @@
 			<a class="button glow button-rounded button-flat" id="class_info_to_excel">To Excel</a>
 		</div>
 	</div>
+	<br><br>
 	<div id="class_search_results"></div>
+</div>
+
+<!-- Class student management Modal -->
+<div class="modal fade" id="class-student-management-modal" tabindex="-1" role="dialog" aria-labelledby="class_student_management_modal_label" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="class_student_management_modal_label">Class Student Management</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+      		<div class="col-xs-6" id="class_search_class_student_management_class_section">
+      			<div class="highlight">
+      				<div class="row">
+	      				<div class="col-xs-8">
+	      					<label for="input_class_search_class_student_management_ic_name">请输入学员IC/名字</label>
+							<input class="form-control" id="input_class_search_class_student_management_ic_name" placeholder="IC Number/Name">
+						</div>
+						<div class="col-xs-2">
+							<br>
+							<a class="button glow button-rounded button-flat" id="input_class_search_class_student_management_student_search">Search</a>
+						</div>
+					</div>
+					<br>
+					<select multiple class="form-control"></select>
+      			</div>
+      		</div>
+      		<div class="col-xs-1" id="class_search_class_student_management_middle_section">
+      		sasa
+      		</div>
+      		<div class="col-xs-5" id="class_search_class_student_management_class_section">
+      			<div class="highlight">
+	      			<div class="row">
+	      				<div class="col-xs-8">
+	      					<label>班级所以学生</label>
+						</div>
+					</div>
+					<br>
+					<ul class="list-group">
+					  <li class="list-group-item">Cras justo odio</li>
+					  <li class="list-group-item">Dapibus ac facilisis in</li>
+					  <li class="list-group-item">Morbi leo risus</li>
+					  <li class="list-group-item">Porta ac consectetur ac</li>
+					  <li class="list-group-item">Vestibulum at eros</li>
+					  <li class="list-group-item">Cras justo odio</li>
+					  <li class="list-group-item">Dapibus ac facilisis in</li>
+					  <li class="list-group-item">Morbi leo risus</li>
+					  <li class="list-group-item">Porta ac consectetur ac</li>
+					  <li class="list-group-item">Vestibulum at eros</li>
+					</ul>
+	      		</div>
+      		</div>
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Class delete Modal -->
+<div class="modal fade" id="class-delete-modal" tabindex="-1" role="dialog" aria-labelledby="class_delete_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="class_delete_modal_label">Delete Class</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Delete</button>
+      </div>
+    </div>
+  </div>
 </div>

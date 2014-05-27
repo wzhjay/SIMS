@@ -351,6 +351,20 @@ class Apis extends CI_Model
 	}
 
 	/**
+	 * search students by keyword in ic number/firstname/lastname, from table registration, student
+	 *
+	 * @param	key word 
+	 * @return	array or NULL
+	 */
+	function search_students_by_keyword($keyword) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT *  FROM registration r, student s WHERE (r.ic = s.ic) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%")) ORDER BY -DATE(r.reg_date)');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
 	 * search ato info by time
 	 *
 	 * @param	from, to
