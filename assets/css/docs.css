@@ -325,3 +325,11 @@ overflow-y: scroll;
 height: 300px;
 overflow-y: scroll; 
 }
+
+#class_search_class_student_management_middle_section {
+margin-top: 150px;
+}
+
+#class_search_class_student_management_middle_section .btn {
+margin-left: -22px;
+}

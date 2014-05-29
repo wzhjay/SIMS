@@ -598,4 +598,30 @@ class Api extends CI_Controller
 		}
 		echo NULL;
 	}
+
+	/**
+	 *  get all class students
+	 */
+	function getClassStudentsByClassID() {
+		$class_id = $this->input->post('class_id');
+		$students = $this->apis->get_all_class_students_by_class_id($class_id);
+		if($students != NULL) {
+			echo json_encode($students);
+		}
+		echo NULL;
+	}
+
+	/**
+	 *  assign student to class
+	 */
+	function assignStudentToClass() {
+		$class_id = $this->input->post('class_id');
+		$student_id = $this->input->post('student_id');
+		// assign
+		$assign = $this->apis->assign_student_to_class($class_id, $student_id);
+		if($assign) {
+			echo 1;
+		}
+		else echo 0;
+	}
 }

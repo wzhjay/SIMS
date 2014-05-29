@@ -184,6 +184,7 @@
 					 				if(el_id[3] == "management") {
 					 					// menegement class student
 					 					selected_class_management_id = class_id;
+					 					load_class_students(class_id);
 					 				} else if(el_id[3] == "delete") {
 					 					// delete class
 					 					selected_class_delete_id = class_id;
@@ -231,15 +232,14 @@
 			});//End ajax
  		}
 
- 		function search_student_by_ic_name() {
- 			var keyword = $('#input_class_search_class_student_management_ic_name').val();
- 			var target = $('#class_search_class_student_management_class_section select');
-			target.empty();
+ 		function load_class_students(class_id) {
+ 			var target = $('#class_search_class_student_management_class_section ul');
+ 			target.empty();
 			target.append('<div class="loading"></div>');
 			$.ajax({
 				type:"post",
-			    url:window.api_url + "searchStudentInfoByKeyword",
-			    data:{keyword:keyword},
+			    url:window.api_url + "getClassStudentsByClassID",
+			    data:{class_id:class_id},
 			    success:function(json){
 			    	target.empty();
 			    	target.append('<li class="list-group-item">No Student Found</li>');
@@ -251,13 +251,73 @@
 				    			if (reply.hasOwnProperty(key)) {
 				            		// target.append(JSON.stringify(reply[key]));
 				            		target.append(
-				            			'<option>IC: ' + reply[key].ic + ' (' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ')' +'</option>'
+				            			'<li>' + reply[key].ic + ' (' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ')' +'</li>'
 									);
 				            	}
 				            }
 			        	}
 			        }
 			    },
+			});//End ajax
+ 		}
+
+ 		function search_student_by_ic_name() {
+ 			var keyword = $('#input_class_search_class_student_management_ic_name').val();
+ 			var target = $('#class_search_class_student_management_class_section select');
+			target.empty();
+			target.append('<div class="loading"></div>');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "searchStudentInfoByKeyword",
+			    data:{keyword:keyword},
+			    success:function(json){
+			    	target.empty();
+			    	target.append('<option class="list-group-item">No Student Found</option>');
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		if(reply.length > 0) {
+			    			target.empty();
+				    		for (var key in reply) {
+				    			if (reply.hasOwnProperty(key)) {
+				            		// target.append(JSON.stringify(reply[key]));
+				            		target.append(
+				            			'<option id="searched_student_id_'+reply[key].id+'">' + reply[key].ic + ' (' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ')' +'</option>'
+									);
+				            	}
+				            }
+			        	}
+			        }
+			    },
+			});//End ajax
+
+			$('#class_search_class_student_management_middle_section .btn').on('click', function() {
+				$.each($('#class_search_class_student_management_class_section select option:selected'), function() {
+					var student_id = $(this).attr('id').split('_')[3];
+					assign_student_to_class(student_id);
+				});
+			});
+ 		}
+
+ 		function assign_student_to_class(student_id) {
+ 			var class_id = selected_class_management_id;
+ 			$.ajax({
+				type:"post",
+			    url:window.api_url + "assignStudentToClass",
+			    data:{class_id:class_id, student_id:student_id},
+			    success:function(json){
+			    	if(json.trim() != "") {
+					    var reply = $.parseJSON(json);
+					    if(reply == '1') {
+					    	alert("Assign student class success!");
+					    	load_class_students(class_id);
+					    }else{
+					    	alert("Student exist in this class or fail to assign student to class!");
+					    }
+					}
+					else {
+						alert("fail to call api");
+					}
+			    }
 			});//End ajax
  		}
 	</script>
@@ -375,7 +435,9 @@
       			</div>
       		</div>
       		<div class="col-xs-1" id="class_search_class_student_management_middle_section">
-      		sasa
+	      		<button type="button" class="btn btn-primary">
+				  <span class="glyphicon glyphicon-arrow-right"></span> Assign
+				</button>
       		</div>
       		<div class="col-xs-5" id="class_search_class_student_management_class_section">
       			<div class="highlight">
@@ -403,7 +465,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -421,7 +482,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Delete</button>
+        <button type="button" class="btn btn-primary">Confirm</button>
       </div>
     </div>
   </div>

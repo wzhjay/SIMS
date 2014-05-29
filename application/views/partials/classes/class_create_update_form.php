@@ -90,6 +90,7 @@
 					    if(reply == '1') {
 					    	alert("create class success!");
 					    	clear_class_form_inputs();
+					    	load_all_classes();
 					    }else{
 					    	alert("fail to insert class data");
 					    }

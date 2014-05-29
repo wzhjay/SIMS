@@ -78,7 +78,7 @@ class Apis extends CI_Model
 			$query = $this->db->query('INSERT INTO admin_users (user_id, role_id, branch_id, status_id) VALUES ("'.$user_id.'", "'.$role_id.'", "'.$branch_id.'", "'.$status_id.'")');
 			if ($this->db->affected_rows()) return TRUE;
 		}
-		return FLASE;
+		return FALSE;
 	}
 
 	/**
@@ -134,7 +134,7 @@ class Apis extends CI_Model
 			$query = $this->db->query('UPDATE admin_users SET role_id = "'.$new_role_id.'", branch_id = "'.$new_branch_id.'" WHERE user_id = "'.$user_id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
-		return FLASE;
+		return FALSE;
 	}
 
 	/**
@@ -148,7 +148,7 @@ class Apis extends CI_Model
 			$query = $this->db->query('DELETE FROM admin_users WHERE user_id = "'.$user_id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
-		return FLASE;
+		return FALSE;
 	}
 
 	/**
@@ -162,7 +162,7 @@ class Apis extends CI_Model
 			$query = $this->db->query('INSERT INTO registration (ic, reg_date, student_branch_id, reg_branch_id, reg_op_id, reg_no, start_date_wanted, remark) VALUES ("'.$ic.'", "'.$reg_date.'", "'.$student_branch_id.'", "'.$reg_branch_id.'", "'.$reg_op_id.'", "'.$reg_no.'", "'.$start_date_wanted.'", "'.$remark.'")');
 			if ($this->db->affected_rows()) return TRUE;
 		}
-		return FLASE;
+		return FALSE;
 	}
 
 	/**
@@ -204,7 +204,7 @@ class Apis extends CI_Model
 			$query = $this->db->query('INSERT INTO ato (ic, pre_post, recommend_level, class_start_date,  class_end_date, class_code, attendance, el, er, en, es, ew, exam_location, exam_date, exam_time, branch_id, branch_op_id, created, modified, remark) VALUES ("'.$ic.'", "'.$pre_post.'", "'.$recommend_level.'", "'.$class_start_date.'", "'.$class_end_date.'", "'.$class_code.'", "'.$attendance.'", "'.$el.'", "'.$er.'", "'.$en.'", "'.$es.'", "'.$ew.'", "'.$exam_location.'", "'.$exam_date.'", "'.$exam_time.'", "'.$ato_branch_id.'", "'.$ato_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$remark.'")');
 			if ($this->db->affected_rows()) return TRUE;
 		}
-		return FLASE;
+		return FALSE;
 	}
 
 	/**
@@ -218,7 +218,7 @@ class Apis extends CI_Model
 			$query = $this->db->query('UPDATE ato SET pre_post = "'.$pre_post.'", recommend_level = "'.$recommend_level.'", class_start_date = "'.$class_start_date.'", class_end_date = "'.$class_end_date.'", class_code = "'.$class_code.'", attendance = "'.$attendance.'", el = "'.$el.'", er = "'.$er.'", en = "'.$en.'", es = "'.$es.'", ew = "'.$ew.'", exam_location = "'.$exam_location.'", exam_date = "'.$exam_date.'", exam_time = "'.$exam_time.'", branch_id = "'.$ato_branch_id.'", branch_op_id = "'.$ato_op_id.'", modified = "'.date('Y-m-d H:i:s').'", remark = "'.$remark.'" WHERE id = "'.$id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
-		return FLASE;
+		return FALSE;
 	}
 
 	/**
@@ -305,7 +305,7 @@ class Apis extends CI_Model
 			$query = $this->db->query('INSERT INTO student_record (student_ic, exam_date, el_best, er_best,  en_best, es_best, ew_best, cmp, con, wri, wpn, branch_id, branch_op_id, created, modified, remark) VALUES ("'.$ic.'", "'.$exam_date.'", "'.$el.'", "'.$er.'", "'.$en.'", "'.$es.'", "'.$ew.'", "'.$cmp.'", "'.$con.'", "'.$wri.'", "'.$wpn.'", "'.$branch_id.'", "'.$branch_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$remark.'")');
 			if ($this->db->affected_rows()) return TRUE;
 		}
-		return FLASE;
+		return FALSE;
 	}
 
 	/**
@@ -319,7 +319,7 @@ class Apis extends CI_Model
 			$query = $this->db->query('UPDATE student_record SET exam_date = "'.$exam_date.'", er_best = "'.$er.'", el_best = "'.$el.'", es_best = "'.$es.'", ew_best = "'.$ew.'", en_best = "'.$en.'", cmp = "'.$cmp.'", con = "'.$con.'", wri = "'.$wri.'", wpn = "'.$wpn.'", branch_id = "'.$branch_id.'", branch_op_id = "'.$branch_op_id.'", modified = "'.date('Y-m-d H:i:s').'", remark = "'.$remark.'" WHERE id = "'.$id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
-		return FLASE;
+		return FALSE;
 	}
 
 	/**
@@ -414,7 +414,7 @@ class Apis extends CI_Model
 			$query = $this->db->query('INSERT INTO class (code, class_name, type, level,  start_date, end_date, start_time, end_time, teacher_name, teacher_tel, location, branch_id, status, created, modified, remark) VALUES ("'.$code.'", "'.$class_name.'", "'.$type.'", "'.$level.'", "'.$start_date.'", "'.$end_date.'", "'.$start_time.'", "'.$end_time.'", "'.$teacher_name.'", "'.$teacher_tel.'", "'.$location.'", "'.$branch_id.'", "'.$status.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$remark.'")');
 			if ($this->db->affected_rows()) return TRUE;
 		}
-		return FLASE;
+		return FALSE;
 	}
 
 	/**
@@ -428,7 +428,7 @@ class Apis extends CI_Model
 			$query = $this->db->query('UPDATE class SET code = "'.$code.'", class_name = "'.$class_name.'", branch_id = "'.$branch_id.'", type = "'.$type.'", level = "'.$level.'", status = "'.$status.'", location = "'.$location.'", start_date = "'.$start_date.'", end_date = "'.$end_date.'", start_time = "'.$start_time.'", end_time = "'.$end_time.'", teacher_name = "'.$teacher_name.'", teacher_tel = "'.$teacher_tel.'", modified = "'.date('Y-m-d H:i:s').'", remark = "'.$remark.'" WHERE class_id = "'.$class_id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
-		return FLASE;
+		return FALSE;
 	}
 
 	/**
@@ -471,5 +471,53 @@ class Apis extends CI_Model
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
+	}
+
+	/**
+	 * get all class students info from student table by given class_id
+	 *
+	 * @param	class_id
+	 * @return	array or NULL
+	 */
+	function get_all_class_students_by_class_id($class_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM student s WHERE s.id = (SELECT sc.student_id FROM student_class sc WHERE sc.class_id = "'.$class_id.'" ORDER BY s.created)');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;	
+	}
+
+	/**
+	 *  check if record in table student_class where class_id and student_id both eauals to passed values
+	 *
+	 * @param	class_id, student_id
+	 * @return	bool
+	 */
+	function check_student_class_exist($class_id, $student_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM student_class sc WHERE sc.class_id = "'.$class_id.'" AND sc.student_id = "'.$student_id.'" ');
+			if ($query->num_rows() > 0) return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * insert into student_class table if not dubilicated
+	 *
+	 * @param	class_id, student_id
+	 * @return	bool
+	 */
+	function assign_student_to_class($class_id, $student_id) {
+		if($this->session->userdata('session_id')) {
+			if(!$this->apis->check_student_class_exist($class_id, $student_id)) {
+				$query = $this->db->query('INSERT INTO student_class (student_id, class_id) VALUES ("'.$student_id.'", "'.$class_id.'")');
+				if ($this->db->affected_rows()){
+					return TRUE;
+				} else {
+					return FALSE;
+				}
+			}
+		}
+		return FALSE;
 	}
 }
