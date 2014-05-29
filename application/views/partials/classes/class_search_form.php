@@ -308,14 +308,14 @@
 			    	if(json.trim() != "") {
 					    var reply = $.parseJSON(json);
 					    if(reply == '1') {
-					    	alert("Assign student class success!");
+					    	toastr.success("Assign student class success!");
 					    	load_class_students(class_id);
 					    }else{
-					    	alert("Student exist in this class or fail to assign student to class!");
+					    	toastr.error("Student exist in this class. Fail to assign student to class!");
 					    }
 					}
 					else {
-						alert("fail to call api");
+						toastr.error("fail to call api");
 					}
 			    }
 			});//End ajax
