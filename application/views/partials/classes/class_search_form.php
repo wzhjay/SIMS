@@ -32,7 +32,32 @@
  			$('#input_class_search_class_student_management_student_search').on('click', function() {
  				search_student_by_ic_name();
  			});
+
+ 			class_search_load_type();
 		});
+
+		function class_search_load_type() {
+			var types = $('#input_class_search_type');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getAllCourses",
+			    data:{},
+			    success:function(json){
+			    	types.empty();
+			    	if(json != null) {
+			    		var reply = $.parseJSON(json);
+			    		types.append('<option value="NA">请选择</option>');
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			    				types.append('<option id="search_course_type_'+ reply[key].id +'" + value="'+ reply[key].code +'">' + reply[key].type + '</option>');
+			    			}
+			    		}
+			        }else{
+			        	alert("fail to load courses");
+			        }
+			    },
+			});//End ajax
+		}
 
 		function class_search_load_branches() {
 			var branches = $('#input_class_search_branch');
@@ -188,41 +213,7 @@
 					 				} else if(el_id[3] == "delete") {
 					 					// delete class
 					 					selected_class_delete_id = class_id;
-					 					var modalBody = $('#class_delete_modal_label').closest('.modal-content').find('.modal-body');
-					 					modalBody.empty();
-					 					modalBody.append(
-					 						'<div class="row">'+
-									      		'<div class="col-xs-8">' +
-									      			'<div class="highlight">'+
-										      			'<div class="row">' + 
-															'<div class="col-xs-4">'+ 
-																'<div>Name: ' + reply[key].class_name + '</div>' +
-															'</div>' + 
-															'<div class="col-xs-4">' +
-																'<div>Code: ' + reply[key].code + '</div>' + 
-															'</div>' +
-															'<div class="col-xs-4">' +
-																'<div>Status: ' + reply[key].status + '</div>' + 
-															'</div>' +
-														'</div>' +
-										      			'<div class="row">' + 
-															'<div class="col-xs-4">'+ 
-																'<div>Type: ' + reply[key].type + '</div>' +
-															'</div>' + 
-															'<div class="col-xs-4">' +
-																'<div>Level: ' + reply[key].level + '</div>' + 
-															'</div>' +
-															'<div class="col-xs-4">' +
-																'<div>Location: ' + reply[key].location + '</div>' + 
-															'</div>' +
-														'</div>' +
-													'</div>' +
-									      		'</div>' +
-									      		'<div class="col-xs-4">' +
-									      			'<H4>Sure you want to delete this class?</h4>' +
-									      		'</div>' +
-									      	'</div>'
-									    );
+					 					get_class_student_by_id(class_id);
 					 				}
 					 			});
 				            }
@@ -253,6 +244,60 @@
 				            		target.append(
 				            			'<li>' + reply[key].ic + ' (' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ')' +'</li>'
 									);
+				            	}
+				            }
+			        	}
+			        }
+			    },
+			});//End ajax
+ 		}
+
+ 		function get_class_student_by_id(class_id) {
+ 			$.ajax({
+				type:"post",
+			    url:window.api_url + "getClassInfoByID",
+			    data:{class_id:class_id},
+			    success:function(json){
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		if(reply.length > 0) {
+				    		for (var key in reply) {
+				    			if (reply.hasOwnProperty(key)) {
+				            		var modalBody = $('#class_delete_modal_label').closest('.modal-content').find('.modal-body');
+				 					modalBody.empty();
+				 					modalBody.append(
+				 						'<div class="row">'+
+								      		'<div class="col-xs-8">' +
+								      			'<div class="highlight">'+
+									      			'<div class="row">' + 
+														'<div class="col-xs-4">'+ 
+															'<div>Name: ' + reply[key].class_name + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-4">' +
+															'<div>Code: ' + reply[key].code + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-4">' +
+															'<div>Status: ' + reply[key].status + '</div>' + 
+														'</div>' +
+													'</div>' +
+									      			'<div class="row">' + 
+														'<div class="col-xs-4">'+ 
+															'<div>Type: ' + reply[key].type + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-4">' +
+															'<div>Level: ' + reply[key].level + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-4">' +
+															'<div>Location: ' + reply[key].location + '</div>' + 
+														'</div>' +
+													'</div>' +
+												'</div>' +
+								      		'</div>' +
+								      		'<div class="col-xs-4">' +
+								      			'<H4>Sure you want to delete this class?</h4>' +
+								      		'</div>' +
+								      	'</div>'
+								    );
 				            	}
 				            }
 			        	}
@@ -331,21 +376,7 @@
 		</div>
 		<div class="col-xs-4">
 			<label for="input_class_search_type">Class Type</label>
-			<select class="form-control" id="input_class_search_type" >
-				<option value="NA">请选择</option>
-				<option value="encmp">综合</option>
-				<option value="encon">会话</option>
-				<option value="eness">ESS</option>
-				<option value="encos">COS</option>
-				<option value="encom">英文电脑</option>
-				<option value="chcom">华文电脑</option>
-				<option value="chpin">拼音</option>
-				<option value="enpho">音标</option>
-				<option value="engra">语法</option>
-				<option value="chwri">华文作文</option>
-				<option value="others">花艺</option>
-				<option value="others">其他</option>
-			</select>
+			<select class="form-control" id="input_class_search_type" ></select>
 		</div>
 		<div class="col-xs-4">
 			<label for="input_class_search_type">Class Level</label>

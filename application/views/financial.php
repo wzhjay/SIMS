@@ -27,7 +27,7 @@
 			<div class="tab-content">
 			  	<div class="tab-pane fade in active" id="tab-1">
 			  		<h3>添加或更新收入信息</h3><hr>
-					<?php $this->load->view('partials/financial/financial_income_form') ?>
+					<?php $this->load->view('partials/financial/financial_receipt_form') ?>
 			  	</div>
 			  	<div class="tab-pane fade" id="tab-2">
 			  		<h3>添加或更新支出信息</h3><hr>

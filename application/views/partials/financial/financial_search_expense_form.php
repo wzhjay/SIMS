@@ -106,54 +106,20 @@
 											'</div>'
 										);
 					            	}
-
-					            	$('#expense_search_results .button').on('click', function() {
-						 				var el_id = $(this).attr('id').split('_');
-						 				var expense_record_id = el_id[3];
-						 				selected_expense_record_id = expense_record_id;
-						 				if(el_id[2] == "update") {
-						 					// update expense record
-						 					load_expense_record(expense_record_id);
-						 				} else if(el_id[2] == "delete") {
-						 					// delete expense record
-						 					var modalBody = $('#expense_delete_modal_label').closest('.modal-content').find('.modal-body');
-						 					modalBody.empty();
-						 					modalBody.append(
-						 						'<div class="row">'+
-										      		'<div class="col-xs-8">' +
-										      			'<div class="highlight">'+
-											      			'<div class="row">' + 
-																'<div class="col-xs-4">'+ 
-																	'<div>类型: ' + reply[key].exp_type + '</div>' +
-																'</div>' + 
-																'<div class="col-xs-4">' +
-																	'<div>支出人: ' + reply[key].exp_name + '</div>' + 
-																'</div>' +
-																'<div class="col-xs-4">' +
-																	'<div>签收人: ' + reply[key].exp_sign_name + '</div>' + 
-																'</div>' +
-															'</div>' +
-											      			'<div class="row">' + 
-																'<div class="col-xs-4">'+ 
-																	'<div>支出日期: ' + reply[key].exp_date + '</div>' +
-																'</div>' + 
-																'<div class="col-xs-4">' +
-																	'<div>支出金额: ' + reply[key].exp_amount + '</div>' + 
-																'</div>' +
-																'<div class="col-xs-4">' +
-																	'<div>备注: ' + reply[key].exp_remark + '</div>' + 
-																'</div>' +
-															'</div>' +
-														'</div>' +
-										      		'</div>' +
-										      		'<div class="col-xs-4">' +
-										      			'<H4>Sure you want to delete this expense record?</h4>' +
-										      		'</div>' +
-										      	'</div>'
-										    );
-						 				}
-						 			});
 					            }
+
+					            $('#expense_search_results .button').on('click', function() {
+					 				var el_id = $(this).attr('id').split('_');
+					 				var expense_record_id = el_id[3];
+					 				selected_expense_record_id = expense_record_id;
+					 				if(el_id[2] == "update") {
+					 					// update expense record
+					 					load_expense_record(expense_record_id);
+					 				} else if(el_id[2] == "delete") {
+					 					// delete expense record
+					 					get_expense_by_id(expense_record_id);
+					 				}
+					 			});
 				        	}
 				        }
 				    },
@@ -161,6 +127,62 @@
 			}
 		});
 
+ 		// click delete button
+ 		function get_expense_by_id(expense_record_id) {
+ 			$.ajax({
+				type:"post",
+			    url:window.api_url + "getExpenseRecordByID",
+			    data:{exp_id:expense_record_id},
+			    success:function(json){
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			    				var modalBody = $('#expense_delete_modal_label').closest('.modal-content').find('.modal-body');
+			 					modalBody.empty();
+			 					modalBody.append(
+			 						'<div class="row">'+
+							      		'<div class="col-xs-8">' +
+							      			'<div class="highlight">'+
+								      			'<div class="row">' + 
+													'<div class="col-xs-4">'+ 
+														'<div>类型: ' + reply[key].exp_type + '</div>' +
+													'</div>' + 
+													'<div class="col-xs-4">' +
+														'<div>支出人: ' + reply[key].exp_name + '</div>' + 
+													'</div>' +
+													'<div class="col-xs-4">' +
+														'<div>签收人: ' + reply[key].exp_sign_name + '</div>' + 
+													'</div>' +
+												'</div>' +
+								      			'<div class="row">' + 
+													'<div class="col-xs-4">'+ 
+														'<div>支出日期: ' + reply[key].exp_date + '</div>' +
+													'</div>' + 
+													'<div class="col-xs-4">' +
+														'<div>支出金额: ' + reply[key].exp_amount + '</div>' + 
+													'</div>' +
+													'<div class="col-xs-4">' +
+														'<div>备注: ' + reply[key].exp_remark + '</div>' + 
+													'</div>' +
+												'</div>' +
+											'</div>' +
+							      		'</div>' +
+							      		'<div class="col-xs-4">' +
+							      			'<H4>Sure you want to delete this expense record?</h4>' +
+							      		'</div>' +
+							      	'</div>'
+							    );
+			            	}
+			            }
+			        }else{
+			        	toastr.error("fail to load expense record");
+			        }
+			    }
+			});//End ajax	
+ 		}
+
+ 		// click update button
  		function load_expense_record(expense_record_id) {
  			$.ajax({
 				type:"post",

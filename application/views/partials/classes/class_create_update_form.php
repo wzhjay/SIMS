@@ -25,7 +25,32 @@
 			$('#class_class_code_check').on('click', function() {
 				get_class_by_code();
 			});
+
+			load_class_type();
 		});
+
+		function load_class_type() {
+			var types = $('#input_class_type');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getAllCourses",
+			    data:{},
+			    success:function(json){
+			    	types.empty();
+			    	if(json != null) {
+			    		var reply = $.parseJSON(json);
+			    		types.append('<option value="NA">请选择</option>');
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			    				types.append('<option id="course_type_'+ reply[key].id +'" + value="'+ reply[key].code +'">' + reply[key].type + '</option>');
+			    			}
+			    		}
+			        }else{
+			        	alert("fail to load courses");
+			        }
+			    },
+			});//End ajax
+		}
 
 		function class_load_branches() {
 			var branches = $('#input_class_branch');
@@ -34,7 +59,7 @@
 			    url:window.api_url + "getAllBranches",
 			    data:{},
 			    success:function(json){
-			    	branches.children().remove();
+			    	branches.empty();
 			    	if(json != null) {
 			    		var reply = $.parseJSON(json);
 			    		for (var key in reply) {
@@ -329,21 +354,7 @@
 	<div class="row">
 		<div class="col-xs-3">
 			<label for="input_class_type">Class Type</label>
-			<select class="form-control" id="input_class_type" >
-		        <option value="NA">请选择</option>
-		        <option value="encmp">综合</option>
-		        <option value="encon">会话</option>
-		        <option value="eness">ESS</option>
-				<option value="encos">COS</option>
-		        <option value="encom">英文电脑</option>
-		        <option value="chcom">华文电脑</option>
-		        <option value="chpin">拼音</option>
-		        <option value="enpho">音标</option>
-		        <option value="engra">语法</option>
-		        <option value="chwri">华文作文</option>
-		        <option value="others">花艺</option>
-		        <option value="others">其他</option>
-		    </select>
+			<select class="form-control" id="input_class_type" ></select>
 		</div>
 		<div class="col-xs-3">
 			<label for="input_class_level">Class Level</label>
