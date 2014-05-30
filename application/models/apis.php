@@ -520,4 +520,60 @@ class Apis extends CI_Model
 		}
 		return FALSE;
 	}
+
+	/**
+	 * insert into expense table new record
+	 *
+	 * @param	$exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $exp_remark
+	 * @return	bool
+	 */
+	function create_new_expense_record($exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $exp_remark) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('INSERT INTO expense (exp_type, exp_name, exp_sign_name, exp_date, exp_amount, created, modified, exp_remark) VALUES ("'.$exp_type.'", "'.$exp_name.'", "'.$exp_sign_name.'", "'.$exp_date.'", "'.$exp_amount.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$exp_remark.'")');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * update expense record by given exp_id
+	 *
+	 * @param	$exp_id, $exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $exp_remark
+	 * @return	bool
+	 */
+	function update_expense_record($exp_id, $exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $exp_remark) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('UPDATE expense SET exp_type = "'.$exp_type.'", exp_name = "'.$exp_name.'", exp_sign_name = "'.$exp_sign_name.'", exp_date = "'.$exp_date.'", exp_amount = "'.$exp_amount.'", exp_remark = "'.$exp_remark.'", modified = "'.date('Y-m-d H:i:s').'" WHERE exp_id = "'.$exp_id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * get expense record from expense table, by given exp_id
+	 *
+	 * @param	$exp_id
+	 * @return	array or null
+	 */
+	function get_expense_record_by_id($exp_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM expense e WHERE e.exp_id = "'.$exp_id.'"');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;	
+	}
+
+	function search_expense_by_multiple_var($exp_type, $exp_name, $exp_sign_name, $exp_date_from, $exp_date_to) {
+		if($this->session->userdata('session_id')) {
+			if($exp_type == 'NA') { 
+				$query1 = $this->db->query('SELECT *  FROM expense e WHERE (e.exp_name LIKE "%'.$exp_name.'%") AND (e.exp_sign_name LIKE "%'.$exp_sign_name.'%") AND (DATE(e.exp_date) BETWEEN "'.$exp_date_from.'" AND "'.$exp_date_to.'") ORDER BY -DATE(e.exp_date)');
+				if ($query1->num_rows() > 0) return $query1->result_array();
+			}
+			else {
+				$query2 = $this->db->query('SELECT *  FROM expense e WHERE (e.exp_name LIKE "%'.$exp_name.'%") AND (e.exp_type = "'.$exp_type.'") AND (e.exp_sign_name LIKE "%'.$exp_sign_name.'%") AND (DATE(e.exp_date) BETWEEN "'.$exp_date_from.'" AND "'.$exp_date_to.'") ORDER BY -DATE(e.exp_date)');
+				if ($query2->num_rows() > 0) return $query2->result_array();	
+			}
+			return NULL;
+		}
+	}
 }

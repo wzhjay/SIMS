@@ -443,7 +443,7 @@
       			<div class="highlight">
 	      			<div class="row">
 	      				<div class="col-xs-8">
-	      					<label>班级所以学生</label>
+	      					<label>班级所有学生</label>
 						</div>
 					</div>
 					<br>

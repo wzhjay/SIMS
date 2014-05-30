@@ -624,4 +624,71 @@ class Api extends CI_Controller
 		}
 		else echo 0;
 	}
+
+	/**
+	 *  create new expense record
+	 */
+	function createExpenseRecord() {
+		$exp_type = $this->input->post('exp_type');
+		$exp_name = $this->input->post('exp_name');
+		$exp_sign_name = $this->input->post('exp_sign_name');
+		$exp_date = $this->input->post('exp_date');
+		$exp_amount = $this->input->post('exp_amount');
+		$exp_remark = $this->input->post('exp_remark');
+		// create
+		$create = $this->apis->create_new_expense_record($exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $exp_remark);
+		if($create) {
+			echo 1;
+		}
+		else echo 0;
+	}
+
+	/**
+	 *  update expense record
+	 */
+	function updateExpenseRecord() {
+		$exp_id = $this->input->post('exp_id');
+		$exp_type = $this->input->post('exp_type');
+		$exp_name = $this->input->post('exp_name');
+		$exp_sign_name = $this->input->post('exp_sign_name');
+		$exp_date = $this->input->post('exp_date');
+		$exp_amount = $this->input->post('exp_amount');
+		$exp_remark = $this->input->post('exp_remark');
+		// update
+		$update = $this->apis->update_expense_record($exp_id, $exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $exp_remark);
+		if($update) {
+			echo 2;
+		}
+		else echo 0;
+	}
+
+	/**
+	 *  get expense record by id
+	 */
+	function getExpenseRecordByID() {
+		$exp_id = $this->input->post('exp_id');
+		$record = $this->apis->get_expense_record_by_id($exp_id);
+		if($record != NULL) {
+			echo json_encode($record);
+		}
+		echo NULL;
+	}
+
+	/**
+	 *  search expense records by ytpes
+	 */
+	function searchExpenseRecords() {
+		$exp_type = $this->input->post('exp_type');
+		$exp_name = $this->input->post('exp_name');
+		$exp_sign_name = $this->input->post('exp_sign_name');
+		$exp_date_from = $this->input->post('exp_date_from');
+		$exp_date_to = $this->input->post('exp_date_to');
+		
+		$results = $this->apis->search_expense_by_multiple_var($exp_type, $exp_name, $exp_sign_name, $exp_date_from, $exp_date_to);
+		
+		if($results != NULL) {
+			echo json_encode($results);
+		}
+		echo NULL;
+	}
 }
