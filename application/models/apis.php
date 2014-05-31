@@ -610,4 +610,24 @@ class Apis extends CI_Model
 		}
 		return NULL;
 	}
+
+	/**
+	 * search receipt records by multiple variables
+	 *
+	 * @param	$student_ic, $receipt_no, $receipt_branch, $course_type, $receipt_date_from, $receipt_date_to
+	 * @return	array or null
+	 */
+	function search_receipt_by_multiple_var($student_ic, $receipt_no, $receipt_branch, $course_type, $receipt_date_from, $receipt_date_to) {
+		if($this->session->userdata('session_id')) {
+			if($course_type == 'ALL') { $course_type = "";}
+			if($receipt_branch == 'ALL') {	
+				$query1 = $this->db->query('SELECT *  FROM receipt r, branch b WHERE (b.id = r.receipt_branch_id) AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") ORDER BY -DATE(r.receipt_date)');
+				if ($query1->num_rows() > 0) return $query1->result_array();
+			} else {
+				$query2 = $this->db->query('SELECT *  FROM receipt r, branch b WHERE (b.id = r.receipt_branch_id) AND (r.receipt_branch_id = "'.$receipt_branch.'") AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") ORDER BY -DATE(r.receipt_date)');
+				if ($query2->num_rows() > 0) return $query2->result_array();
+			}
+		}
+		return NULL;
+	}
 }

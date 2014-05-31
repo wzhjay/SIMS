@@ -7,7 +7,7 @@
 				format: 'yyyy-mm-dd'
 			});
 
-			load_course_type();
+			receipt_load_course_type();
 			receipt_load_admin_users();
 			receipt_load_branches();
 
@@ -68,7 +68,7 @@
 			});//End ajax
 		}
 
-		function load_course_type() {
+		function receipt_load_course_type() {
 			var types = $('#input_financial_receipt_course_type');
 			$.ajax({
 				type:"post",

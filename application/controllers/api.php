@@ -745,4 +745,23 @@ class Api extends CI_Controller
 		}
 		echo NULL;
 	}
+
+	/**
+	 *  search receipt records
+	 */
+	function searchReceiptRecords() {
+		$student_ic = $this->input->post('student_ic');
+		$receipt_no = $this->input->post('receipt_no');
+		$receipt_branch = $this->input->post('receipt_branch');
+		$course_type = $this->input->post('course_type');
+		$receipt_date_from = $this->input->post('receipt_date_from');
+		$receipt_date_to = $this->input->post('receipt_date_to');
+		
+		$results = $this->apis->search_receipt_by_multiple_var($student_ic, $receipt_no, $receipt_branch, $course_type, $receipt_date_from, $receipt_date_to);
+		
+		if($results != NULL) {
+			echo json_encode($results);
+		}
+		echo NULL;
+	}
 }
