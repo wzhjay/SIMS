@@ -563,6 +563,12 @@ class Apis extends CI_Model
 		return NULL;	
 	}
 
+	/**
+	 * search expense records by multiple variables
+	 *
+	 * @param	$exp_type, $exp_name, $exp_sign_name, $exp_date_from, $exp_date_to
+	 * @return	array or null
+	 */
 	function search_expense_by_multiple_var($exp_type, $exp_name, $exp_sign_name, $exp_date_from, $exp_date_to) {
 		if($this->session->userdata('session_id')) {
 			if($exp_type == 'NA') { 
@@ -575,5 +581,33 @@ class Apis extends CI_Model
 			}
 			return NULL;
 		}
+	}
+
+	/**
+	 *  insert new data into receipt table
+	 *
+	 * @param	$student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $reg_no, $related_receipt, $related_receipt_amount, $receipt_remark
+	 * @return	bool
+	 */
+	function create_new_receipt_record($student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $reg_no, $related_receipt, $related_receipt_amount, $receipt_branch_id, $receipt_op_id, $receipt_remark) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('INSERT INTO receipt (student_ic, receipt_no, payee_name, receipt_date, receipt_amount, makeup, student_before, course_type, reg_no, related_receipt, related_receipt_amount, receipt_branch_id, receipt_op_id, created, modified, receipt_remark) VALUES ("'.$student_ic.'", "'.$receipt_no.'", "'.$payee_name.'", "'.$receipt_date.'", "'.$receipt_amount.'", "'.$makeup.'", "'.$student_before.'", "'.$course_type.'", "'.$reg_no.'", "'.$related_receipt.'", "'.$related_receipt_amount.'", "'.$receipt_branch_id.'", "'.$receipt_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$receipt_remark.'")');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 *  ger receipt record from receipt table, given receipt_no
+	 *
+	 * @param	$receipt_no
+	 * @return	array or null
+	 */
+	function get_receipt_by_receipt_no($receipt_no) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM receipt r WHERE r.receipt_no = "'.$receipt_no.'"');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
 	}
 }

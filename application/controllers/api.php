@@ -675,7 +675,7 @@ class Api extends CI_Controller
 	}
 
 	/**
-	 *  search expense records by ytpes
+	 *  search expense records by tpes
 	 */
 	function searchExpenseRecords() {
 		$exp_type = $this->input->post('exp_type');
@@ -688,6 +688,60 @@ class Api extends CI_Controller
 		
 		if($results != NULL) {
 			echo json_encode($results);
+		}
+		echo NULL;
+	}
+
+	/**
+	 *  create new receipt record
+	 */
+	function createNewReceiptRecord() {
+		$student_ic = $this->input->post('student_ic');
+		$receipt_no = $this->input->post('receipt_no');
+		$payee_name = $this->input->post('payee_name');
+		$receipt_date = $this->input->post('receipt_date');
+		$receipt_amount = $this->input->post('receipt_amount');
+		$makeup = $this->input->post('makeup');
+		$student_before = $this->input->post('student_before');
+		$course_type = $this->input->post('course_type');
+		$reg_no = $this->input->post('reg_no');
+		$related_receipt = $this->input->post('related_receipt');
+		$related_receipt_amount = $this->input->post('related_receipt_amount');
+		$receipt_branch_id = $this->input->post('receipt_branch_id');
+		$receipt_op_id = $this->input->post('receipt_op_id');
+		$receipt_remark = $this->input->post('receipt_remark');
+
+		// create
+		$create = $this->apis->create_new_receipt_record(
+			$student_ic, 
+			$receipt_no, 
+			$payee_name, 
+			$receipt_date, 
+			$receipt_amount, 
+			$makeup,
+			$student_before,
+			$course_type,
+			$reg_no,
+			$related_receipt,
+			$related_receipt_amount,
+			$receipt_branch_id, 
+			$receipt_op_id,
+			$receipt_remark);
+		if($create) {
+			echo 1;
+		}
+		else echo 0;
+	}
+
+	/**
+	 *  get receipt by receipt number
+	 */
+	function getReceiptByNo() {
+		$receipt_no = $this->input->post('receipt_no');
+		$receipt = $this->apis->get_receipt_by_receipt_no($receipt_no);
+		
+		if($receipt != NULL) {
+			echo json_encode($receipt);
 		}
 		echo NULL;
 	}
