@@ -311,6 +311,13 @@
 								);
 					        }
 				    	}
+
+				    	$('#financial-receipt-num-modal .button').on('click', function() {
+				    		var receipt_record_id = $(this).attr('id').split('_')[5];
+				    		selected_receipt_record_id = receipt_record_id;
+				    		load_receipt_record(receipt_record_id);
+				    		$('#financial-receipt-num-modal').modal('hide');
+				    	});
 				    }
 				    else {
 				    	// no result found in student table
