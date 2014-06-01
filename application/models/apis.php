@@ -586,12 +586,12 @@ class Apis extends CI_Model
 	/**
 	 *  insert new data into receipt table
 	 *
-	 * @param	$student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $reg_no, $related_receipt, $related_receipt_amount, $receipt_remark
+	 * @param	$student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $letter_type, $reg_no, $related_receipt, $related_receipt_amount, $receipt_remark
 	 * @return	bool
 	 */
-	function create_new_receipt_record($student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $reg_no, $related_receipt, $related_receipt_amount, $receipt_branch_id, $receipt_op_id, $receipt_remark) {
+	function create_new_receipt_record($student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $letter_type, $reg_no, $related_receipt, $related_receipt_amount, $receipt_branch_id, $receipt_op_id, $receipt_remark) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('INSERT INTO receipt (student_ic, receipt_no, payee_name, receipt_date, receipt_amount, makeup, student_before, course_type, reg_no, related_receipt, related_receipt_amount, receipt_branch_id, receipt_op_id, created, modified, receipt_remark) VALUES ("'.$student_ic.'", "'.$receipt_no.'", "'.$payee_name.'", "'.$receipt_date.'", "'.$receipt_amount.'", "'.$makeup.'", "'.$student_before.'", "'.$course_type.'", "'.$reg_no.'", "'.$related_receipt.'", "'.$related_receipt_amount.'", "'.$receipt_branch_id.'", "'.$receipt_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$receipt_remark.'")');
+			$query = $this->db->query('INSERT INTO receipt (student_ic, receipt_no, payee_name, receipt_date, receipt_amount, makeup, student_before, course_type, letter_type, reg_no, related_receipt, related_receipt_amount, receipt_branch_id, receipt_op_id, created, modified, receipt_remark) VALUES ("'.$student_ic.'", "'.$receipt_no.'", "'.$payee_name.'", "'.$receipt_date.'", "'.$receipt_amount.'", "'.$makeup.'", "'.$student_before.'", "'.$course_type.'", "'.$letter_type.'", "'.$reg_no.'", "'.$related_receipt.'", "'.$related_receipt_amount.'", "'.$receipt_branch_id.'", "'.$receipt_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$receipt_remark.'")');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;
@@ -629,5 +629,27 @@ class Apis extends CI_Model
 			}
 		}
 		return NULL;
+	}
+
+	/**
+	 * get receipt record from receipt table by ID
+	 *
+	 * @param	$receipt_id
+	 * @return	array or null
+	 */
+	function get_receipt_record_by_id($receipt_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM receipt r WHERE r.receipt_id = "'.$receipt_id.'"');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;	
+	}
+
+	function update_receipt_record($receipt_id, $student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $letter_type, $reg_no, $related_receipt, $related_receipt_amount, $receipt_branch_id, $receipt_op_id, $receipt_remark) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('UPDATE receipt SET student_ic = "'.$student_ic.'", receipt_no = "'.$receipt_no.'", payee_name = "'.$payee_name.'", receipt_date = "'.$receipt_date.'", receipt_amount = "'.$receipt_amount.'", makeup = "'.$makeup.'", student_before = "'.$student_before.'", course_type = "'.$course_type.'", letter_type = "'.$letter_type.'", reg_no = "'.$reg_no.'", related_receipt = "'.$related_receipt.'", related_receipt_amount = "'.$related_receipt_amount.'", receipt_branch_id = "'.$receipt_branch_id.'", receipt_op_id = "'.$receipt_op_id.'", receipt_remark = "'.$receipt_remark.'", modified = "'.date('Y-m-d H:i:s').'" WHERE receipt_id = "'.$receipt_id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
 	}
 }

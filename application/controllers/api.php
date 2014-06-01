@@ -704,6 +704,7 @@ class Api extends CI_Controller
 		$makeup = $this->input->post('makeup');
 		$student_before = $this->input->post('student_before');
 		$course_type = $this->input->post('course_type');
+		$letter_type = $this->input->post('letter_type');
 		$reg_no = $this->input->post('reg_no');
 		$related_receipt = $this->input->post('related_receipt');
 		$related_receipt_amount = $this->input->post('related_receipt_amount');
@@ -721,6 +722,7 @@ class Api extends CI_Controller
 			$makeup,
 			$student_before,
 			$course_type,
+			$letter_type,
 			$reg_no,
 			$related_receipt,
 			$related_receipt_amount,
@@ -763,5 +765,62 @@ class Api extends CI_Controller
 			echo json_encode($results);
 		}
 		echo NULL;
+	}
+
+	/**
+	 *  get receipt record by receipt_id
+	 */
+	function getReceiptRecordByID() {
+		$receipt_id = $this->input->post('receipt_id');
+		$record = $this->apis->get_receipt_record_by_id($receipt_id);
+		if($record != NULL) {
+			echo json_encode($record);
+		}
+		echo NULL;
+	}
+
+	/**
+	 *  update receipt record by receipt_id
+	 */
+	function updateReceiptRecord() {
+		$receipt_id = $this->input->post('receipt_id');
+		$student_ic = $this->input->post('student_ic');
+		$receipt_no = $this->input->post('receipt_no');
+		$payee_name = $this->input->post('payee_name');
+		$receipt_date = $this->input->post('receipt_date');
+		$receipt_amount = $this->input->post('receipt_amount');
+		$makeup = $this->input->post('makeup');
+		$student_before = $this->input->post('student_before');
+		$course_type = $this->input->post('course_type');
+		$letter_type = $this->input->post('letter_type');
+		$reg_no = $this->input->post('reg_no');
+		$related_receipt = $this->input->post('related_receipt');
+		$related_receipt_amount = $this->input->post('related_receipt_amount');
+		$receipt_branch_id = $this->input->post('receipt_branch_id');
+		$receipt_op_id = $this->input->post('receipt_op_id');
+		$receipt_remark = $this->input->post('receipt_remark');
+
+		// update
+		$update = $this->apis->update_receipt_record(
+			$receipt_id,
+			$student_ic, 
+			$receipt_no, 
+			$payee_name, 
+			$receipt_date, 
+			$receipt_amount, 
+			$makeup,
+			$student_before,
+			$course_type,
+			$letter_type,
+			$reg_no,
+			$related_receipt,
+			$related_receipt_amount,
+			$receipt_branch_id, 
+			$receipt_op_id,
+			$receipt_remark);
+		if($update) {
+			echo 2;
+		}
+		else echo 0;
 	}
 }

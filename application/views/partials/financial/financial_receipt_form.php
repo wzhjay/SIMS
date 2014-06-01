@@ -15,6 +15,10 @@
 				create_new_receipt_record();
 			});
 
+			$('#financial_receipt_update').on('click', function() {
+				update_receipt_record();
+			});
+			
 			$('#financial_receipt_student_ic_check').on('click', function() {
 				check_receipt_student_ic();
 			});
@@ -133,6 +137,55 @@
 					    clear_receipt_from_inputs();
 					}else{
 						toastr.error("Fail to create receipt record!");
+					}
+			    }
+			});//End ajax
+		}
+
+		function update_receipt_record() {
+			var student_ic = $('#input_financial_receipt_student_ic').val();
+			var receipt_no = $('#input_financial_receipt_num').val();
+			var payee_name = $('#input_financial_receipt_payee').val();
+			var receipt_date = $('#input_financial_receipt_date').val();
+			var receipt_amount = $('#input_financial_receipt_amount').val();
+			var makeup = $('#input_financial_receipt_makeup').is(':checked') ? 'YES' : 'NO';
+			var student_before = $('#input_financial_receipt_student_before').is(':checked') ? 'YES' : 'NO';
+			var course_type = $('#input_financial_receipt_course_type option:selected').val();
+			var letter_type = $('#input_financial_receipt_letter_type option:selected').val();
+			var reg_no = $('#input_financial_receipt_reg_num').val();
+			var related_receipt = $('#input_financial_receipt_related_receipt').val();
+			var related_receipt_amount = $('#input_financial_receipt_related_receipt_amount').val();
+			var receipt_branch = $('#input_financial_receipt_branch option:selected').attr('id').split('_');
+			var receipt_branch_id = receipt_branch[2];
+			var receipt_op = $('#input_financial_receipt_op option:selected').attr('id').split('_');
+			var receipt_op_id = receipt_op[2];
+			var receipt_remark = $('#input_financial_receipt_remark').val();
+
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "updateReceiptRecord",
+			    data:{	receipt_id:selected_receipt_record_id,
+			    		student_ic:student_ic,
+			    		receipt_no:receipt_no, 
+			    		payee_name:payee_name, 
+			    		receipt_date:receipt_date, 
+			    		receipt_amount:receipt_amount, 
+			    		makeup:makeup, 
+			    		student_before:student_before,
+			    		course_type:course_type,
+			    		letter_type:letter_type,
+			    		reg_no:reg_no,
+			    		related_receipt:related_receipt,
+			    		related_receipt_amount:related_receipt_amount,
+			    		receipt_branch_id:receipt_branch_id,
+			    		receipt_op_id:receipt_op_id,
+			    		receipt_remark:receipt_remark},
+			    success:function(json){
+			    	if(json.trim() == '2') {
+					    toastr.success("Update receipt record success!");
+					    clear_receipt_from_inputs();
+					}else{
+						toastr.error("Fail to update receipt record!");
 					}
 			    }
 			});//End ajax

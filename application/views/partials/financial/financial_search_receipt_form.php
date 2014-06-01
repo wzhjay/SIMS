@@ -184,7 +184,7 @@
 				 					load_receipt_record(receipt_record_id);
 				 				} else if(el_id[2] == "delete") {
 				 					// delete receipt record
-				 					get_receipt_by_id(receipt_record_id);
+				 					delete_receipt_by_id(receipt_record_id);
 				 				}
 				 			});
 			        	}
@@ -194,10 +194,46 @@
 		}
 
 		function load_receipt_record(receipt_record_id) {
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getReceiptRecordByID",
+			    data:{receipt_id:receipt_record_id},
+			    success:function(json){
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			    				$('#input_financial_receipt_student_ic').val(reply[key].student_ic);
+								$('#input_financial_receipt_num').val(reply[key].receipt_no);
+								$('#input_financial_receipt_payee').val(reply[key].payee_name);
+								$('#input_financial_receipt_date').val(reply[key].receipt_date);
+								$('#input_financial_receipt_amount').val(reply[key].receipt_amount);
+								(reply[key].makeup == "YES") ? $('#input_financial_receipt_makeup').prop('checked', true) : $('#input_financial_receipt_makeup').prop('checked', false);
+								(reply[key].student_before == "YES") ? $('#input_financial_receipt_student_before').prop('checked', true) : $('#input_financial_receipt_student_before').prop('checked', false);
+								
+								$('#input_financial_receipt_course_type option[value="'+reply[key].course_type+'"]').attr('selected', 'selected');
+								$('#input_financial_receipt_letter_type option[value="'+reply[key].letter_type+'"]').attr('selected', 'selected');
 
+								$('#input_financial_receipt_reg_num').val(reply[key].reg_no);
+								$('#input_financial_receipt_related_receipt').val(reply[key].related_receipt);
+								$('#input_financial_receipt_related_receipt_amount').val(reply[key].related_receipt_amount);
+								
+								$('#input_financial_receipt_branch option[id="receipt_branch_'+reply[key].receipt_branch_id+'"]').attr('selected', 'selected');
+								$('#input_financial_receipt_op option[id="receipt_op_'+reply[key].receipt_op_id+'"]').attr('selected', 'selected');
+
+								$('#input_financial_receipt_remark').val(reply[key].receipt_remark);
+			            	}
+			            }
+			            $("html, body").animate({ scrollTop: 0 }, "slow");
+			            toastr.info("Update receipt record on above form!");
+			        }else{
+			        	toastr.error("Fail to load receipt record");
+			        }
+			    }
+			});//End ajax
 		}
 
-		function get_receipt_by_id(receipt_record_id) {
+		function delete_receipt_by_id(receipt_record_id) {
 
 		}
 	</script>
