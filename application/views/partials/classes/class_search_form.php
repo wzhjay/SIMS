@@ -136,7 +136,7 @@
 													'<h4 class="panel-title">' +
 														'<div class="row">' +
 															'<div class="col-xs-8">' +
-																'<a data-toggle="collapse" data-parent="class_search_collapse_'+key+'" href="#class_search_collapse_body_'+key+'">Class Name: <b>' + reply[key].class_name + '</b>  /  Class Code: <b>' + reply[key].code + '</b>  /  Class Status: <b>' + reply[key].status + '</b></a>' +
+																'<a data-toggle="collapse" data-parent="class_search_collapse_'+key+'" href="#class_search_collapse_body_'+key+'">Class Name: <b>' + reply[key].class_name + '</b>  /  Code: <b>' + reply[key].code + '</b>  /  Course: <b>' + reply[key].type + '</b>  /  Status: <b>' + reply[key].status + '</b></a>' +
 															'</div>' + 
 															'<div class="col-xs-2">' +
 																'<a class="button glow button-rounded button-flat" id="class_search_student_management_'+reply[key].class_id+'" data-toggle="modal" data-target="#class-student-management-modal">Manage</a>' + 

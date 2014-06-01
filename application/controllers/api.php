@@ -612,6 +612,18 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  get all class info by student ic, where student are in these classes
+	 */
+	function getStudentClassesInfoByIC() {
+		$ic = $this->input->post('ic');
+		$classes = $this->apis->get_all_class_by_student_ic($ic);
+		if($classes != NULL) {
+			echo json_encode($classes);
+		}
+		echo NULL;
+	}
+
+	/**
 	 *  assign student to class
 	 */
 	function assignStudentToClass() {

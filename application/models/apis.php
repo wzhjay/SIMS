@@ -645,11 +645,31 @@ class Apis extends CI_Model
 		return NULL;	
 	}
 
+	/**
+	 * update receipt record
+	 *
+	 * @param	$receipt_id, $student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $letter_type, $reg_no, $related_receipt, $related_receipt_amount, $receipt_branch_id, $receipt_op_id, $receipt_remark
+	 * @return	bool
+	 */
 	function update_receipt_record($receipt_id, $student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $letter_type, $reg_no, $related_receipt, $related_receipt_amount, $receipt_branch_id, $receipt_op_id, $receipt_remark) {
 		if($this->session->userdata('session_id')) {
 			$query = $this->db->query('UPDATE receipt SET student_ic = "'.$student_ic.'", receipt_no = "'.$receipt_no.'", payee_name = "'.$payee_name.'", receipt_date = "'.$receipt_date.'", receipt_amount = "'.$receipt_amount.'", makeup = "'.$makeup.'", student_before = "'.$student_before.'", course_type = "'.$course_type.'", letter_type = "'.$letter_type.'", reg_no = "'.$reg_no.'", related_receipt = "'.$related_receipt.'", related_receipt_amount = "'.$related_receipt_amount.'", receipt_branch_id = "'.$receipt_branch_id.'", receipt_op_id = "'.$receipt_op_id.'", receipt_remark = "'.$receipt_remark.'", modified = "'.date('Y-m-d H:i:s').'" WHERE receipt_id = "'.$receipt_id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;
+	}
+
+	/**
+	 * get classes from class, student_class and branch table by student IC
+	 *
+	 * @param	$ic
+	 * @return	array or null
+	 */
+	function get_all_class_by_student_ic($ic) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM class c, student_class sc, branch b WHERE (c.class_id = sc.class_id) AND (sc.student_id = (SELECT id FROM student s WHERE s.ic = "'.$ic.'")) AND (c.branch_id = b.id) ORDER BY c.created');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
 	}
 }
