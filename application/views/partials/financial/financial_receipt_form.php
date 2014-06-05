@@ -106,8 +106,8 @@
 			var course_type = $('#input_financial_receipt_course_type option:selected').val();
 			var letter_type = $('#input_financial_receipt_letter_type option:selected').val();
 			var reg_no = $('#input_financial_receipt_reg_num').val();
-			var related_receipt = $('#input_financial_receipt_related_receipt').val();
-			var related_receipt_amount = $('#input_financial_receipt_related_receipt_amount').val();
+			// var related_receipt = $('#input_financial_receipt_related_receipt').val();
+			// var related_receipt_amount = $('#input_financial_receipt_related_receipt_amount').val();
 			var receipt_branch = $('#input_financial_receipt_branch option:selected').attr('id').split('_');
 			var receipt_branch_id = receipt_branch[2];
 			var receipt_op = $('#input_financial_receipt_op option:selected').attr('id').split('_');
@@ -126,8 +126,8 @@
 			    		student_before:student_before,
 			    		course_type:course_type,
 			    		reg_no:reg_no,
-			    		related_receipt:related_receipt,
-			    		related_receipt_amount:related_receipt_amount,
+			    		// related_receipt:related_receipt,
+			    		// related_receipt_amount:related_receipt_amount,
 			    		receipt_branch_id:receipt_branch_id,
 			    		receipt_op_id:receipt_op_id,
 			    		receipt_remark:receipt_remark},
@@ -153,8 +153,8 @@
 			var course_type = $('#input_financial_receipt_course_type option:selected').val();
 			var letter_type = $('#input_financial_receipt_letter_type option:selected').val();
 			var reg_no = $('#input_financial_receipt_reg_num').val();
-			var related_receipt = $('#input_financial_receipt_related_receipt').val();
-			var related_receipt_amount = $('#input_financial_receipt_related_receipt_amount').val();
+			// var related_receipt = $('#input_financial_receipt_related_receipt').val();
+			// var related_receipt_amount = $('#input_financial_receipt_related_receipt_amount').val();
 			var receipt_branch = $('#input_financial_receipt_branch option:selected').attr('id').split('_');
 			var receipt_branch_id = receipt_branch[2];
 			var receipt_op = $('#input_financial_receipt_op option:selected').attr('id').split('_');
@@ -175,8 +175,8 @@
 			    		course_type:course_type,
 			    		letter_type:letter_type,
 			    		reg_no:reg_no,
-			    		related_receipt:related_receipt,
-			    		related_receipt_amount:related_receipt_amount,
+			    		// related_receipt:related_receipt,
+			    		// related_receipt_amount:related_receipt_amount,
 			    		receipt_branch_id:receipt_branch_id,
 			    		receipt_op_id:receipt_op_id,
 			    		receipt_remark:receipt_remark},
@@ -202,8 +202,8 @@
 			$('#input_financial_receipt_course_type option[value="NA"]').attr('selected', 'selected');
 			$('#input_financial_receipt_letter_type option[value="NA"]').attr('selected', 'selected');
 			$('#input_financial_receipt_reg_num').val('');
-			$('#input_financial_receipt_related_receipt').val('');
-			$('#input_financial_receipt_related_receipt_amount').val('');
+			// $('#input_financial_receipt_related_receipt').val('');
+			// $('#input_financial_receipt_related_receipt_amount').val('');
 			$('#input_financial_receipt_remark').val('');
 		}
 
@@ -406,21 +406,21 @@
 		        <option value="wts2">wts2</option>
 		    </select>
 		</div>
-	</div>
-	<div class="row">
 		<div class="col-xs-4">
 			<label for="input_financial_receipt_reg_num">报名表号码</label>
 			<input class="form-control" id="input_financial_receipt_reg_num" >
 		</div>
-		<div class="col-xs-4">
+	</div>
+	<!-- <div class="row"> -->
+<!-- 		<div class="col-xs-4">
 			<label for="input_financial_receipt_related_receipt">相关收据</label>
 			<input class="form-control" id="input_financial_receipt_related_receipt" >
 		</div>
 		<div class="col-xs-4">
 			<label for="input_financial_receipt_related_receipt_amount">对应金额</label>
 			<input class="form-control" id="input_financial_receipt_related_receipt_amount" >
-		</div>
-	</div>
+		</div> -->
+	<!-- </div> -->
 	<div class="row">
 		<div class="col-xs-4">
 			<label for="input_financial_receipt_branch">Branch</label>

@@ -718,8 +718,8 @@ class Api extends CI_Controller
 		$course_type = $this->input->post('course_type');
 		$letter_type = $this->input->post('letter_type');
 		$reg_no = $this->input->post('reg_no');
-		$related_receipt = $this->input->post('related_receipt');
-		$related_receipt_amount = $this->input->post('related_receipt_amount');
+		// $related_receipt = $this->input->post('related_receipt');
+		// $related_receipt_amount = $this->input->post('related_receipt_amount');
 		$receipt_branch_id = $this->input->post('receipt_branch_id');
 		$receipt_op_id = $this->input->post('receipt_op_id');
 		$receipt_remark = $this->input->post('receipt_remark');
@@ -736,8 +736,8 @@ class Api extends CI_Controller
 			$course_type,
 			$letter_type,
 			$reg_no,
-			$related_receipt,
-			$related_receipt_amount,
+			// $related_receipt,
+			// $related_receipt_amount,
 			$receipt_branch_id, 
 			$receipt_op_id,
 			$receipt_remark);
@@ -806,8 +806,8 @@ class Api extends CI_Controller
 		$course_type = $this->input->post('course_type');
 		$letter_type = $this->input->post('letter_type');
 		$reg_no = $this->input->post('reg_no');
-		$related_receipt = $this->input->post('related_receipt');
-		$related_receipt_amount = $this->input->post('related_receipt_amount');
+		// $related_receipt = $this->input->post('related_receipt');
+		// $related_receipt_amount = $this->input->post('related_receipt_amount');
 		$receipt_branch_id = $this->input->post('receipt_branch_id');
 		$receipt_op_id = $this->input->post('receipt_op_id');
 		$receipt_remark = $this->input->post('receipt_remark');
@@ -825,8 +825,8 @@ class Api extends CI_Controller
 			$course_type,
 			$letter_type,
 			$reg_no,
-			$related_receipt,
-			$related_receipt_amount,
+			// $related_receipt,
+			// $related_receipt_amount,
 			$receipt_branch_id, 
 			$receipt_op_id,
 			$receipt_remark);
