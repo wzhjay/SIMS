@@ -14,13 +14,132 @@
 			});
 
 			$('#student_new_create').on('click', function() {
-
+				create_new_student_basic_info();
 			});
 
 			$('#student_new_update').on('click', function() {
 				
 			});
 		});
+
+		function create_new_student_basic_info() {
+			var source = $('#input_student_new_source').val();
+			var gov_letter = $('#input_student_new_gov_letter').is(':checked') ? 'YES' : 'NO';
+			var ic = $('#input_student_new_ic').val();
+			var ic_type = $('#input_student_new_ic_type').val();
+			var firstname = $('#input_student_new_fn').val();
+			var lastname = $('#input_student_new_ln').val();
+			var othername = $('#input_student_new_on').val();
+			var tel = $('#input_student_new_tel').val();
+			var tel_home = $('#input_student_new_tel_home').val();
+			var gender = $('#input_student_new_gender').val();
+			var salutation = $('#input_student_new_sal').val();
+			var birthday = $('#input_student_new_bd').val();
+			var age = $('#input_student_new_age').val();
+			var citizenship = $('#input_student_new_citizenship').val();
+			var nationality = $('#input_student_new_nationality').val();
+			var race = $('#input_student_new_race').val();
+			var cn_level = $('#input_student_new_cnlevel').val();
+			var edu_level = $('#input_student_new_edulevel').val();
+			var lang = $('#input_student_new_lang').val();
+
+			// address
+			var blk = $('#input_student_new_blk').val();
+			var street = $('#input_student_new_street').val();
+			var floor_unit_no = $('#input_student_new_floor_unit').val();
+			var building = $('#input_student_new_building').val();
+			var postcode = $('#input_student_new_postcode').val();
+
+			// employment
+			var emp_status = $('#input_student_new_empstatus').val();
+			var company_name = $('#input_student_new_comn').val();
+			var company_type = $('#input_student_new_com_type').val();
+			var company_reg_no = $('#input_student_new_com_reg_no').val();
+			var industry = $('#input_student_new_industry').val();
+			var designation = $('#input_student_new_designation').val();
+			var salary_range = $('#input_student_new_sal_range').val();
+
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "createStudentBasicInfo",
+			    data:{	source:source,
+			    		gov_letter:gov_letter, 
+			    		ic:ic, 
+			    		ic_type:ic_type, 
+			    		firstname:firstname, 
+			    		lastname:lastname, 
+			    		othername:othername,
+			    		tel:tel,
+			    		tel_home:tel_home,
+			    		gender:gender,
+			    		salutation:salutation,
+			    		birthday:birthday, 
+			    		age:age,
+			    		citizenship:citizenship,
+			    		nationality:nationality,
+			    		race:race,
+			    		cn_level:cn_level,
+			    		edu_level:edu_level,
+			    		lang:lang,
+			    		blk:blk,
+			    		street:street,
+			    		floor_unit_no:floor_unit_no,
+			    		building:building,
+			    		postcode:postcode,
+			    		emp_status:emp_status,
+			    		company_name:company_name,
+			    		company_type:company_type,
+			    		company_reg_no:company_reg_no,
+			    		industry:industry,
+			    		designation:designation,
+			    		salary_range:salary_range},
+			    success:function(json){
+			    	if(json.trim() == '1') {
+					    toastr.success("Create student basic info success!");
+					    clear_student_new_form_inputs();
+					}else{
+						toastr.error("Fail to create student basic info!");
+					}
+			    }
+			});//End ajax
+		}
+
+		function clear_student_new_form_inputs() {
+			$('#input_student_new_gov_letter').prop('checked', false);
+			$('#input_student_new_ic').val('');
+			$('#input_student_new_ic_type option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_fn').val('');
+			$('#input_student_new_ln').val('');
+			$('#input_student_new_on').val('');
+			$('#input_student_new_tel').val('');
+			$('#input_student_new_tel_home').val('');
+			$('#input_student_new_gender option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_sal option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_bd').val('');
+			$('#input_student_new_age').val('');
+			$('#input_student_new_citizenship option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_nationality option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_race option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_cnlevel option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_edulevel option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_lang option[value="NA"]').attr('selected', 'selected');
+
+			// address
+			$('#input_student_new_blk').val('');
+			$('#input_student_new_street').val('');
+			$('#input_student_new_floor_unit').val('');
+			$('#input_student_new_building').val('');
+			$('#input_student_new_postcode').val('');
+
+			// employment
+			$('#input_student_new_empstatus option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_comn').val('');
+			$('#input_student_new_com_type option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_com_reg_no').val('');
+			$('#input_student_new_industry option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_designation option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_sal_range option[value="NA"]').attr('selected', 'selected');
+		}
 
 		function check_student_ic() {
 			var ic = $('#input_student_new_ic').val();

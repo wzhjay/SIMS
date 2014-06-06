@@ -182,6 +182,81 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  create new student basic info
+	 */
+	function createStudentBasicInfo() {
+		$source = $this->input->post('source');
+		$gov_letter = $this->input->post('gov_letter');
+		$ic = $this->input->post('ic');
+		$ic_type = $this->input->post('ic_type');
+		$firstname = $this->input->post('firstname');
+		$lastname = $this->input->post('lastname');
+		$othername = $this->input->post('othername');
+		$tel = $this->input->post('tel');
+		$tel_home = $this->input->post('tel_home');
+		$gender = $this->input->post('gender');
+		$salutation = $this->input->post('salutation');
+		$birthday = $this->input->post('birthday');
+		$age = $this->input->post('age');
+		$citizenship = $this->input->post('citizenship');
+		$nationality = $this->input->post('nationality');
+		$race = $this->input->post('race');
+		$cn_level = $this->input->post('cn_level');
+		$edu_level = $this->input->post('edu_level');
+		$lang = $this->input->post('lang');
+		$blk = $this->input->post('blk');
+		$street = $this->input->post('street');
+		$floor_unit_no = $this->input->post('floor_unit_no');
+		$building = $this->input->post('building');
+		$postcode = $this->input->post('postcode');
+		$emp_status = $this->input->post('emp_status');
+		$company_name = $this->input->post('company_name');
+		$company_type = $this->input->post('company_type');
+		$company_reg_no = $this->input->post('company_reg_no');
+		$industry = $this->input->post('industry');
+		$designation = $this->input->post('designation');
+		$salary_range = $this->input->post('salary_range');
+
+		// create
+		$create = $this->apis->create_new_student_basic_info(
+			$source,
+			$gov_letter,
+			$ic,
+			$ic_type, 
+			$firstname, 
+			$lastname, 
+			$othername, 
+			$tel, 
+			$tel_home, 
+			$gender, 
+			$salutation, 
+			$birthday, 
+			$age, 
+			$citizenship, 
+			$nationality, 
+			$race,
+		    $cn_level,
+			$edu_level,
+			$lang, 
+			$blk, 
+			$street, 
+			$floor_unit_no, 
+			$building, 
+			$postcode, 
+			$emp_status,
+		    $company_name,
+			$company_type,
+			$company_reg_no,
+			$industry,
+			$designation,
+			$salary_range);
+		if($create) {
+			echo 1;
+		}
+		else echo 0;
+	}
+
+	/**
 	 *  create ato info by student
 	 */
 	function createATOInfo() {

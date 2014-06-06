@@ -26,7 +26,6 @@
 	<script type="text/javascript" src="<?php echo base_url() ?>assets/buttons/buttons.js"></script>
 	<script type="text/javascript" src="<?php echo base_url() ?>assets/js/moment.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url() ?>assets/toastr/toastr.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url() ?>assets/fullCalendar/jquery-ui.custom.min.js"></script>
 	<script type="text/javascript">
 		window.api_url = "http://sims.com/SIMS/index.php/api/";
 
