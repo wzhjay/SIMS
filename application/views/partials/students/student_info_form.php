@@ -9,6 +9,9 @@
 				format: 'yyyy-mm-dd'
 			});
 
+			student_new_load_admin_users();
+			student_new_load_branches();
+
 			$('#student_new_ic_check').on('click', function() {
 				check_student_ic();
 			});
@@ -21,6 +24,50 @@
 				
 			});
 		});
+
+		function student_new_load_admin_users() {
+			var users = $('#input_student_new_op');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getAllAdminUsers",
+			    data:{},
+			    success:function(json){
+			    	users.children().remove();
+			    	if(json != null) {
+			    		var reply = $.parseJSON(json);
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			            		users.append('<option id="student_new_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
+			            	}
+			            }
+			        }else{
+			        	alert("fail to load users");
+			        }
+			    }
+			});//End ajax
+		}
+
+		function student_new_load_branches() {
+			var branches = $('#input_student_new_branch');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getAllBranches",
+			    data:{},
+			    success:function(json){
+			    	branches.children().remove();
+			    	if(json != null) {
+			    		var reply = $.parseJSON(json);
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			    				branches.append('<option id="student_new_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+			    			}
+			    		}
+			        }else{
+			        	alert("fail to load braches");
+			        }
+			    }
+			});//End ajax
+		}
 
 		function create_new_student_basic_info() {
 			var source = $('#input_student_new_source').val();
@@ -59,6 +106,13 @@
 			var designation = $('#input_student_new_designation').val();
 			var salary_range = $('#input_student_new_sal_range').val();
 
+			// extra
+			var student_branch = $('#input_student_new_branch option:selected').attr('id').split('_');
+			var student_branch_id = student_branch[3];
+			var student_op = $('#input_student_new_op option:selected').attr('id').split('_');
+			var student_op_id = student_op[3];
+			var student_remark  = $('#input_student_new_remark').val();
+
 			$.ajax({
 				type:"post",
 			    url:window.api_url + "createStudentBasicInfo",
@@ -92,7 +146,10 @@
 			    		company_reg_no:company_reg_no,
 			    		industry:industry,
 			    		designation:designation,
-			    		salary_range:salary_range},
+			    		salary_range:salary_range,
+			    		student_branch_id:student_branch_id,
+			    		student_op_id:student_op_id,
+			    		student_remark:student_remark},
 			    success:function(json){
 			    	if(json.trim() == '1') {
 					    toastr.success("Create student basic info success!");
@@ -139,6 +196,9 @@
 			$('#input_student_new_industry option[value="NA"]').attr('selected', 'selected');
 			$('#input_student_new_designation option[value="NA"]').attr('selected', 'selected');
 			$('#input_student_new_sal_range option[value="NA"]').attr('selected', 'selected');
+
+			// extra
+			$('#input_student_new_remark').val('');
 		}
 
 		function check_student_ic() {
@@ -322,6 +382,7 @@
 			var industry = $('#input_student_new_industry').val();
 			var designation = $('#input_student_new_designation').val();
 			var salary_range = $('#input_student_new_sal_range').val();
+			var student_remark = $('#input_student_new_remark').val();
 		}
 	</script>
 </head>
@@ -862,6 +923,20 @@
                 <option value="$3,000 - $3,499">$3,000 - $3,499</option>
                 <option value="$3,500 and above">$3,500 and above</option>
             </select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_student_new_branch">Student Branch</label>
+			<select class="form-control" id="input_student_new_branch"></select>
+		</div>
+		<div class="col-xs-4">
+			<label for="input_student_new_op">Operator</label>
+			<select class="form-control" id="input_student_new_op"></select>
+		</div>
+		<div class="col-xs-4">
+			<label for="input_student_new_remark">Remark</label>
+			<textarea class="form-control" id="input_student_new_remark" rows="3"></textarea>
 		</div>
 	</div>
 </form>

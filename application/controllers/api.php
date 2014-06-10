@@ -216,41 +216,47 @@ class Api extends CI_Controller
 		$industry = $this->input->post('industry');
 		$designation = $this->input->post('designation');
 		$salary_range = $this->input->post('salary_range');
+		$student_branch_id = $this->input->post('student_branch_id');
+		$student_op_id = $this->input->post('student_op_id');
+		$student_remark = $this->input->post('student_remark');
 
 		// create
 		$create = $this->apis->create_new_student_basic_info(
 			$source,
 			$gov_letter,
 			$ic,
-			$ic_type, 
-			$firstname, 
-			$lastname, 
-			$othername, 
-			$tel, 
-			$tel_home, 
-			$gender, 
-			$salutation, 
-			$birthday, 
-			$age, 
-			$citizenship, 
-			$nationality, 
+			$ic_type,
+			$firstname,
+			$lastname,
+			$othername,
+			$tel,
+			$tel_home,
+			$gender,
+			$salutation,
+			$birthday,
+			$age,
+			$citizenship,
+			$nationality,
 			$race,
-		    $cn_level,
+			$cn_level,
 			$edu_level,
-			$lang, 
-			$blk, 
-			$street, 
-			$floor_unit_no, 
-			$building, 
-			$postcode, 
+			$lang,
+			$blk,
+			$street,
+			$floor_unit_no,
+			$building,
+			$postcode,
 			$emp_status,
-		    $company_name,
+			$company_name,
 			$company_type,
 			$company_reg_no,
 			$industry,
 			$designation,
-			$salary_range);
-		if($create) {
+			$salary_range,
+			$student_branch_id,
+			$student_op_id,
+			$student_remark);
+		if($create){
 			echo 1;
 		}
 		else echo 0;

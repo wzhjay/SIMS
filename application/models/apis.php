@@ -194,6 +194,20 @@ class Apis extends CI_Model
 	}
 
 	/**
+	 * insert new student basic info
+	 *
+	 * @param	$source, $gov_letter, $ic, $ic_type, $firstname, $lastname, $othername, $tel, $tel_home, $gender, $salutation, $birthday, $age, $citizenship, $nationality, $race,$cn_level, $edu_level, $lang, $blk, $street, $floor_unit_no, $building, $postcode, $emp_status, $company_name, $company_type,$company_reg_no, $industry, $designation, $salary_range
+	 * @return	bool
+	 */
+	// function create_new_student_basic_info($source, $gov_letter, $ic, $ic_type, $firstname, $lastname, $othername, $tel, $tel_home, $gender, $salutation, $birthday, $age, $citizenship, $nationality, $race, $cn_level, $edu_level, $lang, $blk, $street, $floor_unit_no, $building, $postcode, $emp_status, $company_name, $company_type, $company_reg_no, $industry, $designation, $salary_range, student_branch_id, student_op_id, student_remark) {
+	// 	if($this->session->userdata('session_id')) {
+	// 		$query = $this->db->query('INSERT INTO student (source, gov_letter, ic, ic_type, firstname, lastname, othername, tel, tel_home, gender, salutation, birthday, age, citizenship, nationality, race, cn_level, edu_level, lang, blk, street, floor_unit_no, building, postcode, emp_status, company_name, company_type, company_reg_no, industry, designation, salary_range, student_branch_id, student_op_id, created, modified, student_remark) VALUES ("'.$source.'", "'.$gov_letttel_home.'", "'.$ic.'", "'.$ic_type.'", "'.$firstname.'", "'.$lastname.'", "'.$othername.'", "'.$tel.'", "'.$tel_home.'", "'.$gender.'", "'.$salutation.'", "'.$birthday.'", "'.$age.'", "'.$citizenship.'", "'.$nationality.'", "'.$race.'", "'.$cn_level.'", "'.$edu_level.'", "'.$lang.'", "'.$blk.'", "'.$street.'", "'.$floor_unit_no.'", "'.$building.'", "'.$postcode.'", "'.$emp_status.'", "'.$company_name.'", "'.$company_type.'", "'.$company_reg_no.'", "'.$industry.'", "'.$designation.'", "'.$salary_range.'", "'.$student_branch_id.'", "'.$student_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$student_remark.'")');
+	// 		if ($this->db->affected_rows()) return TRUE;
+	// 	}
+	// 	return FALSE;
+	// }
+
+	/**
 	 * insert info to ato table
 	 *
 	 * @param	$ic, $pre_post, $recommend_level, $class_start_date,  $class_end_date, $class_code, $attendance, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $remark
