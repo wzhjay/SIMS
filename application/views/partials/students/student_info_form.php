@@ -2,6 +2,7 @@
 	<meta charset="utf-8">
 
 	<script>
+		var selected_student_id = 0;
 		$(document).ready(function($) {
 			event.preventDefault();
 			$('#student_new_info_form').parsley();
@@ -21,7 +22,7 @@
 			});
 
 			$('#student_new_update').on('click', function() {
-				
+				update_student_basic_info();
 			});
 		});
 
@@ -161,6 +162,100 @@
 			});//End ajax
 		}
 
+		function update_student_basic_info() {
+			var student_id = selected_student_id;
+			var source = $('#input_student_new_source').val();
+			var gov_letter = $('#input_student_new_gov_letter').is(':checked') ? 'YES' : 'NO';
+			var ic = $('#input_student_new_ic').val();
+			var ic_type = $('#input_student_new_ic_type').val();
+			var firstname = $('#input_student_new_fn').val();
+			var lastname = $('#input_student_new_ln').val();
+			var othername = $('#input_student_new_on').val();
+			var tel = $('#input_student_new_tel').val();
+			var tel_home = $('#input_student_new_tel_home').val();
+			var gender = $('#input_student_new_gender').val();
+			var salutation = $('#input_student_new_sal').val();
+			var birthday = $('#input_student_new_bd').val();
+			var age = $('#input_student_new_age').val();
+			var citizenship = $('#input_student_new_citizenship').val();
+			var nationality = $('#input_student_new_nationality').val();
+			var race = $('#input_student_new_race').val();
+			var cn_level = $('#input_student_new_cnlevel').val();
+			var edu_level = $('#input_student_new_edulevel').val();
+			var lang = $('#input_student_new_lang').val();
+
+			// address
+			var blk = $('#input_student_new_blk').val();
+			var street = $('#input_student_new_street').val();
+			var floor_unit_no = $('#input_student_new_floor_unit').val();
+			var building = $('#input_student_new_building').val();
+			var postcode = $('#input_student_new_postcode').val();
+
+			// employment
+			var emp_status = $('#input_student_new_empstatus').val();
+			var company_name = $('#input_student_new_comn').val();
+			var company_type = $('#input_student_new_com_type').val();
+			var company_reg_no = $('#input_student_new_com_reg_no').val();
+			var industry = $('#input_student_new_industry').val();
+			var designation = $('#input_student_new_designation').val();
+			var salary_range = $('#input_student_new_sal_range').val();
+
+			// extra
+			var student_branch = $('#input_student_new_branch option:selected').attr('id').split('_');
+			var student_branch_id = student_branch[3];
+			var student_op = $('#input_student_new_op option:selected').attr('id').split('_');
+			var student_op_id = student_op[3];
+			var student_remark  = $('#input_student_new_remark').val();
+
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "updateStudentBasicInfo",
+			    data:{	student_id:student_id,
+			    		source:source,
+			    		gov_letter:gov_letter, 
+			    		ic:ic, 
+			    		ic_type:ic_type, 
+			    		firstname:firstname, 
+			    		lastname:lastname, 
+			    		othername:othername,
+			    		tel:tel,
+			    		tel_home:tel_home,
+			    		gender:gender,
+			    		salutation:salutation,
+			    		birthday:birthday, 
+			    		age:age,
+			    		citizenship:citizenship,
+			    		nationality:nationality,
+			    		race:race,
+			    		cn_level:cn_level,
+			    		edu_level:edu_level,
+			    		lang:lang,
+			    		blk:blk,
+			    		street:street,
+			    		floor_unit_no:floor_unit_no,
+			    		building:building,
+			    		postcode:postcode,
+			    		emp_status:emp_status,
+			    		company_name:company_name,
+			    		company_type:company_type,
+			    		company_reg_no:company_reg_no,
+			    		industry:industry,
+			    		designation:designation,
+			    		salary_range:salary_range,
+			    		student_branch_id:student_branch_id,
+			    		student_op_id:student_op_id,
+			    		student_remark:student_remark},
+			    success:function(json){
+			    	if(json.trim() == '2') {
+					    toastr.success("Update student basic info success!");
+					    clear_student_new_form_inputs();
+					}else{
+						toastr.error("Fail to update student basic info!");
+					}
+			    }
+			});//End ajax
+		}
+
 		function clear_student_new_form_inputs() {
 			$('#input_student_new_gov_letter').prop('checked', false);
 			$('#input_student_new_ic').val('');
@@ -235,7 +330,7 @@
 										'</div>' +
 										'<div class="col-xs-2">' +
 											'<br>' +
-											'<a class="button glow button-rounded button-flat" id="student_new_ic_check_modal_update_' + reply[key].id + '">Update</a>' + 
+											'<a class="button glow button-rounded button-flat" id="student_new_ic_check_modal_update_' + reply[key].student_id + '">Update</a>' + 
 										'</div>' +
 									'</div>'
 								);
@@ -244,7 +339,8 @@
 					        $('#stundet-check-modal a').on('click', function() {
 								var el_id = $(this).attr('id').split('_');
 								var student_id = el_id[6];
-								
+								selected_student_id = student_id;
+
 								$('#input_student_new_source').val(reply[key].source);
 								(reply[key].gov_letter == "YES") ? $('#input_student_new_gov_letter').prop('checked', true) : $('#input_student_new_gov_letter').prop('checked', false);
 								$('#input_student_new_ic').val(reply[key].ic);
@@ -281,6 +377,11 @@
 								$('#input_student_new_industry option[value="'+reply[key].industry+'"]').attr('selected', 'selected');
 								$('#input_student_new_designation option[value="'+reply[key].designation+'"]').attr('selected', 'selected');
 								$('#input_student_new_sal_range option[value="'+reply[key].salary_range+'"]').attr('selected', 'selected');
+
+								// extra
+								$('#input_student_new_branch option[id="student_new_branch_'+reply[key].student_branch_id+'"]').attr('selected', 'selected');
+								$('#input_student_new_op option[id="student_new_user_'+reply[key].student_op_id+'"]').attr('selected', 'selected');
+								$('#input_student_new_remark').val(reply[key].student_remark);
 
 								$('#stundet-check-modal').modal('hide');
 							});

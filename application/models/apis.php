@@ -196,16 +196,99 @@ class Apis extends CI_Model
 	/**
 	 * insert new student basic info
 	 *
-	 * @param	$source, $gov_letter, $ic, $ic_type, $firstname, $lastname, $othername, $tel, $tel_home, $gender, $salutation, $birthday, $age, $citizenship, $nationality, $race,$cn_level, $edu_level, $lang, $blk, $street, $floor_unit_no, $building, $postcode, $emp_status, $company_name, $company_type,$company_reg_no, $industry, $designation, $salary_range
+	 * @param	$source, $gov_letter, $ic, $ic_type, $firstname, $lastname, $othername, $tel, $tel_home, $gender, $salutation, $birthday, $age, $citizenship, $nationality, $race,$cn_level, $edu_level, $lang, $blk, $street, $floor_unit_no, $building, $postcode, $emp_status, $company_name, $company_type,$company_reg_no, $industry, $designation, $salary_range, student_branch_id, student_op_id, student_remark
 	 * @return	bool
 	 */
-	// function create_new_student_basic_info($source, $gov_letter, $ic, $ic_type, $firstname, $lastname, $othername, $tel, $tel_home, $gender, $salutation, $birthday, $age, $citizenship, $nationality, $race, $cn_level, $edu_level, $lang, $blk, $street, $floor_unit_no, $building, $postcode, $emp_status, $company_name, $company_type, $company_reg_no, $industry, $designation, $salary_range, student_branch_id, student_op_id, student_remark) {
-	// 	if($this->session->userdata('session_id')) {
-	// 		$query = $this->db->query('INSERT INTO student (source, gov_letter, ic, ic_type, firstname, lastname, othername, tel, tel_home, gender, salutation, birthday, age, citizenship, nationality, race, cn_level, edu_level, lang, blk, street, floor_unit_no, building, postcode, emp_status, company_name, company_type, company_reg_no, industry, designation, salary_range, student_branch_id, student_op_id, created, modified, student_remark) VALUES ("'.$source.'", "'.$gov_letttel_home.'", "'.$ic.'", "'.$ic_type.'", "'.$firstname.'", "'.$lastname.'", "'.$othername.'", "'.$tel.'", "'.$tel_home.'", "'.$gender.'", "'.$salutation.'", "'.$birthday.'", "'.$age.'", "'.$citizenship.'", "'.$nationality.'", "'.$race.'", "'.$cn_level.'", "'.$edu_level.'", "'.$lang.'", "'.$blk.'", "'.$street.'", "'.$floor_unit_no.'", "'.$building.'", "'.$postcode.'", "'.$emp_status.'", "'.$company_name.'", "'.$company_type.'", "'.$company_reg_no.'", "'.$industry.'", "'.$designation.'", "'.$salary_range.'", "'.$student_branch_id.'", "'.$student_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$student_remark.'")');
-	// 		if ($this->db->affected_rows()) return TRUE;
-	// 	}
-	// 	return FALSE;
-	// }
+	function create_new_student_basic_info(
+			$source,
+			$gov_letter,
+			$ic,
+			$ic_type,
+			$firstname,
+			$lastname,
+			$othername,
+			$tel,
+			$tel_home,
+			$gender,
+			$salutation,
+			$birthday,
+			$age,
+			$citizenship,
+			$nationality,
+			$race,
+			$cn_level,
+			$edu_level,
+			$lang,
+			$blk,
+			$street,
+			$floor_unit_no,
+			$building,
+			$postcode,
+			$emp_status,
+			$company_name,
+			$company_type,
+			$company_reg_no,
+			$industry,
+			$designation,
+			$salary_range,
+			$student_branch_id,
+			$student_op_id,
+			$student_remark) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('INSERT INTO student (source, gov_letter, ic, ic_type, firstname, lastname, othername, tel, tel_home, gender, salutation, birthday, age, citizenship, nationality, race, cn_level, edu_level, lang, block, street, floor_unit_no, building, postcode, emp_status, company_name, company_type, company_reg_no, industry, designation, salary_range, student_branch_id, student_op_id, created, modified, student_remark) VALUES ("'.$source.'", "'.$gov_letter.'", "'.$ic.'", "'.$ic_type.'", "'.$firstname.'", "'.$lastname.'", "'.$othername.'", "'.$tel.'", "'.$tel_home.'", "'.$gender.'", "'.$salutation.'", "'.$birthday.'", "'.$age.'", "'.$citizenship.'", "'.$nationality.'", "'.$race.'", "'.$cn_level.'", "'.$edu_level.'", "'.$lang.'", "'.$blk.'", "'.$street.'", "'.$floor_unit_no.'", "'.$building.'", "'.$postcode.'", "'.$emp_status.'", "'.$company_name.'", "'.$company_type.'", "'.$company_reg_no.'", "'.$industry.'", "'.$designation.'", "'.$salary_range.'", "'.$student_branch_id.'", "'.$student_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$student_remark.'")');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 *  update student basic info
+	 *
+	 * @param	$student_id, $source, $gov_letter, $ic, $ic_type, $firstname, $lastname, $othername, $tel, $tel_home, $gender, $salutation, $birthday, $age, $citizenship, $nationality, $race,$cn_level, $edu_level, $lang, $blk, $street, $floor_unit_no, $building, $postcode, $emp_status, $company_name, $company_type,$company_reg_no, $industry, $designation, $salary_range, student_branch_id, student_op_id, student_remark
+	 * @return	bool
+	 */
+	function update_student_basic_info(
+			$student_id,
+			$source,
+			$gov_letter,
+			$ic,
+			$ic_type,
+			$firstname,
+			$lastname,
+			$othername,
+			$tel,
+			$tel_home,
+			$gender,
+			$salutation,
+			$birthday,
+			$age,
+			$citizenship,
+			$nationality,
+			$race,
+			$cn_level,
+			$edu_level,
+			$lang,
+			$blk,
+			$street,
+			$floor_unit_no,
+			$building,
+			$postcode,
+			$emp_status,
+			$company_name,
+			$company_type,
+			$company_reg_no,
+			$industry,
+			$designation,
+			$salary_range,
+			$student_branch_id,
+			$student_op_id,
+			$student_remark) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('UPDATE student SET source = "'.$source.'", gov_letter = "'.$gov_letter.'", ic = "'.$ic.'", ic_type = "'.$ic_type.'", firstname = "'.$firstname.'", lastname = "'.$lastname.'", othername = "'.$othername.'", tel = "'.$tel.'", tel_home = "'.$tel_home.'", gender = "'.$gender.'", salutation = "'.$salutation.'", birthday = "'.$birthday.'", age = "'.$age.'", citizenship = "'.$citizenship.'", nationality = "'.$nationality.'", floor_unit_no = "'.$floor_unit_no.'", cn_level = "'.$cn_level.'", edu_level = "'.$edu_level.'", lang = "'.$lang.'", block = "'.$blk.'", street = "'.$street.'", building = "'.$building.'", postcode = "'.$postcode.'", emp_status = "'.$emp_status.'", company_name = "'.$company_name.'", company_type = "'.$company_type.'", company_reg_no = "'.$company_reg_no.'", industry = "'.$industry.'", designation = "'.$designation.'", salary_range = "'.$salary_range.'", student_branch_id = "'.$student_branch_id.'", student_op_id = "'.$student_op_id.'", student_remark = "'.$student_remark.'", modified = "'.date('Y-m-d H:i:s').'" WHERE student_id = "'.$student_id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
+	}
 
 	/**
 	 * insert info to ato table
