@@ -17,7 +17,7 @@
 				var branch = $('option:selected', '#input_system_assigned_branch').attr('id').split('_');
 				var branch_id = branch[2];
 				var status_id = 1; // activate
-				// alert(user_id + " " + roel_id + " " + branch_id + " " + status_id);
+				// toastr.error(user_id + " " + roel_id + " " + branch_id + " " + status_id);
 				$.ajax({
 					type:"post",
 				    url:window.api_url + "createNewAdmin",
@@ -25,15 +25,15 @@
 				    success:function(json){
 				    	if(json != null) {
 					    	var reply = $.parseJSON(json);
-					    	// alert(reply);
+					    	// toastr.error(reply);
 					    	if(reply == '1') {
 					    		load_users();
 					        }else{
-					        	alert("fail to call sql query");
+					        	toastr.error("fail to call sql query");
 					        }
 					    }
 					    else {
-					    	alert("fail to call insert user api");
+					    	toastr.error("fail to call insert user api");
 					    }
 					    load_admin_users();
 				    },
@@ -57,7 +57,7 @@
 			            	}
 			            }
 			        }else{
-			        	alert("fail to load users");
+			        	toastr.error("fail to load users");
 			        }
 			    },
 			});//End ajax
@@ -79,7 +79,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load roles");
+			        	toastr.error("fail to load roles");
 			        }
 			    },
 			});//End ajax
@@ -101,7 +101,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load braches");
+			        	toastr.error("fail to load braches");
 			        }
 			    },
 			});//End ajax

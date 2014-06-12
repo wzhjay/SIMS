@@ -53,7 +53,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load courses");
+			        	toastr.error("Fail to load courses!");
 			        }
 			    },
 			});//End ajax
@@ -76,7 +76,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load braches");
+			        	toastr.error("Fail to load braches!");
 			        }
 			    }
 			});//End ajax
@@ -360,7 +360,7 @@
 					    }
 					}
 					else {
-						toastr.error("fail to call api");
+						toastr.error("Fail to call api!");
 					}
 			    }
 			});//End ajax

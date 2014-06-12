@@ -66,10 +66,10 @@
 			    		remark:remark},
 			    success:function(json){
 			    	if(json.trim() == '1') {
-					    alert("insert record success!");
+					    toastr.success("Insert record success!");
 					    clear_student_exam_form();
 					}else{
-						alert("fail to insert record");
+						toastr.error("fail to insert record");
 					}
 			    }
 			});//End ajax
@@ -111,10 +111,10 @@
 			    		remark:remark},
 			    success:function(json){
 			    	if(json.trim() == '2') {
-					    alert("update record success!");
+					    toastr.success("Update record success!");
 					    clear_student_exam_form();
 					}else{
-						alert("fail to update record");
+						toastr.error("fail to update record");
 					}
 			    }
 			});//End ajax
@@ -329,7 +329,7 @@
 			            	}
 			            }
 			        }else{
-			        	alert("fail to load student record");
+			        	toastr.error("fail to load student record");
 			        }
 			    }
 			});//End ajax
@@ -351,7 +351,7 @@
 			            	}
 			            }
 			        }else{
-			        	alert("fail to load users");
+			        	toastr.error("fail to load users");
 			        }
 			    }
 			});//End ajax
@@ -373,7 +373,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load braches");
+			        	toastr.error("fail to load braches");
 			        }
 			    }
 			});//End ajax

@@ -42,7 +42,7 @@
 			            	}
 			            }
 			        }else{
-			        	alert("fail to load users");
+			        	toastr.error("fail to load users");
 			        }
 			    }
 			});//End ajax
@@ -64,7 +64,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load braches");
+			        	toastr.error("fail to load braches");
 			        }
 			    }
 			});//End ajax

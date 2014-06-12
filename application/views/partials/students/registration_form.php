@@ -36,7 +36,7 @@
 			            	}
 			            }
 			        }else{
-			        	alert("fail to load users");
+			        	toastr.error("Fail to load users!");
 			        }
 			    },
 			});//End ajax
@@ -60,7 +60,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load braches");
+			        	toastr.error("Fail to load braches!");
 			        }
 			    },
 			});//End ajax
@@ -87,14 +87,14 @@
 			    	if(json != null) {
 					    var reply = $.parseJSON(json);
 					    if(reply == '1') {
-					    	alert("register success!");
+					    	toastr.success("Register success!");
 					    	clear_form_input_values();
 					    }else{
-					    	alert("fail to insert regstration data");
+					    	toastr.error("Fail to insert regstration data!");
 					    }
 					}
 					else {
-						alert("fail to insert regstration api");
+						toastr.error("Fail to insert regstration api!");
 					}
 			    },
 			});//End ajax

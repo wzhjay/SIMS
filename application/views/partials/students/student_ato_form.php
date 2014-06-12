@@ -46,7 +46,7 @@
 			            	}
 			            }
 			        }else{
-			        	alert("fail to load users");
+			        	toastr.error("fail to load users");
 			        }
 			    }
 			});//End ajax
@@ -68,7 +68,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load braches");
+			        	toastr.error("fail to load braches");
 			        }
 			    }
 			});//End ajax
@@ -119,10 +119,10 @@
 			    		remark:remark},
 			    success:function(json){
 			    	if(json.trim() == '1') {
-					    alert("insert success!");
+					    toastr.success("Insert success!");
 					    clear_ato_inputs();
 					}else{
-						alert("fail to insert ato info");
+						toastr.error("Fail to insert ato info!");
 					}
 			    }
 			});//End ajax
@@ -173,10 +173,10 @@
 			    		remark:remark},
 			    success:function(json){
 			    	if(json.trim() == '2') {
-						alert("update success!");
+						toastr.success("Update success!");
 					    clear_ato_inputs();
 					}else{
-						alert("fail to update ato info");
+						toastr.error("fail to update ato info");
 					}
 			    }
 			});//End ajax
@@ -310,7 +310,7 @@
 			            	}
 			            }
 			        }else{
-			        	alert("fail to load ato info");
+			        	toastr.error("Fail to load ato info!");
 			        }
 			    }
 			});//End ajax

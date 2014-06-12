@@ -103,7 +103,7 @@
 							target.append('<p>No Class Records found</p><br>');
 						}
 					}else {
-						alert("fail to call search api");
+						toastr.error("fail to call search api");
 					}
 				}
 			});//End ajax
@@ -189,7 +189,7 @@
 							target.append('<p>No Exam Records found</p><br>');
 						}
 					}else {
-						alert("fail to call search api");
+						toastr.error("fail to call search api");
 					}
 				}
 			});//End ajax
@@ -289,7 +289,7 @@
 							target.append('<p>No ATO Information found</p><br>');
 						}
 					}else {
-						alert("fail to call search api");
+						toastr.error("fail to call search api");
 					}
 				}
 			});//End ajax
@@ -456,7 +456,7 @@
 					        search_get_student_ato_by_ic(key_word, target);
 						}
 			        }else {
-			        	alert("fail to call search api");
+			        	toastr.error("fail to call search api");
 					}
 			    }
 			});//End ajax

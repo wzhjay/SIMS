@@ -44,7 +44,7 @@
 			            	}
 			            }
 			        }else{
-			        	alert("fail to load users");
+			        	toastr.error("Fail to load users!");
 			        }
 			    }
 			});//End ajax
@@ -66,7 +66,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load braches");
+			        	toastr.error("Fail to load braches!");
 			        }
 			    }
 			});//End ajax
@@ -89,7 +89,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load courses");
+			        	toastr.error("Fail to load courses!");
 			        }
 			    },
 			});//End ajax

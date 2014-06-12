@@ -46,7 +46,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load courses");
+			        	toastr.error("Fail to load courses");
 			        }
 			    },
 			});//End ajax
@@ -68,7 +68,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load branches");
+			        	toastr.error("Fail to load branches");
 			        }
 			    }
 			});//End ajax
@@ -113,15 +113,15 @@
 			    	if(json.trim() != "") {
 					    var reply = $.parseJSON(json);
 					    if(reply == '1') {
-					    	alert("create class success!");
+					    	toastr.success("Create class success!");
 					    	clear_class_form_inputs();
 					    	load_all_classes();
 					    }else{
-					    	alert("fail to insert class data");
+					    	toastr.error("Fail to insert class data");
 					    }
 					}
 					else {
-						alert("fail to insert class api");
+						toastr.error("Fail to insert class api");
 					}
 			    }
 			});//End ajax
@@ -168,14 +168,14 @@
 			    	if(json.trim() != "") {
 					    var reply = $.parseJSON(json);
 					    if(reply == '2') {
-					    	alert("update class success!");
+					    	toastr.success("Update class success!");
 					    	clear_class_form_inputs();
 					    }else{
-					    	alert("fail to update class data");
+					    	toastr.error("Fail to update class data");
 					    }
 					}
 					else {
-						alert("fail to call update class api");
+						toastr.error("Fail to call update class api");
 					}
 			    }
 			});//End ajax
@@ -304,7 +304,7 @@
 			            	}
 			            }
 			        }else{
-			        	alert("fail to load class info");
+			        	toastr.error("Fail to load class info!");
 			        }
 			    }
 			});//End ajax

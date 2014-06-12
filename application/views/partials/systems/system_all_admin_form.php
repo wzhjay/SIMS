@@ -41,7 +41,7 @@
 			    		del_click_setting();
 						
 			        }else{
-			        	alert("fail to load braches");
+			        	toastr.error("fail to load braches");
 			        }
 			    },
 			});//End ajax
@@ -53,7 +53,7 @@
 					var unsername = $(this).closest('tr').find('th').first().text();
 					var el_id = $(this).attr('id').split('_');
 					var user_id = el_id[2];
-					// alert(user_id);
+					// toastr.error(user_id);
 					var modalBody = $('#adminEdit').closest('.modal-content').find('.modal-body');
 					modalBody.children().remove();
 					modalBody.append(
@@ -83,7 +83,7 @@
 				var unsername = $(this).closest('tr').find('th').first().text();
 				var el_id = $(this).attr('id').split('_');
 				var user_id = el_id[2];
-				// alert(user_id);
+				// toastr.error(user_id);
 				var modalBody = $('#adminDel').closest('.modal-content').find('.modal-body');
 				modalBody.children().remove();
 				modalBody.append(
@@ -113,7 +113,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load roles");
+			        	toastr.error("fail to load roles");
 			        }
 			    },
 			});//End ajax
@@ -135,7 +135,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load braches");
+			        	toastr.error("fail to load braches");
 			        }
 			    },
 			});//End ajax
@@ -160,7 +160,7 @@
 
 			            }
 			        }else {
-			        	alert("fail to call update admin api");
+			        	toastr.error("fail to call update admin api");
 					}
 			    }
 			});//End ajax
@@ -183,7 +183,7 @@
 
 			            }
 			        }else {
-			        	alert("fail to call update admin api");
+			        	toastr.error("fail to call update admin api");
 					}
 			    }
 			});//End ajax

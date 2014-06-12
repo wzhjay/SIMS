@@ -51,7 +51,7 @@
 			    			del_click_setting();	// function in system_all_admin_form.php
 						}
 			        }else {
-			        	alert("fail to call search api");
+			        	toastr.error("fail to call search api");
 					}
 			    }
 			});//End ajax

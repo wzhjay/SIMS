@@ -37,7 +37,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load braches");
+			        	toastr.error("fail to load braches");
 			        }
 			    }
 			});//End ajax
@@ -60,7 +60,7 @@
 			    			}
 			    		}
 			        }else{
-			        	alert("fail to load courses");
+			        	toastr.error("fail to load courses");
 			        }
 			    },
 			});//End ajax
