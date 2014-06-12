@@ -28,7 +28,7 @@
 
 		<div class="tab-content">
 		  	<div class="tab-pane fade in active" id="tab-1">
-		  		<h3>输入新的注册信息</h3><hr>
+		  		<h3>添加或更新注册信息</h3><hr>
 				<?php $this->load->view('partials/students/registration_form') ?>
 				<br><br>
 				<h3>查询所有注册信息</h3><hr>

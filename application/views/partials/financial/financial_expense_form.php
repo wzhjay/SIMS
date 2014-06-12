@@ -4,7 +4,8 @@
 	<script>
 		$(document).ready(function($) {
 			$('#input_financial_exp_date').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			$('#financial_exp_create').on('click', function() {

@@ -5,10 +5,12 @@
 		$(document).ready(function($) {
 			event.preventDefault();
 			$('#input_reg_search_from').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 			$('#input_reg_search_to').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			$('#reg_search_submit').on('click', function() {

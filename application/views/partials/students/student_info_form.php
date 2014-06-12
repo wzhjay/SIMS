@@ -7,7 +7,8 @@
 			event.preventDefault();
 			$('#student_new_info_form').parsley();
 			$('#input_student_new_bd').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			student_new_load_admin_users();

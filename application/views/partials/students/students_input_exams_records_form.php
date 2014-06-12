@@ -9,7 +9,8 @@
 	<script>
 		$(document).ready(function($) {
 			$('#input_student_exams_time').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			$('#student_exam_ic_check').on('click', function() {

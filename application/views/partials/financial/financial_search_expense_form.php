@@ -5,11 +5,13 @@
 		var selected_expense_record_id = 0;
 		$(document).ready(function($) {
 			$('#input_search_financial_exp_date_from').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			$('#input_search_financial_exp_date_to').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			$('#financial_exp_search_submit').on('click', function() {

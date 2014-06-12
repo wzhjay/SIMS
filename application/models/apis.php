@@ -154,12 +154,27 @@ class Apis extends CI_Model
 	/**
 	 * insert new reg info into registration table
 	 *
-	 * @param	$ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $remark
+	 * @param	$ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime
 	 * @return	bool
 	 */
-	function create_new_registration($ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $remark) {
+	function create_new_registration($ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('INSERT INTO registration (ic, reg_date, student_branch_id, reg_branch_id, reg_op_id, reg_no, start_date_wanted, remark) VALUES ("'.$ic.'", "'.$reg_date.'", "'.$student_branch_id.'", "'.$reg_branch_id.'", "'.$reg_op_id.'", "'.$reg_no.'", "'.$start_date_wanted.'", "'.$remark.'")');
+			$query = $this->db->query('INSERT INTO registration (ic, reg_date, student_branch_id, reg_branch_id, reg_op_id, reg_no, start_date_wanted, reg_remark, any_am, any_pm, any_eve, sat_am, sat_pm, sat_eve, sun_am, sun_pm, sun_eve, anytime, created, modified) VALUES ("'.$ic.'", "'.$reg_date.'", "'.$student_branch_id.'", "'.$reg_branch_id.'", "'.$reg_op_id.'", "'.$reg_no.'", "'.$start_date_wanted.'", "'.$reg_remark.'", "'.$any_am.'", "'.$any_pm.'", "'.$any_eve.'", "'.$sat_am.'", "'.$sat_pm.'", "'.$sat_eve.'", "'.$sun_am.'", "'.$sun_pm.'", "'.$sun_eve.'", "'.$anytime.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'")');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
+	}
+
+
+	/**
+	 * update reg info into registration table via reg_id
+	 *
+	 * @param	$ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime
+	 * @return	bool
+	 */
+	function update_registration($reg_id, $ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('UPDATE registration SET ic = "'.$ic.'", reg_date = "'.$reg_date.'", student_branch_id = "'.$student_branch_id.'", reg_branch_id = "'.$reg_branch_id.'", reg_op_id = "'.$reg_op_id.'", reg_no = "'.$reg_no.'", start_date_wanted = "'.$start_date_wanted.'", reg_remark = "'.$reg_remark.'", any_am = "'.$any_am.'", any_pm = "'.$any_pm.'", any_eve = "'.$any_eve.'", sat_am = "'.$sat_am.'", sat_pm = "'.$sat_pm.'", sat_eve = "'.$sat_eve.'", sun_am = "'.$sun_am.'", sun_pm = "'.$sun_pm.'", sun_eve = "'.$sun_eve.'", anytime = "'.$anytime.'", modified = "'.date('Y-m-d H:i:s').'" WHERE reg_id = "'.$reg_id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;

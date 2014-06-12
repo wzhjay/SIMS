@@ -5,13 +5,16 @@
 		var update_selected_ato_id = 0;
 		$(document).ready(function($) {
 			$('#input_ato_class_start_date').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 			$('#input_ato_class_end_date').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 			$('#input_ato_exam_date').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			ato_load_admin_users();

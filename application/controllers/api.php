@@ -138,7 +138,7 @@ class Api extends CI_Controller
 	/**
 	 *  create new registration for student
 	 */
-	function createNewRegister() {
+	function createNewRegistrationInfo() {
 		$ic = $this->input->post('ic');
 		$reg_date = $this->input->post('reg_date');
 		$student_branch_id = $this->input->post('student_branch_id');
@@ -146,10 +146,54 @@ class Api extends CI_Controller
 		$reg_op_id = $this->input->post('reg_op_id');
 		$reg_no = $this->input->post('reg_no');
 		$start_date_wanted = $this->input->post('start_date_wanted');
-		$remark = $this->input->post('remark');
-		$success = $this->apis->create_new_registration($ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $remark);
+		$reg_remark = $this->input->post('reg_remark');
+
+		$any_am = $this->input->post('any_am');
+		$any_pm = $this->input->post('any_pm');
+		$any_eve = $this->input->post('any_eve');
+		$sat_am = $this->input->post('sat_am');
+		$sat_pm = $this->input->post('sat_pm');
+		$sat_eve = $this->input->post('sat_eve');
+		$sun_am = $this->input->post('sun_am');
+		$sun_pm = $this->input->post('sun_pm');
+		$sun_eve = $this->input->post('sun_eve');
+		$anytime = $this->input->post('anytime');
+
+		$success = $this->apis->create_new_registration($ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime);
 		if($success) {
 			echo 1;
+		}
+		else echo 0;
+	}
+
+	/**
+	 *  update registration for student
+	 */
+	function updateRegistrationInfo() {
+		$reg_id = $this->input->post('reg_id');
+		$ic = $this->input->post('ic');
+		$reg_date = $this->input->post('reg_date');
+		$student_branch_id = $this->input->post('student_branch_id');
+		$reg_branch_id = $this->input->post('reg_branch_id');
+		$reg_op_id = $this->input->post('reg_op_id');
+		$reg_no = $this->input->post('reg_no');
+		$start_date_wanted = $this->input->post('start_date_wanted');
+		$reg_remark = $this->input->post('reg_remark');
+
+		$any_am = $this->input->post('any_am');
+		$any_pm = $this->input->post('any_pm');
+		$any_eve = $this->input->post('any_eve');
+		$sat_am = $this->input->post('sat_am');
+		$sat_pm = $this->input->post('sat_pm');
+		$sat_eve = $this->input->post('sat_eve');
+		$sun_am = $this->input->post('sun_am');
+		$sun_pm = $this->input->post('sun_pm');
+		$sun_eve = $this->input->post('sun_eve');
+		$anytime = $this->input->post('anytime');
+
+		$success = $this->apis->update_registration($reg_id, $ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime);
+		if($success) {
+			echo 2;
 		}
 		else echo 0;
 	}

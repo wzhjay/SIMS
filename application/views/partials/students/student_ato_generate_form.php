@@ -9,7 +9,8 @@
 	<script>
 		$(document).ready(function($) {
 			$('#input_student_ato_search_data').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 		});
 	</script>

@@ -5,11 +5,13 @@
 		var selected_receipt_record_id = 0;
 		$(document).ready(function($) {
 			$('#input_financial_search_receipt_date_from').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			$('#input_financial_search_receipt_date_to').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			$('#financial_receipt_search_submit').on('click', function() {

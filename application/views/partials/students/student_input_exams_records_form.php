@@ -10,7 +10,8 @@
 		var update_selected_record_id = 0;
 		$(document).ready(function($) {
 			$('#input_student_exam_record_time').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			student_exam_record_load_admin_users();

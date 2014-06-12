@@ -9,11 +9,13 @@
 	<script>
 		$(document).ready(function($) {
 			$('#input_student_ato_search_from').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			$('#input_student_ato_search_to').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			$('#student_ato_search_submit2').on('click', function() {

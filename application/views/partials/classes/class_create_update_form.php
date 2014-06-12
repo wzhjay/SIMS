@@ -5,11 +5,13 @@
 		var update_selected_class_id = 0;
 		$(document).ready(function($) {
 			$('#input_class_start_date').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			$('#input_class_end_date').datepicker({
-				format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
 			});
 
 			class_load_branches();
