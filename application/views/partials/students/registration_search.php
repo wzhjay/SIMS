@@ -28,13 +28,27 @@
 			if($('#input_reg_search_to').val().trim() != "") {
 				to = $('#input_reg_search_to').val();
 			}
+
+			// class time
+			var any_am = $('#input_reg_search_any_am').is(':checked') ? '1' : '0';
+			var any_pm = $('#input_reg_search_any_pm').is(':checked') ? '1' : '0';
+			var any_eve = $('#input_reg_search_any_eve').is(':checked') ? '1' : '0';
+			var sat_am = $('#input_reg_search_sat_am').is(':checked') ? '1' : '0';
+			var sat_pm = $('#input_reg_search_sat_pm').is(':checked') ? '1' : '0';
+			var sat_eve = $('#input_reg_search_sat_eve').is(':checked') ? '1' : '0';
+			var sun_am = $('#input_reg_search_sun_am').is(':checked') ? '1' : '0';
+			var sun_pm = $('#input_reg_search_sun_pm').is(':checked') ? '1' : '0';
+			var sun_eve = $('#input_reg_search_sun_eve').is(':checked') ? '1' : '0';
+			var anytime = $('#input_reg_search_anytime').is(':checked') ? '1' : '0';
+
+
 			var target = $('#reg_search_results');
 			target.empty();
 			target.append('<div class="loading"></div>');
 			$.ajax({
 				type:"post",
 			    url:window.api_url + "searchRegistrationInfo",
-			    data:{from:from, to:to},
+			    data:{from:from, to:to, any_am:any_am, any_pm:any_pm, any_eve:any_eve, sat_am:sat_am, sat_pm:sat_pm, sat_eve:sat_eve, sun_am:sun_am, sun_pm:sun_pm, sun_eve:sun_eve, anytime:anytime},
 			    success:function(json){
 			    	target.empty();
 			    	target.append('<p>No registration info found</p>');
@@ -117,19 +131,98 @@
 	</script>
 </head>
 <div class="highlight">
+	<h4>注册报名时间</h4><hr>
 	<div class="row">
-		<form role="form">
-			<div id="reg_search">
-				<div class="input-daterange" id="reg_datepicker">
-					<div class="col-xs-4">
-						<input class="form-control" id="input_reg_search_from" placeholder="From">
-					</div>
-					<div class="col-xs-4">
-						<input class="form-control" id="input_reg_search_to" placeholder="To">
-					</div>
-				</div>
+		<div class="input-daterange" id="reg_datepicker">
+			<div class="col-xs-4">
+				<input class="form-control" id="input_reg_search_from" placeholder="From">
 			</div>
-		</form>
+			<div class="col-xs-4">
+				<input class="form-control" id="input_reg_search_to" placeholder="To">
+			</div>
+		</div>
+	</div>
+	<h4>想要上课时间</h4><hr>
+	<div class="row">
+		<div class="col-xs-4">
+			<div class="checkbox">
+		        <label for="input_reg_search_any_am">
+		          	<input type="checkbox" id="input_reg_search_any_am"> 平时早上
+		        </label>
+		    </div>
+		</div>
+		<div class="col-xs-4">
+			<div class="checkbox">
+		        <label for="input_reg_search_any_pm">
+		          	<input type="checkbox" id="input_reg_search_any_pm"> 平时下午
+		        </label>
+		    </div>
+		</div>
+		<div class="col-xs-4">
+			<div class="checkbox">
+		        <label for="input_reg_search_any_eve">
+		          	<input type="checkbox" id="input_reg_search_any_eve"> 平时晚上
+		        </label>
+		    </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<div class="checkbox">
+		        <label for="input_reg_search_sat_am">
+		          	<input type="checkbox" id="input_reg_search_sat_am"> 拜六早上
+		        </label>
+		    </div>
+		</div>
+		<div class="col-xs-4">
+			<div class="checkbox">
+		        <label for="input_reg_search_sat_pm">
+		          	<input type="checkbox" id="input_reg_search_sat_pm"> 拜六下午
+		        </label>
+		    </div>
+		</div>
+		<div class="col-xs-4">
+			<div class="checkbox">
+		        <label for="input_reg_search_sat_eve">
+		          	<input type="checkbox" id="input_reg_search_sat_eve"> 拜六晚上
+		        </label>
+		    </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<div class="checkbox">
+		        <label for="input_reg_search_sun_am">
+		          	<input type="checkbox" id="input_reg_search_sun_am"> 拜天早上
+		        </label>
+		    </div>
+		</div>
+		<div class="col-xs-4">
+			<div class="checkbox">
+		        <label for="input_reg_search_sun_pm">
+		          	<input type="checkbox" id="input_reg_search_sun_pm"> 拜天下午
+		        </label>
+		    </div>
+		</div>
+		<div class="col-xs-4">
+			<div class="checkbox">
+		        <label for="input_reg_search_sun_eve">
+		          	<input type="checkbox" id="input_reg_search_sun_eve"> 拜天晚上
+		        </label>
+		    </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<div class="checkbox">
+		        <label for="input_reg_search_anytime">
+		          	<input type="checkbox" id="input_reg_search_anytime"> 任意时间
+		        </label>
+		    </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-8"></div>
 		<div class="col-xs-2">
 			<a class="button glow button-rounded button-flat" id="reg_search_submit">Search</a>
 		</div>

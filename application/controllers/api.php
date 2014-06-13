@@ -216,9 +216,19 @@ class Api extends CI_Controller
 	function searchRegistrationInfo() {
 		$from = $this->input->post('from');
 		$to = $this->input->post('to');
+		$any_am = $this->input->post('any_am');
+		$any_pm = $this->input->post('any_pm');
+		$any_eve = $this->input->post('any_eve');
+		$sat_am = $this->input->post('sat_am');
+		$sat_pm = $this->input->post('sat_pm');
+		$sat_eve = $this->input->post('sat_eve');
+		$sun_am = $this->input->post('sun_am');
+		$sun_pm = $this->input->post('sun_pm');
+		$sun_eve = $this->input->post('sun_eve');
+		$anytime = $this->input->post('anytime');
 		// $from = '2014-05-12';
 		// $to = '2014-06-07';
-		$courses = $this->apis->search_reg_info($from, $to);
+		$courses = $this->apis->search_reg_info($from,$to,$any_am,$any_pm,$any_eve,$sat_am,$sat_pm,$sat_eve,$sun_am,$sun_pm,$sun_eve,$anytime);
 		if($courses != NULL) {
 			echo json_encode($courses);
 		}
