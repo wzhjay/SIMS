@@ -652,7 +652,7 @@ class Apis extends CI_Model
 	 */
 	function get_all_class_students_by_class_id($class_id) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('SELECT * FROM student s WHERE s.id = (SELECT sc.student_id FROM student_class sc WHERE sc.class_id = "'.$class_id.'" ORDER BY s.created)');
+			$query = $this->db->query('SELECT * FROM student s WHERE s.student_id IN (SELECT sc.student_id FROM student_class sc WHERE sc.class_id = "'.$class_id.'" ORDER BY s.created)');
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;	
@@ -688,6 +688,7 @@ class Apis extends CI_Model
 					return FALSE;
 				}
 			}
+			return FALSE;
 		}
 		return FALSE;
 	}

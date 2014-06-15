@@ -151,7 +151,7 @@
 														'</div>' + 
 													'</h4>' +
 												'</div>' +
-												'<div id="class_search_collapse_body_'+key+'" class="panel-collapse collapse in">' + 
+												'<div id="class_search_collapse_body_'+key+'" class="panel-collapse collapse">' + 
 												'<div class="panel-body">' + 
 													'<div class="row">' + 
 														'<div class="col-xs-3">'+ 
@@ -330,7 +330,7 @@
 				    			if (reply.hasOwnProperty(key)) {
 				            		// target.append(JSON.stringify(reply[key]));
 				            		target.append(
-				            			'<option id="searched_student_id_'+reply[key].id+'">' + reply[key].ic + ' (' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ')' +'</option>'
+				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].ic + ' (' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ')' +'</option>'
 									);
 				            	}
 				            }
