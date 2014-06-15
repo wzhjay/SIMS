@@ -76,7 +76,17 @@
 											'<div class="panel panel-default">' + 
 												'<div class="panel-heading">' +
 													'<h4 class="panel-title">' +
-														'<a data-toggle="collapse" data-parent="reg_record_collapse_'+key+'" href="#reg_record_collapse_body_'+key+'">Reg Record ' + num + '  /  Reg Date: <b>' + reply[key].reg_date + '</b>' + '  /  IC: <b>' + reply[key].ic + '</b>' + '  /  Reg Number: <b>' + reply[key].reg_no + '</b>' + '</a>' + 
+														'<div class="row">' +
+															'<div class="col-xs-8">' +
+																'<a data-toggle="collapse" data-parent="reg_record_collapse_'+key+'" href="#reg_record_collapse_body_'+key+'">Reg Record ' + num + '  /  Reg Date: <b>' + reply[key].reg_date + '</b>' + '  /  IC: <b>' + reply[key].ic + '</b>' + '  /  Reg Number: <b>' + reply[key].reg_no + '</b>' + '</a>' + 
+															'</div>' + 
+															'<div class="col-xs-2">' +
+																'<a class="button glow button-rounded button-flat" id="reg_search_update_'+reply[key].reg_id+'" >Update</a>' + 
+															'</div>' + 
+															'<div class="col-xs-2">' +
+																'<a class="button glow button-rounded button-flat" id="reg_search_delete_'+reply[key].reg_id+'" data-toggle="modal" data-target="#reg-delete-modal">Delete</a>' + 
+															'</div>' + 
+														'</div>' + 
 													' </h4>' +
 												'</div>' +
 												'<div id="reg_record_collapse_body_'+key+'" class="panel-collapse collapse">' + 
@@ -119,6 +129,20 @@
 									);
 								}
 							}
+
+							$('#reg_search_results .button').on('click', function() {
+				 				var el_id = $(this).attr('id').split('_');
+				 				var reg_record_id = el_id[3];
+				 				selected_reg_id = reg_record_id;
+				 				if(el_id[2] == "update") {
+				 					// update reg record
+				 					load_reg_record(reg_record_id);
+				 				} else if(el_id[2] == "delete") {
+				 					// delete reg record
+				 					delete_reg_by_id(reg_record_id);
+				 				}
+				 			});
+
 						} else {
 							target.append('<p>No Registration Records Found</p><br>');
 						}
@@ -127,6 +151,50 @@
 					}
 			    }
 			});//End ajax
+		}
+
+		function load_reg_record(reg_record_id) {
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getRegistrationByID",
+			    data:{reg_id:reg_record_id},
+			    success:function(json){
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			    				$('#input_reg_ic').val(reply[key].ic);
+								$('#input_reg_date').val(reply[key].reg_date);
+								$('#input_reg_branch option[id="reg_branch_'+reply[key].reg_branch_id+'"]').attr('selected', 'selected');
+								$('#input_reg_no').val(reply[key].reg_no);
+								$('#input_reg_branch option[id="new_user_'+reply[key].reg_op_id+'"]').attr('selected', 'selected');
+								$('#input_reg_start_date').val(reply[key].start_date_wanted);
+								$('#input_reg_branch_student option[id="reg_branch_stu_'+reply[key].student_branch_id+'"]').attr('selected', 'selected');
+								$('#input_reg_remark').val(reply[key].reg_remark);
+
+								(reply[key].any_am == "1") ? $('#input_reg_any_am').prop('checked', true) : $('#input_reg_any_am').prop('checked', false);
+								(reply[key].any_pm == "1") ? $('#input_reg_any_pm').prop('checked', true) : $('#input_reg_any_pm').prop('checked', false);
+								(reply[key].any_eve == "1") ? $('#input_reg_any_eve').prop('checked', true) : $('#input_reg_any_eve').prop('checked', false);
+								(reply[key].sat_am == "1") ? $('#input_reg_sat_am').prop('checked', true) : $('#input_reg_sat_am').prop('checked', false);
+								(reply[key].sat_pm == "1") ? $('#input_reg_sat_pm').prop('checked', true) : $('#input_reg_sat_pm').prop('checked', false);
+								(reply[key].sat_eve == "1") ? $('#input_reg_sat_eve').prop('checked', true) : $('#input_reg_sat_eve').prop('checked', false);
+								(reply[key].sun_am == "1") ? $('#input_reg_sun_am').prop('checked', true) : $('#input_reg_sun_am').prop('checked', false);
+								(reply[key].sun_pm == "1") ? $('#input_reg_sun_pm').prop('checked', true) : $('#input_reg_sun_pm').prop('checked', false);
+								(reply[key].sun_eve == "1") ? $('#input_reg_sun_eve').prop('checked', true) : $('#input_reg_sun_eve').prop('checked', false);
+								(reply[key].anytime == "1") ? $('#input_reg_anytime').prop('checked', true) : $('#input_reg_anytime').prop('checked', false);
+			            	}
+			            }
+			            $("html, body").animate({ scrollTop: 0 }, "slow");
+			            toastr.info("Update registration record on above form!");
+			        }else{
+			        	toastr.error("Fail to load registration record!");
+			        }
+			    }
+			});//End ajax
+		}
+
+		function delete_reg_by_id(reg_record_id) {
+
 		}
 	</script>
 </head>
@@ -231,4 +299,22 @@
 		</div>
 	</div>
 	<div id="reg_search_results"></div>
+</div>
+
+<!-- reg delete Modal -->
+<div class="modal fade" id="reg-delete-modal" tabindex="-1" role="dialog" aria-labelledby="reg_delete_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="reg_delete_modal_label">Delete Registration Record</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Confirm</button>
+      </div>
+    </div>
+  </div>
 </div>

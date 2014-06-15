@@ -195,6 +195,20 @@ class Apis extends CI_Model
 	}
 
 	/**
+	 * get registration info from regstration table where reg_id equals to given reg_id
+	 *
+	 * @param	reg_id
+	 * @return	array or NULL
+	 */
+	function get_registration_by_id($reg_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM registration WHERE reg_id = "'.$reg_id.'"');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
 	 * search registration info by setting time range
 	 *
 	 * @param	from, to
@@ -219,7 +233,7 @@ class Apis extends CI_Model
 				if($sun_eve == "1") { $query_partial.=" OR r.sun_eve = 1"; };
 				if($anytime == "1") { $query_partial.=" OR r.anytime = 1"; };
 			}
-			$query = $this->db->query('SELECT r.ic, r.reg_date, r.reg_no, b1.name AS reg_branch, b2.name AS assigned_branch, r.start_date_wanted, r.reg_remark, u.username, r.created, r.modified, r.any_am, r.any_pm, r.any_eve, r.sat_am, r.sat_pm, r.sat_eve, r.sun_am, r.sun_pm, r.sun_eve, r.anytime  FROM registration r, branch b1, branch b2, users u WHERE (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (r.reg_branch_id = b1.id) AND (r.student_branch_id = b2.id) AND (r.reg_op_id = u.id) AND ('.$query_partial.') ORDER BY -DATE(r.reg_date)');
+			$query = $this->db->query('SELECT r.reg_id, r.ic, r.reg_date, r.reg_no, b1.name AS reg_branch, b2.name AS assigned_branch, r.start_date_wanted, r.reg_remark, u.username, r.created, r.modified, r.any_am, r.any_pm, r.any_eve, r.sat_am, r.sat_pm, r.sat_eve, r.sun_am, r.sun_pm, r.sun_eve, r.anytime  FROM registration r, branch b1, branch b2, users u WHERE (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (r.reg_branch_id = b1.id) AND (r.student_branch_id = b2.id) AND (r.reg_op_id = u.id) AND ('.$query_partial.') ORDER BY -DATE(r.reg_date)');
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;

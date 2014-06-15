@@ -211,6 +211,18 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  get single registration info by ID
+	 */
+	function getRegistrationByID() {
+		$reg_id = $this->input->post('reg_id');
+		$reg_info = $this->apis->get_registration_by_id($reg_id);
+		if($reg_info != NULL) {
+			echo json_encode($reg_info);
+		}
+		echo NULL;
+	}
+
+	/**
 	 *  search registration info
 	 */
 	function searchRegistrationInfo() {
