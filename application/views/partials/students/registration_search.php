@@ -139,7 +139,19 @@
 				 					load_reg_record(reg_record_id);
 				 				} else if(el_id[2] == "delete") {
 				 					// delete reg record
-				 					delete_reg_by_id(reg_record_id);
+				 					var modalBody = $('#reg_delete_modal_label').closest('.modal-content').find('.modal-body');
+									modalBody.empty();
+									modalBody.append(
+										'<div class="row">' + 
+											'<div class="col-xs-10">'+
+												'<label>Sure you want to delete this registration record?</label><br>' +
+												'<label>确定你要删除这条注册记录？</label>' +
+											'</div>' +	
+										'</div>'
+									);
+				 					$('#reg_del_confirm_btn').on('click', function() {
+				 						delete_reg_by_id(reg_record_id);
+				 					});
 				 				}
 				 			});
 
@@ -194,7 +206,21 @@
 		}
 
 		function delete_reg_by_id(reg_record_id) {
-
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "deleteRegistrationByID",
+			    data:{reg_id:reg_record_id},
+			    success:function(json){
+			    	if(json.trim() == '3') {
+					    toastr.success("Delete success!");
+					    
+					    // clear deleted element
+					    $('#reg_search_delete_' + reg_record_id).closest('.panel-group').remove();
+					}else{
+						toastr.error("Fail to delete registration info!");
+					}
+			    }
+			});//End ajax
 		}
 	</script>
 </head>
@@ -307,13 +333,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="reg_delete_modal_label">Delete Registration Record</h4>
+        <h4 class="modal-title" id="reg_delete_modal_label">Delete Registration Record?</h4>
       </div>
       <div class="modal-body">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Confirm</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="reg_del_confirm_btn">Confirm</button>
       </div>
     </div>
   </div>

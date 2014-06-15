@@ -85,7 +85,7 @@
 				var user_id = el_id[2];
 				// toastr.error(user_id);
 				var modalBody = $('#adminDel').closest('.modal-content').find('.modal-body');
-				modalBody.children().remove();
+				modalBody.empty();
 				modalBody.append(
 					'<div class="row">' + 
 						'<div class="col-xs-4" id="input_system_assigned_user_del">'+

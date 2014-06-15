@@ -55,20 +55,21 @@
 											'<div class="panel panel-default">' + 
 												'<div class="panel-heading">' +
 													'<h4 class="panel-title">' +
-														'<a data-toggle="collapse" data-parent="ato_search_collapse_'+key+'" href="#ato_search_collapse_body_'+key+'">Search ATO ' + num + '</a>' + 
+														'<div class="row">' +
+															'<div class="col-xs-8">' +
+																'<a data-toggle="collapse" data-parent="ato_search_collapse_'+key+'" href="#ato_search_collapse_body_'+key+'">Search ATO ' + num + '  /  IC: <b>' + reply[key].ic + '</b>' + '  /  Name: <b>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</b>' + '  /  Exam Type: <b>' + reply[key].pre_post + '</b>' + '</a>' + 
+															'</div>' + 
+															'<div class="col-xs-2">' +
+																'<a class="button glow button-rounded button-flat" id="ato_search_update_'+reply[key].id+'" >Update</a>' + 
+															'</div>' + 
+															'<div class="col-xs-2">' +
+																'<a class="button glow button-rounded button-flat" id="ato_search_delete_'+reply[key].id+'" data-toggle="modal" data-target="#ato-delete-modal">Delete</a>' + 
+															'</div>' + 
+														'</div>' + 
 													' </h4>' +
 												'</div>' +
-												'<div id="ato_search_collapse_body_'+key+'" class="panel-collapse collapse in">' + 
-												'<div class="panel-body">' + 
-													'<div class="row">' + 
-														'<div class="col-xs-3">'+ 
-															'<div>IC Number: ' + reply[key].ic + '</div>' +
-														'</div>' + 
-														'<div class="col-xs-3">'+ 
-															'<div>Name: ' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname +'</div>' +
-														'</div>' + 
-													'</div>' +
-													'<hr>' +  
+												'<div id="ato_search_collapse_body_'+key+'" class="panel-collapse collapse">' + 
+												'<div class="panel-body">' +  
 													'<div class="row">' + 
 														'<div class="col-xs-4">'+ 
 															'<div>Exam Type: ' + reply[key].pre_post + '</div>' +
@@ -135,9 +136,52 @@
 									);
 				            	}
 				            }
+
+				            $('#ato_search_results .button').on('click', function() {
+				 				var el_id = $(this).attr('id').split('_');
+				 				var ato_record_id = el_id[3];
+				 				selected_ato_id = ato_record_id;
+				 				if(el_id[2] == "update") {
+				 					// update ato record
+				 					load_ato_info(ato_record_id);
+				 				} else if(el_id[2] == "delete") {
+				 					// delete ato record
+				 					var modalBody = $('#ato_delete_modal_label').closest('.modal-content').find('.modal-body');
+									modalBody.empty();
+									modalBody.append(
+										'<div class="row">' + 
+											'<div class="col-xs-10">'+
+												'<label>Sure you want to delete this ATO record?</label><br>' +
+												'<label>确定你要删除这条ATO记录？</label>' +
+											'</div>' +	
+										'</div>'
+									);
+				 					$('#ato_del_confirm_btn').on('click', function() {
+				 						delete_ato_by_id(ato_record_id);
+				 					});
+				 				}
+				 			});
 			        	}
 			        }
 			    },
+			});//End ajax
+		}
+
+		function delete_ato_by_id(ato_record_id) {
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "deleteATOByID",
+			    data:{id:ato_record_id},
+			    success:function(json){
+			    	if(json.trim() == '3') {
+					    toastr.success("Delete success!");
+					    
+					    // clear deleted element
+					    $('#ato_search_delete_' + ato_record_id).closest('.panel-group').remove();
+					}else{
+						toastr.error("Fail to delete ATO info!");
+					}
+			    }
 			});//End ajax
 		}
 	</script>
@@ -163,6 +207,25 @@
 			<a class="button glow button-rounded button-flat" id="student_ato_to_excel2">To Excel</a>
 		</div>
 	</div>
+	<br><br>
 	<div id="ato_search_results">
 	</div>
+</div>
+
+<!-- ato delete Modal -->
+<div class="modal fade" id="ato-delete-modal" tabindex="-1" role="dialog" aria-labelledby="ato_delete_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="ato_delete_modal_label">Delete ATO Record</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="ato_del_confirm_btn">Confirm</button>
+      </div>
+    </div>
+  </div>
 </div>

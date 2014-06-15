@@ -248,6 +248,19 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  delete registration info
+	 */
+	function deleteRegistrationByID() {
+		$reg_id = $this->input->post('reg_id');
+		// delete
+		$delete = $this->apis->delete_reg_info($reg_id);
+		if($delete){
+			echo 3;
+		}
+		else echo 0;
+	}
+
+	/**
 	 *  create new student basic info
 	 */
 	function createStudentBasicInfo() {
@@ -687,6 +700,19 @@ class Api extends CI_Controller
 			echo json_encode($atos);
 		}
 		echo NULL;
+	}
+
+	/**
+	 *  delete ato info
+	 */
+	function deleteATOByID() {
+		$id = $this->input->post('id');
+		// delete
+		$delete = $this->apis->delete_ato_info($id);
+		if($delete){
+			echo 3;
+		}
+		else echo 0;
 	}
 
 	/**

@@ -2,7 +2,7 @@
 	<meta charset="utf-8">
 
 	<script>
-		var update_selected_ato_id = 0;
+		var selected_ato_id = 0;
 		$(document).ready(function($) {
 			$('#input_ato_class_start_date').datepicker({
 				format: 'yyyy-mm-dd',
@@ -25,7 +25,7 @@
 			});
 
 			$('#ato_update_submit').on('click', function() {
-				update_ato_info(update_selected_ato_id);
+				update_ato_info(selected_ato_id);
 			});
 
 			$('#student_ato_ic_check').on('click', function() {
@@ -256,7 +256,7 @@
 				    	$('#student-ato-modal a').on('click', function() {
 							var el_id = $(this).attr('id').split('_');
 							var ato_id = el_id[6];
-							update_selected_ato_id = ato_id;	// assign global var for late update submit
+							selected_ato_id = ato_id;	// assign global var for late update submit
 
 							load_ato_info(ato_id);
 							$('#student-ato-modal').modal('hide');
@@ -312,6 +312,8 @@
 								$('#input_ato_op option[id="ato_user_'+reply[key].branch_op_id+'"]').attr('selected', 'selected');
 			            	}
 			            }
+			            $("html, body").animate({ scrollTop: 0 }, "slow");
+			            toastr.info("Update ato record on above form!");
 			        }else{
 			        	toastr.error("Fail to load ato info!");
 			        }

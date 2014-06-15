@@ -240,6 +240,20 @@ class Apis extends CI_Model
 	}
 
 	/**
+	 * delete registration info by given reg_id
+	 *
+	 * @param	reg_id
+	 * @return	bool
+	 */
+	function delete_reg_info($reg_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('DELETE FROM registration WHERE reg_id = "'.$reg_id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
 	 * insert new student basic info
 	 *
 	 * @param	$source, $gov_letter, $ic, $ic_type, $firstname, $lastname, $othername, $tel, $tel_home, $gender, $salutation, $birthday, $age, $citizenship, $nationality, $race,$cn_level, $edu_level, $lang, $blk, $street, $floor_unit_no, $building, $postcode, $emp_status, $company_name, $company_type,$company_reg_no, $industry, $designation, $salary_range, student_branch_id, student_op_id, student_remark
@@ -519,6 +533,20 @@ class Apis extends CI_Model
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;	
+	}
+
+	/**
+	 * delete ato info by given id
+	 *
+	 * @param	reg_id
+	 * @return	bool
+	 */
+	function delete_ato_info($id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('DELETE FROM ato WHERE id = "'.$id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
 	}
 
 	/**
