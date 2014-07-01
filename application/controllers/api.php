@@ -499,8 +499,6 @@ class Api extends CI_Controller
 			$id,
 			$pre_post,
 			$recommend_level,
-			$class_start_date, 
-			$class_end_date, 
 			$class_code, 
 			$attendance, 
 			$post_change_date,

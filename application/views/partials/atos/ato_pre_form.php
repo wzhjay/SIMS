@@ -330,7 +330,7 @@
 											'<label>备注</label>' +
 											'<div class="form-control">'+ reply[key].remark + '</div>' + 
 										'</div>' +
-									'</div>' +
+									'</div>'
 								);
 					        }
 				    	}
@@ -367,7 +367,7 @@
 			            		$('#input_ato_ic').val(reply[key].ic);
 								$('#input_ato_class_code').val(reply[key].class_code);
 								$('#input_ato_attendance').val(reply[key].attendance);
-								(reply[key].el == "YES") ? $('#input_ato_post_change_date').prop('checked', true) : $('#input_ato_post_change_date').prop('checked', false);
+								(reply[key].post_change_date == "YES") ? $('#input_ato_post_change_date').prop('checked', true) : $('#input_ato_post_change_date').prop('checked', false);
 								(reply[key].el == "YES") ? $('#input_ato_el').prop('checked', true) : $('#input_ato_el').prop('checked', false);
 								(reply[key].er == "YES") ? $('#input_ato_er').prop('checked', true) : $('#input_ato_er').prop('checked', false);
 								(reply[key].en == "YES") ? $('#input_ato_en').prop('checked', true) : $('#input_ato_en').prop('checked', false);

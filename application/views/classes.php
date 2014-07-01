@@ -20,7 +20,7 @@
     <div class="container" id="sims-classes-tabs">
     	<div class="container tab_content">
 			<ul class="nav nav-tabs" id="my_tab">
-			  <li class="active"><a href="#tab-1" data-toggle="tab">所有班级</a></li>
+			  <li class="active"><a href="#tab-1" data-toggle="tab">所有班级和查询</a></li>
 			  <li><a href="#tab-2" data-toggle="tab">添加更新班级</a></li>
 			</ul>
 

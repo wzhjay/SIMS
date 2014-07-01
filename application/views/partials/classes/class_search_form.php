@@ -246,7 +246,7 @@
 				    			if (reply.hasOwnProperty(key)) {
 				            		// target.append(JSON.stringify(reply[key]));
 				            		target.append(
-				            			'<li>' + reply[key].ic + ' (' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ')' +'</li>'
+				            			'<li>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ')' +'</li>'
 									);
 				            	}
 				            }
@@ -312,7 +312,7 @@
 
  		function search_student_by_ic_name() {
  			var keyword = $('#input_class_search_class_student_management_ic_name').val();
- 			var target = $('#class_search_class_student_management_class_section select');
+ 			var target = $('#class_search_student_search_results');
 			target.empty();
 			target.append('<div class="loading"></div>');
 			$.ajax({
@@ -330,7 +330,7 @@
 				    			if (reply.hasOwnProperty(key)) {
 				            		// target.append(JSON.stringify(reply[key]));
 				            		target.append(
-				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].ic + ' (' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ')' +'</option>'
+				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ')' +'</option>'
 									);
 				            	}
 				            }
@@ -340,7 +340,7 @@
 			});//End ajax
 
 			$('#class_search_class_student_management_middle_section .btn').on('click', function() {
-				$.each($('#class_search_class_student_management_class_section select option:selected'), function() {
+				$.each($('#class_search_student_search_results option:selected'), function() {
 					var student_id = $(this).attr('id').split('_')[3];
 					assign_student_to_class(student_id);
 				});
@@ -445,7 +445,7 @@
 
 <!-- Class student management Modal -->
 <div class="modal fade" id="class-student-management-modal" tabindex="-1" role="dialog" aria-labelledby="class_student_management_modal_label" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xlg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -453,7 +453,7 @@
       </div>
       <div class="modal-body">
       	<div class="row">
-      		<div class="col-xs-6" id="class_search_class_student_management_class_section">
+      		<div class="col-xs-6" id="class_search_class_student_management_search_section">
       			<div class="highlight">
       				<div class="row">
 	      				<div class="col-xs-8">
@@ -465,8 +465,55 @@
 							<a class="button glow button-rounded button-flat" id="input_class_search_class_student_management_student_search">Search</a>
 						</div>
 					</div>
-					<br>
-					<select multiple class="form-control"></select>
+					<hr>
+					<div class="row">
+	      				<div class="col-xs-3">
+							<label for="input_class_search_course_type">Course Type</label>
+							<select class="form-control" id="input_class_search_course_type">
+								<option value="NA">请选择</option>
+								<option id="input_class_search_course_type_1" value="encmp">英文综合</option>
+								<option id="input_class_search_course_type_2" value="encon">英文会话</option>
+								<option id="input_class_search_course_type_3" value="eness">ESS</option>
+								<option id="input_class_search_course_type_4" value="encos">COS</option>
+								<option id="input_class_search_course_type_5" value="encom">英文电脑</option>
+								<option id="input_class_search_course_type_6" value="chcom">华文电脑</option>
+								<option id="input_class_search_course_type_7" value="chpin">华文拼音</option>
+								<option id="input_class_search_course_type_8" value="enpho">英文音标</option>
+								<option id="input_class_search_course_type_9" value="engra">英文语法</option>
+								<option id="input_class_search_course_type_10" value="chwri">华文写作</option>
+								<option id="input_class_search_course_type_11" value="others">其他</option>
+							</select>
+						</div>
+						<div class="col-xs-3">
+							<label for="input_class_search_student_level">水平等级</label>
+							<select class="form-control" id="input_class_search_student_level">
+								<option value="NA">请选择</option>
+								<option value="BEGINNERS">初级</option>
+			                	<option value="INTERMEDIATE">中级</option>
+			                	<option value="ADVANCED">高级</option>
+							</select>
+						</div>
+						<div class="col-xs-3">
+							<label for="input_class_search_class_time">想上课时间</label>
+							<select class="form-control" id="input_class_search_class_time">
+								<option value="NA">请选择</option>
+								<option value="any_am">平时早上</option>
+			                	<option value="any_pm">平时下午</option>
+			                	<option value="sat_eve">平时晚上</option>
+			                	<option value="sat_am">周六早上</option>
+			                	<option value="sat_pm">周六下午</option>
+			                	<option value="sat_eve">周六晚上</option>
+			                	<option value="sun_am">周日早上</option>
+			                	<option value="sun_pm">周日下午</option>
+			                	<option value="sun_eve">周日晚上</option>
+							</select>
+						</div>
+						<div class="col-xs-2">
+							<br>
+							<a class="button glow button-rounded button-flat" id="input_class_search_class_student_management_student_search2">Search</a>
+						</div>
+					</div>
+					<select multiple class="form-control" id="class_search_student_search_results"></select>
       			</div>
       		</div>
       		<div class="col-xs-1" id="class_search_class_student_management_middle_section">
@@ -482,18 +529,7 @@
 						</div>
 					</div>
 					<br>
-					<ul class="list-group">
-					  <li class="list-group-item">Cras justo odio</li>
-					  <li class="list-group-item">Dapibus ac facilisis in</li>
-					  <li class="list-group-item">Morbi leo risus</li>
-					  <li class="list-group-item">Porta ac consectetur ac</li>
-					  <li class="list-group-item">Vestibulum at eros</li>
-					  <li class="list-group-item">Cras justo odio</li>
-					  <li class="list-group-item">Dapibus ac facilisis in</li>
-					  <li class="list-group-item">Morbi leo risus</li>
-					  <li class="list-group-item">Porta ac consectetur ac</li>
-					  <li class="list-group-item">Vestibulum at eros</li>
-					</ul>
+					<ul class="list-group"></ul>
 	      		</div>
       		</div>
       	</div>
