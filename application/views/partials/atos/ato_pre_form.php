@@ -25,6 +25,10 @@
 				get_ato_by_ic();
 			});
 
+			$('#student_ato_class_check').on('click', function() {
+				get_class_by_class_code();
+			});
+
 			$('#input_ato_pre_post').change(function() {
 				if($(this).val()=="PRE") { 
 					$('#input_ato_class_code').prop('disabled', true); 
@@ -210,7 +214,7 @@
 			    data:{ic:ic},
 			    success:function(json){
 			    	var modalBody = $('#student_ato_ic_check_modal_label').closest('.modal-content').find('.modal-body');
-			    	modalBody.children().remove();
+			    	modalBody.empty();
 			    	if(json.trim() != "") {
 			    		var reply = $.parseJSON(json);
 				    	for (var key in reply) {
@@ -268,6 +272,81 @@
 								'</div>' + 
 								'<div class="col-xs-8">' + 
 									'<label>Sorry, no related ATO info found!<br>Please input valid IC number.</label>' + 
+							'</div>'
+						);
+					}
+			    }
+			});//End ajax
+		}
+
+		function get_class_by_class_code() {
+			var class_code = $('#input_ato_class_code').val().trim();
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getClassInfoByCode",
+			    data:{code:class_code},
+			    success:function(json){
+			    	var modalBody = $('#student_ato_class_check_modal_label').closest('.modal-content').find('.modal-body');
+			    	modalBody.empty();
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+				    	for (var key in reply) {
+					    	if (reply.hasOwnProperty(key)) {
+								modalBody.append(
+									'<div class="row">' + 
+										'<div class="col-xs-3">'+ 
+											'<label>Classs Code</label>' +
+											'<div class="form-control">' + class_code + '</div>' +
+										'</div>' + 
+										'<div class="col-xs-3">' + 
+											'<label>班级名字</label>' + 
+											'<div class="form-control">' + reply[key].class_name + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-3">' + 
+											'<label>科目</label>' + 
+											'<div class="form-control">' + reply[key].type + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-3">' + 
+											'<label>等级</label>' + 
+											'<div class="form-control">' + reply[key].level + '</div>' + 
+										'</div>' +
+									'</div>' +
+									'<div class="row">' + 
+										'<div class="col-xs-4">'+ 
+											'<label>课程日期</label>' +
+											'<div class="form-control">' + reply[key].start_date + " ~ " + reply[key].end_date + '</div>' +
+										'</div>' + 
+										'<div class="col-xs-4">' + 
+											'<label>课程时段</label>' + 
+											'<div class="form-control">' + reply[key].start_time + " ~ " + reply[key].end_time + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-4">' + 
+											'<label>老师信息</label>' + 
+											'<div class="form-control">' + reply[key].teacher_name + '(' + reply[key].teacher_tel + ')' + '</div>' + 
+										'</div>' +
+									'</div>' +
+									'<div class="row">' + 
+										'<div class="col-xs-6">' +
+											'<label>备注</label>' +
+											'<div class="form-control">'+ reply[key].remark + '</div>' + 
+										'</div>' +
+									'</div>' +
+								);
+					        }
+				    	}
+				    }
+				    else {
+				    	if(class_code.trim() == "") {
+				    		class_code='NULL';
+				    	};
+						modalBody.append(
+							'<div class="row">' + 
+								'<div class="col-xs-4">'+ 
+									'<label>Class Code Input</label>' +
+									'<div class="form-control">' + class_code + '</div>' +
+								'</div>' + 
+								'<div class="col-xs-8">' + 
+									'<label>Sorry, no related Class info found!<br>Please input valid class code.</label>' + 
 							'</div>'
 						);
 					}
@@ -470,6 +549,23 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="student_ato_ic_check_modal_label">ATO Information</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ATO CLASS Check Modal -->
+<div class="modal fade" id="student-ato-class-modal" tabindex="-1" role="dialog" aria-labelledby="student_ato_class_check_modal_label" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="student_ato_class_check_modal_label">Class Information</h4>
       </div>
       <div class="modal-body">
       </div>

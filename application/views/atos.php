@@ -18,8 +18,8 @@
 <div class="container" id="sims-atos-tabs">
 	<div class="container tab_content">
 		<ul class="nav nav-tabs" id="my_tab">
-		  <li class="active"><a href="#tab-1" data-toggle="tab">PRE</a></li>
-		  <li><a href="#tab-2" data-toggle="tab">POST</a></li>
+		  <li class="active"><a href="#tab-1" data-toggle="tab">ATO更新与查询</a></li>
+		  <li><a href="#tab-2" data-toggle="tab">还不知道要干嘛</a></li>
 		</ul>
 
 		<div class="tab-content">
