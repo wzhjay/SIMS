@@ -431,10 +431,9 @@ class Api extends CI_Controller
 		$ic = $this->input->post('ic').trim(" ");
 		$pre_post = $this->input->post('pre_post');
 		$recommend_level = $this->input->post('recommend_level');
-		$class_start_date = $this->input->post('class_start_date');
-		$class_end_date = $this->input->post('class_end_date');
 		$class_code = $this->input->post('class_code');
 		$attendance = $this->input->post('attendance');
+		$post_change_date = $this->input->post('post_change_date');
 		$el = $this->input->post('el');
 		$er = $this->input->post('er');
 		$en = $this->input->post('en');
@@ -452,10 +451,9 @@ class Api extends CI_Controller
 			$ic,
 			$pre_post,
 			$recommend_level,
-			$class_start_date, 
-			$class_end_date, 
 			$class_code, 
 			$attendance, 
+			$post_change_date,
 			$el, 
 			$er, 
 			$en, 
@@ -481,10 +479,9 @@ class Api extends CI_Controller
 		$id = $this->input->post('id');
 		$pre_post = $this->input->post('pre_post');
 		$recommend_level = $this->input->post('recommend_level');
-		$class_start_date = $this->input->post('class_start_date');
-		$class_end_date = $this->input->post('class_end_date');
 		$class_code = $this->input->post('class_code');
 		$attendance = $this->input->post('attendance');
+		$post_change_date = $this->input->post('post_change_date');
 		$el = $this->input->post('el');
 		$er = $this->input->post('er');
 		$en = $this->input->post('en');
@@ -506,6 +503,7 @@ class Api extends CI_Controller
 			$class_end_date, 
 			$class_code, 
 			$attendance, 
+			$post_change_date,
 			$el, 
 			$er, 
 			$en, 
@@ -695,7 +693,8 @@ class Api extends CI_Controller
 	function searchATOInfo() {
 		$from = $this->input->post('from');
 		$to = $this->input->post('to');
-		$atos = $this->apis->search_atos_by_time($from, $to);
+		$class_code = $this->input->post('class_code');
+		$atos = $this->apis->search_atos_by_time($from, $to, $class_code);
 		if($atos != NULL) {
 			echo json_encode($atos);
 		}

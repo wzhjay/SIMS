@@ -4,14 +4,7 @@
 	<script>
 		var selected_ato_id = 0;
 		$(document).ready(function($) {
-			$('#input_ato_class_start_date').datepicker({
-				format: 'yyyy-mm-dd',
-				todayHighlight: true
-			});
-			$('#input_ato_class_end_date').datepicker({
-				format: 'yyyy-mm-dd',
-				todayHighlight: true
-			});
+
 			$('#input_ato_exam_date').datepicker({
 				format: 'yyyy-mm-dd',
 				todayHighlight: true
@@ -30,6 +23,20 @@
 
 			$('#student_ato_ic_check').on('click', function() {
 				get_ato_by_ic();
+			});
+
+			$('#input_ato_pre_post').change(function() {
+				if($(this).val()=="PRE") { 
+					$('#input_ato_class_code').prop('disabled', true); 
+					$('#student_ato_class_check').hide(); 
+					$('#input_ato_attendance').prop('disabled', true); 
+					// $('#input_ato_post_change_date').prop('disabled', true); 
+				} else if($(this).val()=="POST") {
+					$('#input_ato_class_code').prop('disabled', false); 
+					$('#student_ato_class_check').show(); 
+					$('#input_ato_attendance').prop('disabled', false); 
+					// $('#input_ato_post_change_date').prop('disabled', false); 
+				}
 			});
 		});
 
@@ -81,10 +88,9 @@
 			var ic = $('#input_ato_ic').val();
 			var pre_post = $('#input_ato_pre_post').val();
 			var recommend_level = $('#input_ato_recommend_level').val();
-			var class_start_date = $('#input_ato_class_start_date').val();
-			var class_end_date = $('#input_ato_class_end_date').val();
 			var class_code = $('#input_ato_class_code').val();
 			var attendance = $('#input_ato_attendance').val();
+			var post_change_date = $('#input_ato_post_change_date').is(':checked') ? 'YES' : 'NO';
 			var el = $('#input_ato_el').is(':checked') ? 'YES' : 'NO';
 			var er = $('#input_ato_er').is(':checked') ? 'YES' : 'NO';
 			var en = $('#input_ato_en').is(':checked') ? 'YES' : 'NO';
@@ -105,10 +111,9 @@
 			    data:{	ic:ic,
 			    		pre_post:pre_post, 
 			    		recommend_level:recommend_level, 
-			    		class_start_date:class_start_date, 
-			    		class_end_date:class_end_date, 
 			    		class_code:class_code, 
 			    		attendance:attendance,
+			    		post_change_date:post_change_date,
 			    		el:el,
 			    		er:er,
 			    		en:en,
@@ -135,10 +140,9 @@
 			var ic = $('#input_ato_ic').val();
 			var pre_post = $('#input_ato_pre_post').val();
 			var recommend_level = $('#input_ato_recommend_level').val();
-			var class_start_date = $('#input_ato_class_start_date').val();
-			var class_end_date = $('#input_ato_class_end_date').val();
 			var class_code = $('#input_ato_class_code').val();
 			var attendance = $('#input_ato_attendance').val();
+			var post_change_date = $('#input_ato_post_change_date').is(':checked') ? 'YES' : 'NO';
 			var el = $('#input_ato_el').is(':checked') ? 'YES' : 'NO';
 			var er = $('#input_ato_er').is(':checked') ? 'YES' : 'NO';
 			var en = $('#input_ato_en').is(':checked') ? 'YES' : 'NO';
@@ -159,10 +163,9 @@
 			    data:{	id:ato_id,
 			    		pre_post:pre_post, 
 			    		recommend_level:recommend_level, 
-			    		class_start_date:class_start_date, 
-			    		class_end_date:class_end_date, 
 			    		class_code:class_code, 
 			    		attendance:attendance,
+			    		post_change_date:post_change_date,
 			    		el:el,
 			    		er:er,
 			    		en:en,
@@ -187,10 +190,9 @@
 
 		function clear_ato_inputs() {
 			$('#input_ato_ic').val('');
-			$('#input_ato_class_start_date').val('');
-			$('#input_ato_class_end_date').val('');
 			$('#input_ato_class_code').val('');
 			$('#input_ato_attendance').val('');
+			$('#input_ato_post_change_date').prop('checked', false);
 			$('#input_ato_el').prop('checked', false);
 			$('#input_ato_er').prop('checked', false);
 			$('#input_ato_en').prop('checked', false);
@@ -219,14 +221,6 @@
 											'<label>IC Number</label>' +
 											'<div class="form-control">' + ic + '</div>' +
 										'</div>' + 
-										'<div class="col-xs-2">' + 
-											'<label for="student_ato_ic_check_model_class_start_date">开课时间</label>' + 
-											'<div class="form-control" id="student_ato_ic_check_model_class_start_date">' + reply[key].class_start_date + '</div>' + 
-										'</div>' +
-										'<div class="col-xs-2">' + 
-											'<label for="student_ato_ic_check_model_class_end_date">结课时间</label>' + 
-											'<div class="form-control" id="student_ato_ic_check_model_class_end_date">' + reply[key].class_end_date + '</div>' + 
-										'</div>' +
 										'<div class="col-xs-2">' + 
 											'<label for="student_ato_ic_check_model_exam_date">考试时间</label>' + 
 											'<div class="form-control" id="student_ato_ic_check_model_exam_date">' + reply[key].exam_date + '</div>' + 
@@ -292,10 +286,9 @@
 			    		for (var key in reply) {
 			    			if (reply.hasOwnProperty(key)) {
 			            		$('#input_ato_ic').val(reply[key].ic);
-								$('#input_ato_class_start_date').val(reply[key].class_start_date);
-								$('#input_ato_class_end_date').val(reply[key].class_end_date);
 								$('#input_ato_class_code').val(reply[key].class_code);
 								$('#input_ato_attendance').val(reply[key].attendance);
+								(reply[key].el == "YES") ? $('#input_ato_post_change_date').prop('checked', true) : $('#input_ato_post_change_date').prop('checked', false);
 								(reply[key].el == "YES") ? $('#input_ato_el').prop('checked', true) : $('#input_ato_el').prop('checked', false);
 								(reply[key].er == "YES") ? $('#input_ato_er').prop('checked', true) : $('#input_ato_er').prop('checked', false);
 								(reply[key].en == "YES") ? $('#input_ato_en').prop('checked', true) : $('#input_ato_en').prop('checked', false);
@@ -327,23 +320,22 @@
 	<h4>ATO信息</h4><hr>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_ato_ic">IC Number</label>
-			<input class="form-control" id="input_ato_ic" >
-		</div>
-		<div class="col-xs-2">
-			<br>
-			<a class="button glow button-rounded button-flat" id="student_ato_ic_check" data-toggle="modal" data-target="#student-ato-modal">Check</a>
-		</div>
-		<div class="col-xs-2"></div>
-	</div>
-	<div class="row">
-		<div class="col-xs-4">
 			<label for="input_ato_pre_post">Exam Type</label>
 			<select class="form-control" id="input_ato_pre_post">
 		      <option value="NA">请选择</option>
 		      <option value="PRE">PRE CAT</option>
 		      <option value="POST">POST CAT</option>
 		    </select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_ato_ic">IC Number</label>
+			<input class="form-control" id="input_ato_ic" >
+		</div>
+		<div class="col-xs-2">
+			<br>
+			<a class="button glow button-rounded button-flat" id="student_ato_ic_check" data-toggle="modal" data-target="#student-ato-modal">Check</a>
 		</div>
 		<div class="col-xs-4">
 			<label for="input_ato_recommend_level">Recommend Level</label>
@@ -355,23 +347,29 @@
                 <option value="ADVANCED">高级</option>
             </select>
 		</div>
-		<div class="col-xs-4">
-			<label for="input_ato_class_start_date">Class Strat Date</label>
-			<input class="form-control" id="input_ato_class_start_date" >
-		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-4">
-			<label for="input_ato_class_end_date">Class End Date</label>
-			<input class="form-control" id="input_ato_class_end_date">
-		</div>
 		<div class="col-xs-4">
 			<label for="input_ato_class_code">Class Code</label>
 			<input class="form-control" id="input_ato_class_code">
 		</div>
+		<div class="col-xs-2">
+			<br>
+			<a class="button glow button-rounded button-flat" id="student_ato_class_check" data-toggle="modal" data-target="#student-ato-class-modal">Check</a>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-xs-4">
 			<label for="input_ato_attendance">Attendance</label>
 			<input class="form-control" id="input_ato_attendance">
+		</div>
+		<div class="col-xs-2"></div>
+		<div class="col-xs-4">
+			<div class="checkbox">
+			    <label for="input_ato_post_change_date">
+			    	<input type="checkbox" id="input_ato_post_change_date"> 是否改期
+			    </label>
+			</div>
 		</div>
 	</div>
 	<h4>考试科目</h4><hr>

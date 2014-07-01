@@ -21,15 +21,16 @@
 		  <li class="active"><a href="#tab-1" data-toggle="tab">PRE</a></li>
 		  <li><a href="#tab-2" data-toggle="tab">POST</a></li>
 		</ul>
-		
+
 		<div class="tab-content">
 		  	<div class="tab-pane fade in active" id="tab-1">
-		  		<h3>PRE</h3><hr>
+				<h3>输入或更新学员ATO信息</h3><hr>
 				<?php $this->load->view('partials/atos/ato_pre_form') ?>
+				<br><br>
+		  		<h3>查询并生成ATO信息</h3><hr>
+		  		<?php $this->load->view('partials/atos/ato_search_form') ?>
 			</div>
 		  	<div class="tab-pane fade" id="tab-2">
-				<h3>POST</h3><hr>
-				<?php $this->load->view('partials/atos/ato_post_form') ?>
 		  	</div>
 		</div>
 	</div>
