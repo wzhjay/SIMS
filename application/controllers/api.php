@@ -686,6 +686,20 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  search student info by multiple variables
+	 */
+	function searchStudentInfoByMultipleVar() {
+		$course_type = $this->input->post('course_type');
+		$level = $this->input->post('level');
+		$slot = $this->input->post('slot');
+		$students = $this->apis->search_class_students_by_multiple_var($course_type, $level, $slot);
+		if($students != NULL) {
+			echo json_encode($students);
+		}
+		echo NULL;
+	}
+
+	/**
 	 *  search ato info by time
 	 */
 	function searchATOInfo() {

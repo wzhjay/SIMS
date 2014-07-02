@@ -345,7 +345,7 @@ overflow-y: scroll;
 }
 
 #class_search_class_student_management_class_section ul {
-height: 445px;
+height: 400px;
 overflow-y: scroll; 
 }
 
@@ -355,4 +355,8 @@ margin-top: 150px;
 
 #class_search_class_student_management_middle_section .btn {
 margin-left: -22px;
+}
+
+#class_search_class_student_management_search_section .tab-content > .tab-pane {
+padding-top: 20px;
 }

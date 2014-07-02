@@ -37,6 +37,10 @@
  				search_student_by_ic_name();
  			});
 
+ 			$('#input_class_search_class_student_management_student_search2').on('click', function() {
+ 				search_student_by_multiple_var();
+ 			});
+
  			class_search_load_type();
 		});
 
@@ -347,6 +351,46 @@
 			});
  		}
 
+ 		function search_student_by_multiple_var() {
+ 			var course_type = $('#input_class_search_course_type').val();
+ 			var level = $('#input_class_search_student_level').val();
+ 			var slot = $('#input_class_search_class_time').val();
+
+ 			var target = $('#class_search_student_search_results');
+			target.empty();
+			target.append('<div class="loading"></div>');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "searchStudentInfoByMultipleVar",
+			    data:{course_type:course_type, level:level, slot:slot},
+			    success:function(json){
+			    	target.empty();
+			    	target.append('<option class="list-group-item">No Student Found</option>');
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		if(reply.length > 0) {
+			    			target.empty();
+				    		for (var key in reply) {
+				    			if (reply.hasOwnProperty(key)) {
+				            		// target.append(JSON.stringify(reply[key]));
+				            		target.append(
+				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ')' +'</option>'
+									);
+				            	}
+				            }
+			        	}
+			        }
+			    },
+			});//End ajax
+
+			$('#class_search_class_student_management_middle_section .btn').on('click', function() {
+				$.each($('#class_search_student_search_results option:selected'), function() {
+					var student_id = $(this).attr('id').split('_')[3];
+					assign_student_to_class(student_id);
+				});
+			});
+ 		}
+
  		function assign_student_to_class(student_id) {
  			var class_id = selected_class_management_id;
  			$.ajax({
@@ -455,64 +499,75 @@
       	<div class="row">
       		<div class="col-xs-6" id="class_search_class_student_management_search_section">
       			<div class="highlight">
-      				<div class="row">
-	      				<div class="col-xs-8">
-	      					<label for="input_class_search_class_student_management_ic_name">请输入学员IC/名字</label>
-							<input class="form-control" id="input_class_search_class_student_management_ic_name" placeholder="IC Number/Name">
+      				<ul id="class_search_students_tabs" class="nav nav-tabs" role="tablist">
+				      <li class="active"><a href="#class_search_students_tab1" role="tab" data-toggle="tab">精确查找</a></li>
+				      <li class=""><a href="#class_search_students_tab2" role="tab" data-toggle="tab">Group模糊查找</a></li>
+				    </ul>
+				    <div id="class_search_students_tabs_content" class="tab-content">
+				      <div class="tab-pane fade active in" id="class_search_students_tab1">
+				        <div class="row">
+		      				<div class="col-xs-8">
+		      					<label for="input_class_search_class_student_management_ic_name">请输入学员IC/名字</label>
+								<input class="form-control" id="input_class_search_class_student_management_ic_name" placeholder="IC Number/Name">
+							</div>
+							<div class="col-xs-2">
+								<br>
+								<a class="button glow button-rounded button-flat" id="input_class_search_class_student_management_student_search">Search</a>
+							</div>
 						</div>
-						<div class="col-xs-2">
-							<br>
-							<a class="button glow button-rounded button-flat" id="input_class_search_class_student_management_student_search">Search</a>
+				      </div>
+				      <div class="tab-pane fade" id="class_search_students_tab2">
+				        <div class="row">
+		      				<div class="col-xs-3">
+								<label for="input_class_search_course_type">Course Type</label>
+								<select class="form-control" id="input_class_search_course_type">
+									<option value="NA">请选择</option>
+									<option id="input_class_search_course_type_1" value="cmp">英文综合</option>
+									<option id="input_class_search_course_type_2" value="encon">英文会话</option>
+									<option id="input_class_search_course_type_3" value="enwri">英文写作</option>
+									<option id="input_class_search_course_type_3" value="math">数学</option>
+									<!-- <option id="input_class_search_course_type_3" value="eness">ESS</option> -->
+									<!-- <option id="input_class_search_course_type_4" value="encos">COS</option> -->
+									<!-- <option id="input_class_search_course_type_5" value="encom">英文电脑</option> -->
+									<!-- <option id="input_class_search_course_type_6" value="chcom">华文电脑</option> -->
+									<!-- <option id="input_class_search_course_type_7" value="chpin">华文拼音</option> -->
+									<!-- <option id="input_class_search_course_type_8" value="enpho">英文音标</option> -->
+									<!-- <option id="input_class_search_course_type_9" value="engra">英文语法</option> -->
+									<!-- <option id="input_class_search_course_type_10" value="chwri">华文写作</option> -->
+									<!-- <option id="input_class_search_course_type_11" value="others">其他</option> -->
+								</select>
+							</div>
+							<div class="col-xs-3">
+								<label for="input_class_search_student_level">水平等级</label>
+								<select class="form-control" id="input_class_search_student_level">
+									<option value="NA">请选择</option>
+									<option value="BEGINNERS">初级</option>
+				                	<option value="INTERMEDIATE">中级</option>
+				                	<option value="ADVANCED">高级</option>
+								</select>
+							</div>
+							<div class="col-xs-3">
+								<label for="input_class_search_class_time">想上课时间</label>
+								<select class="form-control" id="input_class_search_class_time">
+									<option value="NA">请选择</option>
+									<option value="any_am">平时早上</option>
+				                	<option value="any_pm">平时下午</option>
+				                	<option value="sat_eve">平时晚上</option>
+				                	<option value="sat_am">周六早上</option>
+				                	<option value="sat_pm">周六下午</option>
+				                	<option value="sat_eve">周六晚上</option>
+				                	<option value="sun_am">周日早上</option>
+				                	<option value="sun_pm">周日下午</option>
+				                	<option value="sun_eve">周日晚上</option>
+								</select>
+							</div>
+							<div class="col-xs-2">
+								<br>
+								<a class="button glow button-rounded button-flat" id="input_class_search_class_student_management_student_search2">Search</a>
+							</div>
 						</div>
-					</div>
-					<hr>
-					<div class="row">
-	      				<div class="col-xs-3">
-							<label for="input_class_search_course_type">Course Type</label>
-							<select class="form-control" id="input_class_search_course_type">
-								<option value="NA">请选择</option>
-								<option id="input_class_search_course_type_1" value="encmp">英文综合</option>
-								<option id="input_class_search_course_type_2" value="encon">英文会话</option>
-								<option id="input_class_search_course_type_3" value="eness">ESS</option>
-								<option id="input_class_search_course_type_4" value="encos">COS</option>
-								<option id="input_class_search_course_type_5" value="encom">英文电脑</option>
-								<option id="input_class_search_course_type_6" value="chcom">华文电脑</option>
-								<option id="input_class_search_course_type_7" value="chpin">华文拼音</option>
-								<option id="input_class_search_course_type_8" value="enpho">英文音标</option>
-								<option id="input_class_search_course_type_9" value="engra">英文语法</option>
-								<option id="input_class_search_course_type_10" value="chwri">华文写作</option>
-								<option id="input_class_search_course_type_11" value="others">其他</option>
-							</select>
-						</div>
-						<div class="col-xs-3">
-							<label for="input_class_search_student_level">水平等级</label>
-							<select class="form-control" id="input_class_search_student_level">
-								<option value="NA">请选择</option>
-								<option value="BEGINNERS">初级</option>
-			                	<option value="INTERMEDIATE">中级</option>
-			                	<option value="ADVANCED">高级</option>
-							</select>
-						</div>
-						<div class="col-xs-3">
-							<label for="input_class_search_class_time">想上课时间</label>
-							<select class="form-control" id="input_class_search_class_time">
-								<option value="NA">请选择</option>
-								<option value="any_am">平时早上</option>
-			                	<option value="any_pm">平时下午</option>
-			                	<option value="sat_eve">平时晚上</option>
-			                	<option value="sat_am">周六早上</option>
-			                	<option value="sat_pm">周六下午</option>
-			                	<option value="sat_eve">周六晚上</option>
-			                	<option value="sun_am">周日早上</option>
-			                	<option value="sun_pm">周日下午</option>
-			                	<option value="sun_eve">周日晚上</option>
-							</select>
-						</div>
-						<div class="col-xs-2">
-							<br>
-							<a class="button glow button-rounded button-flat" id="input_class_search_class_student_management_student_search2">Search</a>
-						</div>
-					</div>
+				      </div>
+				    </div>
 					<select multiple class="form-control" id="class_search_student_search_results"></select>
       			</div>
       		</div>

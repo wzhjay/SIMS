@@ -522,6 +522,32 @@ class Apis extends CI_Model
 	}
 
 	/**
+	 * search students by keyword in ic number/firstname/lastname, from table registration, student, student_record
+	 *
+	 * @param	$course_type, $level, $slot
+	 * @return	array or NULL
+	 */
+	function search_class_students_by_multiple_var($course_type, $level, $slot) {
+		if($this->session->userdata('session_id')) {
+			if($course_type != "NA" && $level != "NA") {
+				if($slot != "NA") {
+					$query = $this->db->query('SELECT * FROM registration r, student s, student_record sr WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") ORDER BY -DATE(r.reg_date)');
+				} else {
+					$query = $this->db->query('SELECT * FROM registration r, student s, student_record sr WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (sr.'.$course_type.'="'.$level.'") ORDER BY -DATE(r.reg_date)');
+				}
+			} else {
+				if($slot != "NA") {
+					$query = $this->db->query('SELECT * FROM registration r, student s, student_record sr WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.'.$slot.' = "1") ORDER BY -DATE(r.reg_date)');
+				} else {
+					$query = $this->db->query('SELECT * FROM registration r, student s, student_record sr WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) ORDER BY -DATE(r.reg_date)');
+				}
+			}
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
 	 * search ato info by time
 	 *
 	 * @param	from, to, $class_code
