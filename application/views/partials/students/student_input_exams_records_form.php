@@ -33,20 +33,39 @@
 		function create_student_exam_record() {
 			var ic = $('#input_student_exam_record_ic').val();
 			var exam_date = $('#input_student_exam_record_time').val();
-			var er = $('#input_student_exam_record_er').val();
-			var el = $('#input_student_exam_record_el').val();
-			var es = $('#input_student_exam_record_es').val();
-			var ew = $('#input_student_exam_record_ew').val();
-			var en = $('#input_student_exam_record_en').val();
-			var cmp = $('#input_student_level_cmp').val();
-			var con = $('#input_student_level_con').val();
-			var wri = $('#input_student_level_wri').val();
-			var wpn = $('#input_student_level_wpn').val();
+			var er = $('#input_student_exam_record_er').val().toString();
+			var el = $('#input_student_exam_record_el').val().toString();
+			var es = $('#input_student_exam_record_es').val().toString();
+			var ew = $('#input_student_exam_record_ew').val().toString();
+			var en = $('#input_student_exam_record_en').val().toString();
+			var cmp = "";
+			var con = "";
+			var wri = "";
+			var wpn = "";
 			var branch = $('#input_student_exam_record_branch option:selected').attr('id').split('_');
 			var branch_id = branch[2];
 			var branch_op = $('#input_student_exam_record_op option:selected').attr('id').split('_');
 			var branch_op_id = branch_op[2];
 			var remark = $('#input_student_exam_record_remark').val();
+
+			// level calculation
+			var er_pt = 0;
+			var el_pt = 0;
+			var es_pt = 0;
+			var ew_pt = 0;
+			var en_pt = 0;
+			
+			if(er == "UN" || er == "EXE" || er == "B1") {	er_pt = 0;	} else {	er_pt = parseInt(er);	}
+			if(el == "UN" || el == "EXE" || el == "B1") {	el_pt = 0;	} else {	el_pt = parseInt(el);	}
+			if(es == "UN" || es == "EXE" || es == "B1") {	es_pt = 0;	} else {	es_pt = parseInt(es);	}
+			if(ew == "UN" || ew == "EXE" || ew == "B1") {	ew_pt = 0;	} else {	ew_pt = parseInt(ew);	}
+			if(en == "UN" || en == "EXE" || en == "B1") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
+			var cmp_pt = er_pt + el_pt + es_pt + ew_pt;
+			if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	}
+			if(es_pt<3) {	con = "BEGINNERS";	} else if (es_pt<5) {	con = "INTERMEDIATE";	} else { con = "ADVANCED";	}
+			if(ew_pt<3) {	wri = "BEGINNERS";	} else if (ew_pt<5) {	wri = "INTERMEDIATE";	} else { wri = "ADVANCED";	}
+			if(en_pt<3) {	wpn = "BEGINNERS";	} else if (en_pt<5) {	wpn = "INTERMEDIATE";	} else { wpn = "ADVANCED";	}
+
 
 			$.ajax({
 				type:"post",
@@ -78,20 +97,40 @@
 
 		function update_student_exam_record(record_id) {
 			var exam_date = $('#input_student_exam_record_time').val();
-			var er = $('#input_student_exam_record_er').val();
-			var el = $('#input_student_exam_record_el').val();
-			var es = $('#input_student_exam_record_es').val();
-			var ew = $('#input_student_exam_record_ew').val();
-			var en = $('#input_student_exam_record_en').val();
-			var cmp = $('#input_student_level_cmp').val();
-			var con = $('#input_student_level_con').val();
-			var wri = $('#input_student_level_wri').val();
-			var wpn = $('#input_student_level_wpn').val();
+			var er = $('#input_student_exam_record_er').val().toString();
+			var el = $('#input_student_exam_record_el').val().toString();
+			var es = $('#input_student_exam_record_es').val().toString();
+			var ew = $('#input_student_exam_record_ew').val().toString();
+			var en = $('#input_student_exam_record_en').val().toString();
+			var cmp = "";
+			var con = "";
+			var wri = "";
+			var wpn = "";
 			var branch = $('#input_student_exam_record_branch option:selected').attr('id').split('_');
 			var branch_id = branch[2];
 			var branch_op = $('#input_student_exam_record_op option:selected').attr('id').split('_');
 			var branch_op_id = branch_op[2];
 			var remark = $('#input_student_exam_record_remark').val();
+
+			// level calculation
+			var er_pt = 0;
+			var el_pt = 0;
+			var es_pt = 0;
+			var ew_pt = 0;
+			var en_pt = 0;
+			
+			if(er == "UN" || er == "EXE" || er == "B1") {	er_pt = 0;	} else {	er_pt = parseInt(er);	}
+			if(el == "UN" || el == "EXE" || el == "B1") {	el_pt = 0;	} else {	el_pt = parseInt(el);	}
+			if(es == "UN" || es == "EXE" || es == "B1") {	es_pt = 0;	} else {	es_pt = parseInt(es);	}
+			if(ew == "UN" || ew == "EXE" || ew == "B1") {	ew_pt = 0;	} else {	ew_pt = parseInt(ew);	}
+			if(en == "UN" || en == "EXE" || en == "B1") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
+
+			var cmp_pt = er_pt + el_pt + es_pt + ew_pt;
+			if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	}
+			if(es_pt<3) {	con = "BEGINNERS";	} else if (es_pt<5) {	con = "INTERMEDIATE";	} else { con = "ADVANCED";	}
+			if(ew_pt<3) {	wri = "BEGINNERS";	} else if (ew_pt<5) {	wri = "INTERMEDIATE";	} else { wri = "ADVANCED";	}
+			if(en_pt<3) {	wpn = "BEGINNERS";	} else if (en_pt<5) {	wpn = "INTERMEDIATE";	} else { wpn = "ADVANCED";	}
+
 
 			$.ajax({
 				type:"post",
@@ -485,47 +524,6 @@
 					<option value="6">6</option>
 					<option value="7">7</option>
 					<option value="8">8</option>
-				</select>
-			</div>
-		</div>
-		<h4>等级</h4><hr>
-		<div class="row">
-			<div class="col-xs-4">
-				<label for="input_student_level_cmp">综合CMP</label>
-				<select class="form-control" id="input_student_level_cmp">
-					<option value="NA">请选择</option>
-					<option value="BEGINNERS">初级</option>
-                	<option value="INTERMEDIATE">中级</option>
-                	<option value="ADVANCED">高级</option>
-				</select>
-			</div>
-			<div class="col-xs-4">
-				<label for="input_student_level_con">回话CON</label>
-				<select class="form-control" id="input_student_level_con">
-					<option value="NA">请选择</option>
-					<option value="BEGINNERS">初级</option>
-                	<option value="INTERMEDIATE">中级</option>
-                	<option value="ADVANCED">高级</option>
-				</select>
-			</div>
-			<div class="col-xs-4">
-				<label for="input_student_level_wri">写作WRI</label>
-				<select class="form-control" id="input_student_level_wri">
-					<option value="NA">请选择</option>
-					<option value="BEGINNERS">初级</option>
-                	<option value="INTERMEDIATE">中级</option>
-                	<option value="ADVANCED">高级</option>
-				</select>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-4">
-				<label for="input_student_level_wpn">数学WPN</label>
-				<select class="form-control" id="input_student_level_wpn">
-					<option value="NA">请选择</option>
-					<option value="BEGINNERS">初级</option>
-                	<option value="INTERMEDIATE">中级</option>
-                	<option value="ADVANCED">高级</option>
 				</select>
 			</div>
 		</div>
