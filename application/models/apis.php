@@ -564,7 +564,6 @@ class Apis extends CI_Model
 				$query = $this->db->query('SELECT *  FROM ato a, student s, class c, student_class sc WHERE (a.ic = s.ic) AND (c.code = "'.$class_code.'") AND (c.class_id = sc.class_id) AND (sc.student_id = s.student_id) AND (a.pre_post = "POST") AND (a.post_change_date = "NO") AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") ORDER BY -DATE(a.exam_date)');
 				if ($query->num_rows() > 0) return $query->result_array();
 			}
-			
 		}
 		return NULL;	
 	}
