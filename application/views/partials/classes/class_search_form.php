@@ -523,9 +523,9 @@
 								<select class="form-control" id="input_class_search_course_type">
 									<option value="NA">请选择</option>
 									<option id="input_class_search_course_type_1" value="cmp">英文综合</option>
-									<option id="input_class_search_course_type_2" value="encon">英文会话</option>
-									<option id="input_class_search_course_type_3" value="enwri">英文写作</option>
-									<option id="input_class_search_course_type_3" value="math">数学</option>
+									<option id="input_class_search_course_type_2" value="con">英文会话</option>
+									<option id="input_class_search_course_type_3" value="wri">英文写作</option>
+									<option id="input_class_search_course_type_3" value="wpn">数学</option>
 									<!-- <option id="input_class_search_course_type_3" value="eness">ESS</option> -->
 									<!-- <option id="input_class_search_course_type_4" value="encos">COS</option> -->
 									<!-- <option id="input_class_search_course_type_5" value="encom">英文电脑</option> -->
