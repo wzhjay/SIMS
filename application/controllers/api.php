@@ -731,21 +731,31 @@ class Api extends CI_Controller
 			$to = '2100-01-01';
 		}
 		$class_code = $_POST["class_code"];
-
 		//activate worksheet number 1
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
 		$this->excel->getActiveSheet()->setTitle('test worksheet');
-
 		$atos = $this->apis->search_atos_by_time($from, $to, $class_code);
-
+		$rowArray = array('Pre / Post Assessment', 'Exam Location', 'Class ID', 'Training Start Date (DD/MM/YYYY)', '>Training End Date (DD/MM/YYYY)', 'Course Code', 'Attendance Percentage', 'Training Recommendation', 'EL', 'ER', 'EN', 'ES', 'EW', 'NRIC/Fin No.', 'ID Type (Select from dropdown list)', 'Salutation', 'SurName', 'GivenName', 'OtherName', 'Gender', 'DOB (DD/MM/YYYY)', 'Age', 'Citizenship', 'Nationality', 'Ethnic Group', 'Highest Chinese Education Level', 'Highest Education Level', 'Language Proficiency', 'Blk', 'Street Name', '#Floor - Unit No', 'Building Name', 'Postal Code', 'Contact No', 'Employment Status', 'Company Registration Type', 'Company Name', 'Company Registration No', 'Industry Sector', 'Designation', 'Salary Range');
 		if($atos != NULL) {
 			$this->excel->getActiveSheet()
 			    ->fromArray(
-			        $atos,   // The data to set
-			        NULL        // Array values with this value will not be set
+			        $rowArray,   // The data to set
+			        NULL
 			    );
-			$filename='just_some_random_name.xls'; //save our workbook as this file name
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $atos,   // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'A3'         // Top left coordinate of the worksheet range where
+		                     //    we want to set these values (default is A1)
+			    );
+			if(trim($class_code) == "") {
+				$filename = 'ATO_Date_'.date('Y-m-d H:i:s').'.xls';	
+			} else {
+				$filename = 'ATO_Class_'.date('Y-m-d H:i:s').'.xls';		
+			}
+			
 			header('Content-Type: application/vnd.ms-excel'); //mime type
 			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 			header('Cache-Control: max-age=0'); //no cache
