@@ -557,11 +557,11 @@ class Apis extends CI_Model
 		if($this->session->userdata('session_id')) {
 			if($class_code == "") {
 				// search ato info by time only (pre), if post ato change date, this ato also can be found
-				$query = $this->db->query('SELECT *  FROM ato a, student s WHERE (a.ic = s.ic) AND ((a.pre_post = "PRE") OR ((a.pre_post = "POST") AND (a.post_change_date = "YES"))) AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") ORDER BY -DATE(a.exam_date)');
+				$query = $this->db->query('SELECT DISTINCT a.pre_post, a.exam_location, c.code, c.start_date, c.end_date, c.type, a.attendance, a.recommend_level, a.el, a.er, a.en, a.es, a.ew, s.ic, s.salutation, s.lastname, s.firstname, s.othername, s.gender, s.birthday, s.age, s.citizenship, s.nationality, s.race, s.cn_level, s.edu_level, s.lang, s.block, s.street, s.floor_unit_no, s.building, s.postcode, s.tel, s.emp_status, s.company_type, s.company_name, s.company_reg_no, s.industry, s.designation, s.salary_range FROM ato a, student s, student_class sc, class c WHERE (a.ic = s.ic) AND (s.student_id = sc.student_id) AND (sc.class_id = c.class_id) AND ((a.pre_post = "PRE") OR ((a.pre_post = "POST") AND (a.post_change_date = "YES"))) AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") GROUP BY a.id ORDER BY -DATE(a.exam_date)');
 				if ($query->num_rows() > 0) return $query->result_array();
 			} else {
 				// search ato info by time and class (post), info post ato change date, this ato also cannot be found
-				$query = $this->db->query('SELECT *  FROM ato a, student s, class c, student_class sc WHERE (a.ic = s.ic) AND (c.code = "'.$class_code.'") AND (c.class_id = sc.class_id) AND (sc.student_id = s.student_id) AND (a.pre_post = "POST") AND (a.post_change_date = "NO") AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") ORDER BY -DATE(a.exam_date)');
+				$query = $this->db->query('SELECT DISTINCT a.pre_post, a.exam_location, c.code, c.start_date, c.end_date, c.type, a.attendance, a.recommend_level, a.el, a.er, a.en, a.es, a.ew, s.ic, s.salutation, s.lastname, s.firstname, s.othername, s.gender, s.birthday, s.age, s.citizenship, s.nationality, s.race, s.cn_level, s.edu_level, s.lang, s.block, s.street, s.floor_unit_no, s.building, s.postcode, s.tel, s.emp_status, s.company_type, s.company_name, s.company_reg_no, s.industry, s.designation, s.salary_range FROM ato a, student s, class c, student_class sc WHERE (a.ic = s.ic) AND (c.code = "'.$class_code.'") AND (c.class_id = sc.class_id) AND (sc.student_id = s.student_id) AND (a.pre_post = "POST") AND (a.post_change_date = "NO") AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") ORDER BY -DATE(a.exam_date)');
 				if ($query->num_rows() > 0) return $query->result_array();
 			}
 		}

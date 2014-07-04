@@ -9,6 +9,9 @@ class Api extends CI_Controller
 		$this->template->title('Welcome to SIMS')
 				->set('currentSection', 'apis');
 		$this->load->model('apis');
+
+		//load our new PHPExcel library
+		$this->load->library('excel');
 	}
 
 
@@ -711,6 +714,45 @@ class Api extends CI_Controller
 			echo json_encode($atos);
 		}
 		echo NULL;
+	}
+
+	/**
+	 *  search ato info by time and download as excel file
+	 */
+	function searchATOInfoDownload() {
+		$from = $_POST["from"];
+		$to = $_POST["to"];
+
+		if(trim($from) == "") {
+			$from = '2000-01-01';
+		}
+
+		if(trim($to) == "") {
+			$to = '2100-01-01';
+		}
+		$class_code = $_POST["class_code"];
+
+		//activate worksheet number 1
+		$this->excel->setActiveSheetIndex(0);
+		//name the worksheet
+		$this->excel->getActiveSheet()->setTitle('test worksheet');
+
+		$atos = $this->apis->search_atos_by_time($from, $to, $class_code);
+
+		if($atos != NULL) {
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $atos,   // The data to set
+			        NULL        // Array values with this value will not be set
+			    );
+			$filename='just_some_random_name.xls'; //save our workbook as this file name
+			header('Content-Type: application/vnd.ms-excel'); //mime type
+			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+			header('Cache-Control: max-age=0'); //no cache
+			             
+			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+			$objWriter->save('php://output');
+		}
 	}
 
 	/**

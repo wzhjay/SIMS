@@ -188,29 +188,31 @@
 	</script>
 </head>
 <div class="highlight">
-	<div class="row">
-		<div class="col-xs-4">
-			<label for="input_student_ato_search_from">From</label>
-			<input class="form-control" id="input_student_ato_search_from">
+	<form action="<?php echo $this->config->base_url(); ?>index.php/api/searchATOInfoDownload" method="POST" target="_blank">
+		<div class="row">
+			<div class="col-xs-4">
+				<label for="input_student_ato_search_from">From</label>
+				<input name="from" class="form-control" id="input_student_ato_search_from">
+			</div>
+			<div class="col-xs-4">
+				<label for="input_student_ato_search_to">To</label>
+				<input name="to" class="form-control" id="input_student_ato_search_to">
+			</div>
+			<div class="col-xs-4">
+				<label for="input_student_ato_search_class_code">Class Code</label>
+				<input name="class_code" class="form-control" id="input_student_ato_search_class_code">
+			</div>
 		</div>
-		<div class="col-xs-4">
-			<label for="input_student_ato_search_to">To</label>
-			<input class="form-control" id="input_student_ato_search_to">
+		<div class="row">
+			<div class="col-xs-8"></div>
+			<div class="col-xs-2">
+				<a class="button glow button-rounded button-flat" id="student_ato_search_submit2">Search</a>
+			</div>
+			<div class="col-xs-2">
+				<input type="submit" value="To Excel" class="button glow button-rounded button-flat" id="ato_search_to_excel">
+			</div>
 		</div>
-		<div class="col-xs-4">
-			<label for="input_student_ato_search_class_code">Class Code</label>
-			<input class="form-control" id="input_student_ato_search_class_code">
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-8"></div>
-		<div class="col-xs-2">
-			<a class="button glow button-rounded button-flat" id="student_ato_search_submit2">Search</a>
-		</div>
-		<div class="col-xs-2">
-			<a class="button glow button-rounded button-flat" id="student_ato_to_excel2">To Excel</a>
-		</div>
-	</div>
+	</form>
 	<br>
 	<div id="ato_search_results">
 	</div>
