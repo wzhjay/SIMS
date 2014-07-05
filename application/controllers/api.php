@@ -734,7 +734,7 @@ class Api extends CI_Controller
 		//activate worksheet number 1
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('test worksheet');
+		$this->excel->getActiveSheet()->setTitle('ATO');
 		$atos = $this->apis->search_atos_by_time($from, $to, $class_code);
 		$rowArray = array('Pre / Post Assessment', 'Exam Location', 'Class ID', 'Training Start Date (DD/MM/YYYY)', '>Training End Date (DD/MM/YYYY)', 'Course Code', 'Attendance Percentage', 'Training Recommendation', 'EL', 'ER', 'EN', 'ES', 'EW', 'NRIC/Fin No.', 'ID Type (Select from dropdown list)', 'Salutation', 'SurName', 'GivenName', 'OtherName', 'Gender', 'DOB (DD/MM/YYYY)', 'Age', 'Citizenship', 'Nationality', 'Ethnic Group', 'Highest Chinese Education Level', 'Highest Education Level', 'Language Proficiency', 'Blk', 'Street Name', '#Floor - Unit No', 'Building Name', 'Postal Code', 'Contact No', 'Employment Status', 'Company Registration Type', 'Company Name', 'Company Registration No', 'Industry Sector', 'Designation', 'Salary Range');
 		if($atos != NULL) {
@@ -1028,6 +1028,7 @@ class Api extends CI_Controller
 	 */
 	function createNewReceiptRecord() {
 		$student_ic = $this->input->post('student_ic');
+		$receipt_type = $this->input->post('receipt_type');
 		$receipt_no = $this->input->post('receipt_no');
 		$payee_name = $this->input->post('payee_name');
 		$receipt_date = $this->input->post('receipt_date');
@@ -1045,7 +1046,8 @@ class Api extends CI_Controller
 
 		// create
 		$create = $this->apis->create_new_receipt_record(
-			$student_ic, 
+			$student_ic,
+			$receipt_type, 
 			$receipt_no, 
 			$payee_name, 
 			$receipt_date, 
@@ -1111,11 +1113,60 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  search receipt records and download as excel file
+	 */
+	function searchReceiptRecordsDownload() {
+		$student_ic = $_POST['student_ic'];
+		$receipt_no = $_POST['receipt_no'];
+		$receipt_branch = $_POST['receipt_branch'];
+		$course_type = $_POST['course_type'];
+		$receipt_date_from = $_POST['receipt_date_from'];
+		$receipt_date_to = $_POST['receipt_date_to'];
+
+		if(trim($receipt_date_from) == "") {
+			$receipt_date_from = '2000-01-01';
+		}
+
+		if(trim($receipt_date_to) == "") {
+			$receipt_date_to = '2100-01-01';
+		}
+		//activate worksheet number 1
+		$this->excel->setActiveSheetIndex(0);
+		//name the worksheet
+		$this->excel->getActiveSheet()->setTitle('Receipt');
+		$receipts = $this->apis->search_receipt_by_multiple_var_download($student_ic, $receipt_no, $receipt_branch, $course_type, $receipt_date_from, $receipt_date_to);
+		$rowArray = array('收据类型', '收据时间', '收据号码', '收费金额', '学员IC', '付款人姓名', '学员电话', '是否补交学费', '是否老学员', '课程类型', '收款人', '分部', '备注');
+		if($receipts != NULL) {
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $rowArray,   // The data to set
+			        NULL
+			    );
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $receipts,   // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'A3'         // Top left coordinate of the worksheet range where
+		                     //    we want to set these values (default is A1)
+			    );
+			$filename = 'Receipt_'.date('Y-m-d H:i:s').'.xls';	
+			
+			header('Content-Type: application/vnd.ms-excel'); //mime type
+			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+			header('Cache-Control: max-age=0'); //no cache
+			             
+			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+			$objWriter->save('php://output');
+		}
+	}
+
+	/**
 	 *  update receipt record by receipt_id
 	 */
 	function updateReceiptRecord() {
 		$receipt_id = $this->input->post('receipt_id');
 		$student_ic = $this->input->post('student_ic');
+		$receipt_type = $this->input->post('receipt_type');
 		$receipt_no = $this->input->post('receipt_no');
 		$payee_name = $this->input->post('payee_name');
 		$receipt_date = $this->input->post('receipt_date');
@@ -1134,7 +1185,8 @@ class Api extends CI_Controller
 		// update
 		$update = $this->apis->update_receipt_record(
 			$receipt_id,
-			$student_ic, 
+			$student_ic,
+			$receipt_type, 
 			$receipt_no, 
 			$payee_name, 
 			$receipt_date, 
@@ -1161,7 +1213,7 @@ class Api extends CI_Controller
 		//activate worksheet number 1
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
-		$this->excel->getActiveSheet()->setTitle('test worksheet');
+		$this->excel->getActiveSheet()->setTitle('ATO');
 
 		$rowArray = array('Value1', 'Value2', 'Value3', 'Value4');
 		$this->excel->getActiveSheet()

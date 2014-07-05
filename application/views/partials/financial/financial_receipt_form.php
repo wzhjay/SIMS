@@ -98,6 +98,7 @@
 
 		function create_new_receipt_record() {
 			var student_ic = $('#input_financial_receipt_student_ic').val();
+			var receipt_type = $('#input_financial_receipt_type option:selected').val();
 			var receipt_no = $('#input_financial_receipt_num').val();
 			var payee_name = $('#input_financial_receipt_payee').val();
 			var receipt_date = $('#input_financial_receipt_date').val();
@@ -119,6 +120,7 @@
 				type:"post",
 			    url:window.api_url + "createNewReceiptRecord",
 			    data:{	student_ic:student_ic,
+			    		receipt_type:receipt_type,
 			    		receipt_no:receipt_no, 
 			    		payee_name:payee_name, 
 			    		receipt_date:receipt_date, 
@@ -145,6 +147,7 @@
 
 		function update_receipt_record() {
 			var student_ic = $('#input_financial_receipt_student_ic').val();
+			var receipt_type = $('#input_financial_receipt_type option:selected').val();
 			var receipt_no = $('#input_financial_receipt_num').val();
 			var payee_name = $('#input_financial_receipt_payee').val();
 			var receipt_date = $('#input_financial_receipt_date').val();
@@ -167,6 +170,7 @@
 			    url:window.api_url + "updateReceiptRecord",
 			    data:{	receipt_id:selected_receipt_record_id,
 			    		student_ic:student_ic,
+			    		receipt_type:receipt_type,
 			    		receipt_no:receipt_no, 
 			    		payee_name:payee_name, 
 			    		receipt_date:receipt_date, 
@@ -352,6 +356,14 @@
 		<div class="col-xs-2">
 			<br>
 			<a class="button glow button-rounded button-flat" id="financial_receipt_student_ic_check" data-toggle="modal" data-target="#financial-receipt-student-modal">Check</a>
+		</div>
+		<div class="col-xs-4">
+			<label for="input_financial_receipt_type">收据类型</label>
+			<select class="form-control" id="input_financial_receipt_type">
+            	<option value="SSA">SSA</option>
+	            <option value="Link1" selected="selected">Link1</option>
+    	        <option value="Changchun">Changchun</option>
+          	</select>
 		</div>
 	</div>
 	<div class="row">

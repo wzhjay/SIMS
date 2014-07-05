@@ -794,9 +794,9 @@ class Apis extends CI_Model
 	 * @param	$student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $letter_type, $reg_no, $related_receipt, $related_receipt_amount, $receipt_remark
 	 * @return	bool
 	 */
-	function create_new_receipt_record($student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $letter_type, $reg_no, $receipt_branch_id, $receipt_op_id, $receipt_remark) {
+	function create_new_receipt_record($student_ic, $receipt_type, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $letter_type, $reg_no, $receipt_branch_id, $receipt_op_id, $receipt_remark) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('INSERT INTO receipt (student_ic, receipt_no, payee_name, receipt_date, receipt_amount, makeup, student_before, course_type, letter_type, reg_no, receipt_branch_id, receipt_op_id, created, modified, receipt_remark) VALUES ("'.$student_ic.'", "'.$receipt_no.'", "'.$payee_name.'", "'.$receipt_date.'", "'.$receipt_amount.'", "'.$makeup.'", "'.$student_before.'", "'.$course_type.'", "'.$letter_type.'", "'.$reg_no.'", "'.$receipt_branch_id.'", "'.$receipt_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$receipt_remark.'")');
+			$query = $this->db->query('INSERT INTO receipt (student_ic, receipt_type, receipt_no, payee_name, receipt_date, receipt_amount, makeup, student_before, course_type, letter_type, reg_no, receipt_branch_id, receipt_op_id, created, modified, receipt_remark) VALUES ("'.$student_ic.'", "'.$receipt_type.'", "'.$receipt_no.'", "'.$payee_name.'", "'.$receipt_date.'", "'.$receipt_amount.'", "'.$makeup.'", "'.$student_before.'", "'.$course_type.'", "'.$letter_type.'", "'.$reg_no.'", "'.$receipt_branch_id.'", "'.$receipt_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$receipt_remark.'")');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;
@@ -837,6 +837,26 @@ class Apis extends CI_Model
 	}
 
 	/**
+	 * search receipt records by multiple variables for download
+	 *
+	 * @param	$student_ic, $receipt_no, $receipt_branch, $course_type, $receipt_date_from, $receipt_date_to
+	 * @return	array or null
+	 */
+	function search_receipt_by_multiple_var_download($student_ic, $receipt_no, $receipt_branch, $course_type, $receipt_date_from, $receipt_date_to) {
+		if($this->session->userdata('session_id')) {
+			if($course_type == 'ALL') { $course_type = "";}
+			if($receipt_branch == 'ALL') {	
+				$query1 = $this->db->query('SELECT r.receipt_type, r.receipt_date, r.receipt_no, r.receipt_amount, r.student_ic, r.payee_name, s.tel, r.makeup, r.student_before, r.course_type, u.username, b.name, r.receipt_remark FROM receipt r, branch b, student s, users u WHERE (b.id = r.receipt_branch_id) AND (r.student_ic = s.ic) AND (r.receipt_op_id = u.id) AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") ORDER BY -DATE(r.receipt_date)');
+				if ($query1->num_rows() > 0) return $query1->result_array();
+			} else {
+				$query2 = $this->db->query('SELECT r.receipt_type, r.receipt_date, r.receipt_no, r.receipt_amount, r.student_ic, r.payee_name, s.tel, r.makeup, r.student_before, r.course_type, u.username, b.name, r.receipt_remark FROM receipt r, branch b, student s, users u WHERE (b.id = r.receipt_branch_id) AND (r.student_ic = s.ic) AND (r.receipt_op_id = u.id) AND (r.receipt_branch_id = "'.$receipt_branch.'") AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") ORDER BY -DATE(r.receipt_date)');
+				if ($query2->num_rows() > 0) return $query2->result_array();
+			}
+		}
+		return NULL;
+	}
+
+	/**
 	 * get receipt record from receipt table by ID
 	 *
 	 * @param	$receipt_id
@@ -856,9 +876,9 @@ class Apis extends CI_Model
 	 * @param	$receipt_id, $student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $letter_type, $reg_no, $related_receipt, $related_receipt_amount, $receipt_branch_id, $receipt_op_id, $receipt_remark
 	 * @return	bool
 	 */
-	function update_receipt_record($receipt_id, $student_ic, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $letter_type, $reg_no, $receipt_branch_id, $receipt_op_id, $receipt_remark) {
+	function update_receipt_record($receipt_id, $student_ic, $receipt_type, $receipt_no, $payee_name, $receipt_date, $receipt_amount, $makeup, $student_before, $course_type, $letter_type, $reg_no, $receipt_branch_id, $receipt_op_id, $receipt_remark) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('UPDATE receipt SET student_ic = "'.$student_ic.'", receipt_no = "'.$receipt_no.'", payee_name = "'.$payee_name.'", receipt_date = "'.$receipt_date.'", receipt_amount = "'.$receipt_amount.'", makeup = "'.$makeup.'", student_before = "'.$student_before.'", course_type = "'.$course_type.'", letter_type = "'.$letter_type.'", reg_no = "'.$reg_no.'", receipt_branch_id = "'.$receipt_branch_id.'", receipt_op_id = "'.$receipt_op_id.'", receipt_remark = "'.$receipt_remark.'", modified = "'.date('Y-m-d H:i:s').'" WHERE receipt_id = "'.$receipt_id.'"');
+			$query = $this->db->query('UPDATE receipt SET student_ic = "'.$student_ic.'", receipt_type="'.$receipt_type.'", receipt_no = "'.$receipt_no.'", payee_name = "'.$payee_name.'", receipt_date = "'.$receipt_date.'", receipt_amount = "'.$receipt_amount.'", makeup = "'.$makeup.'", student_before = "'.$student_before.'", course_type = "'.$course_type.'", letter_type = "'.$letter_type.'", reg_no = "'.$reg_no.'", receipt_branch_id = "'.$receipt_branch_id.'", receipt_op_id = "'.$receipt_op_id.'", receipt_remark = "'.$receipt_remark.'", modified = "'.date('Y-m-d H:i:s').'" WHERE receipt_id = "'.$receipt_id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;

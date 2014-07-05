@@ -137,22 +137,17 @@
 														'</div>' +
 													'</div>' +
 													'<div class="row">' + 
-														'<div class="col-xs-4">' +
+														'<div class="col-xs-3">' +
 															"<div>Payee's Name: "+ reply[key].payee_name + '</div>' + 
 														'</div>' +
-														'<div class="col-xs-4">' +
+														'<div class="col-xs-3">' +
 															'<div>是否补交: '+ reply[key].makeup + '</div>' + 
 														'</div>' +
-														'<div class="col-xs-4">' +
+														'<div class="col-xs-3">' +
 															'<div>是否老学员: '+ reply[key].student_before + '</div>' + 
 														'</div>' +
-													'</div>' + 
-													'<div class="row">' + 
 														'<div class="col-xs-3">' +
-															"<div>相关收据: "+ reply[key].related_receipt + '</div>' + 
-														'</div>' +
-														'<div class="col-xs-3">' +
-															'<div>相关收据金额: '+ reply[key].related_receipt_amount + '</div>' + 
+															'<div>收据类型: '+ reply[key].receipt_type + '</div>' + 
 														'</div>' +
 													'</div>' + 
 													'<hr>' + 
@@ -206,6 +201,7 @@
 			    		for (var key in reply) {
 			    			if (reply.hasOwnProperty(key)) {
 			    				$('#input_financial_receipt_student_ic').val(reply[key].student_ic);
+			    				$('#input_financial_receipt_type option[value="'+reply[key].receipt_type+'"]').attr('selected', 'selected');
 								$('#input_financial_receipt_num').val(reply[key].receipt_no);
 								$('#input_financial_receipt_payee').val(reply[key].payee_name);
 								$('#input_financial_receipt_date').val(reply[key].receipt_date);
@@ -241,43 +237,45 @@
 	</script>
 </head>
 <div class="highlight">
-	<div class="row">
-		<div class="col-xs-4">
-			<label for="input_financial_search_receipt_student_ic">Student IC</label>
-			<input class="form-control" id="input_financial_search_receipt_student_ic">
+	<form action="<?php echo $this->config->base_url(); ?>index.php/api/searchReceiptRecordsDownload" method="POST" target="_blank">
+		<div class="row">
+			<div class="col-xs-4">
+				<label for="input_financial_search_receipt_student_ic">Student IC</label>
+				<input name="student_ic" class="form-control" id="input_financial_search_receipt_student_ic">
+			</div>
+			<div class="col-xs-4">
+				<label for="input_financial_search_receipt_num">Receipt Number</label>
+				<input name="receipt_no" class="form-control" id="input_financial_search_receipt_num" >
+			</div>
+			<div class="col-xs-4">
+				<label for="input_financial_search_receipt_branch">Branch</label>
+				<select name="receipt_branch" class="form-control" id="input_financial_search_receipt_branch"></select>
+			</div>
 		</div>
-		<div class="col-xs-4">
-			<label for="input_financial_search_receipt_num">Receipt Number</label>
-			<input class="form-control" id="input_financial_search_receipt_num" >
+		<div class="row">
+			<div class="col-xs-4">
+				<label for="input_financial_search_receipt_date_from">Receipt Date From</label>
+				<input name="receipt_date_from" class="form-control" id="input_financial_search_receipt_date_from" placeholder="From">
+			</div>
+			<div class="col-xs-4">
+				<label for="input_financial_search_receipt_date_to">Receipt Date To</label>
+				<input name="receipt_date_to" class="form-control" id="input_financial_search_receipt_date_to" placeholder="To">
+			</div>
+			<div class="col-xs-4">
+				<label for="input_financial_search_receipt_course_type">Course Type</label>
+				<select name="course_type" class="form-control" id="input_financial_search_receipt_course_type"></select>
+			</div>
 		</div>
-		<div class="col-xs-4">
-			<label for="input_financial_search_receipt_branch">Branch</label>
-			<select class="form-control" id="input_financial_search_receipt_branch"></select>
+		<div class="row">
+			<div class="col-xs-8"></div>
+			<div class="col-xs-2">
+				<a class="button glow button-rounded button-flat" id="financial_receipt_search_submit">Search</a>
+			</div>
+			<div class="col-xs-2">
+				<input type="submit" value="To Excel" class="button glow button-rounded button-flat" id="financial_receipt_search_to_excel">
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-4">
-			<label for="input_financial_search_receipt_date_from">Receipt Date From</label>
-			<input class="form-control" id="input_financial_search_receipt_date_from" placeholder="From">
-		</div>
-		<div class="col-xs-4">
-			<label for="input_financial_search_receipt_date_to">Receipt Date To</label>
-			<input class="form-control" id="input_financial_search_receipt_date_to" placeholder="To">
-		</div>
-		<div class="col-xs-4">
-			<label for="input_financial_search_receipt_course_type">Course Type</label>
-			<select class="form-control" id="input_financial_search_receipt_course_type"></select>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-8"></div>
-		<div class="col-xs-2">
-			<a class="button glow button-rounded button-flat" id="financial_receipt_search_submit">Search</a>
-		</div>
-		<div class="col-xs-2">
-			<a class="button glow button-rounded button-flat" id="financial_receipt_search_to_excel">To Excel</a>
-		</div>
-	</div>
+	</form>
 	<br>
 	<div id="receipt_search_results"></div>
 </div>
