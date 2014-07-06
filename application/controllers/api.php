@@ -735,34 +735,124 @@ class Api extends CI_Controller
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
 		$this->excel->getActiveSheet()->setTitle('ATO');
-		$atos = $this->apis->search_atos_by_time($from, $to, $class_code);
-		$rowArray = array('Pre / Post Assessment', 'Exam Location', 'Class ID', 'Training Start Date (DD/MM/YYYY)', '>Training End Date (DD/MM/YYYY)', 'Course Code', 'Attendance Percentage', 'Training Recommendation', 'EL', 'ER', 'EN', 'ES', 'EW', 'NRIC/Fin No.', 'ID Type (Select from dropdown list)', 'Salutation', 'SurName', 'GivenName', 'OtherName', 'Gender', 'DOB (DD/MM/YYYY)', 'Age', 'Citizenship', 'Nationality', 'Ethnic Group', 'Highest Chinese Education Level', 'Highest Education Level', 'Language Proficiency', 'Blk', 'Street Name', '#Floor - Unit No', 'Building Name', 'Postal Code', 'Contact No', 'Employment Status', 'Company Registration Type', 'Company Name', 'Company Registration No', 'Industry Sector', 'Designation', 'Salary Range');
-		if($atos != NULL) {
-			$this->excel->getActiveSheet()
-			    ->fromArray(
-			        $rowArray,   // The data to set
-			        NULL
-			    );
-			$this->excel->getActiveSheet()
-			    ->fromArray(
-			        $atos,   // The data to set
-			        NULL,        // Array values with this value will not be set
-			        'A3'         // Top left coordinate of the worksheet range where
-		                     //    we want to set these values (default is A1)
-			    );
-			if(trim($class_code) == "") {
-				$filename = 'ATO_Date_'.date('Y-m-d H:i:s').'.xls';	
-			} else {
-				$filename = 'ATO_Class_'.date('Y-m-d H:i:s').'.xls';		
-			}
-			
-			header('Content-Type: application/vnd.ms-excel'); //mime type
-			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
-			header('Cache-Control: max-age=0'); //no cache
-			             
-			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
-			$objWriter->save('php://output');
+		$je_09 = $this->apis->search_atos_by_time_download($from, $to, $class_code, 'JE', '09');
+		if($je_09[0] == NULL) { $je_09[0] = array(NULL); };
+		$je_14 = $this->apis->search_atos_by_time_download($from, $to, $class_code, 'JE', '14');
+		if($je_14[0] == NULL) { $je_14[0] = array(NULL); };
+		$je_19 = $this->apis->search_atos_by_time_download($from, $to, $class_code, 'JE', '19');
+		if($je_19[0] == NULL) { $je_19[0] = array(NULL); };
+		$un_09 = $this->apis->search_atos_by_time_download($from, $to, $class_code, 'UN', '09');
+		if($un_09[0] == NULL) { $un_09[0] = array(NULL); };
+		$un_14 = $this->apis->search_atos_by_time_download($from, $to, $class_code, 'UN', '14');
+		if($un_14[0] == NULL) { $un_14[0] = array(NULL); };
+		$un_19 = $this->apis->search_atos_by_time_download($from, $to, $class_code, 'UN', '19');
+		if($un_19[0] == NULL) { $un_19[0] = array(NULL); };
+		$title_row = array('Pre / Post Assessment', 'Exam Location', 'Class ID', 'Training Start Date (DD/MM/YYYY)', '>Training End Date (DD/MM/YYYY)', 'Course Code', 'Attendance Percentage', 'Training Recommendation', 'EL', 'ER', 'EN', 'ES', 'EW', 'NRIC/Fin No.', 'ID Type (Select from dropdown list)', 'Salutation', 'SurName', 'GivenName', 'OtherName', 'Gender', 'DOB (DD/MM/YYYY)', 'Age', 'Citizenship', 'Nationality', 'Ethnic Group', 'Highest Chinese Education Level', 'Highest Education Level', 'Language Proficiency', 'Blk', 'Street Name', '#Floor - Unit No', 'Building Name', 'Postal Code', 'Contact No', 'Employment Status', 'Company Registration Type', 'Company Name', 'Company Registration No', 'Industry Sector', 'Designation', 'Salary Range');
+		$arrayData = array(
+		    $title_row,
+		    array(NULL),
+		    array('JE'),
+		    array('09:00'),
+		);
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $arrayData,   // The data to set
+		        NULL
+		    );
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $je_09,   // The data to set
+		        NULL,
+		        'A5'
+		    );
+		$start = 5 + sizeof($je_09); + 1;
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		       	array('14:00'),   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += 1; 
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $je_14,   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += sizeof($je_14);
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		       	array('19:00'),   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += 1; 
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $je_19,   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += sizeof($je_19);
+		$arrayData = array(
+		    array(NULL),
+		    array('UN'),
+		    array('09:00'),
+		);
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $arrayData,   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += 3;
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $un_09,   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += sizeof($un_09);
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		       	array('14:00'),   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += 1; 
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $un_14,   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += sizeof($un_14);
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		       	array('19:00'),   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += 1;
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $un_19,   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += sizeof($un_19);
+		if(trim($class_code) == "") {
+			$filename = 'ATO_Date_'.date('Y-m-d H:i:s').'.xls';	
+		} else {
+			$filename = 'ATO_Class_'.date('Y-m-d H:i:s').'.xls';		
 		}
+		
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		             
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+		$objWriter->save('php://output');
 	}
 
 	/**
