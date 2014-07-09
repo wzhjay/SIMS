@@ -238,70 +238,74 @@
     </ul>
     <div id="class_search_students_tabs_content" class="tab-content">
       <div class="tab-pane fade active in" id="student_search_all_students_tab1">
-        <div class="row">
-			<div class="col-xs-4">
-				<label for="input_student_search_all_students_ic_name">请输入学员IC/名字</label>
-				<input class="form-control" id="input_student_search_all_students_ic_name" placeholder="IC Number/Name">
+      	<form action="<?php echo $this->config->base_url(); ?>index.php/api/searchStudentInfoDownload1" method="POST" target="_blank"><form action="<?php echo $this->config->base_url(); ?>index.php/api/searchStudentInfoDownload1" method="POST" target="_blank">
+	        <div class="row">
+				<div class="col-xs-4">
+					<label for="input_student_search_all_students_ic_name">请输入学员IC/名字</label>
+					<input name="keyword" class="form-control" id="input_student_search_all_students_ic_name" placeholder="IC Number/Name">
+				</div>
+				<div class="col-xs-4"></div>
+				<div class="col-xs-2">
+					<br>
+					<a class="button glow button-rounded button-flat" id="input_student_search_all_students_search1">Search</a>
+				</div>
+				<div class="col-xs-2">
+					<br>
+					<input type="submit" value="To Excel" class="button glow button-rounded button-flat" id="input_student_search_all_students_excel1">
+				</div>
 			</div>
-			<div class="col-xs-4"></div>
-			<div class="col-xs-2">
-				<br>
-				<a class="button glow button-rounded button-flat" id="input_student_search_all_students_search1">Search</a>
-			</div>
-			<div class="col-xs-2">
-				<br>
-				<input type="submit" value="To Excel" class="button glow button-rounded button-flat" id="input_student_search_all_students_excel1">
-			</div>
-		</div>
+		</form>
       </div>
       <div class="tab-pane fade" id="student_search_all_students_tab2">
-        <div class="row">
+	    <form action="<?php echo $this->config->base_url(); ?>index.php/api/searchStudentInfoDownload2" method="POST" target="_blank">
+	        <div class="row">
+					<div class="col-xs-3">
+					<label for="input_student_search_all_students_course_type">Course Type</label>
+					<select name="course_type" class="form-control" id="input_student_search_all_students_search_course_type">
+						<option value="NA">请选择</option>
+						<option id="input_student_search_all_students_course_type_1" value="cmp">英文综合</option>
+						<option id="input_student_search_all_students_course_type_2" value="con">英文会话</option>
+						<option id="input_student_search_all_students_course_type_3" value="wri">英文写作</option>
+						<option id="input_student_search_all_students_course_type_3" value="wpn">数学</option>
+					</select>
+				</div>
 				<div class="col-xs-3">
-				<label for="input_student_search_all_students_course_type">Course Type</label>
-				<select class="form-control" id="input_student_search_all_students_search_course_type">
-					<option value="NA">请选择</option>
-					<option id="input_student_search_all_students_course_type_1" value="cmp">英文综合</option>
-					<option id="input_student_search_all_students_course_type_2" value="con">英文会话</option>
-					<option id="input_student_search_all_students_course_type_3" value="wri">英文写作</option>
-					<option id="input_student_search_all_students_course_type_3" value="wpn">数学</option>
-				</select>
+					<label for="input_student_search_all_students_student_level">水平等级</label>
+					<select name="level" class="form-control" id="input_student_search_all_students_student_level">
+						<option value="NA">请选择</option>
+						<option value="BEGINNERS">初级</option>
+	                	<option value="INTERMEDIATE">中级</option>
+	                	<option value="ADVANCED">高级</option>
+					</select>
+				</div>
+				<div class="col-xs-3">
+					<label for="input_student_search_all_students_class_time">想上课时间</label>
+					<select name="slot" class="form-control" id="input_student_search_all_students_class_time">
+						<option value="NA">请选择</option>
+						<option value="any_am">平时早上</option>
+	                	<option value="any_pm">平时下午</option>
+	                	<option value="sat_eve">平时晚上</option>
+	                	<option value="sat_am">周六早上</option>
+	                	<option value="sat_pm">周六下午</option>
+	                	<option value="sat_eve">周六晚上</option>
+	                	<option value="sun_am">周日早上</option>
+	                	<option value="sun_pm">周日下午</option>
+	                	<option value="sun_eve">周日晚上</option>
+					</select>
+				</div>
 			</div>
-			<div class="col-xs-3">
-				<label for="input_student_search_all_students_student_level">水平等级</label>
-				<select class="form-control" id="input_student_search_all_students_student_level">
-					<option value="NA">请选择</option>
-					<option value="BEGINNERS">初级</option>
-                	<option value="INTERMEDIATE">中级</option>
-                	<option value="ADVANCED">高级</option>
-				</select>
+			<div class="row">
+				<div class="col-xs-8"></div>
+				<div class="col-xs-2">
+					<br>
+					<a class="button glow button-rounded button-flat" id="input_student_search_all_students_search2">Search</a>
+				</div>
+				<div class="col-xs-2">
+					<br>
+					<input type="submit" value="To Excel" class="button glow button-rounded button-flat" id="input_student_search_all_students_excel2">
+				</div>
 			</div>
-			<div class="col-xs-3">
-				<label for="input_student_search_all_students_class_time">想上课时间</label>
-				<select class="form-control" id="input_student_search_all_students_class_time">
-					<option value="NA">请选择</option>
-					<option value="any_am">平时早上</option>
-                	<option value="any_pm">平时下午</option>
-                	<option value="sat_eve">平时晚上</option>
-                	<option value="sat_am">周六早上</option>
-                	<option value="sat_pm">周六下午</option>
-                	<option value="sat_eve">周六晚上</option>
-                	<option value="sun_am">周日早上</option>
-                	<option value="sun_pm">周日下午</option>
-                	<option value="sun_eve">周日晚上</option>
-				</select>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-8"></div>
-			<div class="col-xs-2">
-				<br>
-				<a class="button glow button-rounded button-flat" id="input_student_search_all_students_search2">Search</a>
-			</div>
-			<div class="col-xs-2">
-				<br>
-				<input type="submit" value="To Excel" class="button glow button-rounded button-flat" id="input_student_search_all_students_excel2">
-			</div>
-		</div>
+		</form>
       </div>
     </div>
     <br>

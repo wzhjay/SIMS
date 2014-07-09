@@ -440,6 +440,70 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  search student info by ic or name and download
+	 */
+	function searchStudentInfoDownload1() {
+		$keyword = $_POST['keyword'];
+		$students = $this->apis->search_students_by_keyword_download($keyword);
+		$rowArray = array('收据类型', '收据时间', '收据号码', '收费金额', '学员IC', '付款人姓名', '学员电话', '是否补交学费', '是否老学员', '课程类型', '收款人', '分部', '备注');
+		if($students != NULL) {
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $rowArray,   // The data to set
+			        NULL
+			    );
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $students,   // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'A3'         // Top left coordinate of the worksheet range where
+		                     //    we want to set these values (default is A1)
+			    );
+			$filename = 'Students_'.date('Y-m-d H:i:s').'.xls';	
+			
+			header('Content-Type: application/vnd.ms-excel'); //mime type
+			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+			header('Cache-Control: max-age=0'); //no cache
+			             
+			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+			$objWriter->save('php://output');
+		}
+	}
+
+	/**
+	 *  search student info by multi varibles and download
+	 */
+	function searchStudentInfoDownload2() {
+		$course_type = $_POST['course_type'];
+		$level = $_POST['level'];
+		$slot = $_POST['slot'];
+		$students = $this->apis->search_class_students_by_multiple_var_download($course_type, $level, $slot);
+		$rowArray = array('收据类型', '收据时间', '收据号码', '收费金额', '学员IC', '付款人姓名', '学员电话', '是否补交学费', '是否老学员', '课程类型', '收款人', '分部', '备注');
+		if($students != NULL) {
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $rowArray,   // The data to set
+			        NULL
+			    );
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $students,   // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'A3'         // Top left coordinate of the worksheet range where
+		                     //    we want to set these values (default is A1)
+			    );
+			$filename = 'Students_'.date('Y-m-d H:i:s').'.xls';	
+			
+			header('Content-Type: application/vnd.ms-excel'); //mime type
+			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+			header('Cache-Control: max-age=0'); //no cache
+			             
+			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+			$objWriter->save('php://output');
+		}
+	}
+
+	/**
 	 *  create ato info by student
 	 */
 	function createATOInfo() {
