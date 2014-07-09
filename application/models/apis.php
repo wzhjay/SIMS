@@ -545,15 +545,15 @@ class Apis extends CI_Model
 		if($this->session->userdata('session_id')) {
 			if($course_type != "NA" && $level != "NA") {
 				if($slot != "NA") {
-					$query = $this->db->query('SELECT * FROM registration r, student s, student_record sr WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") ORDER BY -DATE(r.reg_date)');
+					$query = $this->db->query('SELECT * FROM registration r, student s, student_record sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") ORDER BY -DATE(r.reg_date)');
 				} else {
-					$query = $this->db->query('SELECT * FROM registration r, student s, student_record sr WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (sr.'.$course_type.'="'.$level.'") ORDER BY -DATE(r.reg_date)');
+					$query = $this->db->query('SELECT * FROM registration r, student s, student_record sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") ORDER BY -DATE(r.reg_date)');
 				}
 			} else {
 				if($slot != "NA") {
-					$query = $this->db->query('SELECT * FROM registration r, student s, student_record sr WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.'.$slot.' = "1") ORDER BY -DATE(r.reg_date)');
+					$query = $this->db->query('SELECT * FROM registration r, student s, student_record sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") ORDER BY -DATE(r.reg_date)');
 				} else {
-					$query = $this->db->query('SELECT * FROM registration r, student s, student_record sr WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) ORDER BY -DATE(r.reg_date)');
+					$query = $this->db->query('SELECT * FROM registration r, student s, student_record sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) ORDER BY -DATE(r.reg_date)');
 				}
 			}
 			if ($query->num_rows() > 0) return $query->result_array();

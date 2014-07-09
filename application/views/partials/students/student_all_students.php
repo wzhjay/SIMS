@@ -7,6 +7,10 @@
 		    $('#input_student_search_all_students_search1').on('click', function() {
 				all_students_search_student_by_name_ic();
 			});
+
+			$('#input_student_search_all_students_search2').on('click', function() {
+				search_student_by_multiple_var();
+			});
 		});
 
 		function all_students_search_student_by_name_ic() {
@@ -100,12 +104,111 @@
 					 			});
 							}
 						} else {
-							target.append('<p>No Exam Records found</p><br>');
+							target.append('<p>No Student Records found</p><br>');
 						}
-					}else {
-						toastr.error("fail to call search api");
 					}
 				}
+			});//End ajax
+		}
+
+		function search_student_by_multiple_var() {
+ 			var course_type = $('#input_student_search_all_students_search_course_type').val();
+ 			var level = $('#input_student_search_all_students_student_level').val();
+ 			var slot = $('#input_student_search_all_students_class_time').val();
+
+ 			var target = $('#student_all_search_results');
+			target.empty();
+			target.append('<div class="loading"></div>');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "searchStudentInfoByMultipleVar",
+			    data:{course_type:course_type, level:level, slot:slot},
+			    success:function(json){
+			    	target.empty();
+			    	target.append('<h4>No Students Found.</h4><hr>');
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		if(reply.length > 0) {
+			    			target.empty();
+				    		for (var key in reply) {
+				    			var num = parseInt(key) + 1;
+				    			if (reply.hasOwnProperty(key)) {
+				            		target.append(
+										'<div class="panel-group" id="student_info_record_collapse_'+key+'">' +
+											'<div class="panel panel-default">' + 
+												'<div class="panel-heading">' +
+													'<h4 class="panel-title">' +
+														'<div class="row">' +
+															'<div class="col-xs-10">' +
+																'<a data-toggle="collapse" data-parent="student_info_record_collapse_'+key+'" href="#student_info_record_collapse_body_'+key+'">Student Record ' + num + '  /  IC: <b>' + reply[key].ic + '</b>  /  Name: <b>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  Tel: <b>' + reply[key].tel + '</b>/  Branch: <b>' + reply[key].name + '</b></a>' + 
+															'</div>' + 
+															'<div class="col-xs-2">' +
+																'<a class="button glow button-rounded button-flat" id="search_all_students_delete_'+reply[key].student_id+'" data-toggle="modal" data-target="#student-delete-modal">Delete</a>' + 
+															'</div>' + 
+														'</div>' + 
+													' </h4>' +
+												'</div>' +
+												'<div id="student_info_record_collapse_body_'+key+'" class="panel-collapse collapse">' + 
+													'<div class="panel-body">' + 
+														'<div class="row">' + 
+															'<div class="col-xs-3">'+ 
+																'<div>Registration Date: ' + reply[key].reg_date + '</div>' +
+															'</div>' + 
+															'<div class="col-xs-3">' +
+																'<div>Registration Number: ' + reply[key].reg_no +'</div>' + 
+															'</div>' +
+															'<div class="col-xs-3">' +
+																'<div>Tel Home: '+ reply[key].tel_home + '</div>' + 
+															'</div>' +
+															'<div class="col-xs-3">' +
+																'<div>Source: '+ reply[key].source + '</div>' + 
+															'</div>' +
+														'</div>' + 
+														'<div class="row">' + 
+															'<div class="col-xs-3">'+ 
+																'<div>Created: ' + reply[key].created + '</div>' +
+															'</div>' + 
+															'<div class="col-xs-3">' +
+																'<div>Modified: ' + reply[key].modified + '</div>' + 
+															'</div>' +
+															'<div class="col-xs-3">' +
+																'<div>Remark: '+ reply[key].student_remark + '</div>' + 
+															'</div>' +
+														'</div>' + 
+													'</div>' + 
+												'</div>' + 
+											'</div>' +
+										'</div>'
+									);
+				            	}
+
+				            	$('#student_all_search_results .button').on('click', function() {
+					 				var el_id = $(this).attr('id').split('_');
+					 				var student_id = el_id[4];
+					 				if(el_id[3] == "delete") {
+					 					// delete student
+					 					selected_stundet_delete_id = student_id;
+					 					var modalBody = $('#student_delete_modal_label').closest('.modal-content').find('.modal-body');
+										modalBody.empty();
+										modalBody.append(
+											'<div class="row">' + 
+												'<div class="col-xs-10">'+
+													'<label>Sure you want to delete this Student record?</label><br>' +
+													'<label>确定你要删除这条学生记录？</label>' +
+												'</div>' +	
+											'</div>'
+										);
+					 					$('#search_student_delete_confirm').on('click', function() {
+											delete_student_info_by_id(student_id);
+										});
+					 				}
+					 			});
+				            }
+			        	}  else {
+							target.append('<p>No Student Records found</p><br>');
+						}
+			        }
+			    },
 			});//End ajax
 		}
 
