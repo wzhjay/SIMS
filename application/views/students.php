@@ -20,8 +20,9 @@
 		<ul class="nav nav-tabs" id="my_tab">
 		  <li class="active"><a href="#tab-1" data-toggle="tab">报名信息</a></li>
 		  <li><a href="#tab-2" data-toggle="tab">基本信息</a></li>
-		  <li><a href="#tab-3" data-toggle="tab">检索学员</a></li>
-		  <li><a href="#tab-4" data-toggle="tab">输入成绩</a></li>
+		  <li><a href="#tab-3" data-toggle="tab">查看学员信息</a></li>
+		  <li><a href="#tab-4" data-toggle="tab">全部学员管理</a></li>
+		  <li><a href="#tab-5" data-toggle="tab">输入成绩</a></li>
 		</ul>
 
 		<div class="tab-content">
@@ -41,6 +42,10 @@
 				<?php $this->load->view('partials/students/student_search_form') ?>
 		  	</div>
 		  	<div class="tab-pane fade" id="tab-4">
+		  		<h3>全部学员</h3><hr>
+				<?php $this->load->view('partials/students/student_all_students') ?>
+		  	</div>
+		  	<div class="tab-pane fade" id="tab-5">
 		  		<h3>输入学生成绩信息</h3><hr>
 				<?php $this->load->view('partials/students/student_input_exams_records_form') ?>
 				<br><br>

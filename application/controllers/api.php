@@ -428,6 +428,18 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  delete student by student_id
+	 */
+	function deleteStudentInfoByID() {
+		$student_id = $this->input->post('student_id');
+		$delete = $this->apis->delete_student_info_by_id($student_id);
+		if($delete){
+			echo 3;
+		}
+		else echo 0;
+	}
+
+	/**
 	 *  create ato info by student
 	 */
 	function createATOInfo() {
