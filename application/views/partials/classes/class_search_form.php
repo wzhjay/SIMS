@@ -383,12 +383,12 @@
 			    },
 			});//End ajax
 
-			$('#class_search_class_student_management_middle_section .btn').on('click', function() {
-				$.each($('#class_search_student_search_results option:selected'), function() {
-					var student_id = $(this).attr('id').split('_')[3];
-					assign_student_to_class(student_id);
-				});
-			});
+			// $('#class_search_class_student_management_middle_section .btn').on('click', function() {
+			// 	$.each($('#class_search_student_search_results option:selected'), function() {
+			// 		var student_id = $(this).attr('id').split('_')[3];
+			// 		assign_student_to_class(student_id);
+			// 	});
+			// });
  		}
 
  		function assign_student_to_class(student_id) {
@@ -507,8 +507,8 @@
 				      <div class="tab-pane fade active in" id="class_search_students_tab1">
 				        <div class="row">
 		      				<div class="col-xs-8">
-		      					<label for="input_class_search_class_student_management_ic_name">请输入学员IC/名字</label>
-								<input class="form-control" id="input_class_search_class_student_management_ic_name" placeholder="IC Number/Name">
+		      					<label for="input_class_search_class_student_management_ic_name">请输入学员IC/名字/HP</label>
+								<input class="form-control" id="input_class_search_class_student_management_ic_name" placeholder="IC Number/Name/HP">
 							</div>
 							<div class="col-xs-2">
 								<br>
@@ -552,7 +552,7 @@
 									<option value="NA">请选择</option>
 									<option value="any_am">平时早上</option>
 				                	<option value="any_pm">平时下午</option>
-				                	<option value="sat_eve">平时晚上</option>
+				                	<option value="any_eve">平时晚上</option>
 				                	<option value="sat_am">周六早上</option>
 				                	<option value="sat_pm">周六下午</option>
 				                	<option value="sat_eve">周六晚上</option>

@@ -157,9 +157,9 @@ class Apis extends CI_Model
 	 * @param	$ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime
 	 * @return	bool
 	 */
-	function create_new_registration($ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime) {
+	function create_new_registration($ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('INSERT INTO registration (ic, reg_date, student_branch_id, reg_branch_id, reg_op_id, reg_no, start_date_wanted, reg_remark, any_am, any_pm, any_eve, sat_am, sat_pm, sat_eve, sun_am, sun_pm, sun_eve, anytime, created, modified) VALUES ("'.$ic.'", "'.$reg_date.'", "'.$student_branch_id.'", "'.$reg_branch_id.'", "'.$reg_op_id.'", "'.$reg_no.'", "'.$start_date_wanted.'", "'.$reg_remark.'", "'.$any_am.'", "'.$any_pm.'", "'.$any_eve.'", "'.$sat_am.'", "'.$sat_pm.'", "'.$sat_eve.'", "'.$sun_am.'", "'.$sun_pm.'", "'.$sun_eve.'", "'.$anytime.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'")');
+			$query = $this->db->query('INSERT INTO registration (ic, reg_date, student_branch_id, reg_branch_id, reg_op_id, reg_no, reg_remark, any_am, any_pm, any_eve, sat_am, sat_pm, sat_eve, sun_am, sun_pm, sun_eve, anytime, created, modified) VALUES ("'.$ic.'", "'.$reg_date.'", "'.$student_branch_id.'", "'.$reg_branch_id.'", "'.$reg_op_id.'", "'.$reg_no.'", "'.$reg_remark.'", "'.$any_am.'", "'.$any_pm.'", "'.$any_eve.'", "'.$sat_am.'", "'.$sat_pm.'", "'.$sat_eve.'", "'.$sun_am.'", "'.$sun_pm.'", "'.$sun_eve.'", "'.$anytime.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'")');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;
@@ -172,9 +172,9 @@ class Apis extends CI_Model
 	 * @param	$ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime
 	 * @return	bool
 	 */
-	function update_registration($reg_id, $ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime) {
+	function update_registration($reg_id, $ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('UPDATE registration SET ic = "'.$ic.'", reg_date = "'.$reg_date.'", student_branch_id = "'.$student_branch_id.'", reg_branch_id = "'.$reg_branch_id.'", reg_op_id = "'.$reg_op_id.'", reg_no = "'.$reg_no.'", start_date_wanted = "'.$start_date_wanted.'", reg_remark = "'.$reg_remark.'", any_am = "'.$any_am.'", any_pm = "'.$any_pm.'", any_eve = "'.$any_eve.'", sat_am = "'.$sat_am.'", sat_pm = "'.$sat_pm.'", sat_eve = "'.$sat_eve.'", sun_am = "'.$sun_am.'", sun_pm = "'.$sun_pm.'", sun_eve = "'.$sun_eve.'", anytime = "'.$anytime.'", modified = "'.date('Y-m-d H:i:s').'" WHERE reg_id = "'.$reg_id.'"');
+			$query = $this->db->query('UPDATE registration SET ic = "'.$ic.'", reg_date = "'.$reg_date.'", student_branch_id = "'.$student_branch_id.'", reg_branch_id = "'.$reg_branch_id.'", reg_op_id = "'.$reg_op_id.'", reg_no = "'.$reg_no.'", reg_remark = "'.$reg_remark.'", any_am = "'.$any_am.'", any_pm = "'.$any_pm.'", any_eve = "'.$any_eve.'", sat_am = "'.$sat_am.'", sat_pm = "'.$sat_pm.'", sat_eve = "'.$sat_eve.'", sun_am = "'.$sun_am.'", sun_pm = "'.$sun_pm.'", sun_eve = "'.$sun_eve.'", anytime = "'.$anytime.'", modified = "'.date('Y-m-d H:i:s').'" WHERE reg_id = "'.$reg_id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;
@@ -233,7 +233,7 @@ class Apis extends CI_Model
 				if($sun_eve == "1") { $query_partial.=" OR r.sun_eve = 1"; };
 				if($anytime == "1") { $query_partial.=" OR r.anytime = 1"; };
 			}
-			$query = $this->db->query('SELECT r.reg_id, r.ic, r.reg_date, r.reg_no, b1.name AS reg_branch, b2.name AS assigned_branch, r.start_date_wanted, r.reg_remark, u.username, r.created, r.modified, r.any_am, r.any_pm, r.any_eve, r.sat_am, r.sat_pm, r.sat_eve, r.sun_am, r.sun_pm, r.sun_eve, r.anytime  FROM registration r, branch b1, branch b2, users u WHERE (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (r.reg_branch_id = b1.id) AND (r.student_branch_id = b2.id) AND (r.reg_op_id = u.id) AND ('.$query_partial.') ORDER BY -DATE(r.reg_date)');
+			$query = $this->db->query('SELECT r.reg_id, r.ic, r.reg_date, r.reg_no, b1.name AS reg_branch, b2.name AS assigned_branch, r.reg_remark, u.username, r.created, r.modified, r.any_am, r.any_pm, r.any_eve, r.sat_am, r.sat_pm, r.sat_eve, r.sun_am, r.sun_pm, r.sun_eve, r.anytime  FROM registration r, branch b1, branch b2, users u WHERE (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (r.reg_branch_id = b1.id) AND (r.student_branch_id = b2.id) AND (r.reg_op_id = u.id) AND ('.$query_partial.') ORDER BY -DATE(r.reg_date)');
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -529,7 +529,7 @@ class Apis extends CI_Model
 	 */
 	function search_students_by_keyword($keyword) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('SELECT *  FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%")) ORDER BY -DATE(r.reg_date)');
+			$query = $this->db->query('SELECT *  FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%") OR (s.tel LIKE "%'.$keyword.'%")) ORDER BY -DATE(r.reg_date)');
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -543,7 +543,7 @@ class Apis extends CI_Model
 	 */
 	function search_students_by_keyword_download($keyword) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('SELECT *  FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%")) ORDER BY -DATE(r.reg_date)');
+			$query = $this->db->query('SELECT *  FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%") OR (s.tel LIKE "%'.$keyword.'%")) ORDER BY -DATE(r.reg_date)');
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;

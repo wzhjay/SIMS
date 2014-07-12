@@ -9,11 +9,6 @@
 				todayHighlight: true
 			});
 
-			$('#input_reg_start_date').datepicker({
-				format: 'yyyy-mm-dd',
-				todayHighlight: true
-			});
-
 			reg_load_admin_users();
 			reg_load_branches();
 
@@ -85,7 +80,6 @@
 			var reg_no = $('#input_reg_no').val();
 			var reg_op = $('#input_reg_op option:selected').attr('id').split('_');
 			var reg_op_id = reg_op[2];
-			var reg_start_date = $('#input_reg_start_date').val();
 			var reg_branch_stu = $('#input_reg_branch_student option:selected').attr('id').split('_');
 			var reg_branch_stu_id = reg_branch_stu[3];
 			var reg_remark = $('#input_reg_remark').val();
@@ -111,7 +105,6 @@
 			    		reg_branch_id:reg_branch_id, 
 			    		reg_op_id:reg_op_id, 
 			    		reg_no:reg_no, 
-			    		start_date_wanted:reg_start_date, 
 			    		reg_remark:reg_remark,
 			    		any_am:any_am,
 			    		any_pm:any_pm,
@@ -150,7 +143,6 @@
 			var reg_no = $('#input_reg_no').val();
 			var reg_op = $('#input_reg_op option:selected').attr('id').split('_');
 			var reg_op_id = reg_op[2];
-			var reg_start_date = $('#input_reg_start_date').val();
 			var reg_branch_stu = $('#input_reg_branch_student option:selected').attr('id').split('_');
 			var reg_branch_stu_id = reg_branch_stu[3];
 			var reg_remark = $('#input_reg_remark').val();
@@ -177,7 +169,6 @@
 			    		reg_branch_id:reg_branch_id, 
 			    		reg_op_id:reg_op_id, 
 			    		reg_no:reg_no, 
-			    		start_date_wanted:reg_start_date, 
 			    		reg_remark:reg_remark,
 			    		any_am:any_am,
 			    		any_pm:any_pm,
@@ -211,7 +202,6 @@
 			$('#input_reg_ic').val('');
 			$('#input_reg_date').val('');
 			$('#input_reg_no').val('');
-			$('#input_reg_start_date').val('');
 			$('#input_reg_remark').val('');
 			$('#input_reg_any_am').prop('checked', false);
 			$('#input_reg_any_pm').prop('checked', false);
@@ -274,7 +264,6 @@
 								$('#input_reg_branch option[id="reg_branch_'+reply[key].reg_branch_id+'"]').attr('selected', 'selected');
 								$('#input_reg_no').val(reply[key].reg_no);
 								$('#input_reg_branch option[id="new_user_'+reply[key].reg_op_id+'"]').attr('selected', 'selected');
-								$('#input_reg_start_date').val(reply[key].start_date_wanted);
 								$('#input_reg_branch_student option[id="reg_branch_stu_'+reply[key].student_branch_id+'"]').attr('selected', 'selected');
 								$('#input_reg_remark').val(reply[key].reg_remark);
 
@@ -347,10 +336,6 @@
 		<div class="col-xs-4">
 			<label for="input_reg_op">Register Operator</label>
 			<select class="form-control" id="input_reg_op"></select>
-		</div>
-		<div class="col-xs-4">
-			<label for="input_reg_start_date">Start Date Wanted</label>
-			<input class="form-control" id="input_reg_start_date" >
 		</div>
 		<div class="col-xs-4">
 			<label for="input_reg_branch_student">Student Branch</label>

@@ -92,17 +92,14 @@
 												'<div id="reg_record_collapse_body_'+key+'" class="panel-collapse collapse">' + 
 													'<div class="panel-body">' + 
 														'<div class="row">' + 
-															'<div class="col-xs-3">'+ 
+															'<div class="col-xs-4">'+ 
 																'<div>Registered Branch: ' + reply[key].reg_branch + '</div>' +
 															'</div>' + 
-															'<div class="col-xs-3">' +
+															'<div class="col-xs-4">' +
 																'<div>Student Branch: ' + reply[key].assigned_branch + '</div>' + 
 															'</div>' +
-															'<div class="col-xs-3">' +
+															'<div class="col-xs-4">' +
 																'<div>Operator: '+ reply[key].username + '</div>' + 
-															'</div>' +
-															'<div class="col-xs-3">' +
-																'<div>Intend To Start: '+ reply[key].start_date_wanted + '</div>' + 
 															'</div>' +
 														'</div>' + 
 														'<hr>' + 

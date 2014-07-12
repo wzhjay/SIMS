@@ -14,7 +14,7 @@
 		});
 
 		function all_students_search_student_by_name_ic() {
-			var keyword = $('input_student_search_all_students_ic_name').val();
+			var keyword = $('#input_student_search_all_students_ic_name').val();
 			var target = $('#student_all_search_results');
 			target.empty();
 			target.append('<div class="loading"></div>');
@@ -241,8 +241,8 @@
       	<form action="<?php echo $this->config->base_url(); ?>index.php/api/searchStudentInfoDownload1" method="POST" target="_blank"><form action="<?php echo $this->config->base_url(); ?>index.php/api/searchStudentInfoDownload1" method="POST" target="_blank">
 	        <div class="row">
 				<div class="col-xs-4">
-					<label for="input_student_search_all_students_ic_name">请输入学员IC/名字</label>
-					<input name="keyword" class="form-control" id="input_student_search_all_students_ic_name" placeholder="IC Number/Name">
+					<label for="input_student_search_all_students_ic_name">请输入学员IC/名字/HP</label>
+					<input name="keyword" class="form-control" id="input_student_search_all_students_ic_name" placeholder="IC Number/Name/HP">
 				</div>
 				<div class="col-xs-4"></div>
 				<div class="col-xs-2">
@@ -284,7 +284,7 @@
 						<option value="NA">请选择</option>
 						<option value="any_am">平时早上</option>
 	                	<option value="any_pm">平时下午</option>
-	                	<option value="sat_eve">平时晚上</option>
+	                	<option value="any_eve">平时晚上</option>
 	                	<option value="sat_am">周六早上</option>
 	                	<option value="sat_pm">周六下午</option>
 	                	<option value="sat_eve">周六晚上</option>

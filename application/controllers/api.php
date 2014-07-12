@@ -148,7 +148,6 @@ class Api extends CI_Controller
 		$reg_branch_id = $this->input->post('reg_branch_id');
 		$reg_op_id = $this->input->post('reg_op_id');
 		$reg_no = $this->input->post('reg_no');
-		$start_date_wanted = $this->input->post('start_date_wanted');
 		$reg_remark = $this->input->post('reg_remark');
 
 		$any_am = $this->input->post('any_am');
@@ -162,7 +161,7 @@ class Api extends CI_Controller
 		$sun_eve = $this->input->post('sun_eve');
 		$anytime = $this->input->post('anytime');
 
-		$success = $this->apis->create_new_registration($ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime);
+		$success = $this->apis->create_new_registration($ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime);
 		if($success) {
 			echo 1;
 		}
@@ -180,9 +179,7 @@ class Api extends CI_Controller
 		$reg_branch_id = $this->input->post('reg_branch_id');
 		$reg_op_id = $this->input->post('reg_op_id');
 		$reg_no = $this->input->post('reg_no');
-		$start_date_wanted = $this->input->post('start_date_wanted');
 		$reg_remark = $this->input->post('reg_remark');
-
 		$any_am = $this->input->post('any_am');
 		$any_pm = $this->input->post('any_pm');
 		$any_eve = $this->input->post('any_eve');
@@ -194,7 +191,7 @@ class Api extends CI_Controller
 		$sun_eve = $this->input->post('sun_eve');
 		$anytime = $this->input->post('anytime');
 
-		$success = $this->apis->update_registration($reg_id, $ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $start_date_wanted, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime);
+		$success = $this->apis->update_registration($reg_id, $ic, $reg_date, $student_branch_id, $reg_branch_id, $reg_op_id, $reg_no, $reg_remark, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime);
 		if($success) {
 			echo 2;
 		}
