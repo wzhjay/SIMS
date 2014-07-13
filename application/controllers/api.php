@@ -1120,6 +1120,19 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  remove student from class
+	 */
+	function removeStudentFromClassByID() {
+		$class_id = $this->input->post('class_id');
+		$student_id = $this->input->post('student_id');
+		$delete = $this->apis->delete_student_class_record($class_id, $student_id);
+		if($delete){
+			echo 3;
+		}
+		else echo 0;
+	}
+
+	/**
 	 *  create new expense record
 	 */
 	function createExpenseRecord() {

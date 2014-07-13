@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)http://sims.com/SIMS/index.php/classes -->
+<html class="hb-loaded"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css"></style><style id="clearly_highlighting_css" type="text/css">/* selection */ html.clearly_highlighting_enabled ::-moz-selection { background: rgba(246, 238, 150, 0.99); } html.clearly_highlighting_enabled ::selection { background: rgba(246, 238, 150, 0.99); } /* cursor */ html.clearly_highlighting_enabled {    /* cursor and hot-spot position -- requires a default cursor, after the URL one */    cursor: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--cursor.png") 14 16, text; } /* highlight tag */ em.clearly_highlight_element {    font-style: inherit !important; font-weight: inherit !important;    background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--yellow.png");    background-repeat: repeat-x; background-position: top left; background-size: 100% 100%; } /* the delete-buttons are positioned relative to this */ em.clearly_highlight_element.clearly_highlight_first { position: relative; } /* delete buttons */ em.clearly_highlight_element a.clearly_highlight_delete_element {    display: none; cursor: pointer;    padding: 0; margin: 0; line-height: 0;    position: absolute; width: 34px; height: 34px; left: -17px; top: -17px;    background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--delete-sprite.png"); background-repeat: no-repeat; background-position: 0px 0px; } em.clearly_highlight_element a.clearly_highlight_delete_element:hover { background-position: -34px 0px; } /* retina */ @media (min--moz-device-pixel-ratio: 2), (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {    em.clearly_highlight_element { background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--yellow@2x.png"); }    em.clearly_highlight_element a.clearly_highlight_delete_element { background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--delete-sprite@2x.png"); background-size: 68px 34px; } } </style><style id="holderjs-style" type="text/css"></style><link type="text/css" rel="stylesheet" href="chrome-extension://imamemhokkdleoelohnmkimbmpfglcil/css/capture.css"><style>[touch-action="none"]{ -ms-touch-action: none; touch-action: none; }[touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }[touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }[touch-action="scroll"],[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }</style><style type="text/css">#yieldsquare-ad {
+  margin:10px auto 20px;
+
+  width: 728px;
+}
+
+#yieldsquare-about a {
+  cursor: pointer;
+}
+
+.yieldsquare-enabled {
+  border-radius:0 0 5px 5px;
+  box-shadow: inset 0 0 75px 75px lightgray, 0 0 0 lightgray;
+  -webkit-transition:opacity 1s linear;
+}
+
+.yieldsquare-disabled-first {
+  -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.45);
+  -webkit-transition: opacity 1s linear;
+  background-image: url(http://s3.amazonaws.com/static.yieldsquare.com/ads-disabled/messagebed.gif);
+  height: 90px;
+  opacity: 1;
+  position: relative;
+  width: 728px;
+}
+
+.yieldsquare-disabled-second {
+  -webkit-transition: all 0.4s ease-in-out;
+  background-image: url(http://s3.amazonaws.com/static.yieldsquare.com/ads-disabled/messagebed.gif);
+  border-radius:0 0 5px 5px;
+  box-shadow: inset 0 0 35px 35px transparent, 0 0 75px 50px transparent;
+  height: 90px;
+  opacity: 0;
+  position: relative;
+  width: 728px;
+}
+
+#yieldsquare-about-ad {
+  font:11px arial !important;
+  color:#555;
+  padding: 4px;
+  text-align:center;
+}
+
+#yieldsquare-about-ad a {
+  cursor: pointer;
+  color: #333;
+}
+
+.yieldsquare-message-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.yieldsquare-message-p {
+    font: 13px/17px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    width: 542px;
+    height: 74px;
+    left: 123px;
+    position: absolute;
+    top: 0px;
+    color: #3d3d3d;
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+
+.yieldsquare-message-p span {
+    font: bold 16px/17px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    color: #292929;
+}
+
+.yieldsquare-message-p a {
+    text-decoration: none;
+    color: #1d97cf;
+}
+
+.yieldsquare-message-p a:hover {
+    text-decoration: underline;
+}
+
+#yieldsquare-message-x {
+    position: absolute;
+    left: 715px;
+    top: 6px;
+}
+
+</style></head><body class="__plain_text_READY__ modal-open" huaban_collector_injected="true"><header>
+	
+	<title></title>
+	
+	<!-- css files -->
+	<link type="text/css" rel="stylesheet" href="./classes_files/bootstrap.css">
+	<link type="text/css" rel="stylesheet" href="./classes_files/datepicker3.css">
+	<link type="text/css" rel="stylesheet" href="./classes_files/parsley.css">
+	<link type="text/css" rel="stylesheet" href="./classes_files/font-awesome.css">
+	<link type="text/css" rel="stylesheet" href="./classes_files/buttons.css">
+	<link type="text/css" rel="stylesheet" href="./classes_files/docs.css">
+	<link type="text/css" rel="stylesheet" href="./classes_files/toastr.min.css">
+
+	<!-- js files -->
+	<script type="text/javascript" src="./classes_files/jquery.min.js"></script>
+	<script type="text/javascript" src="./classes_files/bootstrap.js"></script>
+	<script type="text/javascript" src="./classes_files/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="./classes_files/parsley.min.js"></script>
+	<script type="text/javascript" src="./classes_files/buttons.js"></script>
+	<script type="text/javascript" src="./classes_files/moment.min.js"></script>
+	<script type="text/javascript" src="./classes_files/toastr.min.js"></script>
+	<script type="text/javascript">
+		window.api_url = "http://sims.com/SIMS/index.php/api/";
+
+		toastr.options = {
+		  "closeButton": false,
+		  "debug": false,
+		  "positionClass": "toast-top-left",
+		  "onclick": null,
+		  "showDuration": "200",
+		  "hideDuration": "1000",
+		  "timeOut": "3500",
+		  "extendedTimeOut": "1000",
+		  "showEasing": "swing",
+		  "hideEasing": "linear",
+		  "showMethod": "show",
+		  "hideMethod": "fadeOut"
+		}
+		moment().format();
+	</script>
+	<!-- header -->
+	<nav class="navbar navbar-default navbar-fixed-top" id="top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bav-bar-sims">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://sims.com/SIMS/index.php/welcome">长春教育管理系统</a>
+	</div>
+	<div class="collapse navbar-collapse" id="bav-bar-sims">
+          <ul class="nav navbar-nav pull-right">
+            <li class="dropdown"><a href="http://sims.com/SIMS/index.php/classes#" class="dropdown-toggle" data-toggle="dropdown">wzhjay <b class="caret"></b></a><ul class="dropdown-menu" role="menu"><li><a href="http://sims.com/SIMS/index.php/classes#">Region</a></li><li><a href="http://sims.com/SIMS/index.php/classes#">Chatting Room</a></li><li><a href="http://sims.com/SIMS/index.php/auth/change_password">Change Password</a></li><li class="divider"></li><li><a href="http://sims.com/SIMS/index.php/classes#">Profile</a></li><li class="divider"></li><li><a href="http://sims.com/SIMS/index.php/auth/logout">Logout</a></li></ul></li>            <li><a href="http://sims.com/SIMS/index.php/students">学员管理</a></li>
+            <li><a href="./classes_files/classes.html">班级管理</a></li>
+            <li><a href="http://sims.com/SIMS/index.php/exams">考试管理</a></li>
+            <li><a href="http://sims.com/SIMS/index.php/atos">ATO管理</a></li>
+            <li><a href="http://sims.com/SIMS/index.php/financial">收支管理</a></li>
+            <li><a href="http://sims.com/SIMS/index.php/systems">系统管理</a></li>
+          </ul>
+    </div>
+  </div>
+</nav>
+<hr></header>
+
+	<div class="sims-body">
+		<!-- 
+ * Wang Zihao
+ * wzhjay@gmail.com
+ * 02.05.2014 
+ -->
+
+
+	<meta charset="utf-8">
+
+	<script>
+		$(document).ready(function($) {
+			$('#my_tab a').click(function (e) {
+			  $(this).tab('show');
+			});
+		});
+	</script>
+
+
+    <div class="sims-docs-header" id="sims-classes-header">
+	<div class="container">
+    <h1>Classes</h1>
+        <p>Global CSS settings, fundamental HTML elements styled and enhanced with extensible classes, and an advanced grid system.</p>
+    </div>
+</div>    <div class="container" id="sims-classes-tabs">
+    	<div class="container tab_content">
+			<ul class="nav nav-tabs" id="my_tab">
+			  <li class="active"><a href="http://sims.com/SIMS/index.php/classes#tab-1" data-toggle="tab">所有班级和查询</a></li>
+			  <li><a href="http://sims.com/SIMS/index.php/classes#tab-2" data-toggle="tab">添加更新班级</a></li>
+			</ul>
+
+			<div class="tab-content">
+			  	<div class="tab-pane fade in active" id="tab-1">
+			  		<h3>查询班级信息</h3><hr>
+					 
+	<meta charset="utf-8">
+
+	<script>
+		var selected_class_id = 0;
+		var selected_remove_student_id = 0;
+		$(document).ready(function($) {
+			event.preventDefault();
+
+			$('#input_class_search_start_from').datepicker({
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
+			});
+
+			$('#input_class_search_start_to').datepicker({
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
+			});
+
+			$('#input_class_search_end_from').datepicker({
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
+			});
+
+			$('#input_class_search_end_to').datepicker({
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
+			});
+
+ 			$('#class_info_search_submit').on('click', function() {
+ 				search_class_info_by_types();
+ 			});
+
+ 			class_search_load_branches();
+
+ 			$('#input_class_search_class_student_management_student_search').on('click', function() {
+ 				search_student_by_ic_name();
+ 			});
+
+ 			$('#input_class_search_class_student_management_student_search2').on('click', function() {
+ 				search_student_by_multiple_var();
+ 			});
+
+ 			class_search_load_type();
+
+ 			$('#remove_student_confirm').on('click', function(argument) {
+ 				// body...
+ 			});
+		});
+
+		function class_search_load_type() {
+			var types = $('#input_class_search_type');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getAllCourses",
+			    data:{},
+			    success:function(json){
+			    	types.empty();
+			    	if(json != null) {
+			    		var reply = $.parseJSON(json);
+			    		types.append('<option value="NA">请选择</option>');
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			    				types.append('<option id="search_course_type_'+ reply[key].id +'" + value="'+ reply[key].code +'">' + reply[key].type + '</option>');
+			    			}
+			    		}
+			        }else{
+			        	toastr.error("Fail to load courses!");
+			        }
+			    },
+			});//End ajax
+		}
+
+		function class_search_load_branches() {
+			var branches = $('#input_class_search_branch');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getAllBranches",
+			    data:{},
+			    success:function(json){
+			    	branches.children().remove();
+			    	branches.append('<option id="class_search_branch_ALL">ALL</option>');
+			    	if(json != null) {
+			    		var reply = $.parseJSON(json);
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			    				branches.append('<option id="class_search_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+			    			}
+			    		}
+			        }else{
+			        	toastr.error("Fail to load braches!");
+			        }
+			    }
+			});//End ajax
+		}
+
+ 		function search_class_info_by_types() {
+ 			var code = $('#input_class_search_code').val();;
+ 			var type = $('#input_class_search_type option:selected').val();
+ 			var level = $('#input_class_search_level option:selected').val();
+ 			var status = $('#input_class_search_status option:selected').val();
+ 			var branch = $('#input_class_search_branch option:selected').attr('id').split('_');
+ 			var branch_id = branch[3];
+
+ 			var start_from = '2000-01-01';
+			var start_to  = '2100-01-01';
+			var end_from = '2000-01-01';
+			var end_to = '2100-01-01';
+			
+			if($('#input_class_search_start_from').val().trim() != "") {
+				start_from = $('#input_class_search_start_from').val();
+			}
+
+			if($('#input_class_search_start_to').val().trim() != "") {
+				start_to = $('#input_class_search_start_to').val();
+			}
+
+			if($('#input_class_search_end_from').val().trim() != "") {
+				end_from = $('#input_class_search_end_from').val();
+			}
+
+			if($('#input_class_search_end_to').val().trim() != "") {
+				end_to = $('#input_class_search_end_to').val();
+			}
+
+			var target = $('#class_search_results');
+			target.empty();
+			target.append('<div class="loading"></div>');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "searchClassInfo",
+			    data:{code:code, type:type, level:level, status:status, branch_id:branch_id, start_from:start_from, start_to:start_to, end_from:end_from, end_to:end_to},
+			    success:function(json){
+			    	target.empty();
+			    	target.append('<p>No class info found</p>');
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		if(reply.length > 0) {
+			    			target.empty();
+				    		for (var key in reply) {
+				    			var num = parseInt(key) + 1;
+				    			if (reply.hasOwnProperty(key)) {
+				            		// target.append(JSON.stringify(reply[key]));
+				            		target.append(
+										'<div class="panel-group" id="class_search_collapse_'+key+'">' +
+											'<div class="panel panel-default">' + 
+												'<div class="panel-heading">' +
+													'<h4 class="panel-title">' +
+														'<div class="row">' +
+															'<div class="col-xs-8">' +
+																'<a data-toggle="collapse" data-parent="class_search_collapse_'+key+'" href="#class_search_collapse_body_'+key+'">Class Name: <b>' + reply[key].class_name + '</b>  /  Code: <b>' + reply[key].code + '</b>  /  Course: <b>' + reply[key].type + '</b>  /  Status: <b>' + reply[key].status + '</b></a>' +
+															'</div>' + 
+															'<div class="col-xs-2">' +
+																'<a class="button glow button-rounded button-flat" id="class_search_student_management_'+reply[key].class_id+'" data-toggle="modal" data-target="#class-student-management-modal">Manage</a>' + 
+															'</div>' + 
+															'<div class="col-xs-2">' +
+																'<a class="button glow button-rounded button-flat" id="class_search_class_delete_'+reply[key].class_id+'" data-toggle="modal" data-target="#class-delete-modal">Delete</a>' + 
+															'</div>' + 
+														'</div>' + 
+													'</h4>' +
+												'</div>' +
+												'<div id="class_search_collapse_body_'+key+'" class="panel-collapse collapse">' + 
+												'<div class="panel-body">' + 
+													'<div class="row">' + 
+														'<div class="col-xs-3">'+ 
+															'<div>Type: ' + reply[key].type + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-3">' +
+															'<div>Level: ' + reply[key].level + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-3">' +
+															'<div>Location: ' + reply[key].location + '</div>' + 
+														'</div>' +
+													'</div>' +
+													'<div class="row">' + 
+														'<div class="col-xs-3">' +
+															'<div>Start Date: '+ reply[key].start_date + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-3">' +
+															'<div>End Date: '+ reply[key].end_date + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-3">'+ 
+															'<div>Start Time: ' + reply[key].start_time + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-3">'+ 
+															'<div>End Time: ' + reply[key].end_time + '</div>' +
+														'</div>' + 
+													'</div>' + 
+													'<hr>' + 
+													'<div class="row">' + 
+														'<div class="col-xs-4">'+ 
+															'<div>Teacher: ' + reply[key].teacher_name + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-4">' +
+															"<div>Teacher's Tel: " + reply[key].teacher_tel +'</div>' + 
+														'</div>' +
+														'<div class="col-xs-4">' +
+															"<div>Branch: " + reply[key].name +'</div>' + 
+														'</div>' +
+													'</div>' + 
+													'<div class="row">' + 
+														'<div class="col-xs-4">'+ 
+															'<div>Created: ' + reply[key].created + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-4">' +
+															'<div>Modified: ' + reply[key].modified + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-4">' +
+															'<div>Remark: '+ reply[key].remark + '</div>' + 
+														'</div>' +
+													'</div>' + 
+												'</div>' + 
+											'</div>' +
+										'</div>'
+									);
+				            	}
+
+				            	$('#class_search_results .button').on('click', function() {
+					 				var el_id = $(this).attr('id').split('_');
+					 				var class_id = el_id[4];
+					 				selected_class_id = class_id;
+					 				if(el_id[3] == "management") {
+					 					// menegement class student
+					 					load_class_students(class_id);
+					 				} else if(el_id[3] == "delete") {
+					 					// delete class
+					 					get_class_student_by_id(class_id);
+					 				}
+					 			});
+				            }
+			        	}
+			        }
+			    },
+			});//End ajax
+ 		}
+
+ 		function load_class_students(class_id) {
+ 			var target = $('#class_all_students_list');
+ 			target.empty();
+			target.append('<div class="loading"></div>');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getClassStudentsByClassID",
+			    data:{class_id:class_id},
+			    success:function(json){
+			    	target.empty();
+			    	target.append('<p>No Student Found</p>');
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		if(reply.length > 0) {
+			    			target.empty();
+				    		for (var key in reply) {
+				    			var num = parseInt(key) + 1;
+				    			if (reply.hasOwnProperty(key)) {
+									target.append(
+										'<div class="panel-group" id="class_all_student_collapse_'+key+'">' +
+											'<div class="panel panel-default">' + 
+												'<div class="panel-heading">' +
+													'<h6 class="panel-title">' +
+														'<a data-toggle="collapse" data-parent="class_all_student_collapse_'+key+'" href="#class_all_student_collapse_body_'+key+'">Student ' + num + '  / Name: <b>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  IC: <b>' + reply[key].ic + '</b>  /  Tel: <b>' + reply[key].tel + '</b></a><button id="class_students_student_' + reply[key].student_id + '" style="float:right;padding:3px;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#student-delete-modal">Delete</button>' + 
+													' </h6>' +
+												'</div>' +
+												'<div id="class_all_student_collapse_body_'+key+'" class="panel-collapse collapse">' + 
+												'<div class="panel-body">' + 
+												'</div>' + 
+											'</div>' +
+										'</div>'
+									);
+
+									$(document).ready(function() {
+										// get student's exam records by student ic	
+					    				var target2 = $('#class_all_student_collapse_body_' + key + ' .panel-body');
+						    			$.ajax({
+											type:"post",
+										    url:window.api_url + "getStudentRecordsByIC",
+										    data:{ic:reply[key].ic},
+										    success:function(json2){
+										    	if(json2.trim() != "") {
+										    		var reply2 = $.parseJSON(json2);
+										    		if(reply2.length > 0) {
+											    		for (var key2 in reply2) {
+											    			var num2 = parseInt(key2) + 1;
+											    			if (reply2.hasOwnProperty(key2)) {
+											            		target2.append(
+											            			'<div class="row">' + 
+												            			'<div class="col-xs-6">'+ 
+												            				'<b>Exam Record ' + num2 + '</b>' +
+												            			'</div>' + 
+											            			'</div>' + 
+											            			'<div class="row">' + 
+																		'<div class="col-xs-6">'+ 
+																			'<div>Exam Date: ' + reply2[key2].exam_date + '</div>' +
+																		'</div>' + 
+																		'<div class="col-xs-6">'+ 
+																			'<div>Remark: '+ reply2[key2].remark + '</div>' + 
+																		'</div>' +
+																	'</div>' + 
+																	'<div class="row">' + 
+																		'<div class="col-xs-12">'+ 
+																			'<div>EL:' + reply2[key2].el_best + '    ER:' + reply2[key2].er_best + '    EN:' + reply2[key2].en_best + '    ES:' + reply2[key2].es_best + '    EW:' + reply2[key2].ew_best + '</div>' +
+																		'</div>' + 
+																	'</div>' + 
+																	'<hr>'
+																);
+											            	}
+											            }
+										        	}
+										        }
+										    }
+										});//End ajax
+									});
+					            }
+				            }
+			        	}
+			        }
+			    },
+			});//End ajax
+ 		}
+
+ 		function get_class_student_by_id(class_id) {
+ 			$.ajax({
+				type:"post",
+			    url:window.api_url + "getClassInfoByID",
+			    data:{class_id:class_id},
+			    success:function(json){
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		if(reply.length > 0) {
+				    		for (var key in reply) {
+				    			if (reply.hasOwnProperty(key)) {
+				            		var modalBody = $('#class_delete_modal_label').closest('.modal-content').find('.modal-body');
+				 					modalBody.empty();
+				 					modalBody.append(
+				 						'<div class="row">'+
+								      		'<div class="col-xs-8">' +
+								      			'<div class="highlight">'+
+									      			'<div class="row">' + 
+														'<div class="col-xs-4">'+ 
+															'<div>Name: ' + reply[key].class_name + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-4">' +
+															'<div>Code: ' + reply[key].code + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-4">' +
+															'<div>Status: ' + reply[key].status + '</div>' + 
+														'</div>' +
+													'</div>' +
+									      			'<div class="row">' + 
+														'<div class="col-xs-4">'+ 
+															'<div>Type: ' + reply[key].type + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-4">' +
+															'<div>Level: ' + reply[key].level + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-4">' +
+															'<div>Location: ' + reply[key].location + '</div>' + 
+														'</div>' +
+													'</div>' +
+												'</div>' +
+								      		'</div>' +
+								      		'<div class="col-xs-4">' +
+								      			'<H4>Sure you want to delete this class?</h4>' +
+								      		'</div>' +
+								      	'</div>'
+								    );
+				            	}
+				            }
+			        	}
+			        }
+			    },
+			});//End ajax
+ 		}
+
+ 		function search_student_by_ic_name() {
+ 			var keyword = $('#input_class_search_class_student_management_ic_name').val();
+ 			var target = $('#class_search_student_search_results');
+			target.empty();
+			target.append('<div class="loading"></div>');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "searchStudentInfoByKeyword",
+			    data:{keyword:keyword},
+			    success:function(json){
+			    	target.empty();
+			    	target.append('<option class="list-group-item">No Student Found</option>');
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		if(reply.length > 0) {
+			    			target.empty();
+				    		for (var key in reply) {
+				    			if (reply.hasOwnProperty(key)) {
+				            		// target.append(JSON.stringify(reply[key]));
+				            		target.append(
+				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ')' +'</option>'
+									);
+				            	}
+				            }
+			        	}
+			        }
+			    },
+			});//End ajax
+
+			$('#class_search_class_student_management_middle_section .btn').on('click', function() {
+				$.each($('#class_search_student_search_results option:selected'), function() {
+					var student_id = $(this).attr('id').split('_')[3];
+					assign_student_to_class(student_id);
+				});
+			});
+ 		}
+
+ 		function search_student_by_multiple_var() {
+ 			var course_type = $('#input_class_search_course_type').val();
+ 			var level = $('#input_class_search_student_level').val();
+ 			var slot = $('#input_class_search_class_time').val();
+
+ 			var target = $('#class_search_student_search_results');
+			target.empty();
+			target.append('<div class="loading"></div>');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "searchStudentInfoByMultipleVar",
+			    data:{course_type:course_type, level:level, slot:slot},
+			    success:function(json){
+			    	target.empty();
+			    	target.append('<option class="list-group-item">No Student Found</option>');
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		if(reply.length > 0) {
+			    			target.empty();
+				    		for (var key in reply) {
+				    			if (reply.hasOwnProperty(key)) {
+				            		// target.append(JSON.stringify(reply[key]));
+				            		target.append(
+				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ')' +'</option>'
+									);
+				            	}
+				            }
+			        	}
+			        }
+			    },
+			});//End ajax
+
+			// $('#class_search_class_student_management_middle_section .btn').on('click', function() {
+			// 	$.each($('#class_search_student_search_results option:selected'), function() {
+			// 		var student_id = $(this).attr('id').split('_')[3];
+			// 		assign_student_to_class(student_id);
+			// 	});
+			// });
+ 		}
+
+ 		function assign_student_to_class(student_id) {
+ 			var class_id = selected_class_management_id;
+ 			$.ajax({
+				type:"post",
+			    url:window.api_url + "assignStudentToClass",
+			    data:{class_id:class_id, student_id:student_id},
+			    success:function(json){
+			    	if(json.trim() != "") {
+					    var reply = $.parseJSON(json);
+					    if(reply == '1') {
+					    	toastr.success("Assign student class success!");
+					    	load_class_students(class_id);
+					    }else{
+					    	toastr.error("Student exist in this class. Fail to assign student to class!");
+					    }
+					}
+					else {
+						toastr.error("Fail to call api!");
+					}
+			    }
+			});//End ajax
+ 		}
+	</script>
+
+<div class="highlight">
+	<h4>输入查询信息</h4>
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_class_search_code">Class Code</label>
+			<input class="form-control" id="input_class_search_code">
+		</div>
+		<div class="col-xs-4">
+			<label for="input_class_search_type">Class Type</label>
+			<select class="form-control" id="input_class_search_type"><option value="NA">请选择</option><option id="search_course_type_1" +="" value="encmp">英文综合</option><option id="search_course_type_2" +="" value="encon">英文会话</option><option id="search_course_type_3" +="" value="eness">ESS</option><option id="search_course_type_4" +="" value="encos">COS</option><option id="search_course_type_5" +="" value="encom">英文电脑</option><option id="search_course_type_6" +="" value="chcom">华文电脑</option><option id="search_course_type_7" +="" value="chpin">华文拼音</option><option id="search_course_type_8" +="" value="enpho">英文音标</option><option id="search_course_type_9" +="" value="engra">英文语法</option><option id="search_course_type_10" +="" value="chwri">华文写作</option><option id="search_course_type_11" +="" value="others">其他</option></select>
+		</div>
+		<div class="col-xs-4">
+			<label for="input_class_search_type">Class Level</label>
+			<select class="form-control" id="input_class_search_level">
+		      	<option value="NA">请选择</option>
+		     	<option value="BEGINNERS">初级</option>
+		      	<option value="INTERMEDIATE">中级</option>
+		      	<option value="ADVANCED">高级</option>
+	    	</select>
+	    </div>
+	</div>
+	<div class="row">
+	    <div class="col-xs-4">
+			<label for="input_class_search_status">Status</label>
+			<select class="form-control" id="input_class_search_status">
+		      <option value="NA">请选择</option>
+		      <option value="preparing">未开班</option>
+		      <option value="learning">已开班</option>
+		      <option value="waitexam">待考试</option>
+		      <option value="finished">已结束</option>
+		    </select>
+		</div>
+		<div class="col-xs-4">
+			<label for="input_class_search_branch">Branch</label>
+			<select class="form-control" id="input_class_search_branch"><option id="class_search_branch_ALL">ALL</option><option id="class_search_branch_1">admiralty</option><option id="class_search_branch_2">ang mo kio</option><option id="class_search_branch_3">bedok</option><option id="class_search_branch_4">bukit batok</option><option id="class_search_branch_5">choa chu kang</option><option id="class_search_branch_6">hougang</option><option id="class_search_branch_7">jurong west</option><option id="class_search_branch_8">sengkang</option><option id="class_search_branch_9">serangoon</option><option id="class_search_branch_10">tampines</option><option id="class_search_branch_11">toa payoh</option><option id="class_search_branch_12">yishun</option></select>
+		</div>
+	</div>
+	<label>Start Date</label>
+	<div class="row">
+		<div class="input-daterange">
+			<div class="col-xs-4">
+				<input class="form-control" id="input_class_search_start_from" placeholder="From">
+			</div>
+			<div class="col-xs-4">
+				<input class="form-control" id="input_class_search_start_to" placeholder="To">
+			</div>
+		</div>
+	</div>
+	<label>End Date</label>
+	<div class="row">
+		<div class="input-daterange">
+			<div class="col-xs-4">
+				<input class="form-control" id="input_class_search_end_from" placeholder="From">
+			</div>
+			<div class="col-xs-4">
+				<input class="form-control" id="input_class_search_end_to" placeholder="To">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-8"></div>
+		<div class="col-xs-2">
+			<a class="button glow button-rounded button-flat" id="class_info_search_submit">Search</a>
+		</div>
+		<div class="col-xs-2">
+			<a class="button glow button-rounded button-flat" id="class_info_to_excel">To Excel</a>
+		</div>
+	</div>
+	<br><br>
+	<div id="class_search_results"><div class="panel-group" id="class_search_collapse_0"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><div class="row"><div class="col-xs-8"><a data-toggle="collapse" data-parent="class_search_collapse_0" href="http://sims.com/SIMS/index.php/classes#class_search_collapse_body_0">Class Name: <b>WPL-P</b>  /  Code: <b>93209350</b>  /  Course: <b>encmp</b>  /  Status: <b>preparing</b></a></div><div class="col-xs-2"><a class="button glow button-rounded button-flat" id="class_search_student_management_3" data-toggle="modal" data-target="#class-student-management-modal">Manage</a></div><div class="col-xs-2"><a class="button glow button-rounded button-flat" id="class_search_class_delete_3" data-toggle="modal" data-target="#class-delete-modal">Delete</a></div></div></h4></div><div id="class_search_collapse_body_0" class="panel-collapse collapse"><div class="panel-body"><div class="row"><div class="col-xs-3"><div>Type: encmp</div></div><div class="col-xs-3"><div>Level: INTERMEDIATE</div></div><div class="col-xs-3"><div>Location: SERANGOON</div></div></div><div class="row"><div class="col-xs-3"><div>Start Date: 2014-07-09</div></div><div class="col-xs-3"><div>End Date: 2014-08-09</div></div><div class="col-xs-3"><div>Start Time: 1100</div></div><div class="col-xs-3"><div>End Time: 1500</div></div></div><hr><div class="row"><div class="col-xs-4"><div>Teacher: guowei</div></div><div class="col-xs-4"><div>Teacher's Tel: 13445687</div></div><div class="col-xs-4"><div>Branch: serangoon</div></div></div><div class="row"><div class="col-xs-4"><div>Created: 2014-07-09 09:22:48</div></div><div class="col-xs-4"><div>Modified: 2014-07-09 09:23:11</div></div><div class="col-xs-4"><div>Remark: Test guowri</div></div></div></div></div></div></div><div class="panel-group" id="class_search_collapse_1"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><div class="row"><div class="col-xs-8"><a data-toggle="collapse" data-parent="class_search_collapse_1" href="http://sims.com/SIMS/index.php/classes#class_search_collapse_body_1">Class Name: <b>CMP-LEVEL2</b>  /  Code: <b>7156292</b>  /  Course: <b>chcom</b>  /  Status: <b>preparing</b></a></div><div class="col-xs-2"><a class="button glow button-rounded button-flat" id="class_search_student_management_2" data-toggle="modal" data-target="#class-student-management-modal">Manage</a></div><div class="col-xs-2"><a class="button glow button-rounded button-flat" id="class_search_class_delete_2" data-toggle="modal" data-target="#class-delete-modal">Delete</a></div></div></h4></div><div id="class_search_collapse_body_1" class="panel-collapse collapse"><div class="panel-body"><div class="row"><div class="col-xs-3"><div>Type: chcom</div></div><div class="col-xs-3"><div>Level: INTERMEDIATE</div></div><div class="col-xs-3"><div>Location: YS</div></div></div><div class="row"><div class="col-xs-3"><div>Start Date: 2014-05-12</div></div><div class="col-xs-3"><div>End Date: 2014-06-07</div></div><div class="col-xs-3"><div>Start Time: 1300</div></div><div class="col-xs-3"><div>End Time: 1730</div></div></div><hr><div class="row"><div class="col-xs-4"><div>Teacher: WZHJAY</div></div><div class="col-xs-4"><div>Teacher's Tel: 82512085</div></div><div class="col-xs-4"><div>Branch: yishun</div></div></div><div class="row"><div class="col-xs-4"><div>Created: 2014-05-29 12:14:14</div></div><div class="col-xs-4"><div>Modified: 2014-05-29 12:14:14</div></div><div class="col-xs-4"><div>Remark: Testing 2</div></div></div></div></div></div></div><div class="panel-group" id="class_search_collapse_2"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><div class="row"><div class="col-xs-8"><a data-toggle="collapse" data-parent="class_search_collapse_2" href="http://sims.com/SIMS/index.php/classes#class_search_collapse_body_2">Class Name: <b>CMP-LEVEL1</b>  /  Code: <b>1234567</b>  /  Course: <b>chcom</b>  /  Status: <b>waitexam</b></a></div><div class="col-xs-2"><a class="button glow button-rounded button-flat" id="class_search_student_management_1" data-toggle="modal" data-target="#class-student-management-modal">Manage</a></div><div class="col-xs-2"><a class="button glow button-rounded button-flat" id="class_search_class_delete_1" data-toggle="modal" data-target="#class-delete-modal">Delete</a></div></div></h4></div><div id="class_search_collapse_body_2" class="panel-collapse collapse"><div class="panel-body"><div class="row"><div class="col-xs-3"><div>Type: chcom</div></div><div class="col-xs-3"><div>Level: BEGINNERS</div></div><div class="col-xs-3"><div>Location: BLK 71 #01-923</div></div></div><div class="row"><div class="col-xs-3"><div>Start Date: 2014-05-05</div></div><div class="col-xs-3"><div>End Date: 2014-06-06</div></div><div class="col-xs-3"><div>Start Time: 0930</div></div><div class="col-xs-3"><div>End Time: 1200</div></div></div><hr><div class="row"><div class="col-xs-4"><div>Teacher: WANG ZIHAO</div></div><div class="col-xs-4"><div>Teacher's Tel: 93209350</div></div><div class="col-xs-4"><div>Branch: toa payoh</div></div></div><div class="row"><div class="col-xs-4"><div>Created: 2014-05-26 12:34:11</div></div><div class="col-xs-4"><div>Modified: 2014-05-26 19:28:18</div></div><div class="col-xs-4"><div>Remark: Testing update</div></div></div></div></div></div></div></div>
+</div>
+
+<!-- Class student management Modal -->
+<div class="modal fade in" id="class-student-management-modal" tabindex="-1" role="dialog" aria-labelledby="class_student_management_modal_label" aria-hidden="false" style="display: block;">
+  <div class="modal-dialog modal-xlg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="class_student_management_modal_label">Class Student Management</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+      		<div class="col-xs-6" id="class_search_class_student_management_search_section">
+      			<div class="highlight">
+      				<ul id="class_search_students_tabs" class="nav nav-tabs" role="tablist">
+				      <li class="active"><a href="http://sims.com/SIMS/index.php/classes#class_search_students_tab1" role="tab" data-toggle="tab">精确查找</a></li>
+				      <li class=""><a href="http://sims.com/SIMS/index.php/classes#class_search_students_tab2" role="tab" data-toggle="tab">Group模糊查找</a></li>
+				    </ul>
+				    <div id="class_search_students_tabs_content" class="tab-content">
+				      <div class="tab-pane fade active in" id="class_search_students_tab1">
+				        <div class="row">
+		      				<div class="col-xs-8">
+		      					<label for="input_class_search_class_student_management_ic_name">请输入学员IC/名字/HP</label>
+								<input class="form-control" id="input_class_search_class_student_management_ic_name" placeholder="IC Number/Name/HP">
+							</div>
+							<div class="col-xs-2">
+								<br>
+								<a class="button glow button-rounded button-flat" id="input_class_search_class_student_management_student_search">Search</a>
+							</div>
+						</div>
+				      </div>
+				      <div class="tab-pane fade" id="class_search_students_tab2">
+				        <div class="row">
+		      				<div class="col-xs-3">
+								<label for="input_class_search_course_type">Course Type</label>
+								<select class="form-control" id="input_class_search_course_type">
+									<option value="NA">请选择</option>
+									<option id="input_class_search_course_type_1" value="cmp">英文综合</option>
+									<option id="input_class_search_course_type_2" value="con">英文会话</option>
+									<option id="input_class_search_course_type_3" value="wri">英文写作</option>
+									<option id="input_class_search_course_type_3" value="wpn">数学</option>
+									<!-- <option id="input_class_search_course_type_3" value="eness">ESS</option> -->
+									<!-- <option id="input_class_search_course_type_4" value="encos">COS</option> -->
+									<!-- <option id="input_class_search_course_type_5" value="encom">英文电脑</option> -->
+									<!-- <option id="input_class_search_course_type_6" value="chcom">华文电脑</option> -->
+									<!-- <option id="input_class_search_course_type_7" value="chpin">华文拼音</option> -->
+									<!-- <option id="input_class_search_course_type_8" value="enpho">英文音标</option> -->
+									<!-- <option id="input_class_search_course_type_9" value="engra">英文语法</option> -->
+									<!-- <option id="input_class_search_course_type_10" value="chwri">华文写作</option> -->
+									<!-- <option id="input_class_search_course_type_11" value="others">其他</option> -->
+								</select>
+							</div>
+							<div class="col-xs-3">
+								<label for="input_class_search_student_level">水平等级</label>
+								<select class="form-control" id="input_class_search_student_level">
+									<option value="NA">请选择</option>
+									<option value="BEGINNERS">初级</option>
+				                	<option value="INTERMEDIATE">中级</option>
+				                	<option value="ADVANCED">高级</option>
+								</select>
+							</div>
+							<div class="col-xs-3">
+								<label for="input_class_search_class_time">想上课时间</label>
+								<select class="form-control" id="input_class_search_class_time">
+									<option value="NA">请选择</option>
+									<option value="any_am">平时早上</option>
+				                	<option value="any_pm">平时下午</option>
+				                	<option value="any_eve">平时晚上</option>
+				                	<option value="sat_am">周六早上</option>
+				                	<option value="sat_pm">周六下午</option>
+				                	<option value="sat_eve">周六晚上</option>
+				                	<option value="sun_am">周日早上</option>
+				                	<option value="sun_pm">周日下午</option>
+				                	<option value="sun_eve">周日晚上</option>
+								</select>
+							</div>
+							<div class="col-xs-2">
+								<br>
+								<a class="button glow button-rounded button-flat" id="input_class_search_class_student_management_student_search2">Search</a>
+							</div>
+						</div>
+				      </div>
+				    </div>
+					<select multiple="" class="form-control" id="class_search_student_search_results"></select>
+      			</div>
+      		</div>
+      		<div class="col-xs-1" id="class_search_class_student_management_middle_section">
+	      		<button type="button" class="btn btn-primary">
+				  <span class="glyphicon glyphicon-arrow-right"></span> Assign
+				</button>
+      		</div>
+      		<div class="col-xs-5" id="class_search_class_student_management_class_section">
+      			<div class="highlight">
+	      			<div class="row">
+	      				<div class="col-xs-8">
+	      					<label>班级所有学生</label>
+						</div>
+					</div>
+					<br>
+					<div id="class_all_students_list"><div class="panel-group" id="class_all_student_collapse_0"><div class="panel panel-default"><div class="panel-heading"><h6 class="panel-title"><a data-toggle="collapse" data-parent="class_all_student_collapse_0" href="http://sims.com/SIMS/index.php/classes#class_all_student_collapse_body_0">Student 1  / Name: <b>Mr Zihao Wang</b>  /  IC: <b>a0073222</b>  /  Tel: <b>93209350</b></a><button id="class_students_student_1" style="float:right;padding:3px;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#student-delete-modal">Delete</button> </h6></div><div id="class_all_student_collapse_body_0" class="panel-collapse collapse"><div class="panel-body"><div class="row"><div class="col-xs-6"><b>Exam Record 1</b></div></div><div class="row"><div class="col-xs-6"><div>Exam Date: 2014-07-02</div></div><div class="col-xs-6"><div>Remark: Testing</div></div></div><div class="row"><div class="col-xs-12"><div>EL:2    ER:EXE    EN:6    ES:8    EW:4</div></div></div><hr></div></div></div></div><div class="panel-group" id="class_all_student_collapse_1"><div class="panel panel-default"><div class="panel-heading"><h6 class="panel-title"><a data-toggle="collapse" data-parent="class_all_student_collapse_1" href="http://sims.com/SIMS/index.php/classes#class_all_student_collapse_body_1">Student 2  / Name: <b>Mrs CHENCHUA ZHU</b>  /  IC: <b>s8186386e</b>  /  Tel: <b>12345678</b></a><button id="class_students_student_6" style="float:right;padding:3px;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#student-delete-modal">Delete</button> </h6></div><div id="class_all_student_collapse_body_1" class="panel-collapse collapse"><div class="panel-body"><div class="row"><div class="col-xs-6"><b>Exam Record 1</b></div></div><div class="row"><div class="col-xs-6"><div>Exam Date: 2014-07-10</div></div><div class="col-xs-6"><div>Remark: test guowei</div></div></div><div class="row"><div class="col-xs-12"><div>EL:3    ER:4    EN:5    ES:3    EW:NA</div></div></div><hr></div></div></div></div></div>
+	      		</div>
+      		</div>
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Class delete Modal -->
+<div class="modal fade" id="class-delete-modal" tabindex="-1" role="dialog" aria-labelledby="class_delete_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="class_delete_modal_label">Delete Class</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- student delete Modal -->
+<div class="modal fade" id="student-delete-modal" tabindex="-1" role="dialog" aria-labelledby="student_delete_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="student_delete_modal_label">Remove Studnet</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+      		<div class="col-xs-4"> +
+      			<h4>Sure you want to remove this student from this class?</h4>
+      		</div> +
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="remove_student_confirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>					<br><br>
+					<h3>所有班级</h3><hr>
+					 
+	<meta charset="utf-8">
+
+	<script>
+		$(document).ready(function($) {
+			event.preventDefault();
+
+			load_all_classes();
+		});
+
+		function load_all_classes() {
+			var target = $('#class_all');
+			target.empty();
+			target.append('<div class="loading"></div>');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getAllClassInfo",
+			    data:{},
+			    success:function(json){
+			    	target.empty();
+			    	target.append('<p>No class info</p>');
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		if(reply.length > 0) {
+			    			target.empty();
+				    		for (var key in reply) {
+				    			var num = parseInt(key) + 1;
+				    			if (reply.hasOwnProperty(key)) {
+				            		target.append(
+										'<div class="panel-group" id="class_all_collapse_'+key+'">' +
+											'<div class="panel panel-default">' + 
+												'<div class="panel-heading">' +
+													'<h4 class="panel-title">' +
+														'<a data-toggle="collapse" data-parent="class_all_collapse_'+key+'" href="#class_all_collapse_body_'+key+'">Class ' + num + '  /  Class Name: <b>' + reply[key].class_name + '</b>  /  Code: <b>' + reply[key].code + '</b>  /  Course: <b>' + reply[key].type + '</b>  /  Status: <b>' + reply[key].status + '</b></a>' + 
+													' </h4>' +
+												'</div>' +
+												'<div id="class_all_collapse_body_'+key+'" class="panel-collapse collapse">' + 
+												'<div class="panel-body">' + 
+													'<div class="row">' + 
+														'<div class="col-xs-3">'+ 
+															'<div>Type: ' + reply[key].type + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-3">' +
+															'<div>Level ' + reply[key].level + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-3">' +
+															'<div>Location ' + reply[key].location + '</div>' + 
+														'</div>' +
+													'</div>' +
+													'<div class="row">' + 
+														'<div class="col-xs-3">' +
+															'<div>Start Date: '+ reply[key].start_date + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-3">' +
+															'<div>End Date: '+ reply[key].end_date + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-3">'+ 
+															'<div>Start Time: ' + reply[key].start_time + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-3">'+ 
+															'<div>End Time: ' + reply[key].end_time + '</div>' +
+														'</div>' + 
+													'</div>' + 
+													'<hr>' + 
+													'<div class="row">' + 
+														'<div class="col-xs-4">'+ 
+															'<div>Teacher: ' + reply[key].teacher_name + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-4">' +
+															"<div>Teacher's Tel: " + reply[key].teacher_tel +'</div>' + 
+														'</div>' +
+														'<div class="col-xs-4">' +
+															"<div>Branch: " + reply[key].name +'</div>' + 
+														'</div>' +
+													'</div>' + 
+													'<div class="row">' + 
+														'<div class="col-xs-4">'+ 
+															'<div>Created: ' + reply[key].created + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-4">' +
+															'<div>Modified: ' + reply[key].modified + '</div>' + 
+														'</div>' +
+														'<div class="col-xs-4">' +
+															'<div>Remark: '+ reply[key].remark + '</div>' + 
+														'</div>' +
+													'</div>' + 
+												'</div>' + 
+											'</div>' +
+										'</div>'
+									);
+				            	}
+				            }
+			        	}
+			        }
+			    },
+			});//End ajax
+		}
+	</script>
+
+<div class="highlight">
+	<div id="class_all"><div class="panel-group" id="class_all_collapse_0"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" data-parent="class_all_collapse_0" href="http://sims.com/SIMS/index.php/classes#class_all_collapse_body_0">Class 1  /  Class Name: <b>CMP-LEVEL1</b>  /  Code: <b>1234567</b>  /  Course: <b>chcom</b>  /  Status: <b>waitexam</b></a> </h4></div><div id="class_all_collapse_body_0" class="panel-collapse collapse"><div class="panel-body"><div class="row"><div class="col-xs-3"><div>Type: chcom</div></div><div class="col-xs-3"><div>Level BEGINNERS</div></div><div class="col-xs-3"><div>Location BLK 71 #01-923</div></div></div><div class="row"><div class="col-xs-3"><div>Start Date: 2014-05-05</div></div><div class="col-xs-3"><div>End Date: 2014-06-06</div></div><div class="col-xs-3"><div>Start Time: 0930</div></div><div class="col-xs-3"><div>End Time: 1200</div></div></div><hr><div class="row"><div class="col-xs-4"><div>Teacher: WANG ZIHAO</div></div><div class="col-xs-4"><div>Teacher's Tel: 93209350</div></div><div class="col-xs-4"><div>Branch: toa payoh</div></div></div><div class="row"><div class="col-xs-4"><div>Created: 2014-05-26 12:34:11</div></div><div class="col-xs-4"><div>Modified: 2014-05-26 19:28:18</div></div><div class="col-xs-4"><div>Remark: Testing update</div></div></div></div></div></div></div><div class="panel-group" id="class_all_collapse_1"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" data-parent="class_all_collapse_1" href="http://sims.com/SIMS/index.php/classes#class_all_collapse_body_1">Class 2  /  Class Name: <b>CMP-LEVEL2</b>  /  Code: <b>7156292</b>  /  Course: <b>chcom</b>  /  Status: <b>preparing</b></a> </h4></div><div id="class_all_collapse_body_1" class="panel-collapse collapse"><div class="panel-body"><div class="row"><div class="col-xs-3"><div>Type: chcom</div></div><div class="col-xs-3"><div>Level INTERMEDIATE</div></div><div class="col-xs-3"><div>Location YS</div></div></div><div class="row"><div class="col-xs-3"><div>Start Date: 2014-05-12</div></div><div class="col-xs-3"><div>End Date: 2014-06-07</div></div><div class="col-xs-3"><div>Start Time: 1300</div></div><div class="col-xs-3"><div>End Time: 1730</div></div></div><hr><div class="row"><div class="col-xs-4"><div>Teacher: WZHJAY</div></div><div class="col-xs-4"><div>Teacher's Tel: 82512085</div></div><div class="col-xs-4"><div>Branch: yishun</div></div></div><div class="row"><div class="col-xs-4"><div>Created: 2014-05-29 12:14:14</div></div><div class="col-xs-4"><div>Modified: 2014-05-29 12:14:14</div></div><div class="col-xs-4"><div>Remark: Testing 2</div></div></div></div></div></div></div><div class="panel-group" id="class_all_collapse_2"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" data-parent="class_all_collapse_2" href="http://sims.com/SIMS/index.php/classes#class_all_collapse_body_2">Class 3  /  Class Name: <b>WPL-P</b>  /  Code: <b>93209350</b>  /  Course: <b>encmp</b>  /  Status: <b>preparing</b></a> </h4></div><div id="class_all_collapse_body_2" class="panel-collapse collapse"><div class="panel-body"><div class="row"><div class="col-xs-3"><div>Type: encmp</div></div><div class="col-xs-3"><div>Level INTERMEDIATE</div></div><div class="col-xs-3"><div>Location SERANGOON</div></div></div><div class="row"><div class="col-xs-3"><div>Start Date: 2014-07-09</div></div><div class="col-xs-3"><div>End Date: 2014-08-09</div></div><div class="col-xs-3"><div>Start Time: 1100</div></div><div class="col-xs-3"><div>End Time: 1500</div></div></div><hr><div class="row"><div class="col-xs-4"><div>Teacher: guowei</div></div><div class="col-xs-4"><div>Teacher's Tel: 13445687</div></div><div class="col-xs-4"><div>Branch: serangoon</div></div></div><div class="row"><div class="col-xs-4"><div>Created: 2014-07-09 09:22:48</div></div><div class="col-xs-4"><div>Modified: 2014-07-09 09:23:11</div></div><div class="col-xs-4"><div>Remark: Test guowri</div></div></div></div></div></div></div></div>
+</div>				</div>
+			  	<div class="tab-pane fade" id="tab-2">
+			  		<h3>添加或更新班级信息</h3><hr>
+					 
+	<meta charset="utf-8">
+
+	<script>
+		var update_selected_class_id = 0;
+		$(document).ready(function($) {
+			$('#input_class_start_date').datepicker({
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
+			});
+
+			$('#input_class_end_date').datepicker({
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
+			});
+
+			class_load_branches();
+
+			$('#class_new_submit').on('click', function() {
+				create_new_class();
+			});
+
+			$('#class_update_submit').on('click', function() {
+				update_class();
+			});
+
+			$('#class_class_code_check').on('click', function() {
+				get_class_by_code();
+			});
+
+			load_class_type();
+		});
+
+		function load_class_type() {
+			var types = $('#input_class_type');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getAllCourses",
+			    data:{},
+			    success:function(json){
+			    	types.empty();
+			    	if(json != null) {
+			    		var reply = $.parseJSON(json);
+			    		types.append('<option value="NA">请选择</option>');
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			    				types.append('<option id="course_type_'+ reply[key].id +'" + value="'+ reply[key].code +'">' + reply[key].type + '</option>');
+			    			}
+			    		}
+			        }else{
+			        	toastr.error("Fail to load courses");
+			        }
+			    },
+			});//End ajax
+		}
+
+		function class_load_branches() {
+			var branches = $('#input_class_branch');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getAllBranches",
+			    data:{},
+			    success:function(json){
+			    	branches.empty();
+			    	if(json != null) {
+			    		var reply = $.parseJSON(json);
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			    				branches.append('<option id="class_new_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+			    			}
+			    		}
+			        }else{
+			        	toastr.error("Fail to load branches");
+			        }
+			    }
+			});//End ajax
+		}
+
+		function create_new_class() {
+			var code = $('#input_class_code').val();
+			var class_name = $('#input_class_name').val();
+			var branch = $('#input_class_branch option:selected').attr('id').split('_');
+			var branch_id = branch[3];
+			var type = $('#input_class_type option:selected').val();
+			var level = $('#input_class_level option:selected').val();
+			var status = $('#input_class_status option:selected').val();
+			var location = $('#input_class_location').val();
+			var start_date = $('#input_class_start_date').val();
+			var end_date = $('#input_class_end_date').val();
+			var start_time = $('#input_class_start_time').val();
+			var end_time = $('#input_class_end_time').val();
+			var teacher_name = $('#input_class_teacher_name').val();
+			var teacher_tel = $('#input_class_teacher_tel').val();
+			var remark = $('#input_class_remark').val();
+
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "createNewClass",
+			    data:{
+			    	code:code,
+			    	class_name:class_name,
+			     	branch_id:branch_id,
+			     	type:type, 
+			     	level:level, 
+			     	status:status, 
+			     	location:location, 
+			     	start_date:start_date, 
+			     	end_date:end_date, 
+			     	start_time:start_time, 
+			     	end_time:end_time, 
+			     	teacher_name:teacher_name, 
+			     	teacher_tel:teacher_tel, 
+			     	remark:remark},
+			    success:function(json){
+			    	if(json.trim() != "") {
+					    var reply = $.parseJSON(json);
+					    if(reply == '1') {
+					    	toastr.success("Create class success!");
+					    	clear_class_form_inputs();
+					    	load_all_classes();
+					    }else{
+					    	toastr.error("Fail to insert class data");
+					    }
+					}
+					else {
+						toastr.error("Fail to insert class api");
+					}
+			    }
+			});//End ajax
+		}
+
+		function update_class() {
+			var class_id = update_selected_class_id;
+			var code = $('#input_class_code').val();
+			var class_name = $('#input_class_name').val();
+			var branch = $('#input_class_branch option:selected').attr('id').split('_');
+			var branch_id = branch[3];
+			var type = $('#input_class_type option:selected').val();
+			var level = $('#input_class_level option:selected').val();
+			var status = $('#input_class_status option:selected').val();
+			var location = $('#input_class_location').val();
+			var start_date = $('#input_class_start_date').val();
+			var end_date = $('#input_class_end_date').val();
+			var start_time = $('#input_class_start_time').val();
+			var end_time = $('#input_class_end_time').val();
+			var teacher_name = $('#input_class_teacher_name').val();
+			var teacher_tel = $('#input_class_teacher_tel').val();
+			var remark = $('#input_class_remark').val();
+
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "updateClassByID",
+			    data:{
+			    	class_id:class_id,
+			    	code:code,
+			    	class_name:class_name,
+			     	branch_id:branch_id,
+			     	type:type, 
+			     	level:level, 
+			     	status:status, 
+			     	location:location, 
+			     	start_date:start_date, 
+			     	end_date:end_date, 
+			     	start_time:start_time, 
+			     	end_time:end_time, 
+			     	teacher_name:teacher_name, 
+			     	teacher_tel:teacher_tel, 
+			     	remark:remark},
+			    success:function(json){
+			    	if(json.trim() != "") {
+					    var reply = $.parseJSON(json);
+					    if(reply == '2') {
+					    	toastr.success("Update class success!");
+					    	clear_class_form_inputs();
+					    }else{
+					    	toastr.error("Fail to update class data");
+					    }
+					}
+					else {
+						toastr.error("Fail to call update class api");
+					}
+			    }
+			});//End ajax
+		}
+
+		function get_class_by_code() {
+			var code = $('#input_class_code').val();
+
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getClassInfoByCode",
+			    data:{code:code},
+			    success:function(json){
+			    	var modalBody = $('#class_code_check_modal_label').closest('.modal-content').find('.modal-body');
+			    	modalBody.children().remove();
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+				    	for (var key in reply) {
+					    	if (reply.hasOwnProperty(key)) {
+								modalBody.append(
+									'<div class="row">' + 
+										'<div class="col-xs-2" id="class_check_by_code_code">'+ 
+											'<label>Class Code</label>' +
+											'<div class="form-control">' + code + '</div>' +
+										'</div>' + 
+										'<div class="col-xs-2">' + 
+											'<label for="class_check_by_code_class_name">Name</label>' + 
+											'<div class="form-control" id="sclass_check_by_code_class_name">' + reply[key].class_name + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-2">' + 
+											'<label for="class_check_by_code_type">Type</label>' + 
+											'<div class="form-control" id="sclass_check_by_code_type">' + reply[key].type + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-2">' + 
+											'<label for="class_check_by_code_level">Level</label>' + 
+											'<div class="form-control" id="sclass_check_by_code_level">' + reply[key].level + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-2">' + 
+											'<label for="class_check_by_code_start_date">开课时间</label>' + 
+											'<div class="form-control" id="sclass_check_by_code_start_date">' + reply[key].start_date + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-2">' + 
+											'<label for="class_check_by_code_end_date">结课时间</label>' + 
+											'<div class="form-control" id="class_check_by_code_end_date">' + reply[key].end_date + '</div>' + 
+										'</div>' +
+									'</div>' +
+									'<div class="row">' + 
+										'<div class="col-xs-2">' + 
+											'<label for="class_check_by_code_teacher_name">Teacher</label>' + 
+											'<div class="form-control" id="class_check_by_code_teacher_name">' + reply[key].end_date + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-2">' + 
+											'<label for="class_check_by_code_location">Teacher</label>' + 
+											'<div class="form-control" id="class_check_by_code_location">' + reply[key].location + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-2">' + 
+											'<label for="class_check_by_code_branch">Teacher</label>' + 
+											'<div class="form-control" id="class_check_by_code_branch">' + reply[key].teacher_name + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-4">' +
+											'<label for="class_check_by_code_remark">备注</label>' +
+											'<div class="form-control" id="class_check_by_code_remark">'+ reply[key].remark + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-2">' +
+											'<br>' +
+											'<a class="button glow button-rounded button-flat" id="class_check_by_code_modal_update_' + reply[key].class_id + '">Update</a>' + 
+										'</div>' +
+									'</div>' +
+									'<hr>'
+								);
+					        }
+				    	}
+				    	$('#class-new-modal a').on('click', function() {
+							var el_id = $(this).attr('id').split('_');
+							var class_id = el_id[6];
+							update_selected_class_id = class_id;	// assign global var for late update submit
+
+							load_class_info(class_id);
+							$('#class-new-modal').modal('hide');
+						});
+				    }
+				    else {
+				    	if(code.trim() == "") {
+				    		code='NULL';
+				    	};
+						modalBody.append(
+							'<div class="row">' + 
+								'<div class="col-xs-4" id="class_check_by_code_code">'+ 
+									'<label>Class Code Input</label>' +
+									'<div class="form-control">' + code + '</div>' +
+								'</div>' + 
+								'<div class="col-xs-8">' + 
+									'<label>Sorry, no related class info found!<br>Please input valid class code.</label>' + 
+							'</div>'
+						);
+					}
+			    }
+			});//End ajax
+		}
+
+		function load_class_info(class_id) {
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getClassInfoByID",
+			    data:{class_id:class_id},
+			    success:function(json){
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+			    		for (var key in reply) {
+			    			if (reply.hasOwnProperty(key)) {
+			            		$('#input_class_code').val(reply[key].code);
+								$('#input_class_name').val(reply[key].class_name);
+								$('#input_class_location').val(reply[key].location);
+								$('#input_class_start_date').val(reply[key].start_date);
+								$('#input_class_end_date').val(reply[key].end_date);
+								$('#input_class_start_time').val(reply[key].start_time);
+								$('#input_class_end_time').val(reply[key].end_time);
+								$('#input_class_teacher_name').val(reply[key].teacher_name);
+								$('#input_class_teacher_tel').val(reply[key].teacher_tel);
+								$('#input_class_remark').val(reply[key].remark);
+
+								$('#input_class_status option[value="'+reply[key].status+'"]').attr('selected', 'selected');
+								$('#input_class_level option[value="'+reply[key].level+'"]').attr('selected', 'selected');
+								$('#input_class_type option[value="'+reply[key].type+'"]').attr('selected', 'selected');
+								$('#input_class_branch option[id="class_new_branch_'+reply[key].branch_id+'"]').attr('selected', 'selected');
+			            	}
+			            }
+			        }else{
+			        	toastr.error("Fail to load class info!");
+			        }
+			    }
+			});//End ajax
+		}
+
+		function clear_class_form_inputs() {
+			$('#input_class_code').val('');
+			$('#input_class_name').val('');
+			$('#input_class_branch option[id="class_new_branch_1"]').attr('selected', 'selected');
+			$('#input_class_type option[value="NA"]').attr('selected', 'selected');
+			$('#input_class_level option[value="NA"]').attr('selected', 'selected');
+			$('#input_class_status option[value="NA"]').attr('selected', 'selected');
+			$('#input_class_location').val('');
+			$('#input_class_start_date').val('');
+			$('#input_class_end_date').val('');
+			$('#input_class_start_time').val('');
+			$('#input_class_end_time').val('');
+			$('#input_class_teacher_name').val('');
+			$('#input_class_teacher_tel').val('');
+			$('#input_class_remark').val('');
+		}
+	</script>
+
+<div class="highlight">
+<form role="form">
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_class_code">Class Code</label>
+			<input class="form-control" id="input_class_code">
+		</div>
+		<div class="col-xs-2">
+			<br>
+			<a class="button glow button-rounded button-flat" id="class_class_code_check" data-toggle="modal" data-target="#class-new-modal">Check</a>
+		</div>
+		<div class="col-xs-2"></div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_class_name">Class Name</label>
+			<input class="form-control" id="input_class_name">
+		</div>
+		<div class="col-xs-4">
+			<label for="input_class_branch">Branch</label>
+			<select class="form-control" id="input_class_branch"><option id="class_new_branch_1">admiralty</option><option id="class_new_branch_2">ang mo kio</option><option id="class_new_branch_3">bedok</option><option id="class_new_branch_4">bukit batok</option><option id="class_new_branch_5">choa chu kang</option><option id="class_new_branch_6">hougang</option><option id="class_new_branch_7">jurong west</option><option id="class_new_branch_8">sengkang</option><option id="class_new_branch_9">serangoon</option><option id="class_new_branch_10">tampines</option><option id="class_new_branch_11">toa payoh</option><option id="class_new_branch_12">yishun</option></select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-3">
+			<label for="input_class_type">Class Type</label>
+			<select class="form-control" id="input_class_type"><option value="NA">请选择</option><option id="course_type_1" +="" value="encmp">英文综合</option><option id="course_type_2" +="" value="encon">英文会话</option><option id="course_type_3" +="" value="eness">ESS</option><option id="course_type_4" +="" value="encos">COS</option><option id="course_type_5" +="" value="encom">英文电脑</option><option id="course_type_6" +="" value="chcom">华文电脑</option><option id="course_type_7" +="" value="chpin">华文拼音</option><option id="course_type_8" +="" value="enpho">英文音标</option><option id="course_type_9" +="" value="engra">英文语法</option><option id="course_type_10" +="" value="chwri">华文写作</option><option id="course_type_11" +="" value="others">其他</option></select>
+		</div>
+		<div class="col-xs-3">
+			<label for="input_class_level">Class Level</label>
+			<select class="form-control" id="input_class_level">
+		      <option value="NA">请选择</option>
+		      <option value="BEGINNERS">初级</option>
+		      <option value="INTERMEDIATE">中级</option>
+		      <option value="ADVANCED">高级</option>
+		    </select>
+		</div>
+		<div class="col-xs-3">
+			<label for="input_class_status">Class Status</label>
+			<select class="form-control" id="input_class_status">
+		      <option value="NA">请选择</option>
+		      <option value="preparing">未开班</option>
+		      <option value="learning">已开班</option>
+		      <option value="waitexam">待考试</option>
+		      <option value="finished">已结束</option>
+		    </select>
+		</div>
+		<div class="col-xs-3">
+			<label for="input_class_location">Location</label>
+			<input class="form-control" id="input_class_location">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-3">
+			<label for="input_class_start_date">Start Date</label>
+			<input class="form-control" id="input_class_start_date">
+		</div>
+		<div class="col-xs-3">
+			<label for="input_class_end_date">End Date</label>
+			<input class="form-control" id="input_class_end_date">
+		</div>
+		<div class="col-xs-3">
+			<label for="input_class_start_time">Start Time (0000~2359)</label>
+			<input class="form-control" id="input_class_start_time">
+		</div>
+		<div class="col-xs-3">
+			<label for="input_class_end_time">End Time (0000~2359)</label>
+			<input class="form-control" id="input_class_end_time">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_class_teacher_name">Teacher's Name</label>
+			<input class="form-control" id="input_class_teacher_name">
+		</div>
+		<div class="col-xs-4">
+			<label for="input_class_teacher_tel">Teacher's Tel</label>
+			<input class="form-control" id="input_class_teacher_tel">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_class_remark">Remark</label>
+			<textarea class="form-control" id="input_class_remark" rows="3"></textarea>
+		</div>
+	</div>
+	<hr>
+</form>
+<div class="row">
+	<div class="col-xs-8"></div>
+	<div class="col-xs-2">
+		<a class="button glow button-rounded button-flat" id="class_new_submit">Create</a>
+	</div>
+	<div class="col-xs-2">
+		<a class="button glow button-rounded button-flat" id="class_update_submit">Update</a>
+	</div>
+</div>
+</div>
+
+<!-- Class code Check Modal -->
+<div class="modal fade" id="class-new-modal" tabindex="-1" role="dialog" aria-labelledby="class_code_check_modal_label" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="class_code_check_modal_label">Class Information</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>					<br><br>
+			  	</div>
+			</div>
+		</div>
+    </div>
+	</div>
+	<div id="footer">
+	<div class="container">
+    	<div class="row">
+    		<div class="span12">
+    			<h5>Copyright © 2014 / 
+    			<a href="http://changchun.edu.sg/">长春教育集团</a>
+    			</h5>
+    		</div>
+    	</div>
+    </div>
+</div><div id="yieldsquare-ad" class="yieldsquare-enabled" style="display: none; clear: both;"><iframe id="yieldsquare-frame" frameborder="0" width="0" height="0" src="about:blank" style="margin: 0px; overflow: hidden; display: none !important; visibility: hidden !important; opacity: 0 !important; background-position: 728px 90px;"></iframe><div id="yieldsquare-about-ad">This ad is supporting your extension Smooth Gestures<a id="yieldsquare-disable-ad" href="http://www.smoothgestures.com/donate">Turn off these ads?</a></div></div>
+<div id="HUABAN_WIDGETS"><div class="HUABAN-f-button" style="display: none;">采集</div><style>#HUABAN_WIDGETS  { font-family: "helvetica neue",arial,sans-serif; color: #444; font-size: 14px; } #HUABAN_WIDGETS * { box-sizing: content-box; } #HUABAN_WIDGETS .HUABAN-main { position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: #e5e5e5; background: rgba(229,229,229,.95); max-height: 100%; overflow: hidden; z-index: 9999999999999; } #HUABAN_WIDGETS a img { border: 0; } #HUABAN_WIDGETS .HUABAN-header { height: 50px; background: white; box-shadow: 0 0 4px rgba(0,0,0,.2); width: 100%; left: 0; top: 0; position: absolute; } #HUABAN_WIDGETS .HUABAN-header .HUABAN-inner { margin: 0 auto; position: relative; } #HUABAN_WIDGETS .HUABAN-header .HUABAN-close { width: 60px; height: 50px; border-left: 1px solid #ddd; position: absolute; right: 0; top: 0; background: url(//huaban.com/img/widgets/btn_close.png) 20px 14px no-repeat; cursor: pointer; } #HUABAN_WIDGETS .HUABAN-header .HUABAN-close:hover { background-position: 20px -26px; } #HUABAN_WIDGETS .HUABAN-header .HUABAN-close:active { background-position: 20px -66px; } #HUABAN_WIDGETS .HUABAN-header .HUABAN-logo { display: block; position: absolute; top: 12px; } #HUABAN_WIDGETS .HUABAN-waterfall-holder { position: relative; overflow-y: auto; height: 100%; } #HUABAN_WIDGETS .HUABAN-waterfall { position: relative; margin-top: 50px; } #HUABAN_WIDGETS .HUABAN-waterfall .HUABAN-empty { position: absolute; left: 50%; top: 30px; height: 36px; line-height: 36px; width: 216px; text-align: left; margin-left: -128px; color: #777; background: url(//huaban.com/img/widgets/icon_notice.png) 12px 8px no-repeat white; padding-left: 40px; font-size: 15px; } #HUABAN_WIDGETS .HUABAN-btn { display: inline-block; border-radius: 2px; font-size: 14px; padding: 0 12px; height: 30px; line-height: 30px; cursor: pointer; text-decoration: none; white-space: nowrap; -moz-user-select: none; -webkit-user-select: none; user-select: none; text-align: center; background: #D53939; color: white; } #HUABAN_WIDGETS .HUABAN-btn:hover { background: #E54646; } #HUABAN_WIDGETS .HUABAN-btn:active { background: #C52424; } #HUABAN_WIDGETS .HUABAN-wbtn { background: #EDEDED; color: #444; } #HUABAN_WIDGETS .HUABAN-wbtn:hover { background: #F2F2F2; } #HUABAN_WIDGETS .HUABAN-wbtn:active { background: #DDD; } #HUABAN_WIDGETS .HUABAN-f-button { position: absolute; display: none; z-index: 9999999999998; box-shadow: 0 0 0 2px rgba(255,255,255,.2); background: #aaa; background: rgba(0,0,0,.3); color: white; cursor: pointer; padding: 0 12px; height: 30px; line-height: 30px; border-radius: 2px; font-size: 14px;} #HUABAN_WIDGETS .HUABAN-f-button:hover { background-color: #999; background-color: rgba(0,0,0,.5); } #HUABAN_WIDGETS .HUABAN-f-button:active { background-color: rgba(0,0,0,.6); } #HUABAN_WIDGETS .HUABAN-red-normal-icon-button { width: 36px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(//huaban.com/img/widgets/widget_icons.png) 0 -200px no-repeat; box-shadow: none !important; font-size: 14px; } #HUABAN_WIDGETS .HUABAN-red-normal-icon-button:hover { background-position: -130px -200px; } #HUABAN_WIDGETS .HUABAN-red-normal-icon-button:active { background-position: -260px -200px; } #HUABAN_WIDGETS .HUABAN-red-large-icon-button { width: 80px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(//huaban.com/img/widgets/widget_icons.png) 0 -150px no-repeat; box-shadow: none !important; font-size: 14px; } #HUABAN_WIDGETS .HUABAN-red-large-icon-button:hover { background-position: -130px -150px; } #HUABAN_WIDGETS .HUABAN-red-large-icon-button:active { background-position: -260px -150px; } #HUABAN_WIDGETS .HUABAN-red-small-icon-button { width: 30px; height: 21px; border: 0px; line-height: 21px; padding-left: 20px; padding-right: 0px; text-align: left; background: url(//huaban.com/img/widgets/widget_icons.png) 0 -250px no-repeat; box-shadow: none !important; font-size: 12px; } #HUABAN_WIDGETS .HUABAN-red-small-icon-button:hover { background-position: -130px -250px; } #HUABAN_WIDGETS .HUABAN-red-small-icon-button:active { background-position: -260px -250px; } #HUABAN_WIDGETS .HUABAN-white-normal-icon-button { width: 36px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(//huaban.com/img/widgets/widget_icons.png) 0 -500px no-repeat; box-shadow: none !important; color: #444; font-size: 14px; } #HUABAN_WIDGETS .HUABAN-white-normal-icon-button:hover { background-position: -130px -500px; } #HUABAN_WIDGETS .HUABAN-white-normal-icon-button:active { background-position: -260px -500px; } #HUABAN_WIDGETS .HUABAN-white-large-icon-button { width: 80px; height: 24px; border: 0px; line-height: 24px; padding-left: 24px; padding-right: 0px; text-align: left; background: url(//huaban.com/img/widgets/widget_icons.png) 0 -450px no-repeat; box-shadow: none !important; color: #444; font-size: 14px; } #HUABAN_WIDGETS .HUABAN-white-large-icon-button:hover { background-position: -130px -450px; } #HUABAN_WIDGETS .HUABAN-white-large-icon-button:active { background-position: -260px -450px; } #HUABAN_WIDGETS .HUABAN-white-small-icon-button { width: 30px; height: 21px; border: 0px; line-height: 21px; padding-left: 20px; padding-right: 0px; text-align: left; background: url(//huaban.com/img/widgets/widget_icons.png) 0 -550px no-repeat; box-shadow: none !important; color: #444; font-size: 12px; } #HUABAN_WIDGETS .HUABAN-white-small-icon-button:hover { background-position: -130px -550px; } #HUABAN_WIDGETS .HUABAN-white-small-icon-button:active { background-position: -260px -550px; } #HUABAN_WIDGETS .HUABAN-cell { width: 236px; position: absolute; background: white; box-shadow: 0 1px 3px rgba(0,0,0,.3); } #HUABAN_WIDGETS .HUABAN-cell.HUABAN-pinned { background: #FAFAFA; } #HUABAN_WIDGETS .HUABAN-cell .HUABAN-img-holder { overflow: hidden; position: relative; } #HUABAN_WIDGETS .HUABAN-cell .HUABAN-img-holder:hover img.HUABAN-cell-img { opacity: .8 } #HUABAN_WIDGETS .HUABAN-cell .HUABAN-video-icon { width: 72px; height: 62px; position: absolute; left: 50%; top: 50%; margin: -31px auto auto -36px; background: url(//huaban.com/img/widgets/media_video.png) 0 0 no-repeat; display: none; } #HUABAN_WIDGETS .HUABAN-cell.HUABAN-video .HUABAN-video-icon { display: block; } #HUABAN_WIDGETS .HUABAN-cell .HUABAN-over { display: none; } #HUABAN_WIDGETS .HUABAN-cell:hover .HUABAN-over { display: block; } #HUABAN_WIDGETS .HUABAN-cell .HUABAN-over .HUABAN-btn { width: 60px; height: 34px; padding: 0; position: absolute; left: 50%; top: 50%; margin: -18px 0 0 -31px; line-height: 34px; box-shadow: 0 0 0 2px rgba(255,255,255,.2); font-size: 16px; } #HUABAN_WIDGETS .HUABAN-cell.HUABAN-long .HUABAN-img-holder { height: 600px; } #HUABAN_WIDGETS .HUABAN-cell.HUABAN-long .HUABAN-img-holder:after { content: ""; display: block; position: absolute; width: 236px; height: 12px; left: 0; bottom: 0; background: url(//huaban.com/img/widgets/long_image_shadow_2.png) repeat-x 4px top; } #HUABAN_WIDGETS .HUABAN-cell img { width: 236px; display: block; } #HUABAN_WIDGETS .HUABAN-cell .HUABAN-size { margin: 8px 16px; font-size: 12px; color: #999;} #HUABAN_WIDGETS .HUABAN-cell .HUABAN-description { display: block; margin: 0 6px 6px; padding: 6px 10px; border: 0; resize: none; outline: 0; border: 1px solid transparent; line-height: 18px; font-size: 13px; overflow: hidden; word-wrap: break-word; background: url(//huaban.com/img/widgets/icon_edit.png) 500px center no-repeat; } #HUABAN_WIDGETS .HUABAN-cell:hover .HUABAN-description { background-color: #fff9e0; background-position: 206px center; } #HUABAN_WIDGETS .HUABAN-cell .HUABAN-description:focus { background-color: #F9F9F9; background-position: 500px center; } #HUABAN_WIDGETS .HUABAN-cell .HUABAN-select-btn { width: 34px; height:34px; background: url(//huaban.com/img/widgets/checkbox.png) 0 0 no-repeat; position: absolute; right: 5px; top: 5px; cursor: pointer; } #HUABAN_WIDGETS .HUABAN-selected .HUABAN-select-btn { background-position: 0 -40px; } #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-img-holder { cursor: pointer; } #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-cell-pin-btn { display: none; } #HUABAN_WIDGETS .HUABAN-multi .HUABAN-cell .HUABAN-over { display: block; } #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-buttons { position: absolute; top: 10px; left: 0; display: none; } #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-buttons .HUABAN-btn { margin-right: 10px; } #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti { display: none; height: 50px; line-height: 50px; text-align: center; font-size: 16px; color: #999; font-weight: bold; } #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti span { font-weight: normal; } #HUABAN_WIDGETS .HUABAN-header .HUABAN-multi-noti i { font-style: normal; } #HUABAN_WIDGETS .HUABAN-header .HUABAN-notice { padding: 0 10px; height:30px; line-height: 30px; position: absolute; left: 50%; top: 10px; margin-left: -83px; background: #fff9e2; text-align: center; } #HUABAN_WIDGETS .HUABAN-header .HUABAN-notice i { display: inline-block; width: 18px; height: 18px; background: url(//huaban.com/img/widgets/icon_notice.png) 0 0 no-repeat; vertical-align: top; margin: 6px 6px 0 0; } </style></div><div class="modal-backdrop fade in"></div></body></html>

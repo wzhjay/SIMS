@@ -2,8 +2,8 @@
 	<meta charset="utf-8">
 
 	<script>
-		var selected_class_management_id = 0;
-		var selected_class_delete_id = 0;
+		var selected_class_id = 0;
+		var selected_remove_student_id = 0;
 		$(document).ready(function($) {
 			event.preventDefault();
 
@@ -42,7 +42,29 @@
  			});
 
  			class_search_load_type();
+
+ 			$('#remove_student_confirm').on('click', function() {
+ 				remove_student_from_class(selected_remove_student_id, selected_class_id);
+ 			});
 		});
+
+ 		function remove_student_from_class(selected_remove_student_id, selected_class_id) {
+ 			$.ajax({
+				type:"post",
+			    url:window.api_url + "removeStudentFromClassByID",
+			    data:{student_id:selected_remove_student_id, class_id:selected_class_id},
+			    success:function(json){
+			    	if(json.trim() == '3') {
+					    toastr.success("Remove success!");
+					    
+					    // clear deleted element
+					    $('#class_students_student_' + selected_remove_student_id).closest('.panel-group').remove();
+					}else{
+						toastr.error("Fail to remove student!");
+					}
+			    }
+			});//End ajax	
+ 		}
 
 		function class_search_load_type() {
 			var types = $('#input_class_search_type');
@@ -214,13 +236,12 @@
 				            	$('#class_search_results .button').on('click', function() {
 					 				var el_id = $(this).attr('id').split('_');
 					 				var class_id = el_id[4];
+					 				selected_class_id = class_id;
 					 				if(el_id[3] == "management") {
 					 					// menegement class student
-					 					selected_class_management_id = class_id;
 					 					load_class_students(class_id);
 					 				} else if(el_id[3] == "delete") {
 					 					// delete class
-					 					selected_class_delete_id = class_id;
 					 					get_class_student_by_id(class_id);
 					 				}
 					 			});
@@ -232,7 +253,7 @@
  		}
 
  		function load_class_students(class_id) {
- 			var target = $('#class_search_class_student_management_class_section ul');
+ 			var target = $('#class_all_students_list');
  			target.empty();
 			target.append('<div class="loading"></div>');
 			$.ajax({
@@ -241,19 +262,79 @@
 			    data:{class_id:class_id},
 			    success:function(json){
 			    	target.empty();
-			    	target.append('<li class="list-group-item">No Student Found</li>');
+			    	target.append('<p>No Student Found</p>');
 			    	if(json.trim() != "") {
 			    		var reply = $.parseJSON(json);
 			    		if(reply.length > 0) {
 			    			target.empty();
 				    		for (var key in reply) {
+				    			var num = parseInt(key) + 1;
 				    			if (reply.hasOwnProperty(key)) {
-				            		// target.append(JSON.stringify(reply[key]));
-				            		target.append(
-				            			'<li>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ')' +'</li>'
+									target.append(
+										'<div class="panel-group" id="class_all_student_collapse_'+key+'">' +
+											'<div class="panel panel-default">' + 
+												'<div class="panel-heading">' +
+													'<h6 class="panel-title">' +
+														'<a data-toggle="collapse" data-parent="class_all_student_collapse_'+key+'" href="#class_all_student_collapse_body_'+key+'">Student ' + num + '  / Name: <b>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  IC: <b>' + reply[key].ic + '</b>  /  Tel: <b>' + reply[key].tel + '</b></a><button id="class_students_student_' + reply[key].student_id + '" style="float:right;padding:3px;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#student-delete-modal">Delete</button>' + 
+													' </h6>' +
+												'</div>' +
+												'<div id="class_all_student_collapse_body_'+key+'" class="panel-collapse collapse">' + 
+												'<div class="panel-body">' + 
+												'</div>' + 
+											'</div>' +
+										'</div>'
 									);
-				            	}
+
+									$(document).ready(function() {
+										// get student's exam records by student ic	
+					    				var target2 = $('#class_all_student_collapse_body_' + key + ' .panel-body');
+						    			$.ajax({
+											type:"post",
+										    url:window.api_url + "getStudentRecordsByIC",
+										    data:{ic:reply[key].ic},
+										    success:function(json2){
+										    	if(json2.trim() != "") {
+										    		var reply2 = $.parseJSON(json2);
+										    		if(reply2.length > 0) {
+											    		for (var key2 in reply2) {
+											    			var num2 = parseInt(key2) + 1;
+											    			if (reply2.hasOwnProperty(key2)) {
+											            		target2.append(
+											            			'<div class="row">' + 
+												            			'<div class="col-xs-6">'+ 
+												            				'<b>Exam Record ' + num2 + '</b>' +
+												            			'</div>' + 
+											            			'</div>' + 
+											            			'<div class="row">' + 
+																		'<div class="col-xs-6">'+ 
+																			'<div>Exam Date: ' + reply2[key2].exam_date + '</div>' +
+																		'</div>' + 
+																		'<div class="col-xs-6">'+ 
+																			'<div>Remark: '+ reply2[key2].remark + '</div>' + 
+																		'</div>' +
+																	'</div>' + 
+																	'<div class="row">' + 
+																		'<div class="col-xs-12">'+ 
+																			'<div>EL:' + reply2[key2].el_best + '    ER:' + reply2[key2].er_best + '    EN:' + reply2[key2].en_best + '    ES:' + reply2[key2].es_best + '    EW:' + reply2[key2].ew_best + '</div>' +
+																		'</div>' + 
+																	'</div>' + 
+																	'<hr>'
+																);
+											            	}
+											            }
+										        	}
+										        }
+										    }
+										});//End ajax
+									});
+					            }
 				            }
+
+				            $('#class_all_students_list .btn').on('click', function() {
+				 				var el_id = $(this).attr('id').split('_');
+				 				var student_id = el_id[3];
+				 				selected_remove_student_id = student_id;
+				 			});
 			        	}
 			        }
 			    },
@@ -392,7 +473,7 @@
  		}
 
  		function assign_student_to_class(student_id) {
- 			var class_id = selected_class_management_id;
+ 			var class_id = selected_class_id;
  			$.ajax({
 				type:"post",
 			    url:window.api_url + "assignStudentToClass",
@@ -584,7 +665,7 @@
 						</div>
 					</div>
 					<br>
-					<ul class="list-group"></ul>
+					<div id="class_all_students_list"></div>
 	      		</div>
       		</div>
       	</div>
@@ -609,6 +690,29 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- student delete Modal -->
+<div class="modal fade" id="student-delete-modal" tabindex="-1" role="dialog" aria-labelledby="student_delete_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="student_delete_modal_label">Remove Studnet</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+      		<div class="col-xs-8">
+      			<H4>Sure you want to remove this student from this class?</h4>
+      		</div>
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="remove_student_confirm">Confirm</button>
       </div>
     </div>
   </div>

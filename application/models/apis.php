@@ -460,7 +460,7 @@ class Apis extends CI_Model
 	 */
 	function get_student_records_by_ic($ic) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('SELECT * FROM student_record WHERE student_ic = "'.$ic.'" ORDER BY id');
+			$query = $this->db->query('SELECT * FROM student_record WHERE student_ic = "'.$ic.'" ORDER BY exam_date');
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -801,6 +801,19 @@ class Apis extends CI_Model
 		return FALSE;
 	}
 
+	/**
+	 * delete record from student_class table
+	 *
+	 * @param	class_id, student_id
+	 * @return	bool
+	 */
+	function delete_student_class_record($class_id, $student_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('DELETE FROM student_class WHERE (student_id = "'.$student_id.'") AND (class_id = "'.$class_id.'")');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
+	}
 	/**
 	 * insert into expense table new record
 	 *

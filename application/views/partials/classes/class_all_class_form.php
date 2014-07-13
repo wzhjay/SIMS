@@ -26,7 +26,6 @@
 				    		for (var key in reply) {
 				    			var num = parseInt(key) + 1;
 				    			if (reply.hasOwnProperty(key)) {
-				            		// target.append(JSON.stringify(reply[key]));
 				            		target.append(
 										'<div class="panel-group" id="class_all_collapse_'+key+'">' +
 											'<div class="panel panel-default">' + 
