@@ -11,6 +11,16 @@
 			$('#input_student_search_all_students_search2').on('click', function() {
 				search_student_by_multiple_var();
 			});
+
+			$('#input_student_search_all_students_from').datepicker({
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
+			});
+
+			$('#input_student_search_all_students_to').datepicker({
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
+			});
 		});
 
 		function all_students_search_student_by_name_ic() {
@@ -115,6 +125,15 @@
  			var course_type = $('#input_student_search_all_students_search_course_type').val();
  			var level = $('#input_student_search_all_students_student_level').val();
  			var slot = $('#input_student_search_all_students_class_time').val();
+ 			var from = '2000-01-01';
+			var to  = '2100-01-01';
+			if($('#input_student_search_all_students_from').val().trim() != "") {
+				from = $('#input_student_search_all_students_from').val();
+			}
+			if($('#input_student_search_all_students_to').val().trim() != "") {
+				to = $('#input_student_search_all_students_to').val();
+			}
+ 			var have_class = $('#input_student_search_all_have_class').is(':checked') ? 'YES' : 'NO';
 
  			var target = $('#student_all_search_results');
 			target.empty();
@@ -122,7 +141,7 @@
 			$.ajax({
 				type:"post",
 			    url:window.api_url + "searchStudentInfoByMultipleVar",
-			    data:{course_type:course_type, level:level, slot:slot},
+			    data:{course_type:course_type, level:level, slot:slot, from:from, to:to, have_class:have_class},
 			    success:function(json){
 			    	target.empty();
 			    	target.append('<h4>No Students Found.</h4><hr>');
@@ -258,6 +277,25 @@
       </div>
       <div class="tab-pane fade" id="student_search_all_students_tab2">
 	    <form action="<?php echo $this->config->base_url(); ?>index.php/api/searchStudentInfoDownload2" method="POST" target="_blank">
+		    <div class="row">
+				<div class="input-daterange">
+					<div class="col-xs-4">
+						<label>注册时间 From</label>
+						<input name="from" class="form-control" id="input_student_search_all_students_from" placeholder="From">
+					</div>
+					<div class="col-xs-4">
+						<label>注册时间 To</label>
+						<input name="to" class="form-control" id="input_student_search_all_students_to" placeholder="To">
+					</div>
+					<div class="col-xs-4">
+						<div class="checkbox">
+						    <label for="input_student_search_all_have_class">
+						    	<input name="have_class" type="checkbox" id="input_student_search_all_have_class" value="YES"> 有班级
+						    </label>
+						</div>
+					</div>
+				</div>
+			</div>
 	        <div class="row">
 					<div class="col-xs-3">
 					<label for="input_student_search_all_students_course_type">Course Type</label>

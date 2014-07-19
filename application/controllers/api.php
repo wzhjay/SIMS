@@ -474,7 +474,14 @@ class Api extends CI_Controller
 		$course_type = $_POST['course_type'];
 		$level = $_POST['level'];
 		$slot = $_POST['slot'];
-		$students = $this->apis->search_class_students_by_multiple_var_download($course_type, $level, $slot);
+		$from = $_POST['from'];
+		$to = $_POST['to'];
+		if(isset($_POST['have_class'])) {
+			$have_class = 'YES';
+		} else {
+			$have_class = 'NO';
+		}
+		$students = $this->apis->search_class_students_by_multiple_var_download($course_type, $level, $slot, $from, $to, $have_class);
 		$rowArray = array('收据类型', '收据时间', '收据号码', '收费金额', '学员IC', '付款人姓名', '学员电话', '是否补交学费', '是否老学员', '课程类型', '收款人', '分部', '备注');
 		if($students != NULL) {
 			$this->excel->getActiveSheet()
@@ -768,7 +775,13 @@ class Api extends CI_Controller
 		$course_type = $this->input->post('course_type');
 		$level = $this->input->post('level');
 		$slot = $this->input->post('slot');
-		$students = $this->apis->search_class_students_by_multiple_var($course_type, $level, $slot);
+		$have_class = $this->input->post('have_class');
+		$from = $_POST['from'];
+		$to = $_POST['to'];
+		if($have_class !='YES') {
+			$have_class = 'NO';
+		}
+		$students = $this->apis->search_class_students_by_multiple_var($course_type, $level, $slot, $from, $to, $have_class);
 		if($students != NULL) {
 			echo json_encode($students);
 		}
