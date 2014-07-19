@@ -27,6 +27,16 @@
 				todayHighlight: true
 			});
 
+			$('#input_class_search_from').datepicker({
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
+			});
+
+			$('#input_class_search_to').datepicker({
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
+			});
+
  			$('#class_info_search_submit').on('click', function() {
  				search_class_info_by_types();
  			});
@@ -437,13 +447,23 @@
  			var level = $('#input_class_search_student_level').val();
  			var slot = $('#input_class_search_class_time').val();
 
+ 			var from = '2000-01-01';
+			var to  = '2100-01-01';
+			if($('#input_class_search_from').val().trim() != "") {
+				from = $('#input_class_search_from').val();
+			}
+			if($('#input_class_search_to').val().trim() != "") {
+				to = $('#input_class_search_to').val();
+			}
+ 			var have_class = $('#input_class_search_have_class').is(':checked') ? 'YES' : 'NO';
+
  			var target = $('#class_search_student_search_results');
 			target.empty();
 			target.append('<div class="loading"></div>');
 			$.ajax({
 				type:"post",
 			    url:window.api_url + "searchStudentInfoByMultipleVar",
-			    data:{course_type:course_type, level:level, slot:slot},
+			    data:{course_type:course_type, level:level, slot:slot, from:from, to:to, have_class:have_class},
 			    success:function(json){
 			    	target.empty();
 			    	target.append('<option class="list-group-item">No Student Found</option>');
@@ -598,6 +618,25 @@
 						</div>
 				      </div>
 				      <div class="tab-pane fade" id="class_search_students_tab2">
+				      	<div class="row">
+							<div class="input-daterange">
+								<div class="col-xs-4">
+									<label>注册时间 From</label>
+									<input name="from" class="form-control" id="input_class_search_from" placeholder="From">
+								</div>
+								<div class="col-xs-4">
+									<label>注册时间 To</label>
+									<input name="to" class="form-control" id="input_class_search_to" placeholder="To">
+								</div>
+								<div class="col-xs-4">
+									<div class="checkbox">
+									    <label for="input_class_search_have_class">
+									    	<input name="have_class" type="checkbox" id="input_class_search_have_class" value="YES"> 有班级
+									    </label>
+									</div>
+								</div>
+							</div>
+						</div>
 				        <div class="row">
 		      				<div class="col-xs-3">
 								<label for="input_class_search_course_type">Course Type</label>
