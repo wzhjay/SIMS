@@ -521,12 +521,19 @@
 		<div class="col-xs-2">Check if this student had registered!</div>
 		<div class="col-xs-4">
 			<label for="input_student_new_ic_type">IC Type</label>
-			<select class="form-control" id="input_student_new_ic_type">
+<!-- 			<select class="form-control" id="input_student_new_ic_type">
 		      <option value="NA">请选择</option>
 		      <option value="NRIC">NRIC</option>
 		      <option value="FIN">FIN</option>
 		      <option value="Passport">Passport</option>
 		      <option value="Workpermit">Workpermit</option>
+		    </select> -->
+		    <select class="form-control" id="input_student_new_ic_type">
+		      <option value="0">请选择</option>
+		      <option value="1">NRIC</option>
+		      <option value="2">FIN</option>
+		      <option value="3">Passport</option>
+		      <option value="4">Workpermit</option>
 		    </select>
 		</div>
 	</div>
@@ -565,14 +572,23 @@
 		</div>
 		<div class="col-xs-4">
 			<label for="input_student_new_sal">Salutation</label>
-			<select class="form-control" id="input_student_new_sal">
+<!-- 			<select class="form-control" id="input_student_new_sal">
 				<option value="NA">请选择</option>
 				<option value="Mr">Mr</option>
 				<option value="Mrs">Mrs</option>
 				<option value="Ms">Ms</option>
 				<option value="Miss">Miss</option>
 				<option value="Dr">Dr</option>
-			</select>
+			</select> -->
+			<select class="form-control" id="input_student_new_sal">
+		      <option value="NA">请选择</option>
+		      <option value="0">先生</option>
+		      <option value="1">太太</option>
+		      <option value="2">女士</option>
+		      <option value="3">夫人</option>
+		      <option value="4">博士</option>
+		      <option value="5">教授</option>
+		    </select>
 		</div>
 		<div class="col-xs-4">
 			<label for="input_student_new_bd">Birthday</label>
@@ -846,7 +862,7 @@
 		</div>
 		<div class="col-xs-4">
 			<label for="input_student_new_cnlevel">华文学历</label>
-			<select class="form-control" id="input_student_new_cnlevel">
+<!-- 			<select class="form-control" id="input_student_new_cnlevel">
 	            <option value="NA">请选择</option>
 	            <option value="No Formal Qualification &amp; Lowe">No Formal Qualification &amp; Lowe</option>
 	            <option value="Primary PSLE">Primary PSLE</option>
@@ -858,13 +874,26 @@
 	            <option value="University First Degree">University First Degree</option>
 	            <option value="University Post-graduate Diplo">University Post-graduate Diplo</option>
 	            <option value="Not Reported">Not Reported</option>
+            </select> -->
+            <select class="form-control" id="input_student_new_cnlevel">
+	            <option value="NA">请选择</option>
+	            <option value="01">No Formal Qualification &amp; Lowe</option>
+	            <option value="11">Primary PSLE</option>
+	            <option value="20">Lower Secondary</option>
+	            <option value="31">'N' Level or equivalent</option>
+	            <option value="32">'O' Level or equivalent</option>
+	            <option value="41">'A' Level or equivalent</option>
+	            <option value="70">Professional Qualification &amp; O</option>
+	            <option value="80">University First Degree</option>
+	            <option value="90">University Post-graduate Diplo</option>
+	            <option value="XX">Not Reported</option>
             </select>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
 			<label for="input_student_new_edulevel">教育水平</label>
-				<select class="form-control" id="input_student_new_edulevel">
+<!-- 				<select class="form-control" id="input_student_new_edulevel">
 	            <option value="NA">请选择</option>
 	            <option value="No Formal Qualification &amp; Lower Primary">No Formal Qualification &amp; Lower Primary </option>
 	            <option value="Primary PSLE">Primary PSLE</option>
@@ -888,7 +917,32 @@
 	            <option value="WSQ Graduate Diploma">WSQ Graduate Diploma</option>
 	            <option value="University Post-graduate Diploma &amp; Degree/Master/Doctorate">University Post-graduate Diploma &amp; Degree/Master/Doctorate</option>
 	            <option value="Not Reported">Not Reported</option>
-			</select>
+				</select> -->
+				<select class="form-control" id="input_student_new_edulevel">
+		            <option value="NA">请选择</option>
+		            <option value="01">No Formal Qualification &amp; Lower Primary </option>
+		            <option value="11">Primary PSLE</option>
+		            <option value="20">Lower Secondary</option>
+		            <option value="35">ITE Skills Certification (ISC)</option>
+		            <option value="31">'N' Level or equivalent</option>
+		            <option value="32">'O' Level or equivalent</option>
+		            <option value="41">'A' Level or equivalent</option>
+		            <option value="51">NITEC/Post Nitec</option>
+		            <option value="54">WSQ Certificate</option>
+		            <option value="52">Higher NITEC</option>
+		            <option value="55">WSQ Higher Certificate</option>
+		            <option value="53">Master NITEC</option>
+		            <option value="61">Polytechnic Diploma</option>
+		            <option value="73">WSQ Advance Certificate</option>
+		            <option value="74">WSQ Diploma</option>
+		            <option value="75">WSQ Specialist Diploma</option>
+		            <option value="70">Professional Qualification &amp; Other Diploma</option>
+		            <option value="80">University First Degree</option>
+		            <option value="92">WSQ Graduate Certificate</option>
+		            <option value="93">WSQ Graduate Diploma</option>
+		            <option value="90">University Post-graduate Diploma &amp; Degree/Master/Doctorate</option>
+		            <option value="XX">Not Reported</option>
+	            </select>
 		</div>
 		<div class="col-xs-4">
 			<label for="input_student_new_lang">使用语言</label>
@@ -931,10 +985,15 @@
 	<div class="row">
 		<div class="col-xs-4">
 			<label for="input_student_new_empstatus">工作状态</label>
-			<select class="form-control" id="input_student_new_empstatus">
+<!-- 			<select class="form-control" id="input_student_new_empstatus">
 	            <option value="NA">请选择</option>
 	            <option value="Employed">Employed</option>
 	            <option value="Unemployed">Unemployed</option>
+          </select> -->
+          <select class="form-control" id="input_student_new_empstatus">
+            <option value="NA">请选择</option>
+            <option value="EMP001">Employed</option>
+            <option value="EMP002">Unemployed</option>
           </select>
 		</div>
 		<div class="col-xs-4">
@@ -959,7 +1018,7 @@
 		</div>
 		<div class="col-xs-4">
 			<label for="input_student_new_industry">行业</label>
-			<select class="form-control" id="input_student_new_industry">
+<!-- 			<select class="form-control" id="input_student_new_industry">
                 <option value="NA">请选择</option>
                 <option value="Aerospace">Aerospace</option>
                 <option value="Bio-Medical Sciences">Bio-Medical Sciences</option>
@@ -990,11 +1049,43 @@
                 <option value="Sports and Recreation">Sports and Recreation</option>
                 <option value="Textile">Textile</option>
                 <option value="Others">Others</option>
+            </select> -->
+            <select class="form-control" id="input_student_new_industry">
+                <option value="NA">请选择</option>
+                <option value="1" selected="selected">Others</option>
+                <option value="2">Aerospace</option>
+                <option value="3">Bio-Medical Sciences</option>
+                <option value="4">Business Process Outsourcing</option>
+                <option value="5">Chemicals</option>
+                <option value="6">Creative</option>
+                <option value="7">Construction</option>
+                <option value="8">Electronics</option>
+                <option value="9">Environment</option>
+                <option value="10">Finance</option>
+                <option value="11">Food Mfg &amp; Processing</option>
+                <option value="12">Government / Public Services</option>
+                <option value="13">Healthcare</option>
+                <option value="14">Horticulture</option>
+                <option value="15">Hospitality</option>
+                <option value="16">Infocomm Technology</option>
+                <option value="17">Logistics and Transportation</option>
+                <option value="18">Marine</option>
+                <option value="19">Maritime</option>
+                <option value="20">Precision ?Engineering</option>
+                <option value="21">Printing</option>
+                <option value="22">Professional Services</option>
+                <option value="23">Process</option>
+                <option value="24">Repair and Servicing</option>
+                <option value="25">Retail</option>
+                <option value="26">Security</option>
+                <option value="27">Social &amp; Community Services</option>
+                <option value="28">Sports and Recreation</option>
+                <option value="29">Textile</option>
             </select>
 		</div>
 		<div class="col-xs-4">
 			<label for="input_student_new_designation">职称</label>
-			<select class="form-control" id="input_student_new_designation">
+<!-- 			<select class="form-control" id="input_student_new_designation">
                 <option value="NA">请选择</option>
                 <option value="Legislators, Senior Officials and Mangers">Legislators, Senior Officials and Mangers</option>
                 <option value="Professionals">Professionals</option>
@@ -1007,13 +1098,26 @@
                 <option value="Cleaners, Laborers and Related Workers">Cleaners, Laborers and Related Workers</option>
                 <option value="Workers not classified by Occupation">Workers not classified by Occupation</option>
                 <option value="Others">Others</option>
+            </select> -->
+            <select class="form-control" id="input_student_new_designation">
+                <option value="NA">请选择</option>
+                <option value="01">Legislators, Senior Officials and Mangers</option>
+                <option value="02">Professionals</option>
+                <option value="03">Associate Professionals and Technicians</option>
+                <option value="04">Clerical Workers</option>
+                <option value="05">Service Works and Shop and Market Sales Workers</option>
+                <option value="06">Agricultural and Fishery Workers</option>
+                <option value="07">Production Craftsmen &amp; Related Workers</option>
+                <option value="08">Plan and Machine Operators and Assemblers</option>
+                <option value="09">Cleaners, Laborers and Related Workers</option>
+                <option value="10" selected="selected">Workers not classified by Occupation</option>
             </select>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
 			<label for="input_student_new_sal_range">薪水范围</label>
-			<select class="form-control" id="input_student_new_sal_range">
+<!-- 			<select class="form-control" id="input_student_new_sal_range">
                 <option value="NA">请选择</option>
                 <option value="Unemployed">Unemployed</option>
                 <option value="Below $1,000">Below $1,000</option>
@@ -1024,6 +1128,18 @@
                 <option value="$2,500 - $2,999">$2,500 - $2,999</option>
                 <option value="$3,000 - $3,499">$3,000 - $3,499</option>
                 <option value="$3,500 and above">$3,500 and above</option>
+            </select> -->
+            <select class="form-control" id="input_student_new_sal_range">
+                <option value="NA">请选择</option>
+                <option value="00" selected="selected">Unemployed</option>
+                <option value="01">Below $1,000</option>
+                <option value="02">$1,000 - $1,400</option>
+                <option value="03a">$1,401 - $1,700</option>
+                <option value="03b">$1,701 - $2,000</option>
+                <option value="04">$2,000 - $2,499</option>
+                <option value="05">$2,500 - $2,999</option>
+                <option value="06">$3,000 - $3,499</option>
+                <option value="07">$3,500 and above</option>
             </select>
 		</div>
 	</div>
