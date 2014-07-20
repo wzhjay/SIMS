@@ -19,7 +19,7 @@
 	<div class="container tab_content">
 		<ul class="nav nav-tabs" id="my_tab">
 		  <li class="active"><a href="#tab-1" data-toggle="tab">ATO更新与查询</a></li>
-		  <li><a href="#tab-2" data-toggle="tab">还不知道要干嘛</a></li>
+		  <li><a href="#tab-2" data-toggle="tab">班级ATO生成</a></li>
 		</ul>
 
 		<div class="tab-content">
@@ -31,6 +31,9 @@
 		  		<?php $this->load->view('partials/atos/ato_search_form') ?>
 			</div>
 		  	<div class="tab-pane fade" id="tab-2">
+		  		<h3>生成班级ATO</h3><hr>
+				<?php $this->load->view('partials/atos/ato_class_post') ?>
+				<br><br>
 		  	</div>
 		</div>
 	</div>

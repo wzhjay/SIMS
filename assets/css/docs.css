@@ -345,8 +345,12 @@ overflow-y: scroll;
 }
 
 #class_search_class_student_management_class_section #class_all_students_list {
-height: 400px;
+height: 470px;
 overflow-y: scroll; 
+}
+
+#class_search_class_student_management_search_section {
+	height: 400px;	
 }
 
 #class_search_class_student_management_middle_section {
