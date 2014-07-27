@@ -48,6 +48,10 @@
  			$('#remove_student_confirm').on('click', function() {
  				remove_student_from_class(selected_remove_student_id, selected_class_id);
  			});
+
+ 			$('#ato_class_post_build_ato').on('click', function(){
+				build_ato_of_class();
+			});
 		});
 
  		function ato_class_load_admin_users() {
@@ -272,10 +276,6 @@
 												format: 'yyyy-mm-dd',
 												todayHighlight: true
 											});
-
-											$('#ato_class_post_build_ato').on('click', function(){
-												build_ato_of_class();
-											});
 					 					});
 					 				}
 					 			});
@@ -290,11 +290,19 @@
  			var exam_location = $('#input_ato_class_exam_location').val();
 			var exam_date = $('#input_ato_class_exam_date').val();
 			var exam_time = $('#input_ato_class_exam_time').val();
+
+			var el = $('#input_ato_class_el').is(':checked') ? 'YES' : 'NO';
+			var er = $('#input_ato_class_er').is(':checked') ? 'YES' : 'NO';
+			var en = $('#input_ato_class_en').is(':checked') ? 'YES' : 'NO';
+			var es = $('#input_ato_class_es').is(':checked') ? 'YES' : 'NO';
+			var ew = $('#input_ato_class_ew').is(':checked') ? 'YES' : 'NO';
+
 			var ato_branch = $('#input_ato_class_branch option:selected').attr('id').split('_');
 			var ato_branch_id = ato_branch[2];
 			var ato_op = $('#input_ato_class_op option:selected').attr('id').split('_');
 			var ato_op_id = ato_op[2];
 			var remark  = $('#input_ato_class_remark').val();
+
 
 			// get class info with selelcted class id
 			$.ajax({
@@ -310,7 +318,46 @@
 				    				// create ato record for each student in this class
 				    				$.each($('#class_all_students_list .panel-group .panel-title input'), function(){ 
 										if($(this).is(':checked')){
-											var student_id = $(this).attr('id').split('_')[3];
+
+											var el_id = $(this).attr('id').split('_');
+											var student_id = el_id[3];
+											var student_ic = el_id[4];
+											var pre_post = 'POST';
+											var class_code = reply[key].code;
+											var attendance = '100';
+											var post_change_date = 'NO';
+											var recommend_level = reply[key].level;
+
+											$.ajax({
+												type:"post",
+											    url:window.api_url + "createATOInfo",
+											    data:{	ic:student_ic,
+										    		pre_post:pre_post, 
+										    		recommend_level:recommend_level, 
+										    		class_code:class_code, 
+										    		attendance:attendance,
+										    		post_change_date:post_change_date,
+										    		el:el,
+										    		er:er,
+										    		en:en,
+										    		es:es,
+										    		ew:ew, 
+										    		exam_location:exam_location,
+										    		exam_date:exam_date,
+										    		exam_time:exam_time,
+										    		ato_branch_id:ato_branch_id,
+										    		ato_op_id:ato_op_id,
+										    		remark:remark},
+											    success:function(json2){
+											    	if(json2.trim() == '1') {
+											    		var str_suc = "Create ATO info for student " + student_ic + " successfully!"
+											    		toastr.success(str_suc);
+											        } else {
+											        	var str_fail = "Create ATO info for student " + student_ic + " failed!"
+											        	toastr.error(str_fail);
+											        }
+											    },
+											});//End ajax
 										}
 									});
 				            	}
@@ -344,7 +391,7 @@
 											'<div class="panel panel-default">' + 
 												'<div class="panel-heading">' +
 													'<h6 class="panel-title">' +
-														'<a data-toggle="collapse" data-parent="class_all_student_collapse_'+key+'" href="#class_all_student_collapse_body_'+key+'">Student ' + num + '  / Name: <b>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  IC: <b>' + reply[key].ic + '</b>  /  Tel: <b>' + reply[key].tel + '</b></a><input id="class_students_student_' + reply[key].student_id + '" style="float:right;padding:3px;" type="checkbox" checked>' + 
+														'<a data-toggle="collapse" data-parent="class_all_student_collapse_'+key+'" href="#class_all_student_collapse_body_'+key+'">Student ' + num + '  / Name: <b>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  IC: <b>' + reply[key].ic + '</b>  /  Tel: <b>' + reply[key].tel + '</b></a><input id="class_students_student_' + reply[key].student_id + '_' + reply[key].ic + '" style="float:right;padding:3px;" type="checkbox" checked>' + 
 													' </h6>' +
 												'</div>' +
 												'<div id="class_all_student_collapse_body_'+key+'" class="panel-collapse collapse">' + 
@@ -546,7 +593,7 @@
       	<div class="row">
       		<div class="col-xs-5" id="class_search_class_student_management_search_section">
       			<div class="highlight">
-  					<label>ATO信息输入</label>
+  					<h4>考试信息</h4><hr>
   					<div class="row">
 						<div class="col-xs-4">
 							<label for="input_ato_class_exam_location">Exam Location</label>
@@ -568,6 +615,46 @@
 				                <option value="14">下午两点</option>
 				                <option value="19">晚上七点</option>
 				            </select>
+						</div>
+					</div>
+					<h4>考试科目</h4><hr>
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="checkbox">
+							    <label for="input_ato_class_el">
+							    	<input type="checkbox" id="input_ato_class_el"> 听力EL
+							    </label>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="checkbox">
+						    	<label for="input_ato_class_er">
+						    		<input type="checkbox" id="input_ato_class_er"> 阅读ER
+						    	</label>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="checkbox">
+							    <label for="input_ato_class_en">
+							    	<input type="checkbox" id="input_ato_class_en"> 数学EN
+							    </label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="checkbox">
+						    	<label for="input_ato_class_es">
+						    		<input type="checkbox" id="input_ato_class_es"> 会话ES
+						    	</label>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="checkbox">
+							    <label for="input_ato_class_ew">
+							    	<input type="checkbox" id="input_ato_class_ew"> 写作EW
+							    </label>
+							</div>
 						</div>
 					</div>
 					<div class="row">
