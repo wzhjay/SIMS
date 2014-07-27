@@ -78,7 +78,6 @@
 
 		function create_new_class() {
 			var code = $('#input_class_code').val();
-			var class_name = $('#input_class_name').val();
 			var branch = $('#input_class_branch option:selected').attr('id').split('_');
 			var branch_id = branch[3];
 			var type = $('#input_class_type option:selected').val();
@@ -92,6 +91,9 @@
 			var teacher_name = $('#input_class_teacher_name').val();
 			var teacher_tel = $('#input_class_teacher_tel').val();
 			var remark = $('#input_class_remark').val();
+
+			// composite class name
+			var class_name = 'WPL-P-' + type.toUpperCase() + '-' + level.substring(0, 3) + '-' + code;
 
 			$.ajax({
 				type:"post",
@@ -132,7 +134,6 @@
 		function update_class() {
 			var class_id = update_selected_class_id;
 			var code = $('#input_class_code').val();
-			var class_name = $('#input_class_name').val();
 			var branch = $('#input_class_branch option:selected').attr('id').split('_');
 			var branch_id = branch[3];
 			var type = $('#input_class_type option:selected').val();
@@ -146,6 +147,9 @@
 			var teacher_name = $('#input_class_teacher_name').val();
 			var teacher_tel = $('#input_class_teacher_tel').val();
 			var remark = $('#input_class_remark').val();
+
+			// composite class name
+			var class_name = 'WPL-P-' + type.toUpperCase() + '-' + level.substring(0, 3) + '-' + code;
 
 			$.ajax({
 				type:"post",
@@ -342,12 +346,6 @@
 			<a class="button glow button-rounded button-flat" id="class_class_code_check" data-toggle="modal" data-target="#class-new-modal">Check</a>
 		</div>
 		<div class="col-xs-2"></div>
-	</div>
-	<div class="row">
-		<div class="col-xs-4">
-			<label for="input_class_name">Class Name</label>
-			<input class="form-control" id="input_class_name" >
-		</div>
 		<div class="col-xs-4">
 			<label for="input_class_branch">Branch</label>
 			<select class="form-control" id="input_class_branch"></select>
