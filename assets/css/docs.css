@@ -378,3 +378,33 @@ font-size: 12px;
 line-height:none;
 padding-bottom: 0px;
 }
+
+/*  ============ exams =========== */
+
+#exam_seat_booking_calendar {
+min-width:1000px
+}
+
+#exam_seat_booking_calendar_section_highlight {
+min-width:1000px	
+}
+
+#exam_seat_booking_calendar > table > thead > tr > th {
+height: 40px;
+width: 140px;
+text-align: center;
+}
+
+#exam_seat_booking_calendar > table > tbody > tr > td {
+height: 150px;
+width: 140px;
+}
+
+.exam_seat_booking_content_each_date table {
+margin-bottom:0;
+}
+
+.exam_seat_booking_content_each_date .form-control {
+padding: 0;
+text-align: center;
+}
