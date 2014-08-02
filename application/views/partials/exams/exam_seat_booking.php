@@ -2,24 +2,38 @@
 	<meta charset="utf-8">
 
 	<script>
-		var pre_next = -0;
+		var pre_next = 0;
 		$(document).ready(function($) {
-			build_exam_booking_calender(pre_next)
+			build_exam_booking_calender(pre_next);
 			if(pre_next == 0) {
 				$('.cal_today').css('background', '#ECDDDD');
 			}
+
+			$('#exam_seat_booking_pre_month').on('click', function() {
+				pre_next -= 1;
+				build_exam_booking_calender(pre_next);
+			})
+			$('#exam_seat_booking_next_month').on('click', function() {
+				pre_next += 1;
+				build_exam_booking_calender(pre_next);
+			})
 		});
 
 		function build_exam_booking_calender(_pre_next) {
 			var t_date = new Date();
 	        var day = t_date.getDate();
-	        if((t_date.getMonth() + _pre_next) > 12) {
+	        if((t_date.getMonth() + _pre_next) > 11) {
 	        	var month = (t_date.getMonth() + _pre_next) % 12;
 	        	var year = t_date.getYear() + Math.floor((t_date.getMonth() + _pre_next)/12);
 	        }
-	        else if((t_date.getMonth() + _pre_next) < 1) {
-	        	var month = 12 - ((t_date.getMonth() + _pre_next)*(-1))%12 ;
-	        	var year = t_date.getYear() - Math.floor(((t_date.getMonth() + _pre_next) * (-1))/12) - 1;
+	        else if((t_date.getMonth() + _pre_next) < 0) {
+	        	if(((t_date.getMonth() + _pre_next)*(-1))%12 == 0) {
+	        		var month = 0;
+	        		var year = t_date.getYear() - Math.floor(((t_date.getMonth() + _pre_next) * (-1))/12);
+	        	} else {
+	        		var month = 12 - ((t_date.getMonth() + _pre_next)*(-1))%12 ;
+	        		var year = t_date.getYear() - Math.floor(((t_date.getMonth() + _pre_next) * (-1))/12) - 1;
+	        	}
 	        } else {
 	        	var month = t_date.getMonth() + _pre_next;
 	        	var year = t_date.getYear();
@@ -107,8 +121,8 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<ul class="pager">
-						  <li class="previous"><a href="#">&larr; Prebious</a></li>
-						  <li class="next"><a href="#">Next &rarr;</a></li>
+						  <li class="previous" id="exam_seat_booking_pre_month"><a>&larr; Prebious</a></li>
+						  <li class="next" id="exam_seat_booking_next_month"><a>Next &rarr;</a></li>
 						</ul>
 					</div>
 				</div>
