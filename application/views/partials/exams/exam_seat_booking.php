@@ -71,7 +71,11 @@
             html += '<tr>';
 	        for(i=1;i<=beg_j;i++)
 	        {
-                html += '<td class="cal_days_bef_aft" id="exam_seat_booking_date_' + (days_in_month[month-1]-beg_j+i) +'"><div class="exam_seat_booking_content_each_date">'+(days_in_month[month-1]-beg_j+i)+'</div></td>';
+	        	if(month == 0) {
+	        		html += '<td class="cal_days_bef_aft"><div class="exam_seat_booking_content_each_date">'+(days_in_month[11]-beg_j+i)+'</div></td>';
+	        	} else {
+	        		html += '<td class="cal_days_bef_aft"><div class="exam_seat_booking_content_each_date">'+(days_in_month[month-1]-beg_j+i)+'</div></td>';
+	        	}
                 week++;
 	        }
 	        for(i=1;i<=total;i++)
@@ -82,11 +86,11 @@
                 }
                 if(day==i)
                 {
-                        html += '<td class="cal_today" id="exam_seat_booking_date_' + i +'"><div class="exam_seat_booking_content_each_date">'+i+'</div></td>';
+                        html += '<td class="cal_today booking_date_this_month" id="exam_seat_booking_date_' + i +'"><div class="row"><div class="col-xs-6"><div class="exam_seat_booking_content_each_date">'+i+'</div></div><div class="col-xs-6"><select class="form-control"><option>on</option><option>off</option></select></div></div></td>';
                 }
                 else
                 {
-                        html += '<td id="exam_seat_booking_date_' + i +'"><div class="exam_seat_booking_content_each_date">'+i+'</div></td>';
+                        html += '<td class="booking_date_this_month" id="exam_seat_booking_date_' + i +'"><div class="row"><div class="col-xs-6"><div class="exam_seat_booking_content_each_date">'+i+'</div></div><div class="col-xs-6"><select class="form-control"><option>on</option><option>off</option></select></div></div></td>';
                 }
                 week++;
                 if(week==7)
@@ -97,7 +101,7 @@
 	        }
 	        for(i=1;week!=0;i++)
 	        {
-                html += '<td class="cal_days_bef_aft" id="exam_seat_booking_date_' + i +'"><div class="exam_seat_booking_content_each_date">'+i+'</div></td>';
+                html += '<td class="cal_days_bef_aft"><div class="exam_seat_booking_content_each_date">'+i+'</div></td>';
                 week++;
                 if(week==7)
                 {
@@ -106,6 +110,40 @@
                 }
 	        }
 	        date_table.append($.parseHTML(html));
+	        load_each_date_content();
+		}
+
+		function load_each_date_content() {
+			$.each($('.booking_date_this_month'), function() {
+				$(this).append(
+					'<table class="table table-bordered">' +
+						'<tbody>' +
+							'<tr>' +
+								'<td></td>' +
+					          	'<td>JE</td>' +
+					          	'<td>UN</td>' +
+							'</tr>' +
+							'<tr>' +
+								'<td>09:00</td>' +
+					          	'<td><input type="text" class="form-control" value="12"></td>' +
+					          	'<td><input type="text" class="form-control" value="0"></td>' +
+							'</tr>' +
+							'<tr>' +
+								'<td>14:00</td>' +
+					          	'<td><input type="text" class="form-control" value="12"></td>' +
+					          	'<td><input type="text" class="form-control" value="0"></td>' +
+							'</tr>' +
+							'<tr>' +
+								'<td>19:00</td>' +
+					          	'<td><input type="text" class="form-control" value="12"></td>' +
+					          	'<td><input type="text" class="form-control" value="0"></td>' +
+							'</tr>' +
+						'</tbody>' +
+					'</table>'
+				);
+			});
+
+			$('#exam_booking_calender_date_table tr td .form-control').css('background','#ccc');
 		}
 	</script>
 </head>
@@ -144,77 +182,7 @@
 					          <th>Sat</th>
 					        </tr>
 					    </thead>
-					    <tbody id='exam_booking_calender_date_table'>
-					        <!-- <tr>
-					          <td>
-					          	<div class="exam_seat_booking_content_each_date">
-						          	<div id='exam_seat_booking_date_1'>1</div>
-						          	<table class="table table-bordered">
-										<tbody>
-											<tr>
-												<td></td>
-									          	<td>JE</td>
-									          	<td>UN</td>
-											</tr>
-											<tr>
-												<td>09:00</td>
-									          	<td><input type="text" class="form-control" value="12"></td>
-									          	<td><input type="text" class="form-control" value="0"></td>
-											</tr>
-											<tr>
-												<td>14:00</td>
-									          	<td><input type="text" class="form-control" value="12"></td>
-									          	<td><input type="text" class="form-control" value="0"></td>
-											</tr>
-											<tr>
-												<td>19:00</td>
-									          	<td><input type="text" class="form-control" value="12"></td>
-									          	<td><input type="text" class="form-control" value="0"></td>
-											</tr>
-										</tbody>	
-									</table>
-								</div>
-					          </td>
-					          <td>2</td>
-					          <td>3</td>
-					          <td>4</td>
-					          <td>5</td>
-					          <td>6</td>
-					          <td>7</td>
-					        </tr>
-					        <tr>
-					          <td>8</td>
-					          <td>9</td>
-					          <td>10</td>
-					          <td>11</td>
-					          <td>12</td>
-					          <td>13</td>
-					          <td>14</td>
-					        </tr>
-					        <tr>
-					          <td>15</td>
-					          <td>16</td>
-					          <td>17</td>
-					          <td>18</td>
-					          <td>19</td>
-					          <td>20</td>
-					          <td>21</td>
-					        </tr>
-					        <tr>
-					          <td>22</td>
-					          <td>23</td>
-					          <td>24</td>
-					          <td>25</td>
-					          <td>26</td>
-					          <td>27</td>
-					          <td>28</td>
-					        </tr>
-					        <tr>
-					          <td>29</td>
-					          <td>30</td>
-					          <td>31</td>
-					        </tr> -->
-					      </tbody>
+					    <tbody id='exam_booking_calender_date_table'></tbody>
 					</table>
 				</div>
 			</div>

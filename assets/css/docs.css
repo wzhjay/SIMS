@@ -400,15 +400,19 @@ height: 150px;
 width: 140px;
 }
 
-.exam_seat_booking_content_each_date table {
+.booking_date_this_month table {
 margin-bottom:0;
 }
 
-.exam_seat_booking_content_each_date .form-control {
+#exam_booking_calender_date_table tr td .form-control {
 padding: 0;
 text-align: center;
 }
 
+.booking_date_this_month .row{
+padding: 3px;
+}
+
 .cal_days_bef_aft {
-background: #F1F1ED;
+background: rgb(246, 248, 240);
 }
