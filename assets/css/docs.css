@@ -413,6 +413,10 @@ text-align: center;
 padding: 3px;
 }
 
+.booking_date_this_month input{
+background: rgb(228, 228, 228);
+}
+
 .cal_days_bef_aft {
 background: rgb(246, 248, 240);
 }

@@ -12,10 +12,42 @@
 			$('#exam_seat_booking_pre_month').on('click', function() {
 				pre_next -= 1;
 				build_exam_booking_calender(pre_next);
-			})
+			});
+			
 			$('#exam_seat_booking_next_month').on('click', function() {
 				pre_next += 1;
 				build_exam_booking_calender(pre_next);
+			});
+
+			$('#exam_seat_booking_submit').on('click', function() {
+				create_update_seat_booking_info();
+			});
+
+			$('.exam_seat_booking_on_off').on('change', function() {
+				var el = $(this).closest('.booking_date_this_month');
+				if($(this).val() == 'off') {
+					el.find('table').css('background','rgb(228, 228, 228)');
+					el.find('table input').prop('disabled', true);
+				} else {
+					el.find('table').css('background','');
+					el.find('table input').prop('disabled', false);
+					$.each(el.find('input'), function() {
+						if($(this).val() != '0') {
+							$(this).css('background', 'rgb(0, 255, 0)');
+						} else {
+							$(this).css('background', 'rgb(255, 255, 0)');
+						}
+					});
+
+				}
+			});
+
+			$('.booking_date_this_month input').on('change', function() {
+				if($(this).val() != '0') {
+					$(this).css('background', 'rgb(0, 255, 0)');
+				} else {
+					$(this).css('background', 'rgb(255, 255, 0)');
+				}
 			})
 		});
 
@@ -86,11 +118,11 @@
                 }
                 if(day==i)
                 {
-                        html += '<td class="cal_today booking_date_this_month" id="exam_seat_booking_date_' + i +'"><div class="row"><div class="col-xs-6"><div class="exam_seat_booking_content_each_date">'+i+'</div></div><div class="col-xs-6"><select class="form-control"><option>on</option><option>off</option></select></div></div></td>';
+                        html += '<td class="cal_today booking_date_this_month" id="exam_seat_booking_date_' + i +'"><div class="row"><div class="col-xs-6"><div class="exam_seat_booking_content_each_date">'+i+'</div></div><div class="col-xs-6"><select class="form-control exam_seat_booking_on_off"><option>off</option><option>on</option></select></div></div></td>';
                 }
                 else
                 {
-                        html += '<td class="booking_date_this_month" id="exam_seat_booking_date_' + i +'"><div class="row"><div class="col-xs-6"><div class="exam_seat_booking_content_each_date">'+i+'</div></div><div class="col-xs-6"><select class="form-control"><option>on</option><option>off</option></select></div></div></td>';
+                        html += '<td class="booking_date_this_month" id="exam_seat_booking_date_' + i +'"><div class="row"><div class="col-xs-6"><div class="exam_seat_booking_content_each_date">'+i+'</div></div><div class="col-xs-6"><select class="form-control exam_seat_booking_on_off"><option>off</option><option>on</option></select></div></div></td>';
                 }
                 week++;
                 if(week==7)
@@ -124,26 +156,50 @@
 					          	'<td>UN</td>' +
 							'</tr>' +
 							'<tr>' +
+
 								'<td>09:00</td>' +
-					          	'<td><input type="text" class="form-control" value="12"></td>' +
+					          	'<td><input type="text" class="form-control" value="0"></td>' +
 					          	'<td><input type="text" class="form-control" value="0"></td>' +
 							'</tr>' +
 							'<tr>' +
 								'<td>14:00</td>' +
-					          	'<td><input type="text" class="form-control" value="12"></td>' +
+					          	'<td><input type="text" class="form-control" value="0"></td>' +
 					          	'<td><input type="text" class="form-control" value="0"></td>' +
 							'</tr>' +
 							'<tr>' +
 								'<td>19:00</td>' +
-					          	'<td><input type="text" class="form-control" value="12"></td>' +
+					          	'<td><input type="text" class="form-control" value="0"></td>' +
 					          	'<td><input type="text" class="form-control" value="0"></td>' +
 							'</tr>' +
 						'</tbody>' +
 					'</table>'
 				);
+
+				var on_off = $(this).find('.exam_seat_booking_on_off').val();
+				if(on_off == 'off') {
+					$(this).find('table').css('background','rgb(228, 228, 228)');
+					$(this).find('table input').prop('disabled', true);
+				}
 			});
 
 			$('#exam_booking_calender_date_table tr td .form-control').css('background','#ccc');
+		}
+
+		function create_update_seat_booking_info() {
+			$.each($('.booking_date_this_month'), function() {
+				var on_off = $(this).find('.exam_seat_booking_on_off').val();
+
+				var je_09 = $(this).find('tbody').find('tr:nth-child(2)').find('td:nth-child(2) input').val();
+				var un_09 = $(this).find('tbody').find('tr:nth-child(2)').find('td:nth-child(3) input').val();
+
+				var je_14 = $(this).find('tbody').find('tr:nth-child(3)').find('td:nth-child(2) input').val();
+				var un_14 = $(this).find('tbody').find('tr:nth-child(3)').find('td:nth-child(3) input').val();
+
+				var je_19 = $(this).find('tbody').find('tr:nth-child(4)').find('td:nth-child(2) input').val();
+				var un_19 = $(this).find('tbody').find('tr:nth-child(4)').find('td:nth-child(3) input').val();
+
+				// update or create seat booking records
+			});
 		}
 	</script>
 </head>
