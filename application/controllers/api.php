@@ -1468,5 +1468,49 @@ class Api extends CI_Controller
 			echo 1;
 		}
 		else echo 0;		
-	} 
+	}
+
+	function updateSeatBookingInfo() {
+		$on_off = $this->input->post('on_off');
+		$je_09 = $this->input->post('je_09');
+		$pi_09 = $this->input->post('pi_09');
+		$je_14 = $this->input->post('je_14');
+		$pi_14 = $this->input->post('pi_14');
+		$je_19 = $this->input->post('je_19');
+		$pi_19 = $this->input->post('pi_19');
+		$year = $this->input->post('year');
+		$month = $this->input->post('month');
+		$day = $this->input->post('day');
+
+		// update
+		$update = $this->apis->update_seat_booking_info(
+			$on_off,
+			$je_09, 
+			$pi_09, 
+			$je_14, 
+			$pi_14, 
+			$je_19, 
+			$pi_19,
+			$year,
+			$month,
+			$day);
+		if($update) {
+			echo 2;
+		}
+		else echo 0;
+	}
+
+	/**
+	 *  get seat booking info by giving year, month and day
+	 */
+	function getSeatBookingInfoByYearMonthDay() {
+		$year = $this->input->post('year');
+		$month = $this->input->post('month');
+		$day = $this->input->post('day');
+		$record = $this->apis->get_seat_booking_record_by_date($year, $month, $day);
+		if($record != NULL) {
+			echo json_encode($record);
+		}
+		echo NULL;
+	}
 }
