@@ -1031,4 +1031,44 @@ class Apis extends CI_Model
 		}
 		return NULL;
 	}
+
+	/**
+	 * get seat_booking_id from seat_booking table by year, month and day
+	 *
+	 * @param	$year, $month, $day
+	 * @return	bool
+	 */
+	function get_seat_booking_info_id($year, $month, $day) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM seat_booking sb WHERE sb.year = "'.$year.'" AND sb.month = "'.$month.'" AND sb.day = "'.$day.'"');
+			if ($query->num_rows() == 1) {
+				foreach ($query->result_array() as $row)
+				{
+				   return $row['seat_booking_id'];				}
+			}
+		}
+		return 0;
+	}
+
+	/**
+	 * if sear booking info not created (identified by year, month and day), create otehrwise update
+	 *
+	 * @param	$on_off, $je_09, $pi_09, $je_14, $pi_14, $je_19, $pi_19,$year,$month, $day
+	 * @return	bool
+	 */
+	function create_update_seat_booking_info($on_off, $je_09, $pi_09, $je_14, $pi_14, $je_19, $pi_19,$year,$month, $day) {
+		if($this->session->userdata('session_id')) {
+			$id = $this->get_seat_booking_info_id($year, $month, $day);
+			if($id != 0) {
+				// update exit record
+				$query = $this->db->query('UPDATE seat_booking SET on_off = "'.$on_off.'", je_09="'.$je_09.'", pi_09 = "'.$pi_09.'", je_14 = "'.$je_14.'", pi_14 = "'.$pi_14.'", je_19 = "'.$je_19.'", pi_19 = "'.$pi_19.'", modified = "'.date('Y-m-d H:i:s').'" WHERE seat_booking_id = "'.$id.'"');
+				if ($this->db->affected_rows()) return TRUE;
+			} else {
+				// create new record
+				$query = $this->db->query('INSERT INTO seat_booking (on_off, je_09, pi_09, je_14, pi_14, je_19, pi_19, year, month, day, created, modified) VALUES ("'.$on_off.'", "'.$je_09.'", "'.$pi_09.'", "'.$je_14.'", "'.$pi_14.'", "'.$je_19.'", "'.$pi_19.'", "'.$year.'", "'.$month.'", "'.$day.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'")');
+				if ($this->db->affected_rows()) return TRUE;
+			}
+		}
+		return FALSE;
+	}
 }

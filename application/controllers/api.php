@@ -1434,4 +1434,39 @@ class Api extends CI_Controller
 		//force user to download the Excel file without writing it to server's HD
 		$objWriter->save('php://output');
 	}
+
+	/* --------------------- exam management ------------------------- */
+
+	/**
+	 *  create or update seat booking info of spercific date
+	 */
+	function createOrUpdateSeatBookingInfo() {
+		$on_off = $this->input->post('on_off');
+		$je_09 = $this->input->post('je_09');
+		$pi_09 = $this->input->post('pi_09');
+		$je_14 = $this->input->post('je_14');
+		$pi_14 = $this->input->post('pi_14');
+		$je_19 = $this->input->post('je_19');
+		$pi_19 = $this->input->post('pi_19');
+		$year = $this->input->post('year');
+		$month = $this->input->post('month');
+		$day = $this->input->post('day');
+
+		// create_update
+		$create_update = $this->apis->create_update_seat_booking_info(
+			$on_off,
+			$je_09, 
+			$pi_09, 
+			$je_14, 
+			$pi_14, 
+			$je_19, 
+			$pi_19,
+			$year,
+			$month,
+			$day);
+		if($create_update) {
+			echo 1;
+		}
+		else echo 0;		
+	} 
 }

@@ -3,6 +3,8 @@
 
 	<script>
 		var pre_next = 0;
+		var month_selected = 0;
+		var year_selected = 0;
 		$(document).ready(function($) {
 			build_exam_booking_calender(pre_next);
 			if(pre_next == 0) {
@@ -28,6 +30,7 @@
 				if($(this).val() == 'off') {
 					el.find('table').css('background','rgb(228, 228, 228)');
 					el.find('table input').prop('disabled', true);
+					el.find('table input').css('background','rgb(204, 204, 204)');
 				} else {
 					el.find('table').css('background','');
 					el.find('table input').prop('disabled', false);
@@ -70,6 +73,8 @@
 	        	var month = t_date.getMonth() + _pre_next;
 	        	var year = t_date.getYear();
 	        }
+	        month_selected = month + 1;
+	        year_selected = year;
 	        if(year<=200)
 	        {
 	            year += 1900;
@@ -153,7 +158,7 @@
 							'<tr>' +
 								'<td></td>' +
 					          	'<td>JE</td>' +
-					          	'<td>UN</td>' +
+					          	'<td>PY</td>' +
 							'</tr>' +
 							'<tr>' +
 
@@ -188,17 +193,41 @@
 		function create_update_seat_booking_info() {
 			$.each($('.booking_date_this_month'), function() {
 				var on_off = $(this).find('.exam_seat_booking_on_off').val();
+				if(on_off == 'on') {
+					var day = $(this).find('.exam_seat_booking_content_each_date').text();
 
-				var je_09 = $(this).find('tbody').find('tr:nth-child(2)').find('td:nth-child(2) input').val();
-				var un_09 = $(this).find('tbody').find('tr:nth-child(2)').find('td:nth-child(3) input').val();
+					var je_09 = $(this).find('tbody').find('tr:nth-child(2)').find('td:nth-child(2) input').val();
+					var pi_09 = $(this).find('tbody').find('tr:nth-child(2)').find('td:nth-child(3) input').val();
 
-				var je_14 = $(this).find('tbody').find('tr:nth-child(3)').find('td:nth-child(2) input').val();
-				var un_14 = $(this).find('tbody').find('tr:nth-child(3)').find('td:nth-child(3) input').val();
+					var je_14 = $(this).find('tbody').find('tr:nth-child(3)').find('td:nth-child(2) input').val();
+					var pi_14 = $(this).find('tbody').find('tr:nth-child(3)').find('td:nth-child(3) input').val();
 
-				var je_19 = $(this).find('tbody').find('tr:nth-child(4)').find('td:nth-child(2) input').val();
-				var un_19 = $(this).find('tbody').find('tr:nth-child(4)').find('td:nth-child(3) input').val();
+					var je_19 = $(this).find('tbody').find('tr:nth-child(4)').find('td:nth-child(2) input').val();
+					var pi_19 = $(this).find('tbody').find('tr:nth-child(4)').find('td:nth-child(3) input').val();
 
-				// update or create seat booking records
+					// update or create seat booking records
+					$.ajax({
+						type:"post",
+					    url:window.api_url + "createOrUpdateSeatBookingInfo",
+					    data:{	on_off:on_off,
+					    		je_09:je_09, 
+					    		pi_09:pi_09, 
+					    		je_14:je_14,
+					    		pi_14:pi_14,
+					    		je_19:je_19,
+					    		pi_19:pi_19,
+					    		year:year_selected,
+					    		month:month_selected,
+					    		day:day},
+					    success:function(json){
+					    	if(json.trim() == '1') {
+							    toastr.success("Insert/Update success!");
+							}else{
+								toastr.error("Fail to insert/update seat booking info!");
+							}
+					    }
+					});//End ajax
+				}
 			});
 		}
 	</script>
@@ -209,7 +238,7 @@
 			<div id='exam_seat_booking_calendar'>
 				<div class="row">
 					<div class="col-xs-5"></div>
-					<div class="col-xs-4"><h1><span class="label label-info">输入座位数目</span></h1></div>
+					<div class="col-xs-4"><h1><span class="label label-warning">输入座位数目</span></h1></div>
 					<div class="col-xs-3"></div>
 				</div>
 				<div class="row">
