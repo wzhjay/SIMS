@@ -1145,7 +1145,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_new_branch">Student Branch</label>
+			<label for="input_student_new_branch">Operator Branch</label>
 			<select class="form-control" id="input_student_new_branch"></select>
 		</div>
 		<div class="col-xs-4">
