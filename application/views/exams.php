@@ -28,7 +28,13 @@
 			<div class="tab-content">
 			  	<div class="tab-pane fade in active" id="tab-1">
 			  		<h3>添加或更新考试定位信息</h3><hr>
-					<?php $this->load->view('partials/exams/exam_seat_booking') ?>
+					<?php
+						if($this->apis->chcek_user_role() == 'admin') {
+							$this->load->view('partials/exams/exam_seat_booking'); 
+						} else if($this->apis->chcek_user_role() == 'operator'){
+							$this->load->view('partials/exams/exam_seat_booking_operator');
+						}
+					?>
 					<br><br>
 				</div>
 			  	<div class="tab-pane fade" id="tab-2">
