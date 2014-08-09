@@ -302,6 +302,58 @@
 			});//End ajax
 		}
 
+		function clear_ato_inputs() {
+			$('#input_ato_ic').val('');
+			$('#input_ato_class_code').val('');
+			$('#input_ato_el').prop('checked', false);
+			$('#input_ato_er').prop('checked', false);
+			$('#input_ato_en').prop('checked', false);
+			$('#input_ato_es').prop('checked', false);
+			$('#input_ato_ew').prop('checked', false);
+			$('#input_ato_exam_date').val('');
+			$('#input_ato_remark').val('');
+		}
+
+		function clear_student_new_form_inputs() {
+			$('#input_student_new_gov_letter').prop('checked', false);
+			$('#input_student_new_ic').val('');
+			$('#input_student_new_ic_type option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_fn').val('');
+			$('#input_student_new_ln').val('');
+			$('#input_student_new_on').val('');
+			$('#input_student_new_tel').val('');
+			$('#input_student_new_tel_home').val('');
+			$('#input_student_new_gender option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_sal option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_bd').val('');
+			$('#input_student_new_age').val('');
+			$('#input_student_new_citizenship option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_nationality option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_race option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_cnlevel option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_edulevel option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_lang option[value="NA"]').attr('selected', 'selected');
+
+			// address
+			$('#input_student_new_blk').val('');
+			$('#input_student_new_street').val('');
+			$('#input_student_new_floor_unit').val('');
+			$('#input_student_new_building').val('');
+			$('#input_student_new_postcode').val('');
+
+			// employment
+			$('#input_student_new_empstatus option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_comn').val('');
+			$('#input_student_new_com_type option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_com_reg_no').val('');
+			$('#input_student_new_industry option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_designation option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_new_sal_range option[value="NA"]').attr('selected', 'selected');
+
+			// extra
+			$('#input_student_new_remark').val('');
+		}
+
 		function afterLoadEachDateContent() {
 			$.each($('.booking_date_this_month'), function() {
 				$(this).find('.exam_seat_booking_on_off').prop('disabled', true);
@@ -322,6 +374,7 @@
 						// event listened to modal
 						$(this).on('click', function() {
 							$('#seat-booking-modal').modal('show');
+							clear_ato_inputs();
 							$('#input_ato_exam_date').datepicker({
 								format: 'yyyy-mm-dd',
 								todayHighlight: true
@@ -349,7 +402,6 @@
 								var remark  = $('#input_ato_remark').val();
 
 								// loading student info checking/modifying/adding modal
-								$('#seat-booking-student-info-modal').modal('show');
 								loading_student_basic_info();
 							});
 						});
@@ -366,6 +418,7 @@
 				    success:function(json){
 				    	var modalBody = $('#seat_booking_student_info_modal_label').closest('.modal-content').find('.modal-body');
 				    	if(json.trim() != "") {
+				    		$('#seat-booking-student-info-modal').modal('show');
 				    		var reply = $.parseJSON(json);
 					    	for (var key in reply) {
 						    	if (reply.hasOwnProperty(key)) {
@@ -421,8 +474,9 @@
 							    url:window.api_url + "getRegistrationByIC",
 							    data:{ic:ic},
 							    success:function(json){
-							    	var modalBody = $('#student_ic_check_modal_label').closest('.modal-content').find('.modal-body');
-							    	modalBody.children().remove();
+							    	$('#seat-booking-student-info-fail-modal').modal('show');
+							    	var modalBody = $('#seat_booking_student_info_fail_modal_label').closest('.modal-content').find('.modal-body');
+							    	modalBody.empty();
 							    	if(json.trim() != "") {
 							    		var reply = $.parseJSON(json);
 								    	for (var key in reply) {
@@ -444,10 +498,22 @@
 															'<label for="student_new_ic_check_model_reg_no">注册表号码</label>' +
 															'<div class="form-control" id="student_new_ic_check_model_reg_no">'+ reply[key].reg_no + '</div>' + 
 														'</div>' +
+													'</div>' +
+													'<div class="row">' +
+														'<div class="col-xs-10"></div>' +
+														'<div class="col-xs-2">' +
+															'<a class="button glow button-rounded button-flat" id="seat_booking_new_student_info_btn">Add</a>' +
+														'</div>' +
 													'</div>'
 												);
 									        }
 								    	}
+								    	$('#seat_booking_new_student_info_btn').on('click', function() {
+								    		$('#seat-booking-student-info-fail-modal').modal('hide');
+								    		$('#seat-booking-student-info-modal').modal('show');
+								    		clear_student_new_form_inputs();
+								    		$('#input_student_new_ic').val(ic);
+								    	})
 								    }
 								    else {
 								    	// no result found in student and registartion table
@@ -825,11 +891,6 @@
 						<label for="input_student_new_ic">IC Number</label>
 						<input class="form-control" id="input_student_new_ic" data-parsley-trigger="blur" required>
 					</div>
-					<div class="col-xs-2">
-						<br>
-						<a class="button glow button-rounded button-flat" id="student_new_ic_check" data-toggle="modal" data-target="#stundet-check-modal">Check</a>
-					</div>
-					<div class="col-xs-2">Check if this student had registered!</div>
 					<div class="col-xs-4">
 						<label for="input_student_new_ic_type">IC Type</label>
 					    <select class="form-control" id="input_student_new_ic_type">
@@ -1359,6 +1420,23 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal" id="seat_booking_student_info_modal_confirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Student no info Modal -->
+<div class="modal fade" id="seat-booking-student-info-fail-modal" tabindex="-1" role="dialog" aria-labelledby="seat_booking_student_info_fail_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="seat_booking_student_info_fail_modal_label">Check Student Basic Information</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
