@@ -2,6 +2,7 @@
 	<meta charset="utf-8">
 
 	<script>
+		var global_selected_seat_available_el = null;
 		var pre_next = 0;
 		var month_selected = 0;
 		var year_selected = 0;
@@ -373,10 +374,12 @@
 
 						// event listened to modal
 						$(this).on('click', function() {
+							global_selected_seat_available_el = $(this);
 							var seat_available = $(this).text().trim();
 							if(seat_available != '0') {
 								$('#seat-booking-modal').modal('show');
 								clear_ato_inputs();
+
 								$('#input_ato_exam_date').datepicker({
 									format: 'yyyy-mm-dd',
 									todayHighlight: true
@@ -406,6 +409,14 @@
 					});
 				}
 			});
+
+ 			function update_seat_available_number() {
+ 				var num = parseInt(global_selected_seat_available_el.text().trim());
+ 				var new_num = num - 1;
+ 				global_selected_seat_available_el.text(new_num);
+ 				var me = global_selected_seat_available_el.closest('.booking_date_this_month');
+ 				update_seat_booking_info_on_off(me);
+ 			}
 
  			function insert_ato_info() {
 				var ic = $('#input_ato_ic').val();
@@ -453,6 +464,9 @@
 						    toastr.success("Insert success!");
 						    clear_ato_inputs();
 						    $('#seat-booking-modal').modal('hide');
+
+						    // update seat available number
+						    update_seat_available_number();
 						}else{
 							toastr.error("Fail to insert ato info!");
 						}
@@ -814,26 +828,6 @@
 					$(this).css('background', 'rgb(255, 255, 0)');
 				}
 			});
-
-			// $('.exam_seat_booking_on_off').on('change', function() {
-			// 	var el = $(this).closest('.booking_date_this_month');
-			// 	if($(this).val() == 'off') {
-			// 		update_seat_booking_info_on_off(el);
-			// 		el.find('table').css('background','rgb(228, 228, 228)');
-			// 		el.find('table span').prop('disabled', true);
-			// 		el.find('table span').css('background','rgb(204, 204, 204)');
-			// 	} else {
-			// 		el.find('table').css('background','');
-			// 		el.find('table span').prop('disabled', false);
-			// 		$.each(el.find('span'), function() {
-			// 			if($(this).text() != '0') {
-			// 				$(this).css('background', 'rgb(0, 255, 0)');
-			// 			} else {
-			// 				$(this).css('background', 'rgb(255, 255, 0)');
-			// 			}
-			// 		});
-			// 	}
-			// });
 		}
 
 		function create_update_seat_booking_info() {
@@ -878,6 +872,7 @@
 			});
 		}
 
+		// me is the closest .booking_date_this_month
 		function update_seat_booking_info_on_off(me) {
 			var on_off = me.find('.exam_seat_booking_on_off').val();
 			var day = me.find('.exam_seat_booking_content_each_date').text();
@@ -986,10 +981,6 @@
 						<label for="input_ato_ic">IC Number</label>
 						<input class="form-control" id="input_ato_ic" >
 					</div>
-<!-- 					<div class="col-xs-2">
-						<br>
-						<a class="button glow button-rounded button-flat" id="student_ato_ic_check" data-toggle="modal" data-target="#student-ato-modal">Check</a>
-					</div> -->
 					<div class="col-xs-4">
 						<label for="input_ato_recommend_level">Recommend Level</label>
 						<select class="form-control" id="input_ato_recommend_level">
@@ -1001,30 +992,6 @@
 			            </select>
 					</div>
 				</div>
-<!-- 				<div class="row">
-					<div class="col-xs-4">
-						<label for="input_ato_class_code">Class Code</label>
-						<input class="form-control" id="input_ato_class_code">
-					</div>
-					<div class="col-xs-2">
-						<br>
-						<a class="button glow button-rounded button-flat" id="student_ato_class_check" data-toggle="modal" data-target="#student-ato-class-modal">Check</a>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-4">
-						<label for="input_ato_attendance">Attendance</label>
-						<input class="form-control" id="input_ato_attendance">
-					</div>
-					<div class="col-xs-2"></div>
-					<div class="col-xs-4">
-						<div class="checkbox">
-						    <label for="input_ato_post_change_date">
-						    	<input type="checkbox" id="input_ato_post_change_date"> 是否改期
-						    </label>
-						</div>
-					</div>
-				</div> -->
 				<h4>考试科目</h4><hr>
 				<div class="row">
 					<div class="col-xs-4">
