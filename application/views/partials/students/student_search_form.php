@@ -183,8 +183,6 @@
 								}
 							}
 							target.append('<br>');
-
-							get_class_by_student_ic(key_word, target);
 						} else {
 							target.append('<p>No Exam Records found</p><br>');
 						}
@@ -283,8 +281,6 @@
 								}
 							}
 							target.append('<br>');
-
-							search_get_student_record_by_ic(key_word, target);
 						} else {
 							target.append('<p>No ATO Information found</p><br>');
 						}
@@ -454,6 +450,8 @@
 					        target.append('<br>');
 
 					        search_get_student_ato_by_ic(key_word, target);
+					        search_get_student_record_by_ic(key_word, target);
+					        get_class_by_student_ic(key_word, target);
 						}
 			        }else {
 			        	toastr.error("fail to call search api");

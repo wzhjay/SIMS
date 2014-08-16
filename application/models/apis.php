@@ -1026,7 +1026,7 @@ class Apis extends CI_Model
 	 */
 	function get_all_class_by_student_ic($ic) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('SELECT * FROM class c, student_class sc, branch b WHERE (c.class_id = sc.class_id) AND (sc.student_id = (SELECT id FROM student s WHERE s.ic = "'.$ic.'")) AND (c.branch_id = b.id) ORDER BY c.created');
+			$query = $this->db->query('SELECT * FROM class c, student_class sc, branch b WHERE (c.class_id = sc.class_id) AND (sc.student_id = (SELECT student_id FROM student s WHERE s.ic = "'.$ic.'")) AND (c.branch_id = b.id) ORDER BY c.created');
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
