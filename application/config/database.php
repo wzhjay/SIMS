@@ -48,7 +48,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-// $db['default']['hostname'] = 'http://mysql.alpha.hostsg.com';
+// $db['default']['hostname'] = 'mysql';
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 // $db['default']['username'] = 'changchun';

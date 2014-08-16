@@ -21,8 +21,7 @@
     	<div class="container tab_content">
 			<ul class="nav nav-tabs" id="my_tab">
 			  <li class="active"><a href="#tab-1" data-toggle="tab">定位信息</a></li>
-			  <li><a href="#tab-2" data-toggle="tab">输入定位</a></li>
-			  <li><a href="#tab-3" data-toggle="tab">定位查询</a></li>
+			  <li><a href="#tab-2" data-toggle="tab">定位查询</a></li>
 			</ul>
 
 			<div class="tab-content">
@@ -38,11 +37,8 @@
 					<br><br>
 				</div>
 			  	<div class="tab-pane fade" id="tab-2">
-			  		
+			  		<h3>查询定位信息</h3><hr>
 			  	</div>
-			  <div class="tab-pane fade" id="tab-3">
-			  	
-			  </div>
 			</div>
 		</div>
     </div>
