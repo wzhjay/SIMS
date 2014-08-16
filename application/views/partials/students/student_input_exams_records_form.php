@@ -55,11 +55,11 @@
 			var ew_pt = 0;
 			var en_pt = 0;
 			
-			if(er == "UN" || er == "EXE" || er == "B1") {	er_pt = 0;	} else {	er_pt = parseInt(er);	}
-			if(el == "UN" || el == "EXE" || el == "B1") {	el_pt = 0;	} else {	el_pt = parseInt(el);	}
-			if(es == "UN" || es == "EXE" || es == "B1") {	es_pt = 0;	} else {	es_pt = parseInt(es);	}
-			if(ew == "UN" || ew == "EXE" || ew == "B1") {	ew_pt = 0;	} else {	ew_pt = parseInt(ew);	}
-			if(en == "UN" || en == "EXE" || en == "B1") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
+			if(er == "UN" || er == "EXE" || er == "B1" || er == "PENDING") {	er_pt = 0;	} else {	er_pt = parseInt(er);	}
+			if(el == "UN" || el == "EXE" || el == "B1" || el == "PENDING") {	el_pt = 0;	} else {	el_pt = parseInt(el);	}
+			if(es == "UN" || es == "EXE" || es == "B1" || es == "PENDING") {	es_pt = 0;	} else {	es_pt = parseInt(es);	}
+			if(ew == "UN" || ew == "EXE" || ew == "B1" || ew == "PENDING") {	ew_pt = 0;	} else {	ew_pt = parseInt(ew);	}
+			if(en == "UN" || en == "EXE" || en == "B1" || en == "PENDING") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
 			var cmp_pt = er_pt + el_pt + es_pt + ew_pt;
 			if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	}
 			if(es_pt<3) {	con = "BEGINNERS";	} else if (es_pt<5) {	con = "INTERMEDIATE";	} else { con = "ADVANCED";	}
@@ -119,11 +119,11 @@
 			var ew_pt = 0;
 			var en_pt = 0;
 			
-			if(er == "UN" || er == "EXE" || er == "B1") {	er_pt = 0;	} else {	er_pt = parseInt(er);	}
-			if(el == "UN" || el == "EXE" || el == "B1") {	el_pt = 0;	} else {	el_pt = parseInt(el);	}
-			if(es == "UN" || es == "EXE" || es == "B1") {	es_pt = 0;	} else {	es_pt = parseInt(es);	}
-			if(ew == "UN" || ew == "EXE" || ew == "B1") {	ew_pt = 0;	} else {	ew_pt = parseInt(ew);	}
-			if(en == "UN" || en == "EXE" || en == "B1") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
+			if(er == "UN" || er == "EXE" || er == "B1" || er == "PENDING") {	er_pt = 0;	} else {	er_pt = parseInt(er);	}
+			if(el == "UN" || el == "EXE" || el == "B1" || el == "PENDING") {	el_pt = 0;	} else {	el_pt = parseInt(el);	}
+			if(es == "UN" || es == "EXE" || es == "B1" || es == "PENDING") {	es_pt = 0;	} else {	es_pt = parseInt(es);	}
+			if(ew == "UN" || ew == "EXE" || ew == "B1" || ew == "PENDING") {	ew_pt = 0;	} else {	ew_pt = parseInt(ew);	}
+			if(en == "UN" || en == "EXE" || en == "B1" || en == "PENDING") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
 
 			var cmp_pt = er_pt + el_pt + es_pt + ew_pt;
 			if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	}
@@ -443,6 +443,7 @@
 				<label for="input_student_exam_record_er">阅读ER</label>
 				<select class="form-control" id="input_student_exam_record_er">
 					<option value="NA">请选择</option>
+					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
 					<option value="B1">B1</option>
@@ -460,6 +461,7 @@
 				<label for="input_student_exam_record_el">听力EL</label>
 				<select class="form-control" id="input_student_exam_record_el">
 					<option value="NA">请选择</option>
+					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
 					<option value="B1">B1</option>
@@ -477,6 +479,7 @@
 				<label for="input_student_exam_record_es">会话ES</label>
 				<select class="form-control" id="input_student_exam_record_es">
 					<option value="NA">请选择</option>
+					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
 					<option value="B1">B1</option>
@@ -496,6 +499,7 @@
 				<label for="input_student_exam_record_ew">写作EW</label>
 				<select class="form-control" id="input_student_exam_record_ew">
 					<option value="NA">请选择</option>
+					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
 					<option value="B1">B1</option>
@@ -513,6 +517,7 @@
 				<label for="input_student_exam_record_en">数学EN</label>
 				<select class="form-control" id="input_student_exam_record_en">
 					<option value="NA">请选择</option>
+					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
 					<option value="B1">B1</option>
