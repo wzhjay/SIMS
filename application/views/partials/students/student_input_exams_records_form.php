@@ -164,15 +164,15 @@
 			var ic = $('#input_student_exam_record_ic').val('');
 			var exam_date = $('#input_student_exam_record_time').val('');
 			var remark = $('#input_student_exam_record_remark').val('');
-			$('#input_student_exam_record_er option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_exam_record_el option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_exam_record_es option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_exam_record_ew option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_exam_record_en option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_level_cmp option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_level_con option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_level_wri option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_level_wpn option[value="NA"]').attr('selected', 'selected');
+			$('#input_student_exam_record_er option[value="N/A"]').attr('selected', 'selected');
+			$('#input_student_exam_record_el option[value="N/A"]').attr('selected', 'selected');
+			$('#input_student_exam_record_es option[value="N/A"]').attr('selected', 'selected');
+			$('#input_student_exam_record_ew option[value="N/A"]').attr('selected', 'selected');
+			$('#input_student_exam_record_en option[value="N/A"]').attr('selected', 'selected');
+			$('#input_student_level_cmp option[value="N/A"]').attr('selected', 'selected');
+			$('#input_student_level_con option[value="N/A"]').attr('selected', 'selected');
+			$('#input_student_level_wri option[value="N/A"]').attr('selected', 'selected');
+			$('#input_student_level_wpn option[value="N/A"]').attr('selected', 'selected');
 		}
 
 		function student_exam_record_check_student_by_ic() {
@@ -180,7 +180,7 @@
 			var ic = $('#input_student_exam_record_ic').val().trim(" ");
 			$.ajax({
 				type:"post",
-			    url:window.api_url + "getStudentByIC",
+			    url:window.api_url + "getRegistrationByIC",
 			    data:{ic:ic},
 			    success:function(json){
 			    	var modalBody = $('#student_exam_record_ic_check_modal_label').closest('.modal-content').find('.modal-body');
@@ -199,12 +199,12 @@
 											'<div class="form-control">' + ic + '</div>' +
 										'</div>' + 
 										'<div class="col-xs-3">' + 
-											'<label for="student_record_ic_check_model_student_name">Name</label>' + 
-											'<div class="form-control" id="student_record_ic_check_model_student_name">' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</div>' + 
+											'<label for="student_record_ic_check_model_reg_date">Name</label>' + 
+											'<div class="form-control" id="student_record_ic_check_model_reg_date">' + reply[key].reg_date + '</div>' + 
 										'</div>' +
 										'<div class="col-xs-3">' +
-											'<label for="student_record_ic_check_model_tel">Tel</label>' +
-											'<div class="form-control" id="student_record_ic_check_model_tel">'+ reply[key].tel + '</div>' + 
+											'<label for="student_record_ic_check_model_reg_no">Tel</label>' +
+											'<div class="form-control" id="student_record_ic_check_model_reg_no">'+ reply[key].reg_no + '</div>' + 
 										'</div>' +
 										'<div class="col-xs-2">' +
 										'</div>' +
@@ -442,7 +442,7 @@
 			<div class="col-xs-4">
 				<label for="input_student_exam_record_er">阅读ER</label>
 				<select class="form-control" id="input_student_exam_record_er">
-					<option value="NA">请选择</option>
+					<option value="N/A">请选择</option>
 					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
@@ -460,7 +460,7 @@
 			<div class="col-xs-4">
 				<label for="input_student_exam_record_el">听力EL</label>
 				<select class="form-control" id="input_student_exam_record_el">
-					<option value="NA">请选择</option>
+					<option value="N/A">请选择</option>
 					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
@@ -478,7 +478,7 @@
 			<div class="col-xs-4">
 				<label for="input_student_exam_record_es">会话ES</label>
 				<select class="form-control" id="input_student_exam_record_es">
-					<option value="NA">请选择</option>
+					<option value="N/A">请选择</option>
 					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
@@ -498,7 +498,7 @@
 			<div class="col-xs-4">
 				<label for="input_student_exam_record_ew">写作EW</label>
 				<select class="form-control" id="input_student_exam_record_ew">
-					<option value="NA">请选择</option>
+					<option value="N/A">请选择</option>
 					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
@@ -516,7 +516,7 @@
 			<div class="col-xs-4">
 				<label for="input_student_exam_record_en">数学EN</label>
 				<select class="form-control" id="input_student_exam_record_en">
-					<option value="NA">请选择</option>
+					<option value="N/A">请选择</option>
 					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>

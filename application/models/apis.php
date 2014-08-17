@@ -1110,7 +1110,7 @@ class Apis extends CI_Model
 	 * @param	null
 	 * @return	role
 	 */
-	function chcek_user_role() {
+	function check_user_role() {
 		if($this->session->userdata('session_id')) {
 			$userid = $this->tank_auth->get_user_id();
 			$query = $this->db->query('SELECT * FROM users u, admin_users au, admin_role ar WHERE (u.id = "'.$userid.'") AND (u.id = au.user_id) AND (au.role_id = ar.id)');
@@ -1118,6 +1118,26 @@ class Apis extends CI_Model
 				foreach ($query->result_array() as $row)
 				{
 				   return $row['role'];
+				}
+			}
+		}
+		return 0;
+	}
+
+	/**
+	 * get seat booking info by date info from seat_booking table
+	 *
+	 * @param	null
+	 * @return	branch id
+	 */
+	function get_user_branch_id() {
+		if($this->session->userdata('session_id')) {
+			$userid = $this->tank_auth->get_user_id();
+			$query = $this->db->query('SELECT * FROM users u, admin_users au WHERE (u.id = "'.$userid.'") AND (u.id = au.user_id)');
+			if ($query->num_rows() == 1) {
+				foreach ($query->result_array() as $row)
+				{
+				   return $row['branch_id'];
 				}
 			}
 		}

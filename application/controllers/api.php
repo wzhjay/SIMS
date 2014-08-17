@@ -1536,6 +1536,87 @@ class Api extends CI_Controller
 		else {
 			$result = array('result' => $this->upload->data());
 			$this->load->view('/partials/students/student_exam_upload_result', $result);
+
+			// read upload excel file (exams results), insert into database, delete the temp file
+			$path = "./uploads/exams.xls";
+			$objPHPExcel = PHPExcel_IOFactory::load($path);
+
+			$branch_id = $this->apis->get_user_branch_id();
+			$branch_op_id = $this->tank_auth->get_user_id();
+			foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+			    $worksheetTitle     = $worksheet->getTitle();
+			    $highestRow         = $worksheet->getHighestRow(); // e.g. 10
+			    $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
+			    $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+			    $nrColumns = ord($highestColumn) - 64;
+
+			    $title = date_parse($worksheet->getTitle());
+			    $test_data = $title["year"].'-'.$title["month"].'-'.$title["day"];
+			    echo "<br>The worksheet ".$worksheetTitle." has ";
+			    echo $nrColumns . ' columns (A-' . $highestColumn . ') ';
+			    echo ' and ' . $highestRow . ' row.';
+			    echo '<br>Data: <table border="1"><tr>';
+			    for ($row = 1; $row <= $highestRow; ++ $row) {
+			        echo '<tr>';
+			        $exam_record = array();
+			        for ($col = 0; $col < $highestColumnIndex; ++ $col) {
+			            $cell = $worksheet->getCellByColumnAndRow($col, $row);
+			            $val = $cell->getValue();
+			            // $dataType = PHPExcel_Cell_DataType::dataTypeForValue($val);
+			            echo '<td>' . (string)$val . '<br></td>';
+
+			            // insert into array exam_record, extract only the data
+			            if($row > 2 && $col > 0) {
+			            	array_push($exam_record, (string)$val);
+			            }
+			        }
+			        echo '</tr>';
+
+			        if($row > 2) {
+				       	//get data from array exam_record and insert into db
+				        $ic = $exam_record[1];
+				        $exam_date = $test_data;
+				        $er = substr($exam_record[6],0,1);
+				        if($er == 'E') { $er = 'EXE'; } else if($er == 'U') { $er = 'UN'; } else if($er == 'B') { $er = 'B1'; } else if($er == 'N') { $er = 'N/A'; }
+				        $el = substr($exam_record[5],0,1);
+				        if($el == 'E') { $el = 'EXE'; } else if($el == 'U') { $el = 'UN'; } else if($el == 'B') { $el = 'B1'; } else if($el == 'N') { $el = 'N/A'; }
+				        $es = substr($exam_record[8],0,1);
+				        if($es == 'E') { $es = 'EXE'; } else if($es == 'U') { $es = 'UN'; } else if($es == 'B') { $es = 'B1'; } else if($es == 'N') { $es = 'N/A'; }
+				        $ew = substr($exam_record[9],0,1);
+				        if($ew == 'E') { $ew = 'EXE'; } else if($ew == 'U') { $ew = 'UN'; } else if($ew == 'B') { $ew = 'B1'; } else if($ew == 'N') { $ew = 'N/A'; }
+				        $en = substr($exam_record[4],0,1);
+				        if($en == 'E') { $en = 'EXE'; } else if($en == 'U') { $en = 'UN'; } else if($en == 'B') { $en = 'B1'; } else if($en == 'N') { $en = 'N/A'; }
+				        $cmp = $exam_record[10];
+				        $con = $exam_record[11];
+				        $wri = $exam_record[12];
+				        $wpn = $exam_record[13];
+				        $remark = $exam_record[17];
+				        $create = $this->apis->create_new_student_exam_record(
+							$ic,
+							$exam_date,
+							$er,
+							$el, 
+							$es, 
+							$ew, 
+							$en, 
+							$cmp, 
+							$con, 
+							$wri, 
+							$wpn, 
+							$branch_id, 
+							$branch_op_id, 
+							$remark);
+						if($create) {
+							echo '<p>Worksheet'.$worksheetTitle.' Record'.($row - 2).' insert successed!<p>';
+						}
+						else echo '<p>Worksheet'.$worksheetTitle.' Record'.($row - 2).' insert failed!<p>';
+			        }
+			    }
+			    echo '</table>';
+			}
+
+			// delete temple file
+			unlink($path);
 		}
 	}
 }
