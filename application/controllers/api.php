@@ -1513,4 +1513,28 @@ class Api extends CI_Controller
 		}
 		echo NULL;
 	}
+
+	/**
+	 *  upload file
+	 */
+	function uploadExamResults() {
+		$config['upload_path'] = './uploads/';
+		$config['allowed_types'] = 'xls|xlsx';
+		$config['max_size']	= '2048';
+		$config['file_name']	= 'exams.xls';
+		// $config['max_width']  = '1024';
+		// $config['max_height']  = '768';
+
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+		
+		if (!$this->upload->do_upload()) {
+			$result = array('result' => $this->upload->display_errors());
+			$this->load->view('/partials/students/student_exam_upload_result', $result);
+		}
+		else {
+			$result = array('result' => $this->upload->data());
+			$this->load->view('/partials/students/student_exam_upload_result', $result);
+		}
+	}
 }
