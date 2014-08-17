@@ -1519,7 +1519,8 @@ class Api extends CI_Controller
 	 */
 	function uploadExamResults() {
 		$config['upload_path'] = './uploads/';
-		$config['allowed_types'] = 'xls|xlsx';
+		// $config['allowed_types'] = 'xls|xlsx';
+		$config['allowed_types'] = '*';
 		$config['max_size']	= '2048';
 		$config['file_name']	= 'exams.xls';
 		// $config['max_width']  = '1024';
@@ -1527,7 +1528,7 @@ class Api extends CI_Controller
 
 		$this->load->library('upload', $config);
 		$this->upload->initialize($config);
-		
+
 		if (!$this->upload->do_upload()) {
 			$result = array('result' => $this->upload->display_errors());
 			$this->load->view('/partials/students/student_exam_upload_result', $result);
