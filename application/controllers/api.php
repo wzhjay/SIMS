@@ -1538,8 +1538,8 @@ class Api extends CI_Controller
 			$this->load->view('/partials/students/student_exam_upload_result', $result);
 
 			// read upload excel file (exams results), insert into database, delete the temp file
-			$path = "./uploads/exams.xls";
-			$objPHPExcel = PHPExcel_IOFactory::load($path);
+			$path = "./uploads/";
+			$objPHPExcel = PHPExcel_IOFactory::load($path."exams.xls");
 
 			$branch_id = $this->apis->get_user_branch_id();
 			$branch_op_id = $this->tank_auth->get_user_id();
@@ -1616,7 +1616,9 @@ class Api extends CI_Controller
 			}
 
 			// delete temple file
-			unlink($path);
+			foreach (glob($path."exams*.*") as $filename) {
+			    unlink($filename);
+			}
 		}
 	}
 }
