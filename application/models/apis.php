@@ -866,9 +866,9 @@ class Apis extends CI_Model
 	 * @param	$exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $exp_remark
 	 * @return	bool
 	 */
-	function create_new_expense_record($exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $exp_remark) {
+	function create_new_expense_record($exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $branch_id, $branch_op_id, $exp_remark) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('INSERT INTO expense (exp_type, exp_name, exp_sign_name, exp_date, exp_amount, created, modified, exp_remark) VALUES ("'.$exp_type.'", "'.$exp_name.'", "'.$exp_sign_name.'", "'.$exp_date.'", "'.$exp_amount.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$exp_remark.'")');
+			$query = $this->db->query('INSERT INTO expense (exp_type, exp_name, exp_sign_name, exp_date, exp_amount, created, modified, branch_id, branch_op_id, exp_remark) VALUES ("'.$exp_type.'", "'.$exp_name.'", "'.$exp_sign_name.'", "'.$exp_date.'", "'.$exp_amount.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$branch_id.'", "'.$branch_op_id.'", "'.$exp_remark.'")');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;
@@ -880,9 +880,9 @@ class Apis extends CI_Model
 	 * @param	$exp_id, $exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $exp_remark
 	 * @return	bool
 	 */
-	function update_expense_record($exp_id, $exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $exp_remark) {
+	function update_expense_record($exp_id, $exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $branch_id, $branch_op_id, $exp_remark) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('UPDATE expense SET exp_type = "'.$exp_type.'", exp_name = "'.$exp_name.'", exp_sign_name = "'.$exp_sign_name.'", exp_date = "'.$exp_date.'", exp_amount = "'.$exp_amount.'", exp_remark = "'.$exp_remark.'", modified = "'.date('Y-m-d H:i:s').'" WHERE exp_id = "'.$exp_id.'"');
+			$query = $this->db->query('UPDATE expense SET exp_type = "'.$exp_type.'", exp_name = "'.$exp_name.'", exp_sign_name = "'.$exp_sign_name.'", exp_date = "'.$exp_date.'", exp_amount = "'.$exp_amount.'", branch_id = "'.$branch_id.'", branch_op_id = "'.$branch_op_id.'", exp_remark = "'.$exp_remark.'", modified = "'.date('Y-m-d H:i:s').'" WHERE exp_id = "'.$exp_id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;

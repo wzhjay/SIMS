@@ -11,8 +11,8 @@
 				todayHighlight: true
 			});
 
-			student_new_load_admin_users();
-			student_new_load_branches();
+			// student_new_load_admin_users();
+			// student_new_load_branches();
 
 			$('#student_new_ic_check').on('click', function() {
 				check_student_ic();
@@ -27,49 +27,49 @@
 			});
 		});
 
-		function student_new_load_admin_users() {
-			var users = $('#input_student_new_op');
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllAdminUsers",
-			    data:{},
-			    success:function(json){
-			    	users.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			            		users.append('<option id="student_new_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
-			            	}
-			            }
-			        }else{
-			        	toastr.error("fail to load users");
-			        }
-			    }
-			});//End ajax
-		}
+		// function student_new_load_admin_users() {
+		// 	var users = $('#input_student_new_op');
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllAdminUsers",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	users.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	            		users.append('<option id="student_new_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
+		// 	            	}
+		// 	            }
+		// 	        }else{
+		// 	        	toastr.error("fail to load users");
+		// 	        }
+		// 	    }
+		// 	});//End ajax
+		// }
 
-		function student_new_load_branches() {
-			var branches = $('#input_student_new_branch');
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllBranches",
-			    data:{},
-			    success:function(json){
-			    	branches.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			    				branches.append('<option id="student_new_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
-			    			}
-			    		}
-			        }else{
-			        	toastr.error("fail to load braches");
-			        }
-			    }
-			});//End ajax
-		}
+		// function student_new_load_branches() {
+		// 	var branches = $('#input_student_new_branch');
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllBranches",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	branches.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	    				branches.append('<option id="student_new_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+		// 	    			}
+		// 	    		}
+		// 	        }else{
+		// 	        	toastr.error("fail to load braches");
+		// 	        }
+		// 	    }
+		// 	});//End ajax
+		// }
 
 		function create_new_student_basic_info() {
 			var source = $('#input_student_new_source').val();
@@ -109,10 +109,10 @@
 			var salary_range = $('#input_student_new_sal_range').val();
 
 			// extra
-			var student_branch = $('#input_student_new_branch option:selected').attr('id').split('_');
-			var student_branch_id = student_branch[3];
-			var student_op = $('#input_student_new_op option:selected').attr('id').split('_');
-			var student_op_id = student_op[3];
+			// var student_branch = $('#input_student_new_branch option:selected').attr('id').split('_');
+			// var student_branch_id = student_branch[3];
+			// var student_op = $('#input_student_new_op option:selected').attr('id').split('_');
+			// var student_op_id = student_op[3];
 			var student_remark  = $('#input_student_new_remark').val();
 
 			$.ajax({
@@ -149,8 +149,8 @@
 			    		industry:industry,
 			    		designation:designation,
 			    		salary_range:salary_range,
-			    		student_branch_id:student_branch_id,
-			    		student_op_id:student_op_id,
+			    		// student_branch_id:student_branch_id,
+			    		// student_op_id:student_op_id,
 			    		student_remark:student_remark},
 			    success:function(json){
 			    	if(json.trim() == '1') {
@@ -202,10 +202,10 @@
 			var salary_range = $('#input_student_new_sal_range').val();
 
 			// extra
-			var student_branch = $('#input_student_new_branch option:selected').attr('id').split('_');
-			var student_branch_id = student_branch[3];
-			var student_op = $('#input_student_new_op option:selected').attr('id').split('_');
-			var student_op_id = student_op[3];
+			// var student_branch = $('#input_student_new_branch option:selected').attr('id').split('_');
+			// var student_branch_id = student_branch[3];
+			// var student_op = $('#input_student_new_op option:selected').attr('id').split('_');
+			// var student_op_id = student_op[3];
 			var student_remark  = $('#input_student_new_remark').val();
 
 			$.ajax({
@@ -243,8 +243,8 @@
 			    		industry:industry,
 			    		designation:designation,
 			    		salary_range:salary_range,
-			    		student_branch_id:student_branch_id,
-			    		student_op_id:student_op_id,
+			    		// student_branch_id:student_branch_id,
+			    		// student_op_id:student_op_id,
 			    		student_remark:student_remark},
 			    success:function(json){
 			    	if(json.trim() == '2') {
@@ -380,8 +380,8 @@
 								$('#input_student_new_sal_range option[value="'+reply[key].salary_range+'"]').attr('selected', 'selected');
 
 								// extra
-								$('#input_student_new_branch option[id="student_new_branch_'+reply[key].student_branch_id+'"]').attr('selected', 'selected');
-								$('#input_student_new_op option[id="student_new_user_'+reply[key].student_op_id+'"]').attr('selected', 'selected');
+								// $('#input_student_new_branch option[id="student_new_branch_'+reply[key].student_branch_id+'"]').attr('selected', 'selected');
+								// $('#input_student_new_op option[id="student_new_user_'+reply[key].student_op_id+'"]').attr('selected', 'selected');
 								$('#input_student_new_remark').val(reply[key].student_remark);
 
 								$('#stundet-check-modal').modal('hide');
@@ -493,7 +493,7 @@
 	<h4>基本信息</h4><hr>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_new_source">学生来源</label>
+			<label for="input_student_new_source">*学生来源</label>
 			<select class="form-control" id="input_student_new_source">
             	<option value="SSA">SSA</option>
 	            <option value="Link1" selected="selected">Link1</option>
@@ -511,7 +511,7 @@
 	</div><hr>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_new_ic">IC Number</label>
+			<label for="input_student_new_ic">*IC Number(准证号码)</label>
 			<input class="form-control" id="input_student_new_ic" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-2">
@@ -520,7 +520,7 @@
 		</div>
 		<div class="col-xs-2">Check if this student had registered!</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_ic_type">IC Type</label>
+			<label for="input_student_new_ic_type">*IC Type(准证类型)</label>
 <!-- 			<select class="form-control" id="input_student_new_ic_type">
 		      <option value="NA">请选择</option>
 		      <option value="NRIC">NRIC</option>
@@ -539,11 +539,11 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_new_fn">First Name</label>
+			<label for="input_student_new_fn">*First Name(姓)</label>
 			<input class="form-control" id="input_student_new_fn" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_ln">Last Name</label>
+			<label for="input_student_new_ln">*Last Name(名)</label>
 			<input class="form-control" id="input_student_new_ln" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
@@ -553,17 +553,17 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_new_tel">Tel</label>
-			<input class="form-control" id="input_student_new_tel">
+			<label for="input_student_new_tel">*Tel(电话)</label>
+			<input class="form-control" id="input_student_new_tel" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_tel_home">Tel Home</label>
+			<label for="input_student_new_tel_home">Tel Home(家里电话)</label>
 			<input class="form-control" id="input_student_new_tel_home">
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_new_gender">Gender</label>
+			<label for="input_student_new_gender">*Gender(性别)</label>
 			<select class="form-control" id="input_student_new_gender">
 		      <option value="NA">请选择</option>
 		      <option value="M">Male（男）</option>
@@ -571,7 +571,7 @@
 		    </select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_sal">Salutation</label>
+			<label for="input_student_new_sal">*Salutation(称呼)</label>
 <!-- 			<select class="form-control" id="input_student_new_sal">
 				<option value="NA">请选择</option>
 				<option value="Mr">Mr</option>
@@ -591,17 +591,17 @@
 		    </select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_bd">Birthday</label>
-			<input class="form-control" id="input_student_new_bd">
+			<label for="input_student_new_bd">*Birthday(生日)</label>
+			<input class="form-control" id="input_student_new_bd" data-parsley-trigger="blur" required>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_new_age">Age</label>
-			<input class="form-control" id="input_student_new_age">
+			<label for="input_student_new_age">*Age(年龄)</label>
+			<input class="form-control" id="input_student_new_age" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_citizenship">Citizenship</label>
+			<label for="input_student_new_citizenship">*Citizenship(身份)</label>
 			<select class="form-control" id="input_student_new_citizenship">
 				<option value="NA">请选择</option>
                 <option value="SG">新加坡公民</option>
@@ -615,7 +615,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_new_nationality">Nationality</label>
+			<label for="input_student_new_nationality">*Nationality(国籍)</label>
 			<select class="form-control" id="input_student_new_nationality">
 	            <option value="NA">请选择</option>
 	            <option value="SG">Singapore Citizen </option>
@@ -850,7 +850,7 @@
 			</select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_race">Race</label>
+			<label for="input_student_new_race">*Race(种族)</label>
 			<select class="form-control" id="input_student_new_race">
             	<option value="NA">请选择</option>
 	            <option value="CN">Chinese(华人)</option>
@@ -861,7 +861,7 @@
 			</select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_cnlevel">华文学历</label>
+			<label for="input_student_new_cnlevel">*华文学历</label>
 <!-- 			<select class="form-control" id="input_student_new_cnlevel">
 	            <option value="NA">请选择</option>
 	            <option value="No Formal Qualification &amp; Lowe">No Formal Qualification &amp; Lowe</option>
@@ -892,7 +892,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_new_edulevel">教育水平</label>
+			<label for="input_student_new_edulevel">*教育水平</label>
 <!-- 				<select class="form-control" id="input_student_new_edulevel">
 	            <option value="NA">请选择</option>
 	            <option value="No Formal Qualification &amp; Lower Primary">No Formal Qualification &amp; Lower Primary </option>
@@ -945,7 +945,7 @@
 	            </select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_lang">使用语言</label>
+			<label for="input_student_new_lang">*使用语言</label>
 			<select class="form-control" id="input_student_new_lang">
 	            <option value="NA">请选择</option>
 	            <option value="Chinese">Chinese(中文)</option>
@@ -1144,16 +1144,16 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-4">
-			<label for="input_student_new_branch">Operator Branch</label>
+<!-- 		<div class="col-xs-4">
+			<label for="input_student_new_branch">*Operator Branch(操作员分部)</label>
 			<select class="form-control" id="input_student_new_branch"></select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_op">Operator</label>
+			<label for="input_student_new_op">*Operator(操作员)</label>
 			<select class="form-control" id="input_student_new_op"></select>
-		</div>
+		</div> -->
 		<div class="col-xs-4">
-			<label for="input_student_new_remark">Remark</label>
+			<label for="input_student_new_remark">Remark(备注)</label>
 			<textarea class="form-control" id="input_student_new_remark" rows="3"></textarea>
 		</div>
 	</div>
@@ -1162,10 +1162,10 @@
 <div class="row">
 	<div class="col-xs-8"></div>
 	<div class="col-xs-2">
-		<a class="button glow button-rounded button-flat" id="student_new_create">Create</a>
+		<a class="button glow button-rounded button-flat" id="student_new_create">新建</a>
 	</div>
 	<div class="col-xs-2">
-		<a class="button glow button-rounded button-flat" id="student_new_update">Update</a>
+		<a class="button glow button-rounded button-flat" id="student_new_update">更新信息</a>
 	</div>
 </div>
 </div>

@@ -4,6 +4,7 @@
 	<script>
 		var update_selected_class_id = 0;
 		$(document).ready(function($) {
+			$('#class_creation_form').parsley();
 			$('#input_class_start_date').datepicker({
 				format: 'yyyy-mm-dd',
 				todayHighlight: true
@@ -335,11 +336,11 @@
 	</script>
 </head>
 <div class="highlight">
-<form role="form">
+<form role="form" id="class_creation_form">
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_class_code">Class Code</label>
-			<input class="form-control" id="input_class_code" >
+			<label for="input_class_code">*Class Code(班级代码)</label>
+			<input class="form-control" id="input_class_code" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-2">
 			<br>
@@ -347,17 +348,17 @@
 		</div>
 		<div class="col-xs-2"></div>
 		<div class="col-xs-4">
-			<label for="input_class_branch">Branch</label>
+			<label for="input_class_branch">*Branch(班级所在分部)</label>
 			<select class="form-control" id="input_class_branch"></select>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-3">
-			<label for="input_class_type">Class Type</label>
+			<label for="input_class_type">*Class Type(课程类型)</label>
 			<select class="form-control" id="input_class_type" ></select>
 		</div>
 		<div class="col-xs-3">
-			<label for="input_class_level">Class Level</label>
+			<label for="input_class_level">*Class Level(课程水平)</label>
 			<select class="form-control" id="input_class_level">
 		      <option value="NA">请选择</option>
 		      <option value="BEGINNERS">初级</option>
@@ -366,7 +367,7 @@
 		    </select>
 		</div>
 		<div class="col-xs-3">
-			<label for="input_class_status">Class Status</label>
+			<label for="input_class_status">*Class Status(班级状态)</label>
 			<select class="form-control" id="input_class_status" >
 		      <option value="NA">请选择</option>
 		      <option value="preparing">未开班</option>
@@ -376,41 +377,43 @@
 		    </select>
 		</div>
 		<div class="col-xs-3">
-			<label for="input_class_location">Location</label>
-			<input class="form-control" id="input_class_location">
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-3">
-			<label for="input_class_start_date">Start Date</label>
-			<input class="form-control" id="input_class_start_date" >
-		</div>
-		<div class="col-xs-3">
-			<label for="input_class_end_date">End Date</label>
-			<input class="form-control" id="input_class_end_date" >
-		</div>
-		<div class="col-xs-3">
-			<label for="input_class_start_time">Start Time (0000~2359)</label>
-			<input class="form-control" id="input_class_start_time" >
-		</div>
-		<div class="col-xs-3">
-			<label for="input_class_end_time">End Time (0000~2359)</label>
-			<input class="form-control" id="input_class_end_time" >
+			<label for="input_class_location">*Location(上课地点)</label>
+			<input class="form-control" id="input_class_location" data-parsley-trigger="blur" required>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_class_teacher_name">Teacher's Name</label>
-			<input class="form-control" id="input_class_teacher_name" >
+			<label for="input_class_start_date">*Start Date(开班时间)</label>
+			<input class="form-control" id="input_class_start_date" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_class_teacher_tel">Teacher's Tel</label>
-			<input class="form-control" id="input_class_teacher_tel" >
+			<label for="input_class_end_date">*End Date(班级结束时间)</label>
+			<input class="form-control" id="input_class_end_date" data-parsley-trigger="blur" required>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_class_remark">Remark</label>
+			<label for="input_class_start_time">*Start Time (上课开始时间 0000~2359)</label>
+			<input class="form-control" id="input_class_start_time" data-parsley-trigger="blur" required>
+		</div>
+		<div class="col-xs-4">
+			<label for="input_class_end_time">*End Time (上课结束时间 0000~2359)</label>
+			<input class="form-control" id="input_class_end_time" data-parsley-trigger="blur" required>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_class_teacher_name">*Teacher's Name(老师名字)</label>
+			<input class="form-control" id="input_class_teacher_name" data-parsley-trigger="blur" required>
+		</div>
+		<div class="col-xs-4">
+			<label for="input_class_teacher_tel">*Teacher's Tel(老师电话)</label>
+			<input class="form-control" id="input_class_teacher_tel" data-parsley-trigger="blur" required>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_class_remark">Remark(备注)</label>
 			<textarea class="form-control" id="input_class_remark" rows="3"></textarea>
 		</div>
 	</div>
@@ -419,10 +422,10 @@
 <div class="row">
 	<div class="col-xs-8"></div>
 	<div class="col-xs-2">
-		<a class="button glow button-rounded button-flat" id="class_new_submit">Create</a>
+		<a class="button glow button-rounded button-flat" id="class_new_submit">新建</a>
 	</div>
 	<div class="col-xs-2">
-		<a class="button glow button-rounded button-flat" id="class_update_submit">Update</a>
+		<a class="button glow button-rounded button-flat" id="class_update_submit">更新班级信息</a>
 	</div>
 </div>
 </div>

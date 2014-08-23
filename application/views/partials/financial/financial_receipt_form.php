@@ -3,14 +3,15 @@
 
 	<script>
 		$(document).ready(function($) {
+			$('#financial_receipt_form').parsley();
 			$('#input_financial_receipt_date').datepicker({
 				format: 'yyyy-mm-dd',
 				todayHighlight: true
 			});
 
 			receipt_load_course_type();
-			receipt_load_admin_users();
-			receipt_load_branches();
+			// receipt_load_admin_users();
+			// receipt_load_branches();
 
 			$('#financial_receipt_create').on('click', function() {
 				create_new_receipt_record();
@@ -29,49 +30,49 @@
 			});
 		});
 
-		function receipt_load_admin_users() {
-			var users = $('#input_financial_receipt_op');
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllAdminUsers",
-			    data:{},
-			    success:function(json){
-			    	users.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			            		users.append('<option id="receipt_op_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
-			            	}
-			            }
-			        }else{
-			        	toastr.error("Fail to load users!");
-			        }
-			    }
-			});//End ajax
-		}
+		// function receipt_load_admin_users() {
+		// 	var users = $('#input_financial_receipt_op');
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllAdminUsers",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	users.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	            		users.append('<option id="receipt_op_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
+		// 	            	}
+		// 	            }
+		// 	        }else{
+		// 	        	toastr.error("Fail to load users!");
+		// 	        }
+		// 	    }
+		// 	});//End ajax
+		// }
 
-		function receipt_load_branches() {
-			var branches = $('#input_financial_receipt_branch');
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllBranches",
-			    data:{},
-			    success:function(json){
-			    	branches.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			    				branches.append('<option id="receipt_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
-			    			}
-			    		}
-			        }else{
-			        	toastr.error("Fail to load braches!");
-			        }
-			    }
-			});//End ajax
-		}
+		// function receipt_load_branches() {
+		// 	var branches = $('#input_financial_receipt_branch');
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllBranches",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	branches.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	    				branches.append('<option id="receipt_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+		// 	    			}
+		// 	    		}
+		// 	        }else{
+		// 	        	toastr.error("Fail to load braches!");
+		// 	        }
+		// 	    }
+		// 	});//End ajax
+		// }
 
 		function receipt_load_course_type() {
 			var types = $('#input_financial_receipt_course_type');
@@ -110,10 +111,10 @@
 			var reg_no = $('#input_financial_receipt_reg_num').val();
 			// var related_receipt = $('#input_financial_receipt_related_receipt').val();
 			// var related_receipt_amount = $('#input_financial_receipt_related_receipt_amount').val();
-			var receipt_branch = $('#input_financial_receipt_branch option:selected').attr('id').split('_');
-			var receipt_branch_id = receipt_branch[2];
-			var receipt_op = $('#input_financial_receipt_op option:selected').attr('id').split('_');
-			var receipt_op_id = receipt_op[2];
+			// var receipt_branch = $('#input_financial_receipt_branch option:selected').attr('id').split('_');
+			// var receipt_branch_id = receipt_branch[2];
+			// var receipt_op = $('#input_financial_receipt_op option:selected').attr('id').split('_');
+			// var receipt_op_id = receipt_op[2];
 			var receipt_remark = $('#input_financial_receipt_remark').val();
 
 			$.ajax({
@@ -131,8 +132,8 @@
 			    		reg_no:reg_no,
 			    		// related_receipt:related_receipt,
 			    		// related_receipt_amount:related_receipt_amount,
-			    		receipt_branch_id:receipt_branch_id,
-			    		receipt_op_id:receipt_op_id,
+			    		// receipt_branch_id:receipt_branch_id,
+			    		// receipt_op_id:receipt_op_id,
 			    		receipt_remark:receipt_remark},
 			    success:function(json){
 			    	if(json.trim() == '1') {
@@ -159,10 +160,10 @@
 			var reg_no = $('#input_financial_receipt_reg_num').val();
 			// var related_receipt = $('#input_financial_receipt_related_receipt').val();
 			// var related_receipt_amount = $('#input_financial_receipt_related_receipt_amount').val();
-			var receipt_branch = $('#input_financial_receipt_branch option:selected').attr('id').split('_');
-			var receipt_branch_id = receipt_branch[2];
-			var receipt_op = $('#input_financial_receipt_op option:selected').attr('id').split('_');
-			var receipt_op_id = receipt_op[2];
+			// var receipt_branch = $('#input_financial_receipt_branch option:selected').attr('id').split('_');
+			// var receipt_branch_id = receipt_branch[2];
+			// var receipt_op = $('#input_financial_receipt_op option:selected').attr('id').split('_');
+			// var receipt_op_id = receipt_op[2];
 			var receipt_remark = $('#input_financial_receipt_remark').val();
 
 			$.ajax({
@@ -182,8 +183,8 @@
 			    		reg_no:reg_no,
 			    		// related_receipt:related_receipt,
 			    		// related_receipt_amount:related_receipt_amount,
-			    		receipt_branch_id:receipt_branch_id,
-			    		receipt_op_id:receipt_op_id,
+			    		// receipt_branch_id:receipt_branch_id,
+			    		// receipt_op_id:receipt_op_id,
 			    		receipt_remark:receipt_remark},
 			    success:function(json){
 			    	if(json.trim() == '2') {
@@ -347,18 +348,18 @@
 	</script>
 </head>
 <div class="highlight">
-<form role="form">
+<form role="form" id="financial_receipt_form">
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_financial_receipt_student_ic">Student IC</label>
-			<input class="form-control" id="input_financial_receipt_student_ic">
+			<label for="input_financial_receipt_student_ic">*Student IC(准证号码)</label>
+			<input class="form-control" id="input_financial_receipt_student_ic" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-2">
 			<br>
 			<a class="button glow button-rounded button-flat" id="financial_receipt_student_ic_check" data-toggle="modal" data-target="#financial-receipt-student-modal">Check</a>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_financial_receipt_type">收据类型</label>
+			<label for="input_financial_receipt_type">*收据类型</label>
 			<select class="form-control" id="input_financial_receipt_type">
             	<option value="SSA">SSA</option>
 	            <option value="Link1" selected="selected">Link1</option>
@@ -368,8 +369,8 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_financial_receipt_num">Receipt Number</label>
-			<input class="form-control" id="input_financial_receipt_num" >
+			<label for="input_financial_receipt_num">*Receipt Number(收据号码)</label>
+			<input class="form-control" id="input_financial_receipt_num" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-2">
 			<br>
@@ -378,16 +379,16 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_financial_receipt_payee">Payee's Name</label>
-			<input class="form-control" id="input_financial_receipt_payee" >
+			<label for="input_financial_receipt_payee">*Payee's Name(收款人)</label>
+			<input class="form-control" id="input_financial_receipt_payee" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_financial_receipt_date">Receipt Date</label>
-			<input class="form-control" id="input_financial_receipt_date" >
+			<label for="input_financial_receipt_date">*Receipt Date(收款日)</label>
+			<input class="form-control" id="input_financial_receipt_date" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_financial_receipt_amount">Receipt Amount</label>
-			<input class="form-control" id="input_financial_receipt_amount" >
+			<label for="input_financial_receipt_amount">*Receipt Amount(收款金额)</label>
+			<input class="form-control" id="input_financial_receipt_amount" data-parsley-trigger="blur" required>
 		</div>
 	</div>
 	<div class="row">
@@ -408,11 +409,11 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_financial_receipt_course_type">Course Type</label>
+			<label for="input_financial_receipt_course_type">*Course Type(课程类型)</label>
 			<select class="form-control" id="input_financial_receipt_course_type"></select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_financial_receipt_letter_type">Letter Type</label>
+			<label for="input_financial_receipt_letter_type">*Letter Type(政府信类型)</label>
 			<select class="form-control" id="input_financial_receipt_letter_type">
 		        <option value="NA">NA</option>
 		        <option value="wts1">wts1</option>
@@ -420,8 +421,8 @@
 		    </select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_financial_receipt_reg_num">报名表号码</label>
-			<input class="form-control" id="input_financial_receipt_reg_num" >
+			<label for="input_financial_receipt_reg_num">*报名表号码(报名表号码)</label>
+			<input class="form-control" id="input_financial_receipt_reg_num" data-parsley-trigger="blur" required>
 		</div>
 	</div>
 	<!-- <div class="row"> -->
@@ -435,16 +436,16 @@
 		</div> -->
 	<!-- </div> -->
 	<div class="row">
-		<div class="col-xs-4">
+<!-- 		<div class="col-xs-4">
 			<label for="input_financial_receipt_branch">Branch</label>
 			<select class="form-control" id="input_financial_receipt_branch"></select>
 		</div>
 		<div class="col-xs-4">
 			<label for="input_financial_receipt_op">Operator</label>
 			<select class="form-control" id="input_financial_receipt_op"></select>
-		</div>
+		</div> -->
 		<div class="col-xs-4">
-			<label for="input_financial_receipt_remark">Remark</label>
+			<label for="input_financial_receipt_remark">Remark(备注)</label>
 			<textarea class="form-control" id="input_financial_receipt_remark" rows="3"></textarea>
 		</div>
 	</div>
@@ -453,10 +454,10 @@
 <div class="row">
 	<div class="col-xs-8"></div>
 	<div class="col-xs-2">
-		<a class="button glow button-rounded button-flat" id="financial_receipt_create">Create</a>
+		<a class="button glow button-rounded button-flat" id="financial_receipt_create">新建</a>
 	</div>
 	<div class="col-xs-2">
-		<a class="button glow button-rounded button-flat" id="financial_receipt_update">Update</a>
+		<a class="button glow button-rounded button-flat" id="financial_receipt_update">更新收据信息</a>
 	</div>
 </div>
 </div>

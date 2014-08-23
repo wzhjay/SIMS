@@ -9,13 +9,14 @@
 	<script>
 		var update_selected_record_id = 0;
 		$(document).ready(function($) {
+			$('#student_record_form').parsley();
 			$('#input_student_exam_record_time').datepicker({
 				format: 'yyyy-mm-dd',
 				todayHighlight: true
 			});
 
-			student_exam_record_load_admin_users();
-			student_exam_record_load_branches();
+			// student_exam_record_load_admin_users();
+			// student_exam_record_load_branches();
 
 			$('#student_exam_record_create').on('click', function() {
 				create_student_exam_record();
@@ -42,10 +43,10 @@
 			var con = "";
 			var wri = "";
 			var wpn = "";
-			var branch = $('#input_student_exam_record_branch option:selected').attr('id').split('_');
-			var branch_id = branch[2];
-			var branch_op = $('#input_student_exam_record_op option:selected').attr('id').split('_');
-			var branch_op_id = branch_op[2];
+			// var branch = $('#input_student_exam_record_branch option:selected').attr('id').split('_');
+			// var branch_id = branch[2];
+			// var branch_op = $('#input_student_exam_record_op option:selected').attr('id').split('_');
+			// var branch_op_id = branch_op[2];
 			var remark = $('#input_student_exam_record_remark').val();
 
 			// level calculation
@@ -81,8 +82,8 @@
 			    		con:con,
 			    		wri:wri,
 			    		wpn:wpn,
-			    		branch_id:branch_id,
-			    		branch_op_id:branch_op_id,
+			    		// branch_id:branch_id,
+			    		// branch_op_id:branch_op_id,
 			    		remark:remark},
 			    success:function(json){
 			    	if(json.trim() == '1') {
@@ -106,10 +107,10 @@
 			var con = "";
 			var wri = "";
 			var wpn = "";
-			var branch = $('#input_student_exam_record_branch option:selected').attr('id').split('_');
-			var branch_id = branch[2];
-			var branch_op = $('#input_student_exam_record_op option:selected').attr('id').split('_');
-			var branch_op_id = branch_op[2];
+			// var branch = $('#input_student_exam_record_branch option:selected').attr('id').split('_');
+			// var branch_id = branch[2];
+			// var branch_op = $('#input_student_exam_record_op option:selected').attr('id').split('_');
+			// var branch_op_id = branch_op[2];
 			var remark = $('#input_student_exam_record_remark').val();
 
 			// level calculation
@@ -146,8 +147,8 @@
 			    		con:con,
 			    		wri:wri,
 			    		wpn:wpn,
-			    		branch_id:branch_id,
-			    		branch_op_id:branch_op_id,
+			    		// branch_id:branch_id,
+			    		// branch_op_id:branch_op_id,
 			    		remark:remark},
 			    success:function(json){
 			    	if(json.trim() == '2') {
@@ -363,8 +364,8 @@
 								$('#input_student_level_wri option[value="'+reply[key].wri+'"]').attr('selected', 'selected');
 								$('#input_student_level_wpn option[value="'+reply[key].wpn+'"]').attr('selected', 'selected');
 
-								$('#input_student_exam_record_branch option[id="record_branch_'+reply[key].branch_id+'"]').attr('selected', 'selected');
-								$('#input_student_exam_record_op option[id="record_user_'+reply[key].branch_op_id+'"]').attr('selected', 'selected');
+								// $('#input_student_exam_record_branch option[id="record_branch_'+reply[key].branch_id+'"]').attr('selected', 'selected');
+								// $('#input_student_exam_record_op option[id="record_user_'+reply[key].branch_op_id+'"]').attr('selected', 'selected');
 								$('#input_student_exam_record_remark').val(reply[key].remark);
 			            	}
 			            }
@@ -375,57 +376,57 @@
 			});//End ajax
 		}
 
-		function student_exam_record_load_admin_users() {
-			var users = $('#input_student_exam_record_op');
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllAdminUsers",
-			    data:{},
-			    success:function(json){
-			    	users.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			            		users.append('<option id="record_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
-			            	}
-			            }
-			        }else{
-			        	toastr.error("fail to load users");
-			        }
-			    }
-			});//End ajax
-		}
+		// function student_exam_record_load_admin_users() {
+		// 	var users = $('#input_student_exam_record_op');
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllAdminUsers",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	users.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	            		users.append('<option id="record_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
+		// 	            	}
+		// 	            }
+		// 	        }else{
+		// 	        	toastr.error("fail to load users");
+		// 	        }
+		// 	    }
+		// 	});//End ajax
+		// }
 
-		function student_exam_record_load_branches() {
-			var branches = $('#input_student_exam_record_branch');
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllBranches",
-			    data:{},
-			    success:function(json){
-			    	branches.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			    				branches.append('<option id="record_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
-			    			}
-			    		}
-			        }else{
-			        	toastr.error("fail to load braches");
-			        }
-			    }
-			});//End ajax
-		}
+		// function student_exam_record_load_branches() {
+		// 	var branches = $('#input_student_exam_record_branch');
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllBranches",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	branches.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	    				branches.append('<option id="record_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+		// 	    			}
+		// 	    		}
+		// 	        }else{
+		// 	        	toastr.error("fail to load braches");
+		// 	        }
+		// 	    }
+		// 	});//End ajax
+		// }
 	</script>
 </head>
 <div class="highlight">
-	<form role="form">
+	<form role="form" id="student_record_form">
 		<div class="row">
 			<div class="col-xs-4">
-				<label for="input_student_exam_record_ic">请输入学员IC</label>
-				<input class="form-control" id="input_student_exam_record_ic">
+				<label for="input_student_exam_record_ic">*学员IC</label>
+				<input class="form-control" id="input_student_exam_record_ic" data-parsley-trigger="blur" required>
 			</div>
 			<div class="col-xs-2">
 				<br>
@@ -433,14 +434,14 @@
 			</div>
 			<div class="col-xs-2"></div>
 			<div class="col-xs-4">
-				<label for="input_student_exam_record_time">考试日期</label>
-				<input class="form-control" id="input_student_exam_record_time">
+				<label for="input_student_exam_record_time">*考试日期</label>
+				<input class="form-control" id="input_student_exam_record_time" data-parsley-trigger="blur" required>
 			</div>
 		</div>
 		<h4>考试成绩</h4><hr>
 		<div class="row">
 			<div class="col-xs-4">
-				<label for="input_student_exam_record_er">阅读ER</label>
+				<label for="input_student_exam_record_er">*阅读ER</label>
 				<select class="form-control" id="input_student_exam_record_er">
 					<option value="N/A">请选择</option>
 					<option value="PENDING">PENDING</option>
@@ -458,7 +459,7 @@
 				</select>
 			</div>
 			<div class="col-xs-4">
-				<label for="input_student_exam_record_el">听力EL</label>
+				<label for="input_student_exam_record_el">*听力EL</label>
 				<select class="form-control" id="input_student_exam_record_el">
 					<option value="N/A">请选择</option>
 					<option value="PENDING">PENDING</option>
@@ -476,7 +477,7 @@
 				</select>
 			</div>
 			<div class="col-xs-4">
-				<label for="input_student_exam_record_es">会话ES</label>
+				<label for="input_student_exam_record_es">*会话ES</label>
 				<select class="form-control" id="input_student_exam_record_es">
 					<option value="N/A">请选择</option>
 					<option value="PENDING">PENDING</option>
@@ -496,7 +497,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-4">
-				<label for="input_student_exam_record_ew">写作EW</label>
+				<label for="input_student_exam_record_ew">*写作EW</label>
 				<select class="form-control" id="input_student_exam_record_ew">
 					<option value="N/A">请选择</option>
 					<option value="PENDING">PENDING</option>
@@ -514,7 +515,7 @@
 				</select>
 			</div>
 			<div class="col-xs-4">
-				<label for="input_student_exam_record_en">数学EN</label>
+				<label for="input_student_exam_record_en">*数学EN</label>
 				<select class="form-control" id="input_student_exam_record_en">
 					<option value="N/A">请选择</option>
 					<option value="PENDING">PENDING</option>
@@ -533,14 +534,14 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-4">
-				<label for="input_student_exam_record_branch">Exam Record Branch</label>
+<!-- 			<div class="col-xs-4">
+				<label for="input_student_exam_record_branch">*Exam Record Branch(操作员分部)</label>
 				<select class="form-control" id="input_student_exam_record_branch"></select>
 			</div>
 			<div class="col-xs-4">
-				<label for="input_student_exam_record_op">Exam Record Operator</label>
+				<label for="input_student_exam_record_op">*Exam Record Operator(操作员)</label>
 				<select class="form-control" id="input_student_exam_record_op"></select>
-			</div>
+			</div> -->
 			<div class="col-xs-4">
 				<label for="input_student_exam_record_remark">Remark</label>
 				<textarea class="form-control" id="input_student_exam_record_remark" rows="3"></textarea>
@@ -551,10 +552,10 @@
 	<div class="row">
 		<div class="col-xs-8"></div>
 		<div class="col-xs-2">
-			<a class="button glow button-rounded button-flat" id="student_exam_record_create">Create</a>
+			<a class="button glow button-rounded button-flat" id="student_exam_record_create">新建</a>
 		</div>
 		<div class="col-xs-2">
-			<a class="button glow button-rounded button-flat" id="student_exam_record_update">Update</a>
+			<a class="button glow button-rounded button-flat" id="student_exam_record_update">更新学生信息</a>
 		</div>
 	</div>
 </div>

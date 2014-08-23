@@ -3,6 +3,7 @@
 
 	<script>
 		$(document).ready(function($) {
+			$('#financial_expense_form').parsley();
 			$('#input_financial_exp_date').datepicker({
 				format: 'yyyy-mm-dd',
 				todayHighlight: true
@@ -85,10 +86,10 @@
 	</script>
 </head>
 <div class="highlight">
-<form role="form">
+<form role="form" id="financial_expense_form">
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_financial_exp_type">支出类型</label>
+			<label for="input_financial_exp_type">*支出类型</label>
 			<select class="form-control" id="input_financial_exp_type">
 		        <option value="NA">请选择</option>
 		        <option value="refund">退款</option>
@@ -103,27 +104,27 @@
 		    </select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_financial_exp_name">支出人</label>
-			<input class="form-control" id="input_financial_exp_name" >
+			<label for="input_financial_exp_name">*支出人</label>
+			<input class="form-control" id="input_financial_exp_name" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_financial_exp_sign_name">签收人</label>
-			<input class="form-control" id="input_financial_exp_sign_name" >
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-4">
-			<label for="input_financial_exp_date">支出日期</label>
-			<input class="form-control" id="input_financial_exp_date" >
-		</div>
-		<div class="col-xs-4">
-			<label for="input_financial_exp_amount">支出金额</label>
-			<input class="form-control" id="input_financial_exp_amount" >
+			<label for="input_financial_exp_sign_name">*签收人</label>
+			<input class="form-control" id="input_financial_exp_sign_name" data-parsley-trigger="blur" required>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_financial_exp_remark">Remark</label>
+			<label for="input_financial_exp_date">*支出日期</label>
+			<input class="form-control" id="input_financial_exp_date" data-parsley-trigger="blur" required>
+		</div>
+		<div class="col-xs-4">
+			<label for="input_financial_exp_amount">*支出金额</label>
+			<input class="form-control" id="input_financial_exp_amount" data-parsley-trigger="blur" required>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_financial_exp_remark">Remark(备注)</label>
 			<textarea class="form-control" id="input_financial_exp_remark" rows="3"></textarea>
 		</div>
 	</div>
@@ -132,10 +133,10 @@
 <div class="row">
 	<div class="col-xs-8"></div>
 	<div class="col-xs-2">
-		<a class="button glow button-rounded button-flat" id="financial_exp_create">Create</a>
+		<a class="button glow button-rounded button-flat" id="financial_exp_create">新建</a>
 	</div>
 	<div class="col-xs-2">
-		<a class="button glow button-rounded button-flat" id="financial_exp_update">Update</a>
+		<a class="button glow button-rounded button-flat" id="financial_exp_update">更新支出信息</a>
 	</div>
 </div>
 </div>

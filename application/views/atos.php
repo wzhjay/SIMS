@@ -25,7 +25,7 @@
 		<div class="tab-content">
 		  	<div class="tab-pane fade in active" id="tab-1">
 				<h3>输入或更新学员ATO信息</h3><hr>
-				<?php $this->load->view('partials/atos/ato_pre_form') ?>
+				<?php $this->load->view('partials/atos/ato_post_form') ?>
 				<br><br>
 		  		<h3>查询并生成ATO信息</h3><hr>
 		  		<?php $this->load->view('partials/atos/ato_search_form') ?>

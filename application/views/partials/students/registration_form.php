@@ -4,12 +4,13 @@
 	<script>
 		var selected_reg_id = 0;
 		$(document).ready(function($) {
+			$('#student_reg_form').parsley();
 			$('#input_reg_date').datepicker({
 				format: 'yyyy-mm-dd',
 				todayHighlight: true
 			});
 
-			reg_load_admin_users();
+			// reg_load_admin_users();
 			reg_load_branches();
 
 			$('#reg_new_create').on('click', function() {
@@ -26,42 +27,42 @@
 		});
 
 
-		function reg_load_admin_users() {
-			var users = $('#input_reg_op');
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllAdminUsers",
-			    data:{},
-			    success:function(json){
-			    	users.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			            		users.append('<option id="new_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
-			            	}
-			            }
-			        }else{
-			        	toastr.error("Fail to load users!");
-			        }
-			    },
-			});//End ajax
-		}
+		// function reg_load_admin_users() {
+		// 	var users = $('#input_reg_op');
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllAdminUsers",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	users.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	            		users.append('<option id="new_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
+		// 	            	}
+		// 	            }
+		// 	        }else{
+		// 	        	toastr.error("Fail to load users!");
+		// 	        }
+		// 	    },
+		// 	});//End ajax
+		// }
 
 		function reg_load_branches() {
-			var branches = $('#input_reg_branch');
+			// var branches = $('#input_reg_branch');
 			var branches_stu = $('#input_reg_branch_student');
 			$.ajax({
 				type:"post",
 			    url:window.api_url + "getAllBranches",
 			    data:{},
 			    success:function(json){
-			    	branches.children().remove();
+			    	branches_stu.children().remove();
 			    	if(json != null) {
 			    		var reply = $.parseJSON(json);
 			    		for (var key in reply) {
 			    			if (reply.hasOwnProperty(key)) {
-			    				branches.append('<option id="reg_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+			    				// branches.append('<option id="reg_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
 			    				branches_stu.append('<option id="reg_branch_stu_'+ reply[key].id +'">' + reply[key].name + '</option>');
 			    			}
 			    		}
@@ -75,11 +76,11 @@
 		function create_new_reg() {
 			var ic = $('#input_reg_ic').val();
 			var reg_date = $('#input_reg_date').val();
-			var reg_branch = $('#input_reg_branch option:selected').attr('id').split('_');
-			var reg_branch_id = reg_branch[2];
+			// var reg_branch = $('#input_reg_branch option:selected').attr('id').split('_');
+			// var reg_branch_id = reg_branch[2];
 			var reg_no = $('#input_reg_no').val();
-			var reg_op = $('#input_reg_op option:selected').attr('id').split('_');
-			var reg_op_id = reg_op[2];
+			// var reg_op = $('#input_reg_op option:selected').attr('id').split('_');
+			// var reg_op_id = reg_op[2];
 			var reg_branch_stu = $('#input_reg_branch_student option:selected').attr('id').split('_');
 			var reg_branch_stu_id = reg_branch_stu[3];
 			var reg_remark = $('#input_reg_remark').val();
@@ -102,8 +103,8 @@
 			    data:{	ic:ic,
 			    		reg_date:reg_date, 
 			    		student_branch_id:reg_branch_stu_id, 
-			    		reg_branch_id:reg_branch_id, 
-			    		reg_op_id:reg_op_id, 
+			    		// reg_branch_id:reg_branch_id, 
+			    		// reg_op_id:reg_op_id, 
 			    		reg_no:reg_no, 
 			    		reg_remark:reg_remark,
 			    		any_am:any_am,
@@ -138,11 +139,11 @@
 			var reg_id = selected_reg_id
 			var ic = $('#input_reg_ic').val();
 			var reg_date = $('#input_reg_date').val();
-			var reg_branch = $('#input_reg_branch option:selected').attr('id').split('_');
-			var reg_branch_id = reg_branch[2];
+			// var reg_branch = $('#input_reg_branch option:selected').attr('id').split('_');
+			// var reg_branch_id = reg_branch[2];
 			var reg_no = $('#input_reg_no').val();
-			var reg_op = $('#input_reg_op option:selected').attr('id').split('_');
-			var reg_op_id = reg_op[2];
+			// var reg_op = $('#input_reg_op option:selected').attr('id').split('_');
+			// var reg_op_id = reg_op[2];
 			var reg_branch_stu = $('#input_reg_branch_student option:selected').attr('id').split('_');
 			var reg_branch_stu_id = reg_branch_stu[3];
 			var reg_remark = $('#input_reg_remark').val();
@@ -261,9 +262,9 @@
 
 								$('#input_reg_ic').val(reply[key].ic);
 								$('#input_reg_date').val(reply[key].reg_date);
-								$('#input_reg_branch option[id="reg_branch_'+reply[key].reg_branch_id+'"]').attr('selected', 'selected');
+								// $('#input_reg_branch option[id="reg_branch_'+reply[key].reg_branch_id+'"]').attr('selected', 'selected');
 								$('#input_reg_no').val(reply[key].reg_no);
-								$('#input_reg_branch option[id="new_user_'+reply[key].reg_op_id+'"]').attr('selected', 'selected');
+								// $('#input_reg_branch option[id="new_user_'+reply[key].reg_op_id+'"]').attr('selected', 'selected');
 								$('#input_reg_branch_student option[id="reg_branch_stu_'+reply[key].student_branch_id+'"]').attr('selected', 'selected');
 								$('#input_reg_remark').val(reply[key].reg_remark);
 
@@ -306,11 +307,11 @@
 	</script>
 </head>
 <div class="highlight">
-<form role="form">
+<form role="form" id="student_reg_form">
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_reg_ic">IC Number</label>
-			<input class="form-control" id="input_reg_ic" >
+			<label for="input_reg_ic">*IC Number(准证号码)</label>
+			<input class="form-control" id="input_reg_ic" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-2">
 			<br>
@@ -320,31 +321,31 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_reg_date">Register Date</label>
-			<input class="form-control" id="input_reg_date" >
+			<label for="input_reg_date">*Register Date(报名日期)</label>
+			<input class="form-control" id="input_reg_date" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_reg_branch">Register Branch</label>
-			<select class="form-control" id="input_reg_branch"></select>
+			<label for="input_reg_branch_student">*Student Branch(学生所在分部)</label>
+			<select class="form-control" id="input_reg_branch_student" data-parsley-trigger="blur" required></select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_reg_no">Register Number</label>
-			<input class="form-control" id="input_reg_no" >
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-4">
-			<label for="input_reg_op">Register Operator</label>
-			<select class="form-control" id="input_reg_op"></select>
-		</div>
-		<div class="col-xs-4">
-			<label for="input_reg_branch_student">Student Branch</label>
-			<select class="form-control" id="input_reg_branch_student"></select>
+			<label for="input_reg_no">*Register Number(报名号码)</label>
+			<input class="form-control" id="input_reg_no" data-parsley-trigger="blur" required>
 		</div>
 	</div>
+<!-- 	<div class="row">
+		<div class="col-xs-4">
+			<label for="input_reg_op">*Register Operator(操作员)</label>
+			<select class="form-control" id="input_reg_op" data-parsley-trigger="blur" required></select>
+		</div>
+		<div class="col-xs-4">
+			<label for="input_reg_branch">*Register Branch(报名所在分部)</label>
+			<select class="form-control" id="input_reg_branch" data-parsley-trigger="blur" required></select>
+		</div>
+	</div> -->
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_reg_remark">Remark</label>
+			<label for="input_reg_remark">Remark(备注)</label>
 			<textarea class="form-control" id="input_reg_remark" rows="3"></textarea>
 		</div>
 	</div>
@@ -432,10 +433,10 @@
 <div class="row">
 	<div class="col-xs-8"></div>
 	<div class="col-xs-2">
-		<a class="button glow button-rounded button-flat" id="reg_new_create">Create</a>
+		<a class="button glow button-rounded button-flat" id="reg_new_create">新建</a>
 	</div>
 	<div class="col-xs-2">
-		<a class="button glow button-rounded button-flat" id="reg_new_update">Update</a>
+		<a class="button glow button-rounded button-flat" id="reg_new_update">更新报名信息</a>
 	</div>
 </div>
 </div>

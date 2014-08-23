@@ -145,8 +145,10 @@ class Api extends CI_Controller
 		$ic = $this->input->post('ic');
 		$reg_date = $this->input->post('reg_date');
 		$student_branch_id = $this->input->post('student_branch_id');
-		$reg_branch_id = $this->input->post('reg_branch_id');
-		$reg_op_id = $this->input->post('reg_op_id');
+		// $reg_branch_id = $this->input->post('reg_branch_id');
+		// $reg_op_id = $this->input->post('reg_op_id');
+		$reg_branch_id = $this->apis->get_user_branch_id();
+		$reg_op_id = $this->tank_auth->get_user_id();
 		$reg_no = $this->input->post('reg_no');
 		$reg_remark = $this->input->post('reg_remark');
 
@@ -176,8 +178,10 @@ class Api extends CI_Controller
 		$ic = $this->input->post('ic');
 		$reg_date = $this->input->post('reg_date');
 		$student_branch_id = $this->input->post('student_branch_id');
-		$reg_branch_id = $this->input->post('reg_branch_id');
-		$reg_op_id = $this->input->post('reg_op_id');
+		// $reg_branch_id = $this->input->post('reg_branch_id');
+		// $reg_op_id = $this->input->post('reg_op_id');
+		$reg_branch_id = $this->apis->get_user_branch_id();
+		$reg_op_id = $this->tank_auth->get_user_id();
 		$reg_no = $this->input->post('reg_no');
 		$reg_remark = $this->input->post('reg_remark');
 		$any_am = $this->input->post('any_am');
@@ -295,8 +299,10 @@ class Api extends CI_Controller
 		$industry = $this->input->post('industry');
 		$designation = $this->input->post('designation');
 		$salary_range = $this->input->post('salary_range');
-		$student_branch_id = $this->input->post('student_branch_id');
-		$student_op_id = $this->input->post('student_op_id');
+		// $student_branch_id = $this->input->post('student_branch_id');
+		// $student_op_id = $this->input->post('student_op_id');
+		$student_branch_id = $this->apis->get_user_branch_id();
+		$student_op_id = $this->tank_auth->get_user_id();
 		$student_remark = $this->input->post('student_remark');
 
 		// create
@@ -377,8 +383,10 @@ class Api extends CI_Controller
 		$industry = $this->input->post('industry');
 		$designation = $this->input->post('designation');
 		$salary_range = $this->input->post('salary_range');
-		$student_branch_id = $this->input->post('student_branch_id');
-		$student_op_id = $this->input->post('student_op_id');
+		// $student_branch_id = $this->input->post('student_branch_id');
+		// $student_op_id = $this->input->post('student_op_id');
+		$student_branch_id = $this->apis->get_user_branch_id();
+		$student_op_id = $this->tank_auth->get_user_id();
 		$student_remark = $this->input->post('student_remark');
 
 		// update
@@ -525,8 +533,10 @@ class Api extends CI_Controller
 		$exam_location = $this->input->post('exam_location');
 		$exam_date = $this->input->post('exam_date');
 		$exam_time = $this->input->post('exam_time');
-		$ato_branch_id = $this->input->post('ato_branch_id');
-		$ato_op_id = $this->input->post('ato_op_id');
+		// $ato_branch_id = $this->input->post('ato_branch_id');
+		// $ato_op_id = $this->input->post('ato_op_id');
+		$ato_branch_id = $this->apis->get_user_branch_id();
+		$ato_op_id = $this->tank_auth->get_user_id();
 		$remark = $this->input->post('remark');
 		
 		// create
@@ -573,8 +583,10 @@ class Api extends CI_Controller
 		$exam_location = $this->input->post('exam_location');
 		$exam_date = $this->input->post('exam_date');
 		$exam_time = $this->input->post('exam_time');
-		$ato_branch_id = $this->input->post('ato_branch_id');
-		$ato_op_id = $this->input->post('ato_op_id');
+		// $ato_branch_id = $this->input->post('ato_branch_id');
+		// $ato_op_id = $this->input->post('ato_op_id');
+		$ato_branch_id = $this->apis->get_user_branch_id();
+		$ato_op_id = $this->tank_auth->get_user_id();
 		$remark = $this->input->post('remark');
 
 		// update
@@ -665,8 +677,10 @@ class Api extends CI_Controller
 		$con = $this->input->post('con');
 		$wri = $this->input->post('wri');
 		$wpn = $this->input->post('wpn');
-		$branch_id = $this->input->post('branch_id');
-		$branch_op_id = $this->input->post('branch_op_id');
+		// $branch_id = $this->input->post('branch_id');
+		// $branch_op_id = $this->input->post('branch_op_id');
+		$branch_id = $this->apis->get_user_branch_id();
+		$branch_op_id = $this->tank_auth->get_user_id();
 		$remark = $this->input->post('remark');
 		
 		// create
@@ -706,8 +720,10 @@ class Api extends CI_Controller
 		$con = $this->input->post('con');
 		$wri = $this->input->post('wri');
 		$wpn = $this->input->post('wpn');
-		$branch_id = $this->input->post('branch_id');
-		$branch_op_id = $this->input->post('branch_op_id');
+		// $branch_id = $this->input->post('branch_id');
+		// $branch_op_id = $this->input->post('branch_op_id');
+		$branch_id = $this->apis->get_user_branch_id();
+		$branch_op_id = $this->tank_auth->get_user_id();
 		$remark = $this->input->post('remark');
 		
 		// update
@@ -1154,9 +1170,11 @@ class Api extends CI_Controller
 		$exp_sign_name = $this->input->post('exp_sign_name');
 		$exp_date = $this->input->post('exp_date');
 		$exp_amount = $this->input->post('exp_amount');
+		$branch_id = $this->apis->get_user_branch_id();
+		$branch_op_id = $this->tank_auth->get_user_id();
 		$exp_remark = $this->input->post('exp_remark');
 		// create
-		$create = $this->apis->create_new_expense_record($exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $exp_remark);
+		$create = $this->apis->create_new_expense_record($exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $branch_id, $branch_op_id, $exp_remark);
 		if($create) {
 			echo 1;
 		}
@@ -1173,9 +1191,11 @@ class Api extends CI_Controller
 		$exp_sign_name = $this->input->post('exp_sign_name');
 		$exp_date = $this->input->post('exp_date');
 		$exp_amount = $this->input->post('exp_amount');
+		$branch_id = $this->apis->get_user_branch_id();
+		$branch_op_id = $this->tank_auth->get_user_id();
 		$exp_remark = $this->input->post('exp_remark');
 		// update
-		$update = $this->apis->update_expense_record($exp_id, $exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $exp_remark);
+		$update = $this->apis->update_expense_record($exp_id, $exp_type, $exp_name, $exp_sign_name, $exp_date, $exp_amount, $branch_id, $branch_op_id, $exp_remark);
 		if($update) {
 			echo 2;
 		}
@@ -1229,8 +1249,10 @@ class Api extends CI_Controller
 		$reg_no = $this->input->post('reg_no');
 		// $related_receipt = $this->input->post('related_receipt');
 		// $related_receipt_amount = $this->input->post('related_receipt_amount');
-		$receipt_branch_id = $this->input->post('receipt_branch_id');
-		$receipt_op_id = $this->input->post('receipt_op_id');
+		// $receipt_branch_id = $this->input->post('receipt_branch_id');
+		// $receipt_op_id = $this->input->post('receipt_op_id');
+		$receipt_branch_id = $this->apis->get_user_branch_id();
+		$receipt_op_id = $this->tank_auth->get_user_id();
 		$receipt_remark = $this->input->post('receipt_remark');
 
 		// create
@@ -1367,8 +1389,10 @@ class Api extends CI_Controller
 		$reg_no = $this->input->post('reg_no');
 		// $related_receipt = $this->input->post('related_receipt');
 		// $related_receipt_amount = $this->input->post('related_receipt_amount');
-		$receipt_branch_id = $this->input->post('receipt_branch_id');
-		$receipt_op_id = $this->input->post('receipt_op_id');
+		// $receipt_branch_id = $this->input->post('receipt_branch_id');
+		// $receipt_op_id = $this->input->post('receipt_op_id');
+		$receipt_branch_id = $this->apis->get_user_branch_id();
+		$receipt_op_id = $this->tank_auth->get_user_id();
 		$receipt_remark = $this->input->post('receipt_remark');
 
 		// update
