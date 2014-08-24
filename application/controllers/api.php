@@ -86,6 +86,18 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 * Get current admin users, combine with their branch, role, status
+	 */
+	function getCurrentAdmin() {
+		$branch_op_id = $this->tank_auth->get_user_id();
+		$admins = $this->apis->get_current_admin($branch_op_id);
+		if($admins != NULL) {
+			echo json_encode($admins);
+		}
+		echo NULL;
+	}
+
+	/**
 	 * Search admin user by username or email
 	 */
 	function searchAdminUser() {

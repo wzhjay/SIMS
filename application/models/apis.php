@@ -54,6 +54,20 @@ class Apis extends CI_Model
 	}
 
 	/**
+	 * get current admin
+	 *
+	 * @param	user if
+	 * @return	array
+	 */
+	function get_current_admin($userid) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM users u, admin_users au, admin_role ar, branch b WHERE (u.id = "'.$userid.'") AND (u.id = au.user_id) AND (au.role_id = ar.id) AND (au.branch_id = b.id)');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;	
+	}
+
+	/**
 	 * Get all branches
 	 *
 	 * @param	none

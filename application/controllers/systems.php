@@ -27,4 +27,8 @@ class Systems extends CI_Controller
 			$this->template->build('systems', $data);
 		}
 	}
+
+	function userProfile() {
+		$this->template->build('/partials/systems/user_profile');
+	}
 }

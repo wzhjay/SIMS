@@ -20,7 +20,7 @@
                     echo '<li><a href="#">Chatting Room</a></li>';
                     echo '<li><a href='.$this->config->base_url().'index.php/auth/change_password>Change Password</a></li>';
                     echo '<li class="divider"></li>';
-                    echo '<li><a href="#">Profile</a></li>';
+                    echo '<li><a href='.$this->config->base_url().'index.php/systems/userProfile>Profile</a></li>';
                     echo '<li class="divider"></li>';
                     echo '<li><a href='.$this->config->base_url().'index.php/auth/logout>Logout</a></li>';
                     echo '</ul>';
