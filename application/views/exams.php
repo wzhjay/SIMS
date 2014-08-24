@@ -30,7 +30,7 @@
 					<?php
 						if($this->apis->check_user_role() == 'admin') {
 							$this->load->view('partials/exams/exam_seat_booking'); 
-						} else if($this->apis->chcek_user_role() == 'operator'){
+						} else if($this->apis->check_user_role() == 'operator'){
 							$this->load->view('partials/exams/exam_seat_booking_operator');
 						}
 					?>
