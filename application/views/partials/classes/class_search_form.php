@@ -520,15 +520,15 @@
 	<h4>输入查询信息</h4>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_class_search_code">Class Code</label>
+			<label for="input_class_search_code">Class Code(班级代码)</label>
 			<input class="form-control" id="input_class_search_code">
 		</div>
 		<div class="col-xs-4">
-			<label for="input_class_search_type">Class Type</label>
+			<label for="input_class_search_type">Class Type(课程类型)</label>
 			<select class="form-control" id="input_class_search_type" ></select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_class_search_type">Class Level</label>
+			<label for="input_class_search_type">Class Level(班级水平)</label>
 			<select class="form-control" id="input_class_search_level">
 		      	<option value="NA">请选择</option>
 		     	<option value="BEGINNERS">初级</option>
@@ -539,7 +539,7 @@
 	</div>
 	<div class="row">
 	    <div class="col-xs-4">
-			<label for="input_class_search_status">Status</label>
+			<label for="input_class_search_status">Status(班级状态)</label>
 			<select class="form-control" id="input_class_search_status" >
 		      <option value="NA">请选择</option>
 		      <option value="preparing">未开班</option>
@@ -549,11 +549,11 @@
 		    </select>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_class_search_branch">Branch</label>
+			<label for="input_class_search_branch">Branch(分部 *操作员请选择ALL或者自己所在branch)</label>
 			<select class="form-control" id="input_class_search_branch" ></select>
 		</div>
 	</div>
-	<label>Start Date</label>
+	<label>Start Date(班级开始日期)</label>
 	<div class="row">
 		<div class="input-daterange">
 			<div class="col-xs-4">
@@ -564,7 +564,7 @@
 			</div>
 		</div>
 	</div>
-	<label>End Date</label>
+	<label>End Date(班级结束日期)</label>
 	<div class="row">
 		<div class="input-daterange">
 			<div class="col-xs-4">

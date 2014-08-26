@@ -202,7 +202,12 @@ class Apis extends CI_Model
 	 */
 	function get_registration_by_ic($ic) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('SELECT * FROM registration WHERE ic = "'.$ic.'"');
+			if($this->apis->check_user_role() == 'admin') {
+				$query = $this->db->query('SELECT * FROM registration r WHERE r.ic = "'.$ic.'"');	
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				$query = $this->db->query('SELECT * FROM registration r WHERE r.ic = "'.$ic.'" AND (r.student_branch_id = "'.$op_branch_id.'")');
+			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -247,7 +252,12 @@ class Apis extends CI_Model
 				if($sun_eve == "1") { $query_partial.=" OR r.sun_eve = 1"; };
 				if($anytime == "1") { $query_partial.=" OR r.anytime = 1"; };
 			}
-			$query = $this->db->query('SELECT r.reg_id, r.ic, r.reg_date, r.reg_no, b1.name AS reg_branch, b2.name AS assigned_branch, r.reg_remark, u.username, r.created, r.modified, r.any_am, r.any_pm, r.any_eve, r.sat_am, r.sat_pm, r.sat_eve, r.sun_am, r.sun_pm, r.sun_eve, r.anytime  FROM registration r, branch b1, branch b2, users u WHERE (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (r.reg_branch_id = b1.id) AND (r.student_branch_id = b2.id) AND (r.reg_op_id = u.id) AND ('.$query_partial.') ORDER BY -DATE(r.reg_date)');
+			if($this->apis->check_user_role() == 'admin') {
+				$query = $this->db->query('SELECT r.reg_id, r.ic, r.reg_date, r.reg_no, b1.name AS reg_branch, b2.name AS assigned_branch, r.reg_remark, u.username, r.created, r.modified, r.any_am, r.any_pm, r.any_eve, r.sat_am, r.sat_pm, r.sat_eve, r.sun_am, r.sun_pm, r.sun_eve, r.anytime  FROM registration r, branch b1, branch b2, users u WHERE (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (r.reg_branch_id = b1.id) AND (r.student_branch_id = b2.id) AND (r.reg_op_id = u.id) AND ('.$query_partial.') ORDER BY -DATE(r.reg_date)');
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				$query = $this->db->query('SELECT r.reg_id, r.ic, r.reg_date, r.reg_no, b1.name AS reg_branch, b2.name AS assigned_branch, r.reg_remark, u.username, r.created, r.modified, r.any_am, r.any_pm, r.any_eve, r.sat_am, r.sat_pm, r.sat_eve, r.sun_am, r.sun_pm, r.sun_eve, r.anytime  FROM registration r, branch b1, branch b2, users u WHERE (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (r.reg_branch_id = b1.id) AND (r.student_branch_id = b2.id) AND (r.reg_op_id = u.id) AND ('.$query_partial.') AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -460,7 +470,12 @@ class Apis extends CI_Model
 	 */
 	function get_student_info_by_ic($ic) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('SELECT * FROM student WHERE ic = "'.$ic.'"');
+			if($this->apis->check_user_role() == 'admin') {
+				$query = $this->db->query('SELECT * FROM student s, registration r WHERE (s.ic = "'.$ic.'")');	
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				$query = $this->db->query('SELECT * FROM student s, registration r WHERE (s.ic = "'.$ic.'") AND (r.student_branch_id = "'.$op_branch_id.'")');
+			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -529,7 +544,12 @@ class Apis extends CI_Model
 	 */
 	function search_students_by_ic($ic) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('SELECT *  FROM registration r, student s WHERE (r.ic = s.ic) AND (s.ic = "'.$ic.'") ORDER BY -DATE(r.reg_date)');
+			if($this->apis->check_user_role() == 'admin') {
+				$query = $this->db->query('SELECT *  FROM registration r, student s WHERE (r.ic = s.ic) AND (s.ic = "'.$ic.'") ORDER BY -DATE(r.reg_date)');
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				$query = $this->db->query('SELECT *  FROM registration r, student s WHERE (r.ic = s.ic) AND (s.ic = "'.$ic.'") AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -543,7 +563,12 @@ class Apis extends CI_Model
 	 */
 	function search_students_by_keyword($keyword) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('SELECT *  FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%") OR (s.tel LIKE "%'.$keyword.'%")) ORDER BY -DATE(r.reg_date)');
+			if($this->apis->check_user_role() == 'admin') {
+				$query = $this->db->query('SELECT *  FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%") OR (s.tel LIKE "%'.$keyword.'%")) ORDER BY -DATE(r.reg_date)');
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				$query = $this->db->query('SELECT *  FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%") OR (s.tel LIKE "%'.$keyword.'%")) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -557,7 +582,12 @@ class Apis extends CI_Model
 	 */
 	function search_students_by_keyword_download($keyword) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('SELECT *  FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%") OR (s.tel LIKE "%'.$keyword.'%")) ORDER BY -DATE(r.reg_date)');
+			if($this->apis->check_user_role() == 'admin') {
+				$query = $this->db->query('SELECT *  FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%") OR (s.tel LIKE "%'.$keyword.'%")) ORDER BY -DATE(r.reg_date)');
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				$query = $this->db->query('SELECT *  FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%") OR (s.tel LIKE "%'.$keyword.'%")) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -578,35 +608,68 @@ class Apis extends CI_Model
 				$to = "2100-01-01";
 			}
 
-			if($have_class == "YES") {
-				if($course_type != "NA" && $level != "NA") {
-					if($slot != "NA") {
-						$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+			if($this->apis->check_user_role() == 'admin') {
+				if($have_class == "YES") {
+					if($course_type != "NA" && $level != "NA") {
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						}
 					} else {
-						$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						}
 					}
 				} else {
-					if($slot != "NA") {
-						$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+					if($course_type != "NA" && $level != "NA") {
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						}
 					} else {
-						$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						}
 					}
 				}
 			} else {
-				if($course_type != "NA" && $level != "NA") {
-					if($slot != "NA") {
-						$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+				$op_branch_id = $this->apis->get_user_branch_id();
+				if($have_class == "YES") {
+					if($course_type != "NA" && $level != "NA") {
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						}
 					} else {
-						$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						}
 					}
 				} else {
-					if($slot != "NA") {
-						$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+					if($course_type != "NA" && $level != "NA") {
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						}
 					} else {
-						$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						}
 					}
 				}
-			}			
+			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -627,35 +690,68 @@ class Apis extends CI_Model
 				$to = "2100-01-01";
 			}
 
-			if($have_class == "YES") {
-				if($course_type != "NA" && $level != "NA") {
-					if($slot != "NA") {
-						$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+			if($this->apis->check_user_role() == 'admin') {
+				if($have_class == "YES") {
+					if($course_type != "NA" && $level != "NA") {
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						}
 					} else {
-						$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						}
 					}
 				} else {
-					if($slot != "NA") {
-						$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+					if($course_type != "NA" && $level != "NA") {
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						}
 					} else {
-						$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						}
 					}
 				}
 			} else {
-				if($course_type != "NA" && $level != "NA") {
-					if($slot != "NA") {
-						$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+				$op_branch_id = $this->apis->get_user_branch_id();
+				if($have_class == "YES") {
+					if($course_type != "NA" && $level != "NA") {
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						}
 					} else {
-						$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						}
 					}
 				} else {
-					if($slot != "NA") {
-						$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+					if($course_type != "NA" && $level != "NA") {
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (sr.'.$course_type.'="'.$level.'") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						}
 					} else {
-						$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) ORDER BY -DATE(r.reg_date)');
+						if($slot != "NA") {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (r.'.$slot.' = "1") AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						} else {
+							$query = $this->db->query('SELECT * FROM registration r, student s, student_records sr, branch b WHERE (r.ic = s.ic) AND (s.ic = sr.student_ic) AND (r.student_branch_id = b.id) AND (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (s.student_id NOT IN (SELECT sc2.student_id FROM student_class sc2)) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+						}
 					}
 				}
-			}			
+			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -730,13 +826,25 @@ class Apis extends CI_Model
 			if($level == 'NA') { $level = "";}
 			if($status == 'NA') { $status = "";}
 
-			if($branch_id == 'ALL') {
-				$query1 = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.created)');
-				if ($query1->num_rows() > 0) return $query1->result_array();
-			}
-			else {
-				$query2 = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.branch_id = "'.$branch_id.'") AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.created)');
-				if ($query2->num_rows() > 0) return $query2->result_array();
+			if($this->apis->check_user_role() == 'admin') {
+				if($branch_id == 'ALL') {
+					$query1 = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.created)');
+					if ($query1->num_rows() > 0) return $query1->result_array();
+				}
+				else {
+					$query2 = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.branch_id = "'.$branch_id.'") AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.created)');
+					if ($query2->num_rows() > 0) return $query2->result_array();
+				}
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				if($branch_id == 'ALL') {
+					$query1 = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") AND (c.branch_id = "'.$op_branch_id.'") ORDER BY -DATE(c.created)');
+					if ($query1->num_rows() > 0) return $query1->result_array();
+				}
+				else {
+					$query2 = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.branch_id = "'.$branch_id.'") AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") AND (c.branch_id = "'.$op_branch_id.'") ORDER BY -DATE(c.created)');
+					if ($query2->num_rows() > 0) return $query2->result_array();
+				}
 			}
 		}
 		return NULL;
@@ -778,7 +886,12 @@ class Apis extends CI_Model
 	 */
 	function get_class_info_by_code($code) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.code = "'.$code.'") ORDER BY c.class_id');
+			if($this->apis->check_user_role() == 'admin') {
+				$query = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.code = "'.$code.'") ORDER BY c.class_id');
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				$query = $this->db->query('SELECT *  FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.code = "'.$code.'") AND (c.branch_id = "'.$op_branch_id.'") ORDER BY c.class_id');
+			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
