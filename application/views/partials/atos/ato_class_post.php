@@ -5,6 +5,10 @@
 		var selected_class_id = 0;
 		var selected_remove_student_id = 0;
 		$(document).ready(function($) {
+			$('#input_ato_class_exam_date').datepicker({
+				format: 'yyyy-mm-dd',
+				todayHighlight: true
+			});
 			event.preventDefault();
 
 			$('#input_class_search_start_from').datepicker({
@@ -54,49 +58,49 @@
 			});
 		});
 
- 		function ato_class_load_admin_users() {
-			var users = $('#input_ato_class_op');
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllAdminUsers",
-			    data:{},
-			    success:function(json){
-			    	users.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			            		users.append('<option id="ato_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
-			            	}
-			            }
-			        }else{
-			        	toastr.error("fail to load users");
-			        }
-			    }
-			});//End ajax
-		}
+ 	// 	function ato_class_load_admin_users() {
+		// 	var users = $('#input_ato_class_op');
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllAdminUsers",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	users.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	            		users.append('<option id="ato_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
+		// 	            	}
+		// 	            }
+		// 	        }else{
+		// 	        	toastr.error("fail to load users");
+		// 	        }
+		// 	    }
+		// 	});//End ajax
+		// }
 
-		function ato_class_load_branches() {
-			var branches = $('#input_ato_class_branch');
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllBranches",
-			    data:{},
-			    success:function(json){
-			    	branches.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			    				branches.append('<option id="ato_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
-			    			}
-			    		}
-			        }else{
-			        	toastr.error("fail to load braches");
-			        }
-			    }
-			});//End ajax
-		}
+		// function ato_class_load_branches() {
+		// 	var branches = $('#input_ato_class_branch');
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllBranches",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	branches.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	    				branches.append('<option id="ato_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+		// 	    			}
+		// 	    		}
+		// 	        }else{
+		// 	        	toastr.error("fail to load braches");
+		// 	        }
+		// 	    }
+		// 	});//End ajax
+		// }
 
 		function class_search_load_type() {
 			var types = $('#input_class_search_type');
@@ -297,10 +301,10 @@
 			var es = $('#input_ato_class_es').is(':checked') ? 'YES' : 'NO';
 			var ew = $('#input_ato_class_ew').is(':checked') ? 'YES' : 'NO';
 
-			var ato_branch = $('#input_ato_class_branch option:selected').attr('id').split('_');
-			var ato_branch_id = ato_branch[2];
-			var ato_op = $('#input_ato_class_op option:selected').attr('id').split('_');
-			var ato_op_id = ato_op[2];
+			// var ato_branch = $('#input_ato_class_branch option:selected').attr('id').split('_');
+			// var ato_branch_id = ato_branch[2];
+			// var ato_op = $('#input_ato_class_op option:selected').attr('id').split('_');
+			// var ato_op_id = ato_op[2];
 			var remark  = $('#input_ato_class_remark').val();
 
 
@@ -345,8 +349,8 @@
 										    		exam_location:exam_location,
 										    		exam_date:exam_date,
 										    		exam_time:exam_time,
-										    		ato_branch_id:ato_branch_id,
-										    		ato_op_id:ato_op_id,
+										    		// ato_branch_id:ato_branch_id,
+										    		// ato_op_id:ato_op_id,
 										    		remark:remark},
 											    success:function(json2){
 											    	if(json2.trim() == '1') {
@@ -600,7 +604,7 @@
 							<select class="form-control" id="input_ato_class_exam_location">
 								<option value="NA">请选择</option>
 					      		<option value="JE">Jurong East</option>
-					      		<option value="UN">EUNOS</option>
+					      		<option value="PY">Paya Lebar</option>
 					      	</select>
 						</div>
 						<div class="col-xs-4">
@@ -655,16 +659,6 @@
 							    	<input type="checkbox" id="input_ato_class_ew"> 写作EW
 							    </label>
 							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-6">
-							<label for="input_ato_class_branch">ATO Branch</label>
-							<select class="form-control" id="input_ato_class_branch"></select>
-						</div>
-						<div class="col-xs-6">
-							<label for="input_ato_op">ATO Operator</label>
-							<select class="form-control" id="input_ato_class_op"></select>
 						</div>
 					</div>
 					<div class="row">

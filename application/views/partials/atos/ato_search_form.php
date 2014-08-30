@@ -73,25 +73,14 @@
 												'<div class="panel-body">' +  
 													'<div class="row">' + 
 														'<div class="col-xs-4">'+ 
-															'<div>Exam Type: ' + reply[key].pre_post + '</div>' +
+															'<div>IC: ' + reply[key].ic + '</div>' +
 														'</div>' + 
-														'<div class="col-xs-4">' +
-															'<div>Class Start Date ' + reply[key].class_start_date + '</div>' + 
-														'</div>' +
-														'<div class="col-xs-4">' +
-															'<div>Class End Date: '+ reply[key].class_end_date + '</div>' + 
-														'</div>' +
-													'</div>' +
-													'<div class="row">' + 
 														'<div class="col-xs-4">' +
 															'<div>Class Code: '+ reply[key].class_code + '</div>' + 
 														'</div>' +
 														'<div class="col-xs-4">' +
 															'<div>Attendance: '+ reply[key].attendance + '</div>' + 
 														'</div>' +
-														// '<div class="col-xs-4">'+ 
-														// 	'<div>Recommend Level: ' + reply[key].recommend_level + '</div>' +
-														// '</div>' + 
 													'</div>' + 
 													'<hr>' + 
 													'<div class="row">' + 
@@ -113,10 +102,13 @@
 													'</div>' + 
 													'<hr>' + 
 													'<div class="row">' + 
-														'<div class="col-xs-3">'+ 
+														'<div class="col-xs-4">'+ 
 															'<div>Exam Location: ' + reply[key].exam_location + '</div>' +
 														'</div>' + 
-														'<div class="col-xs-3">' +
+														'<div class="col-xs-4">'+ 
+															'<div>Exam Datetime: ' + reply[key].exam_date + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-4">' +
 															'<div>Exam Time: ' + reply[key].exam_time +'</div>' + 
 														'</div>' +
 													'</div>' + 

@@ -172,17 +172,17 @@
 											'<tr>' +
 												'<td>09:00</td>' +
 									          	'<td class="JE_09"><span class="form-control">'+reply[key].je_09+'<span></td>' +
-									          	'<td class="PI_09"><span class="form-control">'+reply[key].pi_09+'</td>' +
+									          	'<td class="PY_09"><span class="form-control">'+reply[key].pi_09+'</td>' +
 											'</tr>' +
 											'<tr>' +
 												'<td>14:00</td>' +
 									          	'<td class="JE_14"><span class="form-control">'+reply[key].je_14+'</td>' +
-									          	'<td class="PI_14"><span class="form-control">'+reply[key].pi_14+'</td>' +
+									          	'<td class="PY_14"><span class="form-control">'+reply[key].pi_14+'</td>' +
 											'</tr>' +
 											'<tr>' +
 												'<td>19:00</td>' +
 									          	'<td class="JE_19"><span class="form-control">'+reply[key].je_19+'</td>' +
-									          	'<td class="PI_19"><span class="form-control">'+reply[key].pi_19+'</td>' +
+									          	'<td class="PY_19"><span class="form-control">'+reply[key].pi_19+'</td>' +
 											'</tr>' +
 										'</tbody>' +
 									'</table>'
@@ -208,17 +208,17 @@
 
 										'<td>09:00</td>' +
 							          	'<td class="JE_09"><span type="text" class="form-control">0</td>' +
-							          	'<td class="PI_09"><span type="text" class="form-control">0</td>' +
+							          	'<td class="PY_09"><span type="text" class="form-control">0</td>' +
 									'</tr>' +
 									'<tr>' +
 										'<td>14:00</td>' +
 							          	'<td class="JE_14"><span type="text" class="form-control">0</td>' +
-							          	'<td class="PI_14"><span type="text" class="form-control">0</td>' +
+							          	'<td class="PY_14"><span type="text" class="form-control">0</td>' +
 									'</tr>' +
 									'<tr>' +
 										'<td>19:00</td>' +
 							          	'<td class="JE_19"><span type="text" class="form-control">0</td>' +
-							          	'<td class="PI_19"><span type="text" class="form-control">0</td>' +
+							          	'<td class="PY_19"><span type="text" class="form-control">0</td>' +
 									'</tr>' +
 								'</tbody>' +
 							'</table>'
@@ -455,7 +455,7 @@
 		var en = $('#input_ato_en').is(':checked') ? 'YES' : 'NO';
 		var es = $('#input_ato_es').is(':checked') ? 'YES' : 'NO';
 		var ew = $('#input_ato_ew').is(':checked') ? 'YES' : 'NO';
-		var exam_location = $('#input_ato_exam_location').val();
+		var exam_location = global_location_selected;
 		var exam_date = global_year + '-' + month_selected + '-' + global_day_selected;
 		var exam_time = global_time_selected;
 		// var ato_branch = $('#input_ato_branch option:selected').attr('id').split('_');

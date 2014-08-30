@@ -439,8 +439,8 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_ato_attendance">*Attendance(出席率)</label>
-			<input class="form-control" id="input_ato_attendance" data-parsley-trigger="blur" required>
+			<label for="input_ato_attendance">Attendance(出席率)</label>
+			<input class="form-control" id="input_ato_attendance">
 		</div>
 		<div class="col-xs-2"></div>
 		<div class="col-xs-4">
@@ -498,7 +498,7 @@
 			<select class="form-control" id="input_ato_exam_location">
 				<option value="NA">请选择</option>
 	      		<option value="JE">Jurong East</option>
-	      		<option value="UN">EUNOS</option>
+	      		<option value="PY">Paya Lebar</option>
 	      	</select>
 		</div>
 		<div class="col-xs-4">

@@ -60,6 +60,17 @@
 												'<div id="student_info_record_collapse_body_'+key+'" class="panel-collapse collapse">' + 
 													'<div class="panel-body">' + 
 														'<div class="row">' + 
+															'<div class="col-xs-4">'+ 
+																'<div>IC: ' + reply[key].ic + '</div>' +
+															'</div>' + 
+															'<div class="col-xs-4">' +
+																'<div>Name: ' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname +'</div>' + 
+															'</div>' +
+															'<div class="col-xs-4">' +
+																'<div>Tel: '+ reply[key].tel + '</div>' + 
+															'</div>' +
+														'</div>' + 
+														'<div class="row">' + 
 															'<div class="col-xs-3">'+ 
 																'<div>Registration Date: ' + reply[key].reg_date + '</div>' +
 															'</div>' + 

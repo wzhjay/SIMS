@@ -442,7 +442,12 @@ class Apis extends CI_Model
 	 */
 	function get_student_atos_by_ic($ic) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('SELECT * FROM ato WHERE ic = "'.$ic.'"');
+			if($this->apis->check_user_role() == 'admin') {
+				$query = $this->db->query('SELECT * FROM ato WHERE ic = "'.$ic.'"');
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				$query = $this->db->query('SELECT * FROM ato WHERE ic = "'.$ic.'" AND (branch_id = "'.$op_branch_id.'")');
+			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -765,14 +770,27 @@ class Apis extends CI_Model
 	 */
 	function search_atos_by_time($from, $to, $class_code) {
 		if($this->session->userdata('session_id')) {
-			if($class_code == "") {
-				// search ato info by time only (pre), if post ato change date, this ato also can be found
-				$query = $this->db->query('SELECT DISTINCT * FROM ato a, student s, student_class sc, class c WHERE (a.ic = s.ic) AND (s.student_id = sc.student_id) AND (sc.class_id = c.class_id) AND ((a.pre_post = "PRE") OR ((a.pre_post = "POST") AND (a.post_change_date = "YES"))) AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") GROUP BY a.id ORDER BY -DATE(a.exam_date)');
-				if ($query->num_rows() > 0) return $query->result_array();
+			if($this->apis->check_user_role() == 'admin') {
+				if($class_code == "") {
+					// search ato info by time only (pre), if post ato change date, this ato also can be found
+					$query = $this->db->query('SELECT DISTINCT * FROM ato a, student s, student_class sc, class c WHERE (a.ic = s.ic) AND (s.student_id = sc.student_id) AND (sc.class_id = c.class_id) AND ((a.pre_post = "PRE") OR ((a.pre_post = "POST") AND (a.post_change_date = "YES"))) AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") GROUP BY a.id ORDER BY -DATE(a.exam_date)');
+					if ($query->num_rows() > 0) return $query->result_array();
+				} else {
+					// search ato info by time and class (post), info post ato change date, this ato also cannot be found
+					$query = $this->db->query('SELECT DISTINCT * FROM ato a, student s, class c, student_class sc WHERE (a.ic = s.ic) AND (c.code = "'.$class_code.'") AND (c.class_id = sc.class_id) AND (sc.student_id = s.student_id) AND (a.pre_post = "POST") AND (a.post_change_date = "NO") AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") ORDER BY -DATE(a.exam_date)');
+					if ($query->num_rows() > 0) return $query->result_array();
+				}
 			} else {
-				// search ato info by time and class (post), info post ato change date, this ato also cannot be found
-				$query = $this->db->query('SELECT DISTINCT * FROM ato a, student s, class c, student_class sc WHERE (a.ic = s.ic) AND (c.code = "'.$class_code.'") AND (c.class_id = sc.class_id) AND (sc.student_id = s.student_id) AND (a.pre_post = "POST") AND (a.post_change_date = "NO") AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") ORDER BY -DATE(a.exam_date)');
-				if ($query->num_rows() > 0) return $query->result_array();
+				$op_branch_id = $this->apis->get_user_branch_id();
+				if($class_code == "") {
+					// search ato info by time only (pre), if post ato change date, this ato also can be found
+					$query = $this->db->query('SELECT DISTINCT * FROM ato a, student s, student_class sc, class c WHERE (a.ic = s.ic) AND (s.student_id = sc.student_id) AND (sc.class_id = c.class_id) AND ((a.pre_post = "PRE") OR ((a.pre_post = "POST") AND (a.post_change_date = "YES"))) AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (a.branch_id = "'.$op_branch_id.'") GROUP BY a.id ORDER BY -DATE(a.exam_date)');
+					if ($query->num_rows() > 0) return $query->result_array();
+				} else {
+					// search ato info by time and class (post), info post ato change date, this ato also cannot be found
+					$query = $this->db->query('SELECT DISTINCT * FROM ato a, student s, class c, student_class sc WHERE (a.ic = s.ic) AND (c.code = "'.$class_code.'") AND (c.class_id = sc.class_id) AND (sc.student_id = s.student_id) AND (a.pre_post = "POST") AND (a.post_change_date = "NO") AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (a.branch_id = "'.$op_branch_id.'") ORDER BY -DATE(a.exam_date)');
+					if ($query->num_rows() > 0) return $query->result_array();
+				}
 			}
 		}
 		return NULL;	
@@ -786,14 +804,27 @@ class Apis extends CI_Model
 	 */
 	function search_atos_by_time_download($from, $to, $class_code, $location, $slot) {
 		if($this->session->userdata('session_id')) {
-			if($class_code == "") {
-				// search ato info by time only (pre), if post ato change date, this ato also can be found
-				$query = $this->db->query('SELECT DISTINCT a.pre_post, a.exam_location, c.code, c.start_date, c.end_date, c.type, a.attendance, a.recommend_level, a.el, a.er, a.en, a.es, a.ew, s.ic, s.ic_type, s.salutation, s.lastname, s.firstname, s.othername, s.gender, s.birthday, s.age, s.citizenship, s.nationality, s.race, s.cn_level, s.edu_level, s.lang, s.block, s.street, s.floor_unit_no, s.building, s.postcode, s.tel, s.emp_status, s.company_type, s.company_name, s.company_reg_no, s.industry, s.designation, s.salary_range, "changchun@changchun.edu.sg" FROM ato a, student s, student_class sc, class c WHERE (a.ic = s.ic) AND (s.student_id = sc.student_id) AND (sc.class_id = c.class_id) AND ((a.pre_post = "PRE") OR ((a.pre_post = "POST") AND (a.post_change_date = "YES"))) AND (a.exam_location = "'.$location.'") AND (a.exam_time = "'.$slot.'") AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") GROUP BY a.id ORDER BY -DATE(a.exam_date)');
-				if ($query->num_rows() > 0) return $query->result_array();
+			if($this->apis->check_user_role() == 'admin') {
+				if($class_code == "") {
+					// search ato info by time only (pre), if post ato change date, this ato also can be found
+					$query = $this->db->query('SELECT DISTINCT a.pre_post, a.exam_location, c.code, c.start_date, c.end_date, c.type, a.attendance, a.el, a.er, a.en, a.es, a.ew, s.ic, s.ic_type, s.salutation, s.lastname, s.firstname, s.othername, s.gender, s.birthday, s.age, s.citizenship, s.nationality, s.race, s.cn_level, s.edu_level, s.lang, s.block, s.street, s.floor_unit_no, s.building, s.postcode, s.tel, s.emp_status, s.company_type, s.company_name, s.company_reg_no, s.industry, s.designation, s.salary_range, "changchun@changchun.edu.sg" FROM ato a, student s, student_class sc, class c WHERE (a.ic = s.ic) AND (s.student_id = sc.student_id) AND (sc.class_id = c.class_id) AND ((a.pre_post = "PRE") OR ((a.pre_post = "POST") AND (a.post_change_date = "YES"))) AND (a.exam_location = "'.$location.'") AND (a.exam_time = "'.$slot.'") AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") GROUP BY a.id ORDER BY -DATE(a.exam_date)');
+					if ($query->num_rows() > 0) return $query->result_array();
+				} else {
+					// search ato info by time and class (post), info post ato change date, this ato also cannot be found
+					$query = $this->db->query('SELECT DISTINCT a.pre_post, a.exam_location, c.code, c.start_date, c.end_date, c.type, a.attendance, a.el, a.er, a.en, a.es, a.ew, s.ic, s.ic_type, s.salutation, s.lastname, s.firstname, s.othername, s.gender, s.birthday, s.age, s.citizenship, s.nationality, s.race, s.cn_level, s.edu_level, s.lang, s.block, s.street, s.floor_unit_no, s.building, s.postcode, s.tel, s.emp_status, s.company_type, s.company_name, s.company_reg_no, s.industry, s.designation, s.salary_range, "changchun@changchun.edu.sg" FROM ato a, student s, class c, student_class sc WHERE (a.ic = s.ic) AND (c.code = "'.$class_code.'") AND (c.class_id = sc.class_id) AND (sc.student_id = s.student_id) AND (a.pre_post = "POST") AND (a.post_change_date = "NO") AND (a.exam_location = "'.$location.'") AND (a.exam_time = "'.$slot.'") AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") ORDER BY -DATE(a.exam_date)');
+					if ($query->num_rows() > 0) return $query->result_array();
+				}
 			} else {
-				// search ato info by time and class (post), info post ato change date, this ato also cannot be found
-				$query = $this->db->query('SELECT DISTINCT a.pre_post, a.exam_location, c.code, c.start_date, c.end_date, c.type, a.attendance, a.recommend_level, a.el, a.er, a.en, a.es, a.ew, s.ic, s.ic_type, s.salutation, s.lastname, s.firstname, s.othername, s.gender, s.birthday, s.age, s.citizenship, s.nationality, s.race, s.cn_level, s.edu_level, s.lang, s.block, s.street, s.floor_unit_no, s.building, s.postcode, s.tel, s.emp_status, s.company_type, s.company_name, s.company_reg_no, s.industry, s.designation, s.salary_range, "changchun@changchun.edu.sg" FROM ato a, student s, class c, student_class sc WHERE (a.ic = s.ic) AND (c.code = "'.$class_code.'") AND (c.class_id = sc.class_id) AND (sc.student_id = s.student_id) AND (a.pre_post = "POST") AND (a.post_change_date = "NO") AND (a.exam_location = "'.$location.'") AND (a.exam_time = "'.$slot.'") AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") ORDER BY -DATE(a.exam_date)');
-				if ($query->num_rows() > 0) return $query->result_array();
+				$op_branch_id = $this->apis->get_user_branch_id();
+				if($class_code == "") {
+					// search ato info by time only (pre), if post ato change date, this ato also can be found
+					$query = $this->db->query('SELECT DISTINCT a.pre_post, a.exam_location, c.code, c.start_date, c.end_date, c.type, a.attendance, a.el, a.er, a.en, a.es, a.ew, s.ic, s.ic_type, s.salutation, s.lastname, s.firstname, s.othername, s.gender, s.birthday, s.age, s.citizenship, s.nationality, s.race, s.cn_level, s.edu_level, s.lang, s.block, s.street, s.floor_unit_no, s.building, s.postcode, s.tel, s.emp_status, s.company_type, s.company_name, s.company_reg_no, s.industry, s.designation, s.salary_range, "changchun@changchun.edu.sg" FROM ato a, student s, student_class sc, class c WHERE (a.ic = s.ic) AND (s.student_id = sc.student_id) AND (sc.class_id = c.class_id) AND ((a.pre_post = "PRE") OR ((a.pre_post = "POST") AND (a.post_change_date = "YES"))) AND (a.exam_location = "'.$location.'") AND (a.exam_time = "'.$slot.'") AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (a.branch_id = "'.$op_branch_id.'") GROUP BY a.id ORDER BY -DATE(a.exam_date)');
+					if ($query->num_rows() > 0) return $query->result_array();
+				} else {
+					// search ato info by time and class (post), info post ato change date, this ato also cannot be found
+					$query = $this->db->query('SELECT DISTINCT a.pre_post, a.exam_location, c.code, c.start_date, c.end_date, c.type, a.attendance, a.el, a.er, a.en, a.es, a.ew, s.ic, s.ic_type, s.salutation, s.lastname, s.firstname, s.othername, s.gender, s.birthday, s.age, s.citizenship, s.nationality, s.race, s.cn_level, s.edu_level, s.lang, s.block, s.street, s.floor_unit_no, s.building, s.postcode, s.tel, s.emp_status, s.company_type, s.company_name, s.company_reg_no, s.industry, s.designation, s.salary_range, "changchun@changchun.edu.sg" FROM ato a, student s, class c, student_class sc WHERE (a.ic = s.ic) AND (c.code = "'.$class_code.'") AND (c.class_id = sc.class_id) AND (sc.student_id = s.student_id) AND (a.pre_post = "POST") AND (a.post_change_date = "NO") AND (a.exam_location = "'.$location.'") AND (a.exam_time = "'.$slot.'") AND (DATE(a.exam_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (a.branch_id = "'.$op_branch_id.'") ORDER BY -DATE(a.exam_date)');
+					if ($query->num_rows() > 0) return $query->result_array();
+				}
 			}
 		}
 		return NULL;	
@@ -1037,13 +1068,25 @@ class Apis extends CI_Model
 	 */
 	function search_expense_by_multiple_var($exp_type, $exp_name, $exp_sign_name, $exp_date_from, $exp_date_to) {
 		if($this->session->userdata('session_id')) {
-			if($exp_type == 'NA') { 
-				$query1 = $this->db->query('SELECT *  FROM expense e WHERE (e.exp_name LIKE "%'.$exp_name.'%") AND (e.exp_sign_name LIKE "%'.$exp_sign_name.'%") AND (DATE(e.exp_date) BETWEEN "'.$exp_date_from.'" AND "'.$exp_date_to.'") ORDER BY -DATE(e.exp_date)');
-				if ($query1->num_rows() > 0) return $query1->result_array();
-			}
-			else {
-				$query2 = $this->db->query('SELECT *  FROM expense e WHERE (e.exp_name LIKE "%'.$exp_name.'%") AND (e.exp_type = "'.$exp_type.'") AND (e.exp_sign_name LIKE "%'.$exp_sign_name.'%") AND (DATE(e.exp_date) BETWEEN "'.$exp_date_from.'" AND "'.$exp_date_to.'") ORDER BY -DATE(e.exp_date)');
-				if ($query2->num_rows() > 0) return $query2->result_array();	
+			if($this->apis->check_user_role() == 'admin') {
+				if($exp_type == 'NA') { 
+					$query1 = $this->db->query('SELECT *  FROM expense e WHERE (e.exp_name LIKE "%'.$exp_name.'%") AND (e.exp_sign_name LIKE "%'.$exp_sign_name.'%") AND (DATE(e.exp_date) BETWEEN "'.$exp_date_from.'" AND "'.$exp_date_to.'") ORDER BY -DATE(e.exp_date)');
+					if ($query1->num_rows() > 0) return $query1->result_array();
+				}
+				else {
+					$query2 = $this->db->query('SELECT *  FROM expense e WHERE (e.exp_name LIKE "%'.$exp_name.'%") AND (e.exp_type = "'.$exp_type.'") AND (e.exp_sign_name LIKE "%'.$exp_sign_name.'%") AND (DATE(e.exp_date) BETWEEN "'.$exp_date_from.'" AND "'.$exp_date_to.'") ORDER BY -DATE(e.exp_date)');
+					if ($query2->num_rows() > 0) return $query2->result_array();	
+				}
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				if($exp_type == 'NA') { 
+					$query1 = $this->db->query('SELECT *  FROM expense e WHERE (e.exp_name LIKE "%'.$exp_name.'%") AND (e.exp_sign_name LIKE "%'.$exp_sign_name.'%") AND (DATE(e.exp_date) BETWEEN "'.$exp_date_from.'" AND "'.$exp_date_to.'") AND (e.branch_id = "'.$op_branch_id.'") ORDER BY -DATE(e.exp_date)');
+					if ($query1->num_rows() > 0) return $query1->result_array();
+				}
+				else {
+					$query2 = $this->db->query('SELECT *  FROM expense e WHERE (e.exp_name LIKE "%'.$exp_name.'%") AND (e.exp_type = "'.$exp_type.'") AND (e.exp_sign_name LIKE "%'.$exp_sign_name.'%") AND (DATE(e.exp_date) BETWEEN "'.$exp_date_from.'" AND "'.$exp_date_to.'") AND (e.branch_id = "'.$op_branch_id.'") ORDER BY -DATE(e.exp_date)');
+					if ($query2->num_rows() > 0) return $query2->result_array();	
+				}
 			}
 			return NULL;
 		}
@@ -1086,12 +1129,23 @@ class Apis extends CI_Model
 	function search_receipt_by_multiple_var($student_ic, $receipt_no, $receipt_branch, $course_type, $receipt_date_from, $receipt_date_to) {
 		if($this->session->userdata('session_id')) {
 			if($course_type == 'ALL') { $course_type = "";}
-			if($receipt_branch == 'ALL') {	
-				$query1 = $this->db->query('SELECT *  FROM receipt r, branch b WHERE (b.id = r.receipt_branch_id) AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") ORDER BY -DATE(r.receipt_date)');
-				if ($query1->num_rows() > 0) return $query1->result_array();
+			if($this->apis->check_user_role() == 'admin') {
+				if($receipt_branch == 'ALL') {	
+					$query1 = $this->db->query('SELECT *  FROM receipt r, branch b WHERE (b.id = r.receipt_branch_id) AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") ORDER BY -DATE(r.receipt_date)');
+					if ($query1->num_rows() > 0) return $query1->result_array();
+				} else {
+					$query2 = $this->db->query('SELECT *  FROM receipt r, branch b WHERE (b.id = r.receipt_branch_id) AND (r.receipt_branch_id = "'.$receipt_branch.'") AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") ORDER BY -DATE(r.receipt_date)');
+					if ($query2->num_rows() > 0) return $query2->result_array();
+				}	
 			} else {
-				$query2 = $this->db->query('SELECT *  FROM receipt r, branch b WHERE (b.id = r.receipt_branch_id) AND (r.receipt_branch_id = "'.$receipt_branch.'") AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") ORDER BY -DATE(r.receipt_date)');
-				if ($query2->num_rows() > 0) return $query2->result_array();
+				$op_branch_id = $this->apis->get_user_branch_id();
+				if($receipt_branch == 'ALL') {	
+					$query1 = $this->db->query('SELECT *  FROM receipt r, branch b WHERE (b.id = r.receipt_branch_id) AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") AND (r.receipt_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.receipt_date)');
+					if ($query1->num_rows() > 0) return $query1->result_array();
+				} else {
+					$query2 = $this->db->query('SELECT *  FROM receipt r, branch b WHERE (b.id = r.receipt_branch_id) AND (r.receipt_branch_id = "'.$receipt_branch.'") AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") AND (r.receipt_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.receipt_date)');
+					if ($query2->num_rows() > 0) return $query2->result_array();
+				}
 			}
 		}
 		return NULL;
@@ -1106,12 +1160,23 @@ class Apis extends CI_Model
 	function search_receipt_by_multiple_var_download($student_ic, $receipt_no, $receipt_branch, $course_type, $receipt_date_from, $receipt_date_to) {
 		if($this->session->userdata('session_id')) {
 			if($course_type == 'ALL') { $course_type = "";}
-			if($receipt_branch == 'ALL') {	
-				$query1 = $this->db->query('SELECT r.receipt_type, r.receipt_date, r.receipt_no, r.receipt_amount, r.student_ic, r.payee_name, s.tel, r.makeup, r.student_before, r.course_type, u.username, b.name, r.receipt_remark FROM receipt r, branch b, student s, users u WHERE (b.id = r.receipt_branch_id) AND (r.student_ic = s.ic) AND (r.receipt_op_id = u.id) AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") ORDER BY -DATE(r.receipt_date)');
-				if ($query1->num_rows() > 0) return $query1->result_array();
+			if($this->apis->check_user_role() == 'admin') {
+				if($receipt_branch == 'ALL') {	
+					$query1 = $this->db->query('SELECT r.receipt_type, r.receipt_date, r.receipt_no, r.receipt_amount, r.student_ic, r.payee_name, s.tel, r.makeup, r.student_before, r.course_type, u.username, b.name, r.receipt_remark FROM receipt r, branch b, student s, users u WHERE (b.id = r.receipt_branch_id) AND (r.student_ic = s.ic) AND (r.receipt_op_id = u.id) AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") ORDER BY -DATE(r.receipt_date)');
+					if ($query1->num_rows() > 0) return $query1->result_array();
+				} else {
+					$query2 = $this->db->query('SELECT r.receipt_type, r.receipt_date, r.receipt_no, r.receipt_amount, r.student_ic, r.payee_name, s.tel, r.makeup, r.student_before, r.course_type, u.username, b.name, r.receipt_remark FROM receipt r, branch b, student s, users u WHERE (b.id = r.receipt_branch_id) AND (r.student_ic = s.ic) AND (r.receipt_op_id = u.id) AND (r.receipt_branch_id = "'.$receipt_branch.'") AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") ORDER BY -DATE(r.receipt_date)');
+					if ($query2->num_rows() > 0) return $query2->result_array();
+				}	
 			} else {
-				$query2 = $this->db->query('SELECT r.receipt_type, r.receipt_date, r.receipt_no, r.receipt_amount, r.student_ic, r.payee_name, s.tel, r.makeup, r.student_before, r.course_type, u.username, b.name, r.receipt_remark FROM receipt r, branch b, student s, users u WHERE (b.id = r.receipt_branch_id) AND (r.student_ic = s.ic) AND (r.receipt_op_id = u.id) AND (r.receipt_branch_id = "'.$receipt_branch.'") AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") ORDER BY -DATE(r.receipt_date)');
-				if ($query2->num_rows() > 0) return $query2->result_array();
+				$op_branch_id = $this->apis->get_user_branch_id();
+				if($receipt_branch == 'ALL') {	
+					$query1 = $this->db->query('SELECT r.receipt_type, r.receipt_date, r.receipt_no, r.receipt_amount, r.student_ic, r.payee_name, s.tel, r.makeup, r.student_before, r.course_type, u.username, b.name, r.receipt_remark FROM receipt r, branch b, student s, users u WHERE (b.id = r.receipt_branch_id) AND (r.student_ic = s.ic) AND (r.receipt_op_id = u.id) AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") AND (r.receipt_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.receipt_date)');
+					if ($query1->num_rows() > 0) return $query1->result_array();
+				} else {
+					$query2 = $this->db->query('SELECT r.receipt_type, r.receipt_date, r.receipt_no, r.receipt_amount, r.student_ic, r.payee_name, s.tel, r.makeup, r.student_before, r.course_type, u.username, b.name, r.receipt_remark FROM receipt r, branch b, student s, users u WHERE (b.id = r.receipt_branch_id) AND (r.student_ic = s.ic) AND (r.receipt_op_id = u.id) AND (r.receipt_branch_id = "'.$receipt_branch.'") AND (r.student_ic LIKE "%'.$student_ic.'%") AND (r.receipt_no LIKE "%'.$receipt_no.'%") AND (r.course_type LIKE "%'.$course_type.'%") AND (DATE(r.receipt_date) BETWEEN "'.$receipt_date_from.'" AND "'.$receipt_date_to.'") AND (r.receipt_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.receipt_date)');
+					if ($query2->num_rows() > 0) return $query2->result_array();
+				}
 			}
 		}
 		return NULL;

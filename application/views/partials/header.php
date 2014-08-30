@@ -32,7 +32,13 @@
             <li><a href="<?php echo $this->config->base_url(); ?>index.php/exams">考试管理</a></li>
             <li><a href="<?php echo $this->config->base_url(); ?>index.php/atos">ATO管理</a></li>
             <li><a href="<?php echo $this->config->base_url(); ?>index.php/financial">收支管理</a></li>
-            <li><a href="<?php echo $this->config->base_url(); ?>index.php/systems">系统管理</a></li>
+            <?php
+                if($this->apis->check_user_role() == 'admin') {
+                    echo '<li><a href='.$this->config->base_url().'index.php/systems>系统管理</a></li>';
+                } else {
+                    echo '<li><a href='.$this->config->base_url().'index.php/systems/userProfile>系统管理</a></li>';
+                }
+            ?>
           </ul>
     </div>
   </div>
