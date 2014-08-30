@@ -623,6 +623,8 @@
 	            <option value="MY">Malaysian </option>
 	            <option value="IN">Indian </option>
 	            <option value="ID">Indonesian </option>
+	            <option value="VN">Vietnamese </option>
+	            <option value="TH">Thai </option>
 	            <option value="AF">Afghan </option>
 	            <option value="AL">Albanian </option>
 	            <option value="DZ">Algerian </option>
@@ -817,7 +819,6 @@
 	            <option value="TW">Taiwanese </option>
 	            <option value="TI">Tajikistani </option>
 	            <option value="TZ">Tanzanian  </option>
-	            <option value="TH">Thai </option>
 	            <option value="TE">Timorense </option>
 	            <option value="TG">Togo </option>
 	            <option value="TK">Tokelau Islands  </option>
@@ -836,7 +837,6 @@
 	            <option value="UZ">Uzbek  </option>
 	            <option value="VU">Vanuatu </option>
 	            <option value="VE">Venezuelan </option>
-	            <option value="VN">Vietnamese </option>
 	            <option value="WF">Wallis And Futuna  </option>
 	            <option value="EH">Western Sahara </option>
 	            <option value="YE">Yemen Arab Rep </option>

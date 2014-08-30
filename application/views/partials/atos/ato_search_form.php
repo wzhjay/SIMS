@@ -89,9 +89,9 @@
 														'<div class="col-xs-4">' +
 															'<div>Attendance: '+ reply[key].attendance + '</div>' + 
 														'</div>' +
-														'<div class="col-xs-4">'+ 
-															'<div>Recommend Level: ' + reply[key].recommend_level + '</div>' +
-														'</div>' + 
+														// '<div class="col-xs-4">'+ 
+														// 	'<div>Recommend Level: ' + reply[key].recommend_level + '</div>' +
+														// '</div>' + 
 													'</div>' + 
 													'<hr>' + 
 													'<div class="row">' + 

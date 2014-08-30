@@ -394,9 +394,9 @@ class Apis extends CI_Model
 	 * @param	$ic, $pre_post, $recommend_level, $class_start_date,  $class_end_date, $class_code, $attendance, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $remark
 	 * @return	bool
 	 */
-	function create_new_ato($ic, $pre_post, $recommend_level, $class_code, $attendance, $post_change_date, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $ato_branch_id, $ato_op_id, $remark) {
+	function create_new_ato($ic, $pre_post, $class_code, $attendance, $post_change_date, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $ato_branch_id, $ato_op_id, $remark) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('INSERT INTO ato (ic, pre_post, recommend_level, class_code, attendance, post_change_date, el, er, en, es, ew, exam_location, exam_date, exam_time, branch_id, branch_op_id, created, modified, remark) VALUES ("'.$ic.'", "'.$pre_post.'", "'.$recommend_level.'", "'.$class_code.'", "'.$attendance.'", "'.$post_change_date.'", "'.$el.'", "'.$er.'", "'.$en.'", "'.$es.'", "'.$ew.'", "'.$exam_location.'", "'.$exam_date.'", "'.$exam_time.'", "'.$ato_branch_id.'", "'.$ato_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$remark.'")');
+			$query = $this->db->query('INSERT INTO ato (ic, pre_post, class_code, attendance, post_change_date, el, er, en, es, ew, exam_location, exam_date, exam_time, branch_id, branch_op_id, created, modified, remark) VALUES ("'.$ic.'", "'.$pre_post.'", "'.$class_code.'", "'.$attendance.'", "'.$post_change_date.'", "'.$el.'", "'.$er.'", "'.$en.'", "'.$es.'", "'.$ew.'", "'.$exam_location.'", "'.$exam_date.'", "'.$exam_time.'", "'.$ato_branch_id.'", "'.$ato_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$remark.'")');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;
@@ -408,9 +408,9 @@ class Apis extends CI_Model
 	 * @param	$ic, $pre_post, $recommend_level, $class_start_date,  $class_end_date, $class_code, $attendance, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $remark
 	 * @return	bool where ato.id = get id by ic
 	 */
-	function update_ato($id, $pre_post, $recommend_level, $class_code, $attendance, $post_change_date, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $ato_branch_id, $ato_op_id, $remark) {
+	function update_ato($id, $pre_post, $class_code, $attendance, $post_change_date, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $ato_branch_id, $ato_op_id, $remark) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('UPDATE ato SET pre_post = "'.$pre_post.'", recommend_level = "'.$recommend_level.'", class_code = "'.$class_code.'", attendance = "'.$attendance.'", post_change_date = "'.$post_change_date.'", el = "'.$el.'", er = "'.$er.'", en = "'.$en.'", es = "'.$es.'", ew = "'.$ew.'", exam_location = "'.$exam_location.'", exam_date = "'.$exam_date.'", exam_time = "'.$exam_time.'", branch_id = "'.$ato_branch_id.'", branch_op_id = "'.$ato_op_id.'", modified = "'.date('Y-m-d H:i:s').'", remark = "'.$remark.'" WHERE id = "'.$id.'"');
+			$query = $this->db->query('UPDATE ato SET pre_post = "'.$pre_post.'", class_code = "'.$class_code.'", attendance = "'.$attendance.'", post_change_date = "'.$post_change_date.'", el = "'.$el.'", er = "'.$er.'", en = "'.$en.'", es = "'.$es.'", ew = "'.$ew.'", exam_location = "'.$exam_location.'", exam_date = "'.$exam_date.'", exam_time = "'.$exam_time.'", branch_id = "'.$ato_branch_id.'", branch_op_id = "'.$ato_op_id.'", modified = "'.date('Y-m-d H:i:s').'", remark = "'.$remark.'" WHERE id = "'.$id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;
@@ -471,10 +471,10 @@ class Apis extends CI_Model
 	function get_student_info_by_ic($ic) {
 		if($this->session->userdata('session_id')) {
 			if($this->apis->check_user_role() == 'admin') {
-				$query = $this->db->query('SELECT * FROM student s, registration r WHERE (s.ic = "'.$ic.'")');	
+				$query = $this->db->query('SELECT * FROM student s, registration r WHERE (s.ic = "'.$ic.'") AND (s.ic = r.ic)');	
 			} else {
 				$op_branch_id = $this->apis->get_user_branch_id();
-				$query = $this->db->query('SELECT * FROM student s, registration r WHERE (s.ic = "'.$ic.'") AND (r.student_branch_id = "'.$op_branch_id.'")');
+				$query = $this->db->query('SELECT * FROM student s, registration r WHERE (s.ic = "'.$ic.'") AND (s.ic = r.ic) AND (r.student_branch_id = "'.$op_branch_id.'")');
 			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}

@@ -533,7 +533,7 @@ class Api extends CI_Controller
 	function createATOInfo() {
 		$ic = $this->input->post('ic').trim(" ");
 		$pre_post = $this->input->post('pre_post');
-		$recommend_level = $this->input->post('recommend_level');
+		// $recommend_level = $this->input->post('recommend_level');
 		$class_code = $this->input->post('class_code');
 		$attendance = $this->input->post('attendance');
 		$post_change_date = $this->input->post('post_change_date');
@@ -555,7 +555,7 @@ class Api extends CI_Controller
 		$create = $this->apis->create_new_ato(
 			$ic,
 			$pre_post,
-			$recommend_level,
+			// $recommend_level,
 			$class_code, 
 			$attendance, 
 			$post_change_date,
@@ -583,7 +583,7 @@ class Api extends CI_Controller
 		// $ic = $this->input->post('ic').trim(" ");
 		$id = $this->input->post('id');
 		$pre_post = $this->input->post('pre_post');
-		$recommend_level = $this->input->post('recommend_level');
+		// $recommend_level = $this->input->post('recommend_level');
 		$class_code = $this->input->post('class_code');
 		$attendance = $this->input->post('attendance');
 		$post_change_date = $this->input->post('post_change_date');
@@ -605,7 +605,7 @@ class Api extends CI_Controller
 		$update = $this->apis->update_ato(
 			$id,
 			$pre_post,
-			$recommend_level,
+			// $recommend_level,
 			$class_code, 
 			$attendance, 
 			$post_change_date,

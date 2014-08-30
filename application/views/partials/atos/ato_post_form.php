@@ -91,7 +91,7 @@
 		function insert_ato_info() {
 			var ic = $('#input_ato_ic').val();
 			var pre_post = $('#input_ato_pre_post').val();
-			var recommend_level = $('#input_ato_recommend_level').val();
+			// var recommend_level = $('#input_ato_recommend_level').val();
 			var class_code = $('#input_ato_class_code').val();
 			var attendance = $('#input_ato_attendance').val();
 			var post_change_date = $('#input_ato_post_change_date').is(':checked') ? 'YES' : 'NO';
@@ -114,7 +114,7 @@
 			    url:window.api_url + "createATOInfo",
 			    data:{	ic:ic,
 			    		pre_post:pre_post, 
-			    		recommend_level:recommend_level, 
+			    		// recommend_level:recommend_level, 
 			    		class_code:class_code, 
 			    		attendance:attendance,
 			    		post_change_date:post_change_date,
@@ -143,7 +143,7 @@
 		function update_ato_info(ato_id) {
 			var ic = $('#input_ato_ic').val();
 			var pre_post = $('#input_ato_pre_post').val();
-			var recommend_level = $('#input_ato_recommend_level').val();
+			// var recommend_level = $('#input_ato_recommend_level').val();
 			var class_code = $('#input_ato_class_code').val();
 			var attendance = $('#input_ato_attendance').val();
 			var post_change_date = $('#input_ato_post_change_date').is(':checked') ? 'YES' : 'NO';
@@ -166,7 +166,7 @@
 			    url:window.api_url + "updateATOInfo",
 			    data:{	id:ato_id,
 			    		pre_post:pre_post, 
-			    		recommend_level:recommend_level, 
+			    		// recommend_level:recommend_level, 
 			    		class_code:class_code, 
 			    		attendance:attendance,
 			    		post_change_date:post_change_date,
@@ -233,10 +233,10 @@
 											'<label for="student_ato_ic_check_model_exam_type">考试类型</label>' + 
 											'<div class="form-control" id="student_ato_ic_check_model_exam_type">' + reply[key].pre_post + '</div>' + 
 										'</div>' +
-										'<div class="col-xs-2">' + 
-											'<label for="student_ato_ic_check_model_recommend_level">推荐等级</label>' + 
-											'<div class="form-control" id="student_ato_ic_check_model_recommend_level">' + reply[key].recommend_level + '</div>' + 
-										'</div>' +
+										// '<div class="col-xs-2">' + 
+										// 	'<label for="student_ato_ic_check_model_recommend_level">推荐等级</label>' + 
+										// 	'<div class="form-control" id="student_ato_ic_check_model_recommend_level">' + reply[key].recommend_level + '</div>' + 
+										// '</div>' +
 										'<div class="col-xs-6">' +
 											'<label for="student_ato_ic_check_model_remark">备注</label>' +
 											'<div class="form-control" id="student_ato_ic_check_model_remark">'+ reply[key].remark + '</div>' + 
@@ -306,10 +306,10 @@
 											'<label>科目</label>' + 
 											'<div class="form-control">' + reply[key].type + '</div>' + 
 										'</div>' +
-										'<div class="col-xs-3">' + 
-											'<label>等级</label>' + 
-											'<div class="form-control">' + reply[key].level + '</div>' + 
-										'</div>' +
+										// '<div class="col-xs-3">' + 
+										// 	'<label>等级</label>' + 
+										// 	'<div class="form-control">' + reply[key].level + '</div>' + 
+										// '</div>' +
 									'</div>' +
 									'<div class="row">' + 
 										'<div class="col-xs-4">'+ 
@@ -377,7 +377,7 @@
 								$('#input_ato_remark').val(reply[key].remark);
 
 								$('#input_ato_pre_post option[value="'+reply[key].pre_post+'"]').attr('selected', 'selected');
-								$('#input_ato_recommend_level option[value="'+reply[key].recommend_level+'"]').attr('selected', 'selected');
+								// $('#input_ato_recommend_level option[value="'+reply[key].recommend_level+'"]').attr('selected', 'selected');
 								$('#input_ato_exam_location option[value="'+reply[key].exam_location+'"]').attr('selected', 'selected');
 								$('#input_ato_exam_time option[value="'+reply[key].exam_time+'"]').attr('selected', 'selected');
 								// $('#input_ato_branch option[id="ato_branch_'+reply[key].branch_id+'"]').attr('selected', 'selected');
@@ -416,7 +416,7 @@
 			<br>
 			<a class="button glow button-rounded button-flat" id="student_ato_ic_check" data-toggle="modal" data-target="#student-ato-modal">Check</a>
 		</div>
-		<div class="col-xs-4">
+<!-- 		<div class="col-xs-4">
 			<label for="input_ato_recommend_level">*Recommend Level(推荐等级)</label>
 			<select class="form-control" id="input_ato_recommend_level">
             	<option value="NA">请选择</option>
@@ -425,7 +425,7 @@
                 <option value="INTERMEDIATE">中级</option>
                 <option value="ADVANCED">高级</option>
             </select>
-		</div>
+		</div> -->
 	</div>
 	<div class="row">
 		<div class="col-xs-4">

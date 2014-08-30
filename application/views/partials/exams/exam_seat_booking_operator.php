@@ -1,915 +1,935 @@
- <head>
-	<meta charset="utf-8">
-
-	<script>
-		var global_selected_seat_available_el = null;
-		var pre_next = 0;
-		var month_selected = 0;
-		var year_selected = 0;
-		$(document).ready(function($) {
-			build_exam_booking_calender(pre_next);
-
-			$('#exam_seat_booking_pre_month').on('click', function() {
-				pre_next -= 1;
-				build_exam_booking_calender(pre_next);
-			});
-			
-			$('#exam_seat_booking_next_month').on('click', function() {
-				pre_next += 1;
-				build_exam_booking_calender(pre_next);
-			});
-
-			$('#exam_seat_booking_submit').on('click', function() {
-				create_update_seat_booking_info();
-			});
-
-			ato_load_admin_users($('#input_ato_op'));
-			ato_load_branches($('#input_ato_branch'));
-			student_info_load_admin_users($('#input_student_new_op'));
-			student_info_load_branches($('#input_student_new_branch'));
+<head>
+<meta charset="utf-8">
+<script>
+	var global_selected_seat_available_el = null;
+	var pre_next = 0;
+	var month_selected = 0;
+	var year_selected = 0;
+	var global_year = 0;
+	var global_day_selected = 0;
+	var global_location_selected = '';
+	var global_time_selected = '';
+	var global_ic_selected = '';
+	$(document).ready(function($) {
+		$('#input_student_new_bd').datepicker({
+			format: 'yyyy-mm-dd',
+			todayHighlight: true
 		});
 
-		function build_exam_booking_calender(_pre_next) {
-			var t_date = new Date();
-	        var day = t_date.getDate();
-	        if((t_date.getMonth() + _pre_next) > 11) {
-	        	var month = (t_date.getMonth() + _pre_next) % 12;
-	        	var year = t_date.getYear() + Math.floor((t_date.getMonth() + _pre_next)/12);
-	        }
-	        else if((t_date.getMonth() + _pre_next) < 0) {
-	        	if(((t_date.getMonth() + _pre_next)*(-1))%12 == 0) {
-	        		var month = 0;
-	        		var year = t_date.getYear() - Math.floor(((t_date.getMonth() + _pre_next) * (-1))/12);
-	        	} else {
-	        		var month = 12 - ((t_date.getMonth() + _pre_next)*(-1))%12 ;
-	        		var year = t_date.getYear() - Math.floor(((t_date.getMonth() + _pre_next) * (-1))/12) - 1;
-	        	}
-	        } else {
-	        	var month = t_date.getMonth() + _pre_next;
-	        	var year = t_date.getYear();
-	        }
-	        month_selected = month + 1;
-	        year_selected = year;
-	        if(year<=200)
-	        {
-	            year += 1900;
-	        }
-	        var date = new Date(year, month);
+		build_exam_booking_calender(pre_next);
 
-			months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'Jully', 'August', 'September', 'October', 'November', 'December');
-	        days_in_month = new Array(31,28,31,30,31,30,31,31,30,31,30,31);
-	        if(year%4 == 0 && year!=1900)
-	        {
-	                days_in_month[1]=29;
-	        }
-	        total = days_in_month[month];
-	        var date_today = months[month]+' '+year;	// diaplay date mon year inforamtion
+		$('#exam_seat_booking_pre_month').on('click', function() {
+			pre_next -= 1;
+			build_exam_booking_calender(pre_next);
+		});
+		
+		$('#exam_seat_booking_next_month').on('click', function() {
+			pre_next += 1;
+			build_exam_booking_calender(pre_next);
+		});
 
-	        $('#exam_seat_booking_date').empty();
-			$('#exam_seat_booking_date').append(date_today);
+		$('#exam_seat_booking_submit').on('click', function() {
+			create_update_seat_booking_info();
+		});
 
-	        beg_j = date;
-	        beg_j.setDate(1);
-	        if(beg_j.getDate()==2)
-	        {
-	                beg_j=setDate(0);
-	        }
-	        beg_j = beg_j.getDay();
+		$('#exam_seat_booking_next_button').on('click', function() {
+			// loading student info checking/modifying/adding modal
+			loading_student_basic_info();
+		});
 
-	        week = 0;
-	        var date_table = $('#exam_booking_calender_date_table');
-            date_table.empty();
-            var html = "";
-            html += '<tr>';
-	        for(i=1;i<=beg_j;i++)
-	        {
-	        	if(month == 0) {
-	        		html += '<td class="cal_days_bef_aft"><div class="exam_seat_booking_content_each_date">'+(days_in_month[11]-beg_j+i)+'</div></td>';
-	        	} else {
-	        		html += '<td class="cal_days_bef_aft"><div class="exam_seat_booking_content_each_date">'+(days_in_month[month-1]-beg_j+i)+'</div></td>';
-	        	}
-                week++;
-	        }
-	        for(i=1;i<=total;i++)
-	        {
-                if(week==0)
-                {
-                        html += '<tr>';
-                }
-                if(day==i)
-                {
-                        html += '<td class="cal_today booking_date_this_month" id="exam_seat_booking_date_' + i +'"><div class="row"><div class="col-xs-6"><div class="exam_seat_booking_content_each_date">'+i+'</div></div><div class="col-xs-6"><select class="form-control exam_seat_booking_on_off"><option value="off">off</option><option value="on">on</option></select></div></div></td>';
-                }
-                else
-                {
-                        html += '<td class="booking_date_this_month" id="exam_seat_booking_date_' + i +'"><div class="row"><div class="col-xs-6"><div class="exam_seat_booking_content_each_date">'+i+'</div></div><div class="col-xs-6"><select class="form-control exam_seat_booking_on_off"><option value="off">off</option><option value="on">on</option></select></div></div></td>';
-                }
-                week++;
-                if(week==7)
-                {
-                        html += '</tr>';
-                        week=0;
-                }
-	        }
-	        for(i=1;week!=0;i++)
-	        {
-                html += '<td class="cal_days_bef_aft"><div class="exam_seat_booking_content_each_date">'+i+'</div></td>';
-                week++;
-                if(week==7)
-                {
-                        html += '</tr>';
-                        week=0;
-                }
-	        }
-	        date_table.append($.parseHTML(html));
-	        $(document).ready(function() {
-	        	load_each_date_content();
-	        });
-		}
+		$('#seat_booking_student_info_modal_confirm').on('click', function() {
+	    	// 1. check student basic existed or not, create or update studnet info
+	    	update_create_student_baisc_info(global_ic_selected);
+	    });
+		// ato_load_admin_users($('#input_ato_op'));
+		// ato_load_branches($('#input_ato_branch'));
+		// student_info_load_admin_users($('#input_student_new_op'));
+		// student_info_load_branches($('#input_student_new_branch'));
+	});
 
-		function load_each_date_content() {
-			$.each($('.booking_date_this_month'), function() {
-				var day = $(this).find('.exam_seat_booking_content_each_date').text();
-				var me = $(this);
-				$.ajax({
-					type:"post",
-				    url:window.api_url + "getSeatBookingInfoByYearMonthDay",
-				    data:{year:year_selected,
-				    		month:month_selected,
-				    		day:day},
-				    success:function(json){
-				    	if(json.trim() != "") {
-				    		var reply = $.parseJSON(json);
-					    	for (var key in reply) {
-						    	if (reply.hasOwnProperty(key)) {
-						    		me.append(
-						    			'<table class="table table-bordered">' +
-											'<tbody>' +
-												'<tr>' +
-													'<td></td>' +
-										          	'<td>JE</td>' +
-										          	'<td>PY</td>' +
-												'</tr>' +
-												'<tr>' +
-													'<td>09:00</td>' +
-										          	'<td><span class="form-control">'+reply[key].je_09+'<span></td>' +
-										          	'<td><span class="form-control">'+reply[key].pi_09+'</td>' +
-												'</tr>' +
-												'<tr>' +
-													'<td>14:00</td>' +
-										          	'<td><span class="form-control">'+reply[key].je_14+'</td>' +
-										          	'<td><span class="form-control">'+reply[key].pi_14+'</td>' +
-												'</tr>' +
-												'<tr>' +
-													'<td>19:00</td>' +
-										          	'<td><span class="form-control">'+reply[key].je_19+'</td>' +
-										          	'<td><span class="form-control">'+reply[key].pi_19+'</td>' +
-												'</tr>' +
-											'</tbody>' +
-										'</table>'
-						    		);
- 									// if status is on, update on_off select option
- 									if(reply[key].on_off == 'on') {
- 										me.find('.exam_seat_booking_on_off option[value="'+reply[key].on_off+'"]').attr('selected', 'selected');
- 									}
-						        }
-					    	}
-					    }
-					    else {
-					    	// not in db, load the default table
-					    	me.append(
-					    		'<table class="table table-bordered">' +
-									'<tbody>' +
-										'<tr>' +
-											'<td></td>' +
-								          	'<td>JE</td>' +
-								          	'<td>PY</td>' +
-										'</tr>' +
-										'<tr>' +
+	function build_exam_booking_calender(_pre_next) {
+		var t_date = new Date();
+        var day = t_date.getDate();
+        if((t_date.getMonth() + _pre_next) > 11) {
+        	var month = (t_date.getMonth() + _pre_next) % 12;
+        	var year = t_date.getYear() + Math.floor((t_date.getMonth() + _pre_next)/12);
+        }
+        else if((t_date.getMonth() + _pre_next) < 0) {
+        	if(((t_date.getMonth() + _pre_next)*(-1))%12 == 0) {
+        		var month = 0;
+        		var year = t_date.getYear() - Math.floor(((t_date.getMonth() + _pre_next) * (-1))/12);
+        	} else {
+        		var month = 12 - ((t_date.getMonth() + _pre_next)*(-1))%12 ;
+        		var year = t_date.getYear() - Math.floor(((t_date.getMonth() + _pre_next) * (-1))/12) - 1;
+        	}
+        } else {
+        	var month = t_date.getMonth() + _pre_next;
+        	var year = t_date.getYear();
+        }
+        month_selected = month + 1;
+        year_selected = year;
+        if(year<=200)
+        {
+            year += 1900;
+        }
+        var date = new Date(year, month);
 
-											'<td>09:00</td>' +
-								          	'<td><span type="text" class="form-control">0</td>' +
-								          	'<td><span type="text" class="form-control">0</td>' +
-										'</tr>' +
-										'<tr>' +
-											'<td>14:00</td>' +
-								          	'<td><span type="text" class="form-control">0</td>' +
-								          	'<td><span type="text" class="form-control">0</td>' +
-										'</tr>' +
-										'<tr>' +
-											'<td>19:00</td>' +
-								          	'<td><span type="text" class="form-control">0</td>' +
-								          	'<td><span type="text" class="form-control">0</td>' +
-										'</tr>' +
-									'</tbody>' +
-								'</table>'
-					    	);
-						}
-				    },
-				    complete:function(){
+		months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'Jully', 'August', 'September', 'October', 'November', 'December');
+        days_in_month = new Array(31,28,31,30,31,30,31,31,30,31,30,31);
+        if(year%4 == 0 && year!=1900)
+        {
+                days_in_month[1]=29;
+        }
+        total = days_in_month[month];
+        var date_today = months[month]+' '+year;	// diaplay date mon year inforamtion
+        global_year = year;
+
+        $('#exam_seat_booking_date').empty();
+		$('#exam_seat_booking_date').append(date_today);
+
+        beg_j = date;
+        beg_j.setDate(1);
+        if(beg_j.getDate()==2)
+        {
+                beg_j=setDate(0);
+        }
+        beg_j = beg_j.getDay();
+
+        week = 0;
+        var date_table = $('#exam_booking_calender_date_table');
+        date_table.empty();
+        var html = "";
+        html += '<tr>';
+        for(i=1;i<=beg_j;i++)
+        {
+        	if(month == 0) {
+        		html += '<td class="cal_days_bef_aft"><div class="exam_seat_booking_content_each_date">'+(days_in_month[11]-beg_j+i)+'</div></td>';
+        	} else {
+        		html += '<td class="cal_days_bef_aft"><div class="exam_seat_booking_content_each_date">'+(days_in_month[month-1]-beg_j+i)+'</div></td>';
+        	}
+            week++;
+        }
+        for(i=1;i<=total;i++)
+        {
+            if(week==0)
+            {
+                    html += '<tr>';
+            }
+            if(day==i)
+            {
+                    html += '<td class="cal_today booking_date_this_month" id="exam_seat_booking_date_' + i +'"><div class="row"><div class="col-xs-6"><div class="exam_seat_booking_content_each_date">'+i+'</div></div><div class="col-xs-6"><select class="form-control exam_seat_booking_on_off"><option value="off">off</option><option value="on">on</option></select></div></div></td>';
+            }
+            else
+            {
+                    html += '<td class="booking_date_this_month" id="exam_seat_booking_date_' + i +'"><div class="row"><div class="col-xs-6"><div class="exam_seat_booking_content_each_date">'+i+'</div></div><div class="col-xs-6"><select class="form-control exam_seat_booking_on_off"><option value="off">off</option><option value="on">on</option></select></div></div></td>';
+            }
+            week++;
+            if(week==7)
+            {
+                    html += '</tr>';
+                    week=0;
+            }
+        }
+        for(i=1;week!=0;i++)
+        {
+            html += '<td class="cal_days_bef_aft"><div class="exam_seat_booking_content_each_date">'+i+'</div></td>';
+            week++;
+            if(week==7)
+            {
+                    html += '</tr>';
+                    week=0;
+            }
+        }
+        date_table.append($.parseHTML(html));
+        $(document).ready(function() {
+        	load_each_date_content();
+        });
+	}
+
+	function load_each_date_content() {
+		$.each($('.booking_date_this_month'), function() {
+			var day = $(this).find('.exam_seat_booking_content_each_date').text();
+			var me = $(this);
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "getSeatBookingInfoByYearMonthDay",
+			    data:{year:year_selected,
+			    		month:month_selected,
+			    		day:day},
+			    success:function(json){
+			    	if(json.trim() != "") {
+			    		var reply = $.parseJSON(json);
+				    	for (var key in reply) {
+					    	if (reply.hasOwnProperty(key)) {
+					    		me.append(
+					    			'<table class="table table-bordered">' +
+										'<tbody>' +
+											'<tr>' +
+												'<td></td>' +
+									          	'<td>JE</td>' +
+									          	'<td>PY</td>' +
+											'</tr>' +
+											'<tr>' +
+												'<td>09:00</td>' +
+									          	'<td class="JE_09"><span class="form-control">'+reply[key].je_09+'<span></td>' +
+									          	'<td class="PI_09"><span class="form-control">'+reply[key].pi_09+'</td>' +
+											'</tr>' +
+											'<tr>' +
+												'<td>14:00</td>' +
+									          	'<td class="JE_14"><span class="form-control">'+reply[key].je_14+'</td>' +
+									          	'<td class="PI_14"><span class="form-control">'+reply[key].pi_14+'</td>' +
+											'</tr>' +
+											'<tr>' +
+												'<td>19:00</td>' +
+									          	'<td class="JE_19"><span class="form-control">'+reply[key].je_19+'</td>' +
+									          	'<td class="PI_19"><span class="form-control">'+reply[key].pi_19+'</td>' +
+											'</tr>' +
+										'</tbody>' +
+									'</table>'
+					    		);
+									// if status is on, update on_off select option
+									if(reply[key].on_off == 'on') {
+										me.find('.exam_seat_booking_on_off option[value="'+reply[key].on_off+'"]').attr('selected', 'selected');
+									}
+					        }
+				    	}
 				    }
-				});//End ajax
-			});
- 			$(document).ajaxStop(function() {
-			  afterLoadEachDateContent();
-			  if(pre_next == 0) {
-					$('.cal_today').css('background', '#ECDDDD');
-				}
-			});
-			$('#exam_booking_calender_date_table tr td .form-control').css('background','#ccc');
-		}
+				    else {
+				    	// not in db, load the default table
+				    	me.append(
+				    		'<table class="table table-bordered">' +
+								'<tbody>' +
+									'<tr>' +
+										'<td></td>' +
+							          	'<td>JE</td>' +
+							          	'<td>PY</td>' +
+									'</tr>' +
+									'<tr>' +
 
-		function ato_load_admin_users(users) {
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllAdminUsers",
-			    data:{},
-			    success:function(json){
-			    	users.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			            		users.append('<option id="ato_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
-			            	}
-			            }
-			        }else{
-			        	toastr.error("fail to load users");
-			        }
+										'<td>09:00</td>' +
+							          	'<td class="JE_09"><span type="text" class="form-control">0</td>' +
+							          	'<td class="PI_09"><span type="text" class="form-control">0</td>' +
+									'</tr>' +
+									'<tr>' +
+										'<td>14:00</td>' +
+							          	'<td class="JE_14"><span type="text" class="form-control">0</td>' +
+							          	'<td class="PI_14"><span type="text" class="form-control">0</td>' +
+									'</tr>' +
+									'<tr>' +
+										'<td>19:00</td>' +
+							          	'<td class="JE_19"><span type="text" class="form-control">0</td>' +
+							          	'<td class="PI_19"><span type="text" class="form-control">0</td>' +
+									'</tr>' +
+								'</tbody>' +
+							'</table>'
+				    	);
+					}
+			    },
+			    complete:function(){
 			    }
 			});//End ajax
-		}
+		});
+		
+		$(document).ajaxStop(function() {
+		  afterLoadEachDateContent();
+		  if(pre_next == 0) {
+				$('.cal_today').css('background', '#ECDDDD');
+			}
+		});
+		$('#exam_booking_calender_date_table tr td .form-control').css('background','#ccc');
+	}
 
-		function ato_load_branches(branches) {
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllBranches",
-			    data:{},
-			    success:function(json){
-			    	branches.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			    				branches.append('<option id="ato_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
-			    			}
-			    		}
-			        }else{
-			        	toastr.error("fail to load braches");
-			        }
-			    }
-			});//End ajax
-		}
+		// function ato_load_admin_users(users) {
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllAdminUsers",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	users.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	            		users.append('<option id="ato_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
+		// 	            	}
+		// 	            }
+		// 	        }else{
+		// 	        	toastr.error("fail to load users");
+		// 	        }
+		// 	    }
+		// 	});//End ajax
+		// }
 
-		function student_info_load_admin_users(users) {
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllAdminUsers",
-			    data:{},
-			    success:function(json){
-			    	users.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			            		users.append('<option id="student_new_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
-			            	}
-			            }
-			        }else{
-			        	toastr.error("fail to load users");
-			        }
-			    }
-			});//End ajax
-		}
+		// function ato_load_branches(branches) {
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllBranches",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	branches.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	    				branches.append('<option id="ato_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+		// 	    			}
+		// 	    		}
+		// 	        }else{
+		// 	        	toastr.error("fail to load braches");
+		// 	        }
+		// 	    }
+		// 	});//End ajax
+		// }
 
-		function student_info_load_branches(branches) {
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllBranches",
-			    data:{},
-			    success:function(json){
-			    	branches.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			    				branches.append('<option id="student_new_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
-			    			}
-			    		}
-			        }else{
-			        	toastr.error("fail to load braches");
-			        }
-			    }
-			});//End ajax
-		}
+		// function student_info_load_admin_users(users) {
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllAdminUsers",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	users.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	            		users.append('<option id="student_new_user_'+ reply[key].id +'">' + reply[key].username + ' (' +  reply[key].email + ')</option>');
+		// 	            	}
+		// 	            }
+		// 	        }else{
+		// 	        	toastr.error("fail to load users");
+		// 	        }
+		// 	    }
+		// 	});//End ajax
+		// }
 
-		function clear_ato_inputs() {
-			$('#input_ato_ic').val('');
-			$('#input_ato_class_code').val('');
-			$('#input_ato_el').prop('checked', false);
-			$('#input_ato_er').prop('checked', false);
-			$('#input_ato_en').prop('checked', false);
-			$('#input_ato_es').prop('checked', false);
-			$('#input_ato_ew').prop('checked', false);
-			$('#input_ato_exam_date').val('');
-			$('#input_ato_remark').val('');
-		}
+		// function student_info_load_branches(branches) {
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllBranches",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	branches.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	    				branches.append('<option id="student_new_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+		// 	    			}
+		// 	    		}
+		// 	        }else{
+		// 	        	toastr.error("fail to load braches");
+		// 	        }
+		// 	    }
+		// 	});//End ajax
+		// }
 
-		function clear_student_new_form_inputs() {
-			$('#input_student_new_gov_letter').prop('checked', false);
-			$('#input_student_new_ic').val('');
-			$('#input_student_new_ic_type option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_new_fn').val('');
-			$('#input_student_new_ln').val('');
-			$('#input_student_new_on').val('');
-			$('#input_student_new_tel').val('');
-			$('#input_student_new_tel_home').val('');
-			$('#input_student_new_gender option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_new_sal option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_new_bd').val('');
-			$('#input_student_new_age').val('');
-			$('#input_student_new_citizenship option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_new_nationality option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_new_race option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_new_cnlevel option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_new_edulevel option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_new_lang option[value="NA"]').attr('selected', 'selected');
+	function clear_ato_inputs() {
+		$('#input_ato_ic').val('');
+		$('#input_ato_class_code').val('');
+		$('#input_ato_el').prop('checked', false);
+		$('#input_ato_er').prop('checked', false);
+		$('#input_ato_en').prop('checked', false);
+		$('#input_ato_es').prop('checked', false);
+		$('#input_ato_ew').prop('checked', false);
+		$('#input_ato_exam_date').val('');
+		$('#input_ato_remark').val('');
+	}
 
-			// address
-			$('#input_student_new_blk').val('');
-			$('#input_student_new_street').val('');
-			$('#input_student_new_floor_unit').val('');
-			$('#input_student_new_building').val('');
-			$('#input_student_new_postcode').val('');
+	function clear_student_new_form_inputs() {
+		$('#input_student_new_gov_letter').prop('checked', false);
+		$('#input_student_new_ic').val('');
+		$('#input_student_new_ic_type option[value="NA"]').attr('selected', 'selected');
+		$('#input_student_new_fn').val('');
+		$('#input_student_new_ln').val('');
+		$('#input_student_new_on').val('');
+		$('#input_student_new_tel').val('');
+		$('#input_student_new_tel_home').val('');
+		$('#input_student_new_gender option[value="NA"]').attr('selected', 'selected');
+		$('#input_student_new_sal option[value="NA"]').attr('selected', 'selected');
+		$('#input_student_new_bd').val('');
+		$('#input_student_new_age').val('');
+		$('#input_student_new_citizenship option[value="NA"]').attr('selected', 'selected');
+		$('#input_student_new_nationality option[value="NA"]').attr('selected', 'selected');
+		$('#input_student_new_race option[value="NA"]').attr('selected', 'selected');
+		$('#input_student_new_cnlevel option[value="NA"]').attr('selected', 'selected');
+		$('#input_student_new_edulevel option[value="NA"]').attr('selected', 'selected');
+		$('#input_student_new_lang option[value="NA"]').attr('selected', 'selected');
 
-			// employment
-			$('#input_student_new_empstatus option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_new_comn').val('');
-			$('#input_student_new_com_type option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_new_com_reg_no').val('');
-			$('#input_student_new_industry option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_new_designation option[value="NA"]').attr('selected', 'selected');
-			$('#input_student_new_sal_range option[value="NA"]').attr('selected', 'selected');
+		// address
+		$('#input_student_new_blk').val('');
+		$('#input_student_new_street').val('');
+		$('#input_student_new_floor_unit').val('');
+		$('#input_student_new_building').val('');
+		$('#input_student_new_postcode').val('');
 
-			// extra
-			$('#input_student_new_remark').val('');
-		}
+		// employment
+		$('#input_student_new_empstatus option[value="NA"]').attr('selected', 'selected');
+		$('#input_student_new_comn').val('');
+		$('#input_student_new_com_type option[value="NA"]').attr('selected', 'selected');
+		$('#input_student_new_com_reg_no').val('');
+		$('#input_student_new_industry option[value="NA"]').attr('selected', 'selected');
+		$('#input_student_new_designation option[value="NA"]').attr('selected', 'selected');
+		$('#input_student_new_sal_range option[value="NA"]').attr('selected', 'selected');
 
-		function afterLoadEachDateContent() {
-			$.each($('.booking_date_this_month'), function() {
-				$(this).find('.exam_seat_booking_on_off').prop('disabled', true);
-				if($(this).find('.exam_seat_booking_on_off').val() == 'off') {
-					$(this).find('table').css('background','rgb(228, 228, 228)');
-					$(this).find('table span').prop('disabled', true);
-					$(this).find('table span').css('background','rgb(204, 204, 204)');
-				} else {
-					$(this).find('table').css('background','');
-					$(this).find('table span').prop('disabled', false);
-					$.each($(this).closest('.booking_date_this_month').find('span'), function() {
-						if($(this).text() != '0') {
-							$(this).css({'background':'rgb(0, 255, 0)', 'cursor':'pointer'});
+		// extra
+		$('#input_student_new_remark').val('');
+	}
+
+	function afterLoadEachDateContent() {
+		$.each($('.booking_date_this_month'), function() {
+			var me = $(this);
+			$(this).find('.exam_seat_booking_on_off').prop('disabled', true);
+			if($(this).find('.exam_seat_booking_on_off').val() == 'off') {
+				$(this).find('table').css('background','rgb(228, 228, 228)');
+				$(this).find('table span').prop('disabled', true);
+				$(this).find('table span').css('background','rgb(204, 204, 204)');
+			} else {
+				$(this).find('table').css('background','');
+				$(this).find('table span').prop('disabled', false);
+				$.each($(this).closest('.booking_date_this_month').find('span'), function() {
+					if($(this).text() != '0') {
+						$(this).css({'background':'rgb(0, 255, 0)', 'cursor':'pointer'});
+					} else {
+						$(this).css({'background':'rgb(255, 255, 0)', 'cursor':'pointer'});
+					}
+
+					// event listened to modal
+					$(this).on('click', function() {
+						global_selected_seat_available_el = $(this);
+						var seat_available = $(this).text().trim();
+						if(seat_available != '0') {
+
+							// get the exam date, time, location
+							global_day_selected = me.find('.exam_seat_booking_content_each_date').text();
+							var el_class = global_selected_seat_available_el.closest('td').attr("class");
+							var location_time = el_class.split('_');
+							global_location_selected = location_time[0];
+							global_time_selected = location_time[1];
+
+							$('#seat-booking-modal').modal('show');
+							clear_ato_inputs();
+
+							$('#input_ato_exam_date').datepicker({
+								format: 'yyyy-mm-dd',
+								todayHighlight: true
+							});
 						} else {
-							$(this).css({'background':'rgb(255, 255, 0)', 'cursor':'pointer'});
+							$('#seat-booking-student-info-fail-modal').modal('show');
+						    var modalBody = $('#seat_booking_student_info_fail_modal_label').closest('.modal-content').find('.modal-body');
+						    modalBody.empty();
+						    modalBody.append(
+								'<div class="row">' + 
+									'<div class="col-xs-4" id="student_new_ic_check_model_ic">'+ 
+										'<label>Seat Available: </label>' +
+										'<div class="form-control"><b>' + seat_available + '</b></div>' +
+									'</div>' + 
+									'<div class="col-xs-8">' + 
+										'<label>Sorry, not available seat for booking, please contact administrator or book other seats available.</label>' + 
+									'</div>' + 
+								'</div>'
+							);
 						}
-
-						// event listened to modal
-						$(this).on('click', function() {
-							global_selected_seat_available_el = $(this);
-							var seat_available = $(this).text().trim();
-							if(seat_available != '0') {
-								$('#seat-booking-modal').modal('show');
-								clear_ato_inputs();
-
-								$('#input_ato_exam_date').datepicker({
-									format: 'yyyy-mm-dd',
-									todayHighlight: true
-								});
-
-								$('#exam_seat_booking_next_button').on('click', function() {
-									// loading student info checking/modifying/adding modal
-									loading_student_basic_info();
-								});
-							} else {
-								$('#seat-booking-student-info-fail-modal').modal('show');
-							    var modalBody = $('#seat_booking_student_info_fail_modal_label').closest('.modal-content').find('.modal-body');
-							    modalBody.empty();
-							    modalBody.append(
-									'<div class="row">' + 
-										'<div class="col-xs-4" id="student_new_ic_check_model_ic">'+ 
-											'<label>Seat Available: </label>' +
-											'<div class="form-control"><b>' + seat_available + '</b></div>' +
-										'</div>' + 
-										'<div class="col-xs-8">' + 
-											'<label>Sorry, not available seat for booking, please contact administrator or book other seats available.</label>' + 
-										'</div>' + 
-									'</div>'
-								);
-							}
-						});
 					});
+				});
+			}
+		});
+	}
+
+	function update_seat_available_number() {
+		var num = parseInt(global_selected_seat_available_el.text().trim());
+		var new_num = num - 1;
+		global_selected_seat_available_el.text(new_num);
+		var me = global_selected_seat_available_el.closest('.booking_date_this_month');
+		update_seat_booking_info_on_off(me);
+	}
+
+	function insert_ato_info() {
+		var ic = $('#input_ato_ic').val();
+		var pre_post = $('#input_ato_pre_post').val();
+		// var recommend_level = $('#input_ato_recommend_level').val();
+		var class_code = '0';
+		var attendance = '0';
+		var post_change_date = 'NO';
+		var el = $('#input_ato_el').is(':checked') ? 'YES' : 'NO';
+		var er = $('#input_ato_er').is(':checked') ? 'YES' : 'NO';
+		var en = $('#input_ato_en').is(':checked') ? 'YES' : 'NO';
+		var es = $('#input_ato_es').is(':checked') ? 'YES' : 'NO';
+		var ew = $('#input_ato_ew').is(':checked') ? 'YES' : 'NO';
+		var exam_location = $('#input_ato_exam_location').val();
+		var exam_date = global_year + '-' + month_selected + '-' + global_day_selected;
+		var exam_time = global_time_selected;
+		// var ato_branch = $('#input_ato_branch option:selected').attr('id').split('_');
+		// var ato_branch_id = ato_branch[2];
+		// var ato_op = $('#input_ato_op option:selected').attr('id').split('_');
+		// var ato_op_id = ato_op[2];
+		var remark  = $('#input_ato_remark').val();
+
+		$.ajax({
+			type:"post",
+		    url:window.api_url + "createATOInfo",
+		    data:{	ic:ic,
+		    		pre_post:pre_post, 
+		    		// recommend_level:recommend_level, 
+		    		class_code:class_code, 
+		    		attendance:attendance,
+		    		post_change_date:post_change_date,
+		    		el:el,
+		    		er:er,
+		    		en:en,
+		    		es:es,
+		    		ew:ew, 
+		    		exam_location:exam_location,
+		    		exam_date:exam_date,
+		    		exam_time:exam_time,
+		    		// ato_branch_id:ato_branch_id,
+		    		// ato_op_id:ato_op_id,
+		    		remark:remark},
+		    success:function(json){
+		    	if(json.trim() == '1') {
+				    toastr.success("Insert success!");
+				    clear_ato_inputs();
+				    $('#seat-booking-modal').modal('hide');
+
+				    // update seat available number
+				    update_seat_available_number();
+				}else{
+					toastr.error("Fail to insert ato info!");
 				}
-			});
+		    }
+		});//End ajax
+	}
 
- 			function update_seat_available_number() {
- 				var num = parseInt(global_selected_seat_available_el.text().trim());
- 				var new_num = num - 1;
- 				global_selected_seat_available_el.text(new_num);
- 				var me = global_selected_seat_available_el.closest('.booking_date_this_month');
- 				update_seat_booking_info_on_off(me);
- 			}
+	function create_new_student_basic_info() {
+		var source = $('#input_student_new_source').val();
+		var gov_letter = $('#input_student_new_gov_letter').is(':checked') ? 'YES' : 'NO';
+		var ic = $('#input_student_new_ic').val();
+		var ic_type = $('#input_student_new_ic_type').val();
+		var firstname = $('#input_student_new_fn').val();
+		var lastname = $('#input_student_new_ln').val();
+		var othername = $('#input_student_new_on').val();
+		var tel = $('#input_student_new_tel').val();
+		var tel_home = $('#input_student_new_tel_home').val();
+		var gender = $('#input_student_new_gender').val();
+		var salutation = $('#input_student_new_sal').val();
+		var birthday = $('#input_student_new_bd').val();
+		var age = $('#input_student_new_age').val();
+		var citizenship = $('#input_student_new_citizenship').val();
+		var nationality = $('#input_student_new_nationality').val();
+		var race = $('#input_student_new_race').val();
+		var cn_level = $('#input_student_new_cnlevel').val();
+		var edu_level = $('#input_student_new_edulevel').val();
+		var lang = $('#input_student_new_lang').val();
 
- 			function insert_ato_info() {
-				var ic = $('#input_ato_ic').val();
-				var pre_post = $('#input_ato_pre_post').val();
-				var recommend_level = $('#input_ato_recommend_level').val();
-				var class_code = '0';
-				var attendance = '0';
-				var post_change_date = 'NO';
-				var el = $('#input_ato_el').is(':checked') ? 'YES' : 'NO';
-				var er = $('#input_ato_er').is(':checked') ? 'YES' : 'NO';
-				var en = $('#input_ato_en').is(':checked') ? 'YES' : 'NO';
-				var es = $('#input_ato_es').is(':checked') ? 'YES' : 'NO';
-				var ew = $('#input_ato_ew').is(':checked') ? 'YES' : 'NO';
-				var exam_location = $('#input_ato_exam_location').val();
-				var exam_date = $('#input_ato_exam_date').val();
-				var exam_time = $('#input_ato_exam_time').val();
-				var ato_branch = $('#input_ato_branch option:selected').attr('id').split('_');
-				var ato_branch_id = ato_branch[2];
-				var ato_op = $('#input_ato_op option:selected').attr('id').split('_');
-				var ato_op_id = ato_op[2];
-				var remark  = $('#input_ato_remark').val();
+		// address
+		var blk = $('#input_student_new_blk').val();
+		var street = $('#input_student_new_street').val();
+		var floor_unit_no = $('#input_student_new_floor_unit').val();
+		var building = $('#input_student_new_building').val();
+		var postcode = $('#input_student_new_postcode').val();
 
-				$.ajax({
-					type:"post",
-				    url:window.api_url + "createATOInfo",
-				    data:{	ic:ic,
-				    		pre_post:pre_post, 
-				    		recommend_level:recommend_level, 
-				    		class_code:class_code, 
-				    		attendance:attendance,
-				    		post_change_date:post_change_date,
-				    		el:el,
-				    		er:er,
-				    		en:en,
-				    		es:es,
-				    		ew:ew, 
-				    		exam_location:exam_location,
-				    		exam_date:exam_date,
-				    		exam_time:exam_time,
-				    		ato_branch_id:ato_branch_id,
-				    		ato_op_id:ato_op_id,
-				    		remark:remark},
-				    success:function(json){
-				    	if(json.trim() == '1') {
-						    toastr.success("Insert success!");
-						    clear_ato_inputs();
-						    $('#seat-booking-modal').modal('hide');
+		// employment
+		var emp_status = $('#input_student_new_empstatus').val();
+		var company_name = $('#input_student_new_comn').val();
+		var company_type = $('#input_student_new_com_type').val();
+		var company_reg_no = $('#input_student_new_com_reg_no').val();
+		var industry = $('#input_student_new_industry').val();
+		var designation = $('#input_student_new_designation').val();
+		var salary_range = $('#input_student_new_sal_range').val();
 
-						    // update seat available number
-						    update_seat_available_number();
-						}else{
-							toastr.error("Fail to insert ato info!");
-						}
+		// extra
+		// var student_branch = $('#input_student_new_branch option:selected').attr('id').split('_');
+		// var student_branch_id = student_branch[3];
+		// var student_op = $('#input_student_new_op option:selected').attr('id').split('_');
+		// var student_op_id = student_op[3];
+		var student_remark  = $('#input_student_new_remark').val();
+
+		$.ajax({
+			type:"post",
+		    url:window.api_url + "createStudentBasicInfo",
+		    data:{	source:source,
+		    		gov_letter:gov_letter, 
+		    		ic:ic, 
+		    		ic_type:ic_type, 
+		    		firstname:firstname, 
+		    		lastname:lastname, 
+		    		othername:othername,
+		    		tel:tel,
+		    		tel_home:tel_home,
+		    		gender:gender,
+		    		salutation:salutation,
+		    		birthday:birthday, 
+		    		age:age,
+		    		citizenship:citizenship,
+		    		nationality:nationality,
+		    		race:race,
+		    		cn_level:cn_level,
+		    		edu_level:edu_level,
+		    		lang:lang,
+		    		blk:blk,
+		    		street:street,
+		    		floor_unit_no:floor_unit_no,
+		    		building:building,
+		    		postcode:postcode,
+		    		emp_status:emp_status,
+		    		company_name:company_name,
+		    		company_type:company_type,
+		    		company_reg_no:company_reg_no,
+		    		industry:industry,
+		    		designation:designation,
+		    		salary_range:salary_range,
+		    		// student_branch_id:student_branch_id,
+		    		// student_op_id:student_op_id,
+		    		student_remark:student_remark},
+		    success:function(json){
+		    	if(json.trim() == '1') {
+				    toastr.success("Create student basic info success!");
+				    clear_student_new_form_inputs();
+				    $('#seat-booking-student-info-modal').modal('hide');
+				    insert_ato_info();
+				}else{
+					toastr.error("Fail to create student basic info!");
+				}
+		    }
+		});//End ajax
+	}
+
+	function update_student_basic_info(student_id) {
+		var source = $('#input_student_new_source').val();
+		var gov_letter = $('#input_student_new_gov_letter').is(':checked') ? 'YES' : 'NO';
+		var ic = $('#input_student_new_ic').val();
+		var ic_type = $('#input_student_new_ic_type').val();
+		var firstname = $('#input_student_new_fn').val();
+		var lastname = $('#input_student_new_ln').val();
+		var othername = $('#input_student_new_on').val();
+		var tel = $('#input_student_new_tel').val();
+		var tel_home = $('#input_student_new_tel_home').val();
+		var gender = $('#input_student_new_gender').val();
+		var salutation = $('#input_student_new_sal').val();
+		var birthday = $('#input_student_new_bd').val();
+		var age = $('#input_student_new_age').val();
+		var citizenship = $('#input_student_new_citizenship').val();
+		var nationality = $('#input_student_new_nationality').val();
+		var race = $('#input_student_new_race').val();
+		var cn_level = $('#input_student_new_cnlevel').val();
+		var edu_level = $('#input_student_new_edulevel').val();
+		var lang = $('#input_student_new_lang').val();
+
+		// address
+		var blk = $('#input_student_new_blk').val();
+		var street = $('#input_student_new_street').val();
+		var floor_unit_no = $('#input_student_new_floor_unit').val();
+		var building = $('#input_student_new_building').val();
+		var postcode = $('#input_student_new_postcode').val();
+
+		// employment
+		var emp_status = $('#input_student_new_empstatus').val();
+		var company_name = $('#input_student_new_comn').val();
+		var company_type = $('#input_student_new_com_type').val();
+		var company_reg_no = $('#input_student_new_com_reg_no').val();
+		var industry = $('#input_student_new_industry').val();
+		var designation = $('#input_student_new_designation').val();
+		var salary_range = $('#input_student_new_sal_range').val();
+
+		// extra
+		// var student_branch = $('#input_student_new_branch option:selected').attr('id').split('_');
+		// var student_branch_id = student_branch[3];
+		// var student_op = $('#input_student_new_op option:selected').attr('id').split('_');
+		// var student_op_id = student_op[3];
+		var student_remark  = $('#input_student_new_remark').val();
+
+		$.ajax({
+			type:"post",
+		    url:window.api_url + "updateStudentBasicInfo",
+		    data:{	student_id:student_id,
+		    		source:source,
+		    		gov_letter:gov_letter, 
+		    		ic:ic, 
+		    		ic_type:ic_type, 
+		    		firstname:firstname, 
+		    		lastname:lastname, 
+		    		othername:othername,
+		    		tel:tel,
+		    		tel_home:tel_home,
+		    		gender:gender,
+		    		salutation:salutation,
+		    		birthday:birthday, 
+		    		age:age,
+		    		citizenship:citizenship,
+		    		nationality:nationality,
+		    		race:race,
+		    		cn_level:cn_level,
+		    		edu_level:edu_level,
+		    		lang:lang,
+		    		blk:blk,
+		    		street:street,
+		    		floor_unit_no:floor_unit_no,
+		    		building:building,
+		    		postcode:postcode,
+		    		emp_status:emp_status,
+		    		company_name:company_name,
+		    		company_type:company_type,
+		    		company_reg_no:company_reg_no,
+		    		industry:industry,
+		    		designation:designation,
+		    		salary_range:salary_range,
+		    		// student_branch_id:student_branch_id,
+		    		// student_op_id:student_op_id,
+		    		student_remark:student_remark},
+		    success:function(json){
+		    	if(json.trim() == '2') {
+				    toastr.success("Update student basic info success!");
+				    clear_student_new_form_inputs();
+				    $('#seat-booking-student-info-modal').modal('hide');
+				    insert_ato_info();
+				}else{
+					toastr.error("Fail to update student basic info!");
+				}
+		    }
+		});//End ajax
+	}
+
+	function update_create_student_baisc_info(student_ic) {
+		// update or create seat booking records
+		$.ajax({
+			type:"post",
+		    url:window.api_url + "getStudentByIC",
+		    data:{ic:student_ic},
+		    success:function(json){
+		    	if(json.trim() != "") {
+		    		var reply = $.parseJSON(json);
+			    	for (var key in reply) {
+				    	if (reply.hasOwnProperty(key)) {
+				    		// student info in record, update
+				    		update_student_basic_info(reply[key].student_id);
+				    	}
 				    }
-				});//End ajax
-			}
+				}else{
+					// student not in record, create
+					create_new_student_basic_info();
+				}
+		    }
+		});//End ajax
+	}
 
- 			function create_new_student_basic_info() {
-				var source = $('#input_student_new_source').val();
-				var gov_letter = $('#input_student_new_gov_letter').is(':checked') ? 'YES' : 'NO';
-				var ic = $('#input_student_new_ic').val();
-				var ic_type = $('#input_student_new_ic_type').val();
-				var firstname = $('#input_student_new_fn').val();
-				var lastname = $('#input_student_new_ln').val();
-				var othername = $('#input_student_new_on').val();
-				var tel = $('#input_student_new_tel').val();
-				var tel_home = $('#input_student_new_tel_home').val();
-				var gender = $('#input_student_new_gender').val();
-				var salutation = $('#input_student_new_sal').val();
-				var birthday = $('#input_student_new_bd').val();
-				var age = $('#input_student_new_age').val();
-				var citizenship = $('#input_student_new_citizenship').val();
-				var nationality = $('#input_student_new_nationality').val();
-				var race = $('#input_student_new_race').val();
-				var cn_level = $('#input_student_new_cnlevel').val();
-				var edu_level = $('#input_student_new_edulevel').val();
-				var lang = $('#input_student_new_lang').val();
+	function loading_student_basic_info() {
+		var ic = $('#input_ato_ic').val();
+		global_ic_selected = ic;
+		// listen to confirm button
+		$.ajax({
+			type:"post",
+		    url:window.api_url + "getStudentByIC",
+		    data:{ic:ic},
+		    success:function(json){
+		    	var modalBody = $('#seat_booking_student_info_modal_label').closest('.modal-content').find('.modal-body');
+		    	if(json.trim() != "") {
+		    		$('#seat-booking-student-info-modal').modal('show');
+		    		var reply = $.parseJSON(json);
+			    	for (var key in reply) {
+				    	if (reply.hasOwnProperty(key)) {
+							$('#input_student_new_source').val(reply[key].source);
+							(reply[key].gov_letter == "YES") ? $('#input_student_new_gov_letter').prop('checked', true) : $('#input_student_new_gov_letter').prop('checked', false);
+							$('#input_student_new_ic').val(reply[key].ic);
+							$('#input_student_new_ic_type option[value="'+reply[key].ic_type+'"]').attr('selected', 'selected');
 
-				// address
-				var blk = $('#input_student_new_blk').val();
-				var street = $('#input_student_new_street').val();
-				var floor_unit_no = $('#input_student_new_floor_unit').val();
-				var building = $('#input_student_new_building').val();
-				var postcode = $('#input_student_new_postcode').val();
+							$('#input_student_new_fn').val(reply[key].firstname);
+							$('#input_student_new_ln').val(reply[key].lastname);
+							$('#input_student_new_on').val(reply[key].othername);
+							$('#input_student_new_tel').val(reply[key].tel);
+							$('#input_student_new_tel_home').val(reply[key].tel_home);
+							$('#input_student_new_gender').val(reply[key].gender);
+							$('#input_student_new_sal option[value="'+reply[key].salutation+'"]').attr('selected', 'selected');
+							$('#input_student_new_bd').val(reply[key].birthday);
+							$('#input_student_new_age').val(reply[key].age);
+							$('#input_student_new_citizenship option[value="'+reply[key].citizenship+'"]').attr('selected', 'selected');
+							$('#input_student_new_nationality option[value="'+reply[key].nationality+'"]').attr('selected', 'selected');
+							$('#input_student_new_race option[value="'+reply[key].race+'"]').attr('selected', 'selected');
+							$('#input_student_new_cnlevel option[value="'+reply[key].cn_level+'"]').attr('selected', 'selected');
+							$('#input_student_new_edulevel option[value="'+reply[key].edu_level+'"]').attr('selected', 'selected');
+							$('#input_student_new_lang option[value="'+reply[key].lang+'"]').attr('selected', 'selected');
 
-				// employment
-				var emp_status = $('#input_student_new_empstatus').val();
-				var company_name = $('#input_student_new_comn').val();
-				var company_type = $('#input_student_new_com_type').val();
-				var company_reg_no = $('#input_student_new_com_reg_no').val();
-				var industry = $('#input_student_new_industry').val();
-				var designation = $('#input_student_new_designation').val();
-				var salary_range = $('#input_student_new_sal_range').val();
+							// address
+							$('#input_student_new_blk').val(reply[key].block);
+							$('#input_student_new_street').val(reply[key].street);
+							$('#input_student_new_floor_unit').val(reply[key].floor_unit_no);
+							$('#input_student_new_building').val(reply[key].building);
+							$('#input_student_new_postcode').val(reply[key].postcode);
 
-				// extra
-				var student_branch = $('#input_student_new_branch option:selected').attr('id').split('_');
-				var student_branch_id = student_branch[3];
-				var student_op = $('#input_student_new_op option:selected').attr('id').split('_');
-				var student_op_id = student_op[3];
-				var student_remark  = $('#input_student_new_remark').val();
+							// employment
+							$('#input_student_new_empstatus option[value="'+reply[key].emp_status+'"]').attr('selected', 'selected');
+							$('#input_student_new_comn').val(reply[key].company_name);
+							$('#input_student_new_com_type option[value="'+reply[key].company_type+'"]').attr('selected', 'selected');
+							$('#input_student_new_com_reg_no').val(reply[key].company_reg_no);
+							$('#input_student_new_industry option[value="'+reply[key].industry+'"]').attr('selected', 'selected');
+							$('#input_student_new_designation option[value="'+reply[key].designation+'"]').attr('selected', 'selected');
+							$('#input_student_new_sal_range option[value="'+reply[key].salary_range+'"]').attr('selected', 'selected');
 
-				$.ajax({
-					type:"post",
-				    url:window.api_url + "createStudentBasicInfo",
-				    data:{	source:source,
-				    		gov_letter:gov_letter, 
-				    		ic:ic, 
-				    		ic_type:ic_type, 
-				    		firstname:firstname, 
-				    		lastname:lastname, 
-				    		othername:othername,
-				    		tel:tel,
-				    		tel_home:tel_home,
-				    		gender:gender,
-				    		salutation:salutation,
-				    		birthday:birthday, 
-				    		age:age,
-				    		citizenship:citizenship,
-				    		nationality:nationality,
-				    		race:race,
-				    		cn_level:cn_level,
-				    		edu_level:edu_level,
-				    		lang:lang,
-				    		blk:blk,
-				    		street:street,
-				    		floor_unit_no:floor_unit_no,
-				    		building:building,
-				    		postcode:postcode,
-				    		emp_status:emp_status,
-				    		company_name:company_name,
-				    		company_type:company_type,
-				    		company_reg_no:company_reg_no,
-				    		industry:industry,
-				    		designation:designation,
-				    		salary_range:salary_range,
-				    		student_branch_id:student_branch_id,
-				    		student_op_id:student_op_id,
-				    		student_remark:student_remark},
-				    success:function(json){
-				    	if(json.trim() == '1') {
-						    toastr.success("Create student basic info success!");
-						    clear_student_new_form_inputs();
-						    $('#seat-booking-student-info-modal').modal('hide');
-						    insert_ato_info();
-						}else{
-							toastr.error("Fail to create student basic info!");
+							// extra
+							// $('#input_student_new_branch option[id="student_new_branch_'+reply[key].student_branch_id+'"]').attr('selected', 'selected');
+							// $('#input_student_new_op option[id="student_new_user_'+reply[key].student_op_id+'"]').attr('selected', 'selected');
+							$('#input_student_new_remark').val(reply[key].student_remark);
 						}
-				    }
-				});//End ajax
-			}
-
-			function update_student_basic_info(student_id) {
-				var source = $('#input_student_new_source').val();
-				var gov_letter = $('#input_student_new_gov_letter').is(':checked') ? 'YES' : 'NO';
-				var ic = $('#input_student_new_ic').val();
-				var ic_type = $('#input_student_new_ic_type').val();
-				var firstname = $('#input_student_new_fn').val();
-				var lastname = $('#input_student_new_ln').val();
-				var othername = $('#input_student_new_on').val();
-				var tel = $('#input_student_new_tel').val();
-				var tel_home = $('#input_student_new_tel_home').val();
-				var gender = $('#input_student_new_gender').val();
-				var salutation = $('#input_student_new_sal').val();
-				var birthday = $('#input_student_new_bd').val();
-				var age = $('#input_student_new_age').val();
-				var citizenship = $('#input_student_new_citizenship').val();
-				var nationality = $('#input_student_new_nationality').val();
-				var race = $('#input_student_new_race').val();
-				var cn_level = $('#input_student_new_cnlevel').val();
-				var edu_level = $('#input_student_new_edulevel').val();
-				var lang = $('#input_student_new_lang').val();
-
-				// address
-				var blk = $('#input_student_new_blk').val();
-				var street = $('#input_student_new_street').val();
-				var floor_unit_no = $('#input_student_new_floor_unit').val();
-				var building = $('#input_student_new_building').val();
-				var postcode = $('#input_student_new_postcode').val();
-
-				// employment
-				var emp_status = $('#input_student_new_empstatus').val();
-				var company_name = $('#input_student_new_comn').val();
-				var company_type = $('#input_student_new_com_type').val();
-				var company_reg_no = $('#input_student_new_com_reg_no').val();
-				var industry = $('#input_student_new_industry').val();
-				var designation = $('#input_student_new_designation').val();
-				var salary_range = $('#input_student_new_sal_range').val();
-
-				// extra
-				var student_branch = $('#input_student_new_branch option:selected').attr('id').split('_');
-				var student_branch_id = student_branch[3];
-				var student_op = $('#input_student_new_op option:selected').attr('id').split('_');
-				var student_op_id = student_op[3];
-				var student_remark  = $('#input_student_new_remark').val();
-
-				$.ajax({
-					type:"post",
-				    url:window.api_url + "updateStudentBasicInfo",
-				    data:{	student_id:student_id,
-				    		source:source,
-				    		gov_letter:gov_letter, 
-				    		ic:ic, 
-				    		ic_type:ic_type, 
-				    		firstname:firstname, 
-				    		lastname:lastname, 
-				    		othername:othername,
-				    		tel:tel,
-				    		tel_home:tel_home,
-				    		gender:gender,
-				    		salutation:salutation,
-				    		birthday:birthday, 
-				    		age:age,
-				    		citizenship:citizenship,
-				    		nationality:nationality,
-				    		race:race,
-				    		cn_level:cn_level,
-				    		edu_level:edu_level,
-				    		lang:lang,
-				    		blk:blk,
-				    		street:street,
-				    		floor_unit_no:floor_unit_no,
-				    		building:building,
-				    		postcode:postcode,
-				    		emp_status:emp_status,
-				    		company_name:company_name,
-				    		company_type:company_type,
-				    		company_reg_no:company_reg_no,
-				    		industry:industry,
-				    		designation:designation,
-				    		salary_range:salary_range,
-				    		student_branch_id:student_branch_id,
-				    		student_op_id:student_op_id,
-				    		student_remark:student_remark},
-				    success:function(json){
-				    	if(json.trim() == '2') {
-						    toastr.success("Update student basic info success!");
-						    clear_student_new_form_inputs();
-						    $('#seat-booking-student-info-modal').modal('hide');
-						    insert_ato_info();
-						}else{
-							toastr.error("Fail to update student basic info!");
-						}
-				    }
-				});//End ajax
-			}
-
- 			function get_student_baisc_info(student_ic) {
- 				// update or create seat booking records
-				$.ajax({
-					type:"post",
-				    url:window.api_url + "getStudentByIC",
-				    data:{ic:student_ic},
-				    success:function(json){
-				    	if(json.trim() != "") {
-				    		var reply = $.parseJSON(json);
-					    	for (var key in reply) {
-						    	if (reply.hasOwnProperty(key)) {
-						    		// student info in record, update
-						    		update_student_basic_info(reply[key].student_id);
-						    	}
-						    }
-						}else{
-							// student not in record, create
-							create_new_student_basic_info();
-						}
-				    }
-				});//End ajax
- 			}
-
- 			function loading_student_basic_info() {
- 				var ic = $('#input_ato_ic').val();
- 				// listen to confirm button
-		    	$('#seat_booking_student_info_modal_confirm').on('click', function() {
-		    		// 1. check student basic existed or not, create or update studnet info
-		    		get_student_baisc_info(ic);
-		    	});
- 				$.ajax({
-					type:"post",
-				    url:window.api_url + "getStudentByIC",
-				    data:{ic:ic},
-				    success:function(json){
-				    	var modalBody = $('#seat_booking_student_info_modal_label').closest('.modal-content').find('.modal-body');
-				    	if(json.trim() != "") {
-				    		$('#seat-booking-student-info-modal').modal('show');
-				    		var reply = $.parseJSON(json);
-					    	for (var key in reply) {
-						    	if (reply.hasOwnProperty(key)) {
-
-									$('#input_student_new_source').val(reply[key].source);
-									(reply[key].gov_letter == "YES") ? $('#input_student_new_gov_letter').prop('checked', true) : $('#input_student_new_gov_letter').prop('checked', false);
-									$('#input_student_new_ic').val(reply[key].ic);
-									$('#input_student_new_ic_type option[value="'+reply[key].ic_type+'"]').attr('selected', 'selected');
-
-									$('#input_student_new_fn').val(reply[key].firstname);
-									$('#input_student_new_ln').val(reply[key].lastname);
-									$('#input_student_new_on').val(reply[key].othername);
-									$('#input_student_new_tel').val(reply[key].tel);
-									$('#input_student_new_tel_home').val(reply[key].tel_home);
-									$('#input_student_new_gender').val(reply[key].gender);
-									$('#input_student_new_sal option[value="'+reply[key].salutation+'"]').attr('selected', 'selected');
-									$('#input_student_new_bd').val(reply[key].birthday);
-									$('#input_student_new_age').val(reply[key].age);
-									$('#input_student_new_citizenship option[value="'+reply[key].citizenship+'"]').attr('selected', 'selected');
-									$('#input_student_new_nationality option[value="'+reply[key].nationality+'"]').attr('selected', 'selected');
-									$('#input_student_new_race option[value="'+reply[key].race+'"]').attr('selected', 'selected');
-									$('#input_student_new_cnlevel option[value="'+reply[key].cn_level+'"]').attr('selected', 'selected');
-									$('#input_student_new_edulevel option[value="'+reply[key].edu_level+'"]').attr('selected', 'selected');
-									$('#input_student_new_lang option[value="'+reply[key].lang+'"]').attr('selected', 'selected');
-
-									// address
-									$('#input_student_new_blk').val(reply[key].block);
-									$('#input_student_new_street').val(reply[key].street);
-									$('#input_student_new_floor_unit').val(reply[key].floor_unit_no);
-									$('#input_student_new_building').val(reply[key].building);
-									$('#input_student_new_postcode').val(reply[key].postcode);
-
-									// employment
-									$('#input_student_new_empstatus option[value="'+reply[key].emp_status+'"]').attr('selected', 'selected');
-									$('#input_student_new_comn').val(reply[key].company_name);
-									$('#input_student_new_com_type option[value="'+reply[key].company_type+'"]').attr('selected', 'selected');
-									$('#input_student_new_com_reg_no').val(reply[key].company_reg_no);
-									$('#input_student_new_industry option[value="'+reply[key].industry+'"]').attr('selected', 'selected');
-									$('#input_student_new_designation option[value="'+reply[key].designation+'"]').attr('selected', 'selected');
-									$('#input_student_new_sal_range option[value="'+reply[key].salary_range+'"]').attr('selected', 'selected');
-
-									// extra
-									$('#input_student_new_branch option[id="student_new_branch_'+reply[key].student_branch_id+'"]').attr('selected', 'selected');
-									$('#input_student_new_op option[id="student_new_user_'+reply[key].student_op_id+'"]').attr('selected', 'selected');
-									$('#input_student_new_remark').val(reply[key].student_remark);
-								}
-					    	}
-					    }
-					    else {
-					    	// check from registration table, insert bisic info for this new student
-					    	$.ajax({
-								type:"post",
-							    url:window.api_url + "getRegistrationByIC",
-							    data:{ic:ic},
-							    success:function(json){
-							    	$('#seat-booking-student-info-fail-modal').modal('show');
-							    	var modalBody = $('#seat_booking_student_info_fail_modal_label').closest('.modal-content').find('.modal-body');
-							    	modalBody.empty();
-							    	if(json.trim() != "") {
-							    		var reply = $.parseJSON(json);
-								    	for (var key in reply) {
-									    	if (reply.hasOwnProperty(key)) {
-												modalBody.append(
-													'<div class="row">' + 
-														'Stundet had registered, please insert basic info!' + 
-													'</div>' +
-													'<div class="row">' + 
-														'<div class="col-xs-4" id="student_new_ic_check_model_ic">'+ 
-															'<label>IC Number Input</label>' +
-															'<div class="form-control">' + ic + '</div>' +
-														'</div>' + 
-														'<div class="col-xs-4">' + 
-															'<label for="student_new_ic_check_model_reg_date">注册日期</label>' + 
-															'<div class="form-control" id="student_new_ic_check_model_reg_date">' + reply[key].reg_date + '</div>' + 
-														'</div>' +
-														'<div class="col-xs-4">' +
-															'<label for="student_new_ic_check_model_reg_no">注册表号码</label>' +
-															'<div class="form-control" id="student_new_ic_check_model_reg_no">'+ reply[key].reg_no + '</div>' + 
-														'</div>' +
-													'</div>' +
-													'<div class="row">' +
-														'<div class="col-xs-10"></div>' +
-														'<div class="col-xs-2">' +
-															'<a class="button glow button-rounded button-flat" id="seat_booking_new_student_info_btn">Add</a>' +
-														'</div>' +
-													'</div>'
-												);
-									        }
-								    	}
-								    	$('#seat_booking_new_student_info_btn').on('click', function() {
-								    		$('#seat-booking-student-info-fail-modal').modal('hide');
-								    		$('#seat-booking-student-info-modal').modal('show');
-								    		clear_student_new_form_inputs();
-								    		$('#input_student_new_ic').val(ic);
-								    	})
-								    }
-								    else {
-								    	// no result found in student and registartion table
-								    	if(ic.trim() == "") {
-								    		ic='NULL';
-								    	};
+			    	}
+			    }
+			    else {
+			    	// check from registration table, insert bisic info for this new student
+			    	$.ajax({
+						type:"post",
+					    url:window.api_url + "getRegistrationByIC",
+					    data:{ic:ic},
+					    success:function(json){
+					    	$('#seat-booking-student-info-fail-modal').modal('show');
+					    	var modalBody = $('#seat_booking_student_info_fail_modal_label').closest('.modal-content').find('.modal-body');
+					    	modalBody.empty();
+					    	if(json.trim() != "") {
+					    		var reply = $.parseJSON(json);
+						    	for (var key in reply) {
+							    	if (reply.hasOwnProperty(key)) {
 										modalBody.append(
+											'<div class="row">' + 
+												'Stundet had registered, please insert basic info!' + 
+											'</div>' +
 											'<div class="row">' + 
 												'<div class="col-xs-4" id="student_new_ic_check_model_ic">'+ 
 													'<label>IC Number Input</label>' +
 													'<div class="form-control">' + ic + '</div>' +
 												'</div>' + 
-												'<div class="col-xs-8">' + 
-													'<label>Sorry, no related registration info found!<br>Please input valid IC number or register fisrt.</label>' + 
-												'</div>' + 
+												'<div class="col-xs-4">' + 
+													'<label for="student_new_ic_check_model_reg_date">注册日期</label>' + 
+													'<div class="form-control" id="student_new_ic_check_model_reg_date">' + reply[key].reg_date + '</div>' + 
+												'</div>' +
+												'<div class="col-xs-4">' +
+													'<label for="student_new_ic_check_model_reg_no">注册表号码</label>' +
+													'<div class="form-control" id="student_new_ic_check_model_reg_no">'+ reply[key].reg_no + '</div>' + 
+												'</div>' +
+											'</div>' +
+											'<div class="row">' +
+												'<div class="col-xs-10"></div>' +
+												'<div class="col-xs-2">' +
+													'<a class="button glow button-rounded button-flat" id="seat_booking_new_student_info_btn">Add</a>' +
+												'</div>' +
 											'</div>'
 										);
-									}
-							    }
-							});//End ajax
-						}
-				    }
-				});//End ajax
- 			}
-
-			$('.booking_date_this_month span').on('change', function() {
-				if($(this).text() != '0') {
-					$(this).css('background', 'rgb(0, 255, 0)');
-				} else {
-					$(this).css('background', 'rgb(255, 255, 0)');
-				}
-			});
-		}
-
-		function create_update_seat_booking_info() {
-			$.each($('.booking_date_this_month'), function() {
-				var on_off = $(this).find('.exam_seat_booking_on_off').val();
-				if(on_off == 'on') {
-					var day = $(this).find('.exam_seat_booking_content_each_date').text();
-
-					var je_09 = $(this).find('tbody').find('tr:nth-child(2)').find('td:nth-child(2) span').text().trim();
-					var pi_09 = $(this).find('tbody').find('tr:nth-child(2)').find('td:nth-child(3) span').text().trim();
-
-					var je_14 = $(this).find('tbody').find('tr:nth-child(3)').find('td:nth-child(2) span').text().trim();
-					var pi_14 = $(this).find('tbody').find('tr:nth-child(3)').find('td:nth-child(3) span').text().trim();
-
-					var je_19 = $(this).find('tbody').find('tr:nth-child(4)').find('td:nth-child(2) span').text().trim();
-					var pi_19 = $(this).find('tbody').find('tr:nth-child(4)').find('td:nth-child(3) span').text().trim();
-
-					// update or create seat booking records
-					$.ajax({
-						type:"post",
-					    url:window.api_url + "createOrUpdateSeatBookingInfo",
-					    data:{	on_off:on_off,
-					    		je_09:je_09, 
-					    		pi_09:pi_09, 
-					    		je_14:je_14,
-					    		pi_14:pi_14,
-					    		je_19:je_19,
-					    		pi_19:pi_19,
-					    		year:year_selected,
-					    		month:month_selected,
-					    		day:day},
-					    success:function(json){
-					    	if(json.trim() == '1') {
-							    toastr.success("Insert/Update success!");
-							} else{
-								toastr.error("Fail to insert/update seat booking info!");
+							        }
+						    	}
+						    	$('#seat_booking_new_student_info_btn').on('click', function() {
+						    		$('#seat-booking-student-info-fail-modal').modal('hide');
+						    		$('#seat-booking-student-info-modal').modal('show');
+						    		clear_student_new_form_inputs();
+						    		$('#input_student_new_ic').val(ic);
+						    	})
+						    }
+						    else {
+						    	// no result found in student and registartion table
+						    	if(ic.trim() == "") {
+						    		ic='NULL';
+						    	};
+								modalBody.append(
+									'<div class="row">' + 
+										'<div class="col-xs-4" id="student_new_ic_check_model_ic">'+ 
+											'<label>IC Number Input</label>' +
+											'<div class="form-control">' + ic + '</div>' +
+										'</div>' + 
+										'<div class="col-xs-8">' + 
+											'<label>Sorry, no related registration info found!<br>Please input valid IC number or register fisrt.</label>' + 
+										'</div>' + 
+									'</div>'
+								);
 							}
-
 					    }
 					});//End ajax
 				}
-			});
-		}
+			}
+		});//End ajax
 
-		// me is the closest .booking_date_this_month
-		function update_seat_booking_info_on_off(me) {
-			var on_off = me.find('.exam_seat_booking_on_off').val();
-			var day = me.find('.exam_seat_booking_content_each_date').text();
+		$('.booking_date_this_month span').on('change', function() {
+			if($(this).text() != '0') {
+				$(this).css('background', 'rgb(0, 255, 0)');
+			} else {
+				$(this).css('background', 'rgb(255, 255, 0)');
+			}
+		});
+	}
 
-			var je_09 = me.find('tbody').find('tr:nth-child(2)').find('td:nth-child(2) span').text().trim();
-			var pi_09 = me.find('tbody').find('tr:nth-child(2)').find('td:nth-child(3) span').text().trim();
+	function create_update_seat_booking_info() {
+		$.each($('.booking_date_this_month'), function() {
+			var on_off = $(this).find('.exam_seat_booking_on_off').val();
+			if(on_off == 'on') {
+				var day = $(this).find('.exam_seat_booking_content_each_date').text();
 
-			var je_14 = me.find('tbody').find('tr:nth-child(3)').find('td:nth-child(2) span').text().trim();
-			var pi_14 = me.find('tbody').find('tr:nth-child(3)').find('td:nth-child(3) span').text().trim();
+				var je_09 = $(this).find('tbody').find('tr:nth-child(2)').find('td:nth-child(2) span').text().trim();
+				var pi_09 = $(this).find('tbody').find('tr:nth-child(2)').find('td:nth-child(3) span').text().trim();
 
-			var je_19 = me.find('tbody').find('tr:nth-child(4)').find('td:nth-child(2) span').text().trim();
-			var pi_19 = me.find('tbody').find('tr:nth-child(4)').find('td:nth-child(3) span').text().trim();
+				var je_14 = $(this).find('tbody').find('tr:nth-child(3)').find('td:nth-child(2) span').text().trim();
+				var pi_14 = $(this).find('tbody').find('tr:nth-child(3)').find('td:nth-child(3) span').text().trim();
 
-			// update or create seat booking records
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "updateSeatBookingInfo",
-			    data:{	on_off:on_off,
-			    		je_09:je_09, 
-			    		pi_09:pi_09, 
-			    		je_14:je_14,
-			    		pi_14:pi_14,
-			    		je_19:je_19,
-			    		pi_19:pi_19,
-			    		year:year_selected,
-			    		month:month_selected,
-			    		day:day},
-			    success:function(json){
-			    	if(json.trim() == '2') {
-					    toastr.success("Update success!");
-					}else{
-						toastr.error("Fail to update seat booking info!");
-					}
-			    }
-			});//End ajax
-		}
-	</script>
+				var je_19 = $(this).find('tbody').find('tr:nth-child(4)').find('td:nth-child(2) span').text().trim();
+				var pi_19 = $(this).find('tbody').find('tr:nth-child(4)').find('td:nth-child(3) span').text().trim();
+
+				// update or create seat booking records
+				$.ajax({
+					type:"post",
+				    url:window.api_url + "createOrUpdateSeatBookingInfo",
+				    data:{	on_off:on_off,
+				    		je_09:je_09, 
+				    		pi_09:pi_09, 
+				    		je_14:je_14,
+				    		pi_14:pi_14,
+				    		je_19:je_19,
+				    		pi_19:pi_19,
+				    		year:year_selected,
+				    		month:month_selected,
+				    		day:day},
+				    success:function(json){
+				    	if(json.trim() == '1') {
+						    toastr.success("Insert/Update success!");
+						} else{
+							toastr.error("Fail to insert/update seat booking info!");
+						}
+
+				    }
+				});//End ajax
+			}
+		});
+	}
+
+	// me is the closest .booking_date_this_month
+	function update_seat_booking_info_on_off(me) {
+		var on_off = me.find('.exam_seat_booking_on_off').val();
+		var day = me.find('.exam_seat_booking_content_each_date').text();
+
+		var je_09 = me.find('tbody').find('tr:nth-child(2)').find('td:nth-child(2) span').text().trim();
+		var pi_09 = me.find('tbody').find('tr:nth-child(2)').find('td:nth-child(3) span').text().trim();
+
+		var je_14 = me.find('tbody').find('tr:nth-child(3)').find('td:nth-child(2) span').text().trim();
+		var pi_14 = me.find('tbody').find('tr:nth-child(3)').find('td:nth-child(3) span').text().trim();
+
+		var je_19 = me.find('tbody').find('tr:nth-child(4)').find('td:nth-child(2) span').text().trim();
+		var pi_19 = me.find('tbody').find('tr:nth-child(4)').find('td:nth-child(3) span').text().trim();
+
+		// update or create seat booking records
+		$.ajax({
+			type:"post",
+		    url:window.api_url + "updateSeatBookingInfo",
+		    data:{	on_off:on_off,
+		    		je_09:je_09, 
+		    		pi_09:pi_09, 
+		    		je_14:je_14,
+		    		pi_14:pi_14,
+		    		je_19:je_19,
+		    		pi_19:pi_19,
+		    		year:year_selected,
+		    		month:month_selected,
+		    		day:day},
+		    success:function(json){
+		    	if(json.trim() == '2') {
+				    toastr.success("Update success!");
+				}else{
+					toastr.error("Fail to update seat booking info!");
+				}
+		    }
+		});//End ajax
+	}
+</script>
 </head>
 <div class="highlight" id="exam_seat_booking_calendar_section_highlight">
 <div class="row">
@@ -975,12 +995,12 @@
 					      <!-- <option value="POST">POST CAT</option> -->
 					    </select>
 					</div>
-				</div>
-				<div class="row">
 					<div class="col-xs-4">
 						<label for="input_ato_ic">IC Number</label>
 						<input class="form-control" id="input_ato_ic" >
 					</div>
+				</div>
+<!-- 				<div class="row">
 					<div class="col-xs-4">
 						<label for="input_ato_recommend_level">Recommend Level</label>
 						<select class="form-control" id="input_ato_recommend_level">
@@ -991,7 +1011,7 @@
 			                <option value="ADVANCED">高级</option>
 			            </select>
 					</div>
-				</div>
+				</div> -->
 				<h4>考试科目</h4><hr>
 				<div class="row">
 					<div class="col-xs-4">
@@ -1032,7 +1052,7 @@
 						</div>
 					</div>
 				</div>
-				<h4>考试信息</h4><hr>
+<!-- 				<h4>考试信息</h4><hr>
 				<div class="row">
 					<div class="col-xs-4">
 						<label for="input_ato_exam_location">Exam Location</label>
@@ -1055,16 +1075,16 @@
 			                <option value="19">晚上七点</option>
 			            </select>
 					</div>
-				</div>
+				</div> -->
 				<div class="row">
-					<div class="col-xs-4">
+<!-- 					<div class="col-xs-4">
 						<label for="input_ato_branch">ATO Branch</label>
 						<select class="form-control" id="input_ato_branch"></select>
 					</div>
 					<div class="col-xs-4">
 						<label for="input_ato_op">ATO Operator</label>
 						<select class="form-control" id="input_ato_op"></select>
-					</div>
+					</div> -->
 					<div class="col-xs-4">
 						<label for="input_ato_remark">Remark</label>
 						<textarea class="form-control" id="input_ato_remark" rows="3"></textarea>
@@ -1635,14 +1655,14 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-xs-4">
+					<!-- <div class="col-xs-4">
 						<label for="input_student_new_branch">Operator Branch</label>
 						<select class="form-control" id="input_student_new_branch"></select>
 					</div>
 					<div class="col-xs-4">
 						<label for="input_student_new_op">Operator</label>
 						<select class="form-control" id="input_student_new_op"></select>
-					</div>
+					</div> -->
 					<div class="col-xs-4">
 						<label for="input_student_new_remark">Remark</label>
 						<textarea class="form-control" id="input_student_new_remark" rows="3"></textarea>
