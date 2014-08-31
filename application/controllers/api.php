@@ -457,12 +457,122 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  search singel student info by ic and download
+	 */
+	function searchStudentInfoDownload() {
+		$keyword = $_POST['keyword'];
+		$students = $this->apis->search_single_students_by_keyword_download($keyword);
+		$rowArray1 = array('来源', '注册号', 'IC', '分部', '姓', '名', '其他名字', '电话', '家里电话', '性别', '称呼', '生日', '年龄', 'IC类型', '公民类型', '国籍', '种族', '华文水平', '教育水平', '语言', '政府信', '工作状态', '公司名字', '公司类型', '公司注册号', '行业', '职称', '工资水平', 'Block', '街道', 'Building', '邮编', '备注');
+		if($students != NULL) {
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        array('基本信息'),   // The data to set
+			        NULL
+			    );
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $rowArray1,   // The data to set
+			        NULL,
+			        'A2'
+			    );
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $students,   // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'A3'         // Top left coordinate of the worksheet range where
+		                     //    we want to set these values (default is A1)
+			    );
+
+			$student_records = $this->apis->get_student_records_by_ic_download($keyword);
+			$rowArray2 = array('IC', '考试时间', '听力', '阅读', '数学', '会话', '读写', '综合等级', '会话等级', '读写等级', '数学等级', '备注');
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        array('考试记录'),   // The data to set
+			        NULL,
+			        'A5'
+			    );
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $rowArray2,   // The data to set
+			        NULL,
+			        'A6'
+			    );
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $student_records,   // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'A7'         // Top left coordinate of the worksheet range where
+		                     //    we want to set these values (default is A1)
+			    );
+
+			$start = 8 + sizeof($student_records); + 1;
+
+			$classes = $this->apis->get_all_class_by_student_ic_download($keyword);
+			$rowArray3 = array('班级代码', '班级名字', '班级类型', '班级水平', '开始日期', '结束日期', '开始时间', '结束时间', '老师名字', '老是电话', '上课地点', '班级状态', '备注');
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        array('所在班级信息'),   // The data to set
+			        NULL,
+			        'A'.$start
+			    );
+			$start += 1;
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $rowArray3,   // The data to set
+			        NULL,
+			        'A'.$start
+			    );
+			$start += 1;
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $classes,   // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'A'.$start         // Top left coordinate of the worksheet range where
+		                     //    we want to set these values (default is A1)
+			    );
+			$start += sizeof($classes) + 1;
+			
+			$atos = $this->apis->get_student_atos_by_ic_download($keyword);
+			$rowArray4 = array('IC', 'Pre / Post Assessment','Class ID', 'Attendance Percentage', '是否改期', 'EL', 'ER', 'EN', 'ES', 'EW', 'Exam Location', 'Exam Date', 'Exam Time', 'Remark');
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        array('ATO信息'),   // The data to set
+			        NULL,
+			        'A'.$start
+			    );
+			$start += 1;
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $rowArray4,   // The data to set
+			        NULL,
+			        'A'.$start
+			    );
+			$start += 1;
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $atos,   // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'A'.$start         // Top left coordinate of the worksheet range where
+		                     //    we want to set these values (default is A1)
+			    );
+		}
+		$filename = 'Student_All_Info_'.date('Y-m-d H:i:s').'.xls';	
+			
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		             
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+		$objWriter->save('php://output');
+	}
+
+	/**
 	 *  search student info by ic or name and download
 	 */
 	function searchStudentInfoDownload1() {
 		$keyword = $_POST['keyword'];
 		$students = $this->apis->search_students_by_keyword_download($keyword);
-		$rowArray = array('收据类型', '收据时间', '收据号码', '收费金额', '学员IC', '付款人姓名', '学员电话', '是否补交学费', '是否老学员', '课程类型', '收款人', '分部', '备注');
+		$rowArray = array('来源', '注册号', 'IC', '分部', '姓', '名', '其他名字', '电话', '家里电话', '性别', '称呼', '生日', '年龄', 'IC类型', '公民类型', '国籍', '种族', '华文水平', '教育水平', '语言', '政府信', '工作状态', '公司名字', '公司类型', '公司注册号', '行业', '职称', '工资水平', 'Block', '街道', 'Building', '邮编', '备注');
 		if($students != NULL) {
 			$this->excel->getActiveSheet()
 			    ->fromArray(

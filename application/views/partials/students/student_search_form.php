@@ -19,6 +19,10 @@
 		    });
 		});
 
+		function search_student_info_download() {
+
+		}
+
 		function get_class_by_student_ic(key_word, target) {
 			$.ajax({
 				type:"post",
@@ -211,7 +215,7 @@
 											'<div class="panel panel-default">' + 
 												'<div class="panel-heading">' +
 													'<h4 class="panel-title">' +
-														'<a data-toggle="collapse" data-parent="ato_collapse_'+key+'" href="#ato_collapse_body_'+key+'">ATO ' + num + '  /  Exam Type: <b>' + reply[key].pre_post + '</b>  /  Recommend Level: <b>' + reply[key].recommend_level + '</b>  /  Exam Date&Time: <b>' + reply[key].exam_date + ' ' + reply[key].exam_time + '</b></a>' + 
+														'<a data-toggle="collapse" data-parent="ato_collapse_'+key+'" href="#ato_collapse_body_'+key+'">ATO ' + num + '  /  Exam Type: <b>' + reply[key].pre_post + '</b>  /  Exam Date&Time: <b>' + reply[key].exam_date + ' ' + reply[key].exam_time + '</b></a>' + 
 													' </h4>' +
 												'</div>' +
 												'<div id="ato_collapse_body_'+key+'" class="panel-collapse collapse">' + 
@@ -231,16 +235,13 @@
 															'</div>' +
 														'</div>' + 
 														'<div class="row">' + 
-															'<div class="col-xs-3">'+ 
+															'<div class="col-xs-4">'+ 
 																'<div>Attendance: ' + reply[key].attendance + '</div>' +
 															'</div>' + 
-															'<div class="col-xs-3">' +
-																'<div>Recommend Level: ' + reply[key].recommend_level + '</div>' + 
-															'</div>' +
-															'<div class="col-xs-3">' +
+															'<div class="col-xs-4">' +
 																'<div>Exam Date&Time: '+ reply[key].exam_date + ' ' + reply[key].exam_time + '</div>' + 
 															'</div>' +
-															'<div class="col-xs-3">' +
+															'<div class="col-xs-4">' +
 																'<div>Exam Location: '+ reply[key].exam_location + '</div>' + 
 															'</div>' +
 														'</div>' + 
@@ -462,22 +463,24 @@
 	</script>
 </head>
 <div class="highlight">
-	<div class="row">
-		<div id="student_search">
+	<form action="<?php echo $this->config->base_url(); ?>index.php/api/searchStudentInfoDownload" method="POST" target="_blank">
+		<div class="row">
+			<div id="student_search">
+				<div class="col-xs-2">
+					<label for="input_student_search_ic">请输入学员IC：</label>
+				</div>
+				<div class="col-xs-4">
+					<input name="keyword" class="form-control" id="input_student_search_ic">
+				</div>
+				<div class="col-xs-2"></div>
+			</div>
 			<div class="col-xs-2">
-				<label for="input_student_search_ic">请输入学员IC：</label>
+				<a class="button glow button-rounded button-flat" id="student_search_submit">Search</a>
 			</div>
-			<div class="col-xs-4">
-				<input class="form-control" id="input_student_search_ic" placeholder="IC Number">
+			<div class="col-xs-2">
+				<input type="submit" value="To Excel" class="button glow button-rounded button-flat" id="student_to_excel">
 			</div>
-			<div class="col-xs-2"></div>
 		</div>
-		<div class="col-xs-2">
-			<a class="button glow button-rounded button-flat" id="student_search_submit">Search</a>
-		</div>
-		<div class="col-xs-2">
-			<a class="button glow button-rounded button-flat" id="student_to_excel">To Excel</a>
-		</div>
-	</div>
+	</form>
 	<div id="student_search_results"></div>
 </div>

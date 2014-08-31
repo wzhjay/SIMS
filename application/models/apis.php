@@ -454,6 +454,25 @@ class Apis extends CI_Model
 	}
 
 	/**
+	 * get ato info by ic 
+	 *
+	 * @param	$ic
+	 * @return	array or NULL
+	 */
+	function get_student_atos_by_ic_download($ic) {
+		if($this->session->userdata('session_id')) {
+			if($this->apis->check_user_role() == 'admin') {
+				$query = $this->db->query('SELECT ic, pre_post, class_code, attendance, post_change_date, el, er, en, es, ew, exam_location, exam_date, exam_time, remark FROM ato WHERE ic = "'.$ic.'"');
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				$query = $this->db->query('SELECT ic, pre_post, class_code, attendance, post_change_date, el, er, en, es, ew, exam_location, exam_date, exam_time, remark FROM ato WHERE ic = "'.$ic.'" AND (branch_id = "'.$op_branch_id.'")');
+			}
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
 	 * get ato info by id
 	 *
 	 * @param	id
@@ -495,6 +514,20 @@ class Apis extends CI_Model
 	function get_student_records_by_ic($ic) {
 		if($this->session->userdata('session_id')) {
 			$query = $this->db->query('SELECT * FROM student_records WHERE student_ic = "'.$ic.'" ORDER BY exam_date');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
+	 * get student records from student_records table, by given ic number
+	 *
+	 * @param	ic
+	 * @return	array or NULL
+	 */
+	function get_student_records_by_ic_download($ic) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT sr.student_ic, sr.exam_date, sr.el_best, sr.er_best, sr.en_best, sr.es_best, sr.ew_best, sr.wpn, sr.con, sr.wri, sr.wpn, sr.remark FROM student_records sr WHERE sr.student_ic = "'.$ic.'" ORDER BY sr.exam_date');
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
@@ -585,13 +618,32 @@ class Apis extends CI_Model
 	 * @param	key word 
 	 * @return	array or NULL
 	 */
+	function search_single_students_by_keyword_download($keyword) {
+		if($this->session->userdata('session_id')) {
+			if($this->apis->check_user_role() == 'admin') {
+				$query = $this->db->query('SELECT s.source, r.reg_no, s.ic, b.name, s.firstname, s.lastname, s.othername, s.tel, s.tel_home, s.gender, s.salutation, s.birthday, s.age, s.ic_type, s.citizenship, s.nationality, s.race, s.cn_level, s.edu_level, s.lang, s.gov_letter, s.emp_status, s.company_name, s.company_type, s.company_reg_no, s.industry, s.designation, s.salary_range, s.block, s.street, s.building, s.postcode, s.remark FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (s.ic = "'.$keyword.'") ORDER BY -DATE(r.reg_date)');
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				$query = $this->db->query('SELECT s.source, r.reg_no, s.ic, b.name, s.firstname, s.lastname, s.othername, s.tel, s.tel_home, s.gender, s.salutation, s.birthday, s.age, s.ic_type, s.citizenship, s.nationality, s.race, s.cn_level, s.edu_level, s.lang, s.gov_letter, s.emp_status, s.company_name, s.company_type, s.company_reg_no, s.industry, s.designation, s.salary_range, s.block, s.street, s.building, s.postcode, s.remark FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND (s.ic = "'.$keyword.'") AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+			}
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
+	 * search students by keyword in ic number/firstname/lastname, from table registration, student for download
+	 *
+	 * @param	key word 
+	 * @return	array or NULL
+	 */
 	function search_students_by_keyword_download($keyword) {
 		if($this->session->userdata('session_id')) {
 			if($this->apis->check_user_role() == 'admin') {
-				$query = $this->db->query('SELECT *  FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%") OR (s.tel LIKE "%'.$keyword.'%")) ORDER BY -DATE(r.reg_date)');
+				$query = $this->db->query('SELECT s.source, r.reg_no, s.ic, b.name, s.firstname, s.lastname, s.othername, s.tel, s.tel_home, s.gender, s.salutation, s.birthday, s.age, s.ic_type, s.citizenship, s.nationality, s.race, s.cn_level, s.edu_level, s.lang, s.gov_letter, s.emp_status, s.company_name, s.company_type, s.company_reg_no, s.industry, s.designation, s.salary_range, s.block, s.street, s.building, s.postcode, s.remark FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%") OR (s.tel LIKE "%'.$keyword.'%")) ORDER BY -DATE(r.reg_date)');
 			} else {
 				$op_branch_id = $this->apis->get_user_branch_id();
-				$query = $this->db->query('SELECT *  FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%") OR (s.tel LIKE "%'.$keyword.'%")) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+				$query = $this->db->query('SELECT s.source, r.reg_no, s.ic, b.name, s.firstname, s.lastname, s.othername, s.tel, s.tel_home, s.gender, s.salutation, s.birthday, s.age, s.ic_type, s.citizenship, s.nationality, s.race, s.cn_level, s.edu_level, s.lang, s.gov_letter, s.emp_status, s.company_name, s.company_type, s.company_reg_no, s.industry, s.designation, s.salary_range, s.block, s.street, s.building, s.postcode, s.remark FROM registration r, student s, branch b WHERE (r.ic = s.ic) AND (r.student_branch_id = b.id) AND ((s.ic LIKE "%'.$keyword.'%") OR (s.firstname LIKE "%'.$keyword.'%") OR (s.lastname LIKE "%'.$keyword.'%") OR (s.tel LIKE "%'.$keyword.'%")) AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
 			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
@@ -1219,6 +1271,20 @@ class Apis extends CI_Model
 	function get_all_class_by_student_ic($ic) {
 		if($this->session->userdata('session_id')) {
 			$query = $this->db->query('SELECT * FROM class c, student_class sc, branch b WHERE (c.class_id = sc.class_id) AND (sc.student_id = (SELECT student_id FROM student s WHERE s.ic = "'.$ic.'")) AND (c.branch_id = b.id) ORDER BY c.created');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
+	 * get classes from class, student_class and branch table by student IC
+	 *
+	 * @param	$ic
+	 * @return	array or null
+	 */
+	function get_all_class_by_student_ic_download($ic) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT c.code, c.class_name, c.type, c.level, c.start_date, c.end_date, c.start_time, c.end_time, c.teacher_name, c.teacher_tel, c.location, c.status, c.remark FROM class c, student_class sc, branch b WHERE (c.class_id = sc.class_id) AND (sc.student_id = (SELECT student_id FROM student s WHERE s.ic = "'.$ic.'")) AND (c.branch_id = b.id) ORDER BY c.created');
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
