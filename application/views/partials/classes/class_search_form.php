@@ -112,7 +112,7 @@
 			    		var reply = $.parseJSON(json);
 			    		for (var key in reply) {
 			    			if (reply.hasOwnProperty(key)) {
-			    				branches.append('<option id="class_search_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+			    				branches.append('<option id="class_search_branch_'+ reply[key].id +'" value="reply[key].id">' + reply[key].name + '</option>');
 			    			}
 			    		}
 			        }else{
@@ -518,73 +518,75 @@
 </head>
 <div class="highlight">
 	<h4>输入查询信息</h4>
-	<div class="row">
-		<div class="col-xs-4">
-			<label for="input_class_search_code">Class Code(班级代码)</label>
-			<input class="form-control" id="input_class_search_code">
-		</div>
-		<div class="col-xs-4">
-			<label for="input_class_search_type">Class Type(课程类型)</label>
-			<select class="form-control" id="input_class_search_type" ></select>
-		</div>
-		<div class="col-xs-4">
-			<label for="input_class_search_type">Class Level(班级水平)</label>
-			<select class="form-control" id="input_class_search_level">
-		      	<option value="NA">请选择</option>
-		     	<option value="BEGINNERS">初级</option>
-		      	<option value="INTERMEDIATE">中级</option>
-		      	<option value="ADVANCED">高级</option>
-	    	</select>
-	    </div>
-	</div>
-	<div class="row">
-	    <div class="col-xs-4">
-			<label for="input_class_search_status">Status(班级状态)</label>
-			<select class="form-control" id="input_class_search_status" >
-		      <option value="NA">请选择</option>
-		      <option value="preparing">未开班</option>
-		      <option value="learning">已开班</option>
-		      <option value="waitexam">待考试</option>
-		      <option value="finished">已结束</option>
-		    </select>
-		</div>
-		<div class="col-xs-4">
-			<label for="input_class_search_branch">Branch(分部 *操作员请选择ALL或者自己所在branch)</label>
-			<select class="form-control" id="input_class_search_branch" ></select>
-		</div>
-	</div>
-	<label>Start Date(班级开始日期)</label>
-	<div class="row">
-		<div class="input-daterange">
+	<form action="<?php echo $this->config->base_url(); ?>index.php/api/searchClassInfoDownload" method="POST" target="_blank">
+		<div class="row">
 			<div class="col-xs-4">
-				<input class="form-control" id="input_class_search_start_from" placeholder="From">
+				<label for="input_class_search_code">Class Code(班级代码)</label>
+				<input name='code' class="form-control" id="input_class_search_code">
 			</div>
 			<div class="col-xs-4">
-				<input class="form-control" id="input_class_search_start_to" placeholder="To">
-			</div>
-		</div>
-	</div>
-	<label>End Date(班级结束日期)</label>
-	<div class="row">
-		<div class="input-daterange">
-			<div class="col-xs-4">
-				<input class="form-control" id="input_class_search_end_from" placeholder="From">
+				<label for="input_class_search_type">Class Type(课程类型)</label>
+				<select name='type' class="form-control" id="input_class_search_type" ></select>
 			</div>
 			<div class="col-xs-4">
-				<input class="form-control" id="input_class_search_end_to" placeholder="To">
+				<label for="input_class_search_type">Class Level(班级水平)</label>
+				<select name='level' class="form-control" id="input_class_search_level">
+			      	<option value="NA">请选择</option>
+			     	<option value="BEGINNERS">初级</option>
+			      	<option value="INTERMEDIATE">中级</option>
+			      	<option value="ADVANCED">高级</option>
+		    	</select>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-xs-4">
+				<label for="input_class_search_status">Status(班级状态)</label>
+				<select name='status' class="form-control" id="input_class_search_status" >
+			      <option value="NA">请选择</option>
+			      <option value="preparing">未开班</option>
+			      <option value="learning">已开班</option>
+			      <option value="waitexam">待考试</option>
+			      <option value="finished">已结束</option>
+			    </select>
+			</div>
+			<div class="col-xs-4">
+				<label for="input_class_search_branch">Branch(分部 *操作员请选择ALL或者自己所在branch)</label>
+				<select name='branch_id' class="form-control" id="input_class_search_branch" ></select>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-8"></div>
-		<div class="col-xs-2">
-			<a class="button glow button-rounded button-flat" id="class_info_search_submit">Search</a>
+		<label>Start Date(班级开始日期)</label>
+		<div class="row">
+			<div class="input-daterange">
+				<div class="col-xs-4">
+					<input name='start_from' class="form-control" id="input_class_search_start_from" placeholder="From">
+				</div>
+				<div class="col-xs-4">
+					<input name='start_to' class="form-control" id="input_class_search_start_to" placeholder="To">
+				</div>
+			</div>
 		</div>
-		<div class="col-xs-2">
-			<a class="button glow button-rounded button-flat" id="class_info_to_excel">To Excel</a>
+		<label>End Date(班级结束日期)</label>
+		<div class="row">
+			<div class="input-daterange">
+				<div class="col-xs-4">
+					<input name='end_from' class="form-control" id="input_class_search_end_from" placeholder="From">
+				</div>
+				<div class="col-xs-4">
+					<input name='end_to' class="form-control" id="input_class_search_end_to" placeholder="To">
+				</div>
+			</div>
 		</div>
-	</div>
-	<br><br>
+		<div class="row">
+			<div class="col-xs-8"></div>
+			<div class="col-xs-2">
+				<a class="button glow button-rounded button-flat" id="class_info_search_submit">Search</a>
+			</div>
+			<div class="col-xs-2">
+				<input type="submit" value="To Excel" class="button glow button-rounded button-flat" id="class_info_to_excel">
+			</div>
+		</div>
+		<br><br>
+	</form>
 	<div id="class_search_results"></div>
 </div>
 

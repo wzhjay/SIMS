@@ -614,6 +614,13 @@ class Api extends CI_Controller
 		$slot = $_POST['slot'];
 		$from = $_POST['from'];
 		$to = $_POST['to'];
+		if(trim($from) == "") {
+			$from = '2000-01-01';
+		}
+
+		if(trim($to) == "") {
+			$to = '2100-01-01';
+		}
 		if(isset($_POST['have_class'])) {
 			$have_class = 'YES';
 		} else {
@@ -1132,6 +1139,62 @@ class Api extends CI_Controller
 			echo json_encode($results);
 		}
 		echo NULL;
+	}
+
+	/**
+	 *  search class info by multiple variables and download as excel
+	 */
+	function searchClassInfoDownload() {
+		$code = $_POST['code'];
+		$type = $_POST['type'];
+		$level = $_POST['level'];
+		$status = $_POST['status'];
+		$branch_id = $_POST['branch_id'];
+		$start_from = $_POST['start_from'];
+		$start_to = $_POST['start_to'];
+		$end_from = $_POST['end_from'];
+		$end_to = $_POST['end_to'];
+		if(trim($start_from) == "") {
+			$start_from = '2000-01-01';
+		}
+		if(trim($start_to) == "") {
+			$start_to = '2100-01-01';
+		}
+		if(trim($end_from) == "") {
+			$end_from = '2000-01-01';
+		}
+		if(trim($end_to) == "") {
+			$end_to = '2100-01-01';
+		}
+
+		//activate worksheet number 1
+		$this->excel->setActiveSheetIndex(0);
+		//name the worksheet
+		$this->excel->getActiveSheet()->setTitle('Classes');
+		$classes = $this->apis->search_class_by_multiple_var_download($code, $type, $level, $status, $branch_id, $start_from, $start_to, $end_from, $end_to);
+		$rowArray = array('班级代码', '班级名字', '班级类型', '班级水平', '开班时间', '闭班时间', '上课开始时间', '上课结束时间', '老师名字', '老师电话', '所在地点', '分部', '班级状态', '备注');
+		if($classes != NULL) {
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $rowArray,   // The data to set
+			        NULL
+			    );
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $classes,   // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'A3'         // Top left coordinate of the worksheet range where
+		                     //    we want to set these values (default is A1)
+			    );
+			$filename = 'Classes_'.date('Y-m-d H:i:s').'.xls';	
+			
+			header('Content-Type: application/vnd.ms-excel'); //mime type
+			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+			header('Cache-Control: max-age=0'); //no cache
+			             
+			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+			$objWriter->save('php://output');
+		}
 	}
 
 	/**

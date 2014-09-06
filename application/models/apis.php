@@ -948,6 +948,43 @@ class Apis extends CI_Model
 	}
 
 	/**
+	 * search class info by moultiple var for downloading
+	 *
+	 * @param	$code, $type, $level, $status, $start_from, $start_to, $end_from, $end_to
+	 * @return	array or NULL
+	 */
+	function search_class_by_multiple_var_download($code, $type, $level, $status, $branch_id, $start_from, $start_to, $end_from, $end_to) {
+		if($this->session->userdata('session_id')) {
+			if(trim($code, " ") == "") { $code = "";}
+			if($type == 'NA') { $type = "";}
+			if($level == 'NA') { $level = "";}
+			if($status == 'NA') { $status = "";}
+
+			if($this->apis->check_user_role() == 'admin') {
+				if($branch_id == 'ALL') {
+					$query1 = $this->db->query('SELECT c.code, c.class_name, c.type, c.level, c.start_date, c.end_date, c.start_time, c.end_time, c.teacher_name, c.teacher_tel, c.location, b.name, c.status, c.remark FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.created)');
+					if ($query1->num_rows() > 0) return $query1->result_array();
+				}
+				else {
+					$query2 = $this->db->query('SELECT c.code, c.class_name, c.type, c.level, c.start_date, c.end_date, c.start_time, c.end_time, c.teacher_name, c.teacher_tel, c.location, b.name, c.status, c.remark FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.branch_id = "'.$branch_id.'") AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") ORDER BY -DATE(c.created)');
+					if ($query2->num_rows() > 0) return $query2->result_array();
+				}
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				if($branch_id == 'ALL') {
+					$query1 = $this->db->query('SELECT c.code, c.class_name, c.type, c.level, c.start_date, c.end_date, c.start_time, c.end_time, c.teacher_name, c.teacher_tel, c.location, b.name, c.status, c.remark FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") AND (c.branch_id = "'.$op_branch_id.'") ORDER BY -DATE(c.created)');
+					if ($query1->num_rows() > 0) return $query1->result_array();
+				}
+				else {
+					$query2 = $this->db->query('SELECT c.code, c.class_name, c.type, c.level, c.start_date, c.end_date, c.start_time, c.end_time, c.teacher_name, c.teacher_tel, c.location, b.name, c.status, c.remark FROM class c, branch b WHERE (c.branch_id = b.id) AND (c.branch_id = "'.$branch_id.'") AND (c.code LIKE "%'.$code.'%") AND (c.type LIKE "%'.$type.'%") AND (c.level LIKE "%'.$level.'%") AND (c.status LIKE "%'.$status.'%") AND (DATE(c.start_date) BETWEEN "'.$start_from.'" AND "'.$start_to.'") AND (DATE(c.end_date) BETWEEN "'.$end_from.'" AND "'.$end_to.'") AND (c.branch_id = "'.$op_branch_id.'") ORDER BY -DATE(c.created)');
+					if ($query2->num_rows() > 0) return $query2->result_array();
+				}
+			}
+		}
+		return NULL;
+	}
+
+	/**
 	 * create new class, inseart new data into class table
 	 *
 	 * @param	$code, $class_name, $branch_id, $type, $level, $status, $location, $start_date, $end_date, $start_time, $end_time, $teacher_name, $teacher_tel, $remark

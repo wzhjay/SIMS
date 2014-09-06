@@ -225,7 +225,7 @@
 											'<label>IC Number</label>' +
 											'<div class="form-control">' + ic + '</div>' +
 										'</div>' + 
-										'<div class="col-xs-2">' + 
+										'<div class="col-xs-3">' + 
 											'<label for="student_ato_ic_check_model_exam_date">考试时间</label>' + 
 											'<div class="form-control" id="student_ato_ic_check_model_exam_date">' + reply[key].exam_date + ' ' + reply[key].exam_time + '</div>' + 
 										'</div>' +
@@ -238,7 +238,7 @@
 											'<div class="form-control" id="student_ato_ic_check_model_exam_location">' + reply[key].exam_location + '</div>' + 
 										'</div>' +
 										'<div class="col-xs-2">' + 
-											'<label for="student_ato_ic_check_model_exam_change_date">考试地点</label>' + 
+											'<label for="student_ato_ic_check_model_exam_change_date">是否改期</label>' + 
 											'<div class="form-control" id="student_ato_ic_check_model_exam_change_date">' + reply[key].post_change_date + '</div>' + 
 										'</div>' +
 									'</div>' +
