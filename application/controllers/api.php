@@ -891,6 +891,19 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  delete exam record by id
+	 */
+	function deleteExamRecordByID() {
+		$id = $this->input->post('id');
+		// delete
+		$delete = $this->apis->delete_exam_record_by_id($id);
+		if($delete){
+			echo 3;
+		}
+		else echo 0;
+	}
+
+	/**
 	 *  search student info by ic
 	 */
 	function searchStudentInfo() {

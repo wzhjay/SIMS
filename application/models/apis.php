@@ -575,6 +575,20 @@ class Apis extends CI_Model
 	}
 
 	/**
+	 * delete exam record by given id
+	 *
+	 * @param	id
+	 * @return	bool
+	 */
+	function delete_exam_record_by_id($id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('DELETE FROM student_records WHERE id = "'.$id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
 	 * search students by ic number(equal, one result), from table registration, student
 	 *
 	 * @param	key word (ic)

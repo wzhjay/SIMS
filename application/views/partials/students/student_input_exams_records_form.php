@@ -7,7 +7,7 @@
 	<meta charset="utf-8">
 
 	<script>
-		var update_selected_record_id = 0;
+		var selected_record_id = 0;
 		$(document).ready(function($) {
 			$('#student_record_form').parsley();
 			$('#input_student_exam_record_time').datepicker({
@@ -23,8 +23,12 @@
 			});
 
 			$('#student_exam_record_update').on('click', function() {
-				update_student_exam_record(update_selected_record_id);
+				update_student_exam_record(selected_record_id);
 			});
+
+			$('#student_exam_record_delete_confirm').on('click', function() {
+				delete_student_exam_record(selected_record_id);
+			})
 
 			$('#student_exam_ic_check').on('click', function() {
 				student_exam_record_check_student_by_ic();
@@ -94,6 +98,21 @@
 					}
 			    }
 			});//End ajax
+		}
+
+		function delete_student_exam_record(selected_record_id) {
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "deleteExamRecordByID",
+			    data:{id:selected_record_id},
+			    success:function(json){
+			    	if(json.trim() == '3') {
+					    toastr.success("Delete success!");
+					}else{
+						toastr.error("Fail to delete exam record!");
+					}
+			    }
+			});//End ajax	
 		}
 
 		function update_student_exam_record(record_id) {
@@ -302,6 +321,8 @@
 											'<div class="form-control" id="student_record_ic_check_exam_remark">'+ reply[key].remark + '</div>' + 
 										'</div>' +
 										'<div class="col-xs-2">' +
+										'<br>' +
+											'<a class="button glow button-rounded button-flat" id="student_record_ic_check_modal_delete_' + reply[key].id + '">Delete</a>' + 
 										'</div>' +
 										'<div class="col-xs-2">' +
 											'<br>' +
@@ -315,9 +336,12 @@
 					        $('#student-exam-record-modal a').on('click', function() {
 								var el_id = $(this).attr('id').split('_');
 								var record_id = el_id[6];
-								update_selected_record_id = record_id;	// assign global var for late update submit
-
-								load_exam_record(record_id);
+								selected_record_id = record_id;	// assign global var for late update submit
+								if(el_id[5] == 'update') {
+									load_exam_record(record_id);
+								} else if(el_id[5] == 'delete') {
+									$('#student-exam-record-delete-modal').modal('show');
+								}
 
 								$('#student-exam-record-modal').modal('hide');
 							});
@@ -571,6 +595,27 @@
       <div class="modal-body">
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Student Exam delete Modal -->
+<div class="modal fade" id="student-exam-record-delete-modal" tabindex="-1" role="dialog" aria-labelledby="student_exam_record_delete_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="student_exam_record_delete_modal_label">Delete Exam Records</h4>
+      </div>
+      <div class="modal-body">
+	      <div class='row'>
+	      	<div class="col-xs-12">Sure to delete this exam record? (确定删除这条考试记录？)</div>
+	      </div>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-primary" data-dismiss="modal" id='student_exam_record_delete_confirm'>确定</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
