@@ -396,7 +396,7 @@ class Apis extends CI_Model
 	 */
 	function create_new_ato($ic, $pre_post, $class_code, $attendance, $post_change_date, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $ato_branch_id, $ato_op_id, $remark) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('INSERT INTO ato (ic, pre_post, class_code, attendance, post_change_date, el, er, en, es, ew, exam_location, exam_date, exam_time, branch_id, branch_op_id, created, modified, remark) VALUES ("'.$ic.'", "'.$pre_post.'", "'.$class_code.'", "'.$attendance.'", "'.$post_change_date.'", "'.$el.'", "'.$er.'", "'.$en.'", "'.$es.'", "'.$ew.'", "'.$exam_location.'", "'.$exam_date.'", "'.$exam_time.'", "'.$ato_branch_id.'", "'.$ato_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$remark.'")');
+			$query = $this->db->query('INSERT INTO ato (ic, pre_post, class_code, attendance, post_change_date, el, er, en, es, ew, exam_location, exam_date, exam_time, branch_id, branch_op_id, ato_created, ato_modified, ato_remark) VALUES ("'.$ic.'", "'.$pre_post.'", "'.$class_code.'", "'.$attendance.'", "'.$post_change_date.'", "'.$el.'", "'.$er.'", "'.$en.'", "'.$es.'", "'.$ew.'", "'.$exam_location.'", "'.$exam_date.'", "'.$exam_time.'", "'.$ato_branch_id.'", "'.$ato_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'", "'.$remark.'")');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;
@@ -410,7 +410,7 @@ class Apis extends CI_Model
 	 */
 	function update_ato($id, $pre_post, $class_code, $attendance, $post_change_date, $el, $er, $en, $es, $ew, $exam_location, $exam_date, $exam_time, $ato_branch_id, $ato_op_id, $remark) {
 		if($this->session->userdata('session_id')) {
-			$query = $this->db->query('UPDATE ato SET pre_post = "'.$pre_post.'", class_code = "'.$class_code.'", attendance = "'.$attendance.'", post_change_date = "'.$post_change_date.'", el = "'.$el.'", er = "'.$er.'", en = "'.$en.'", es = "'.$es.'", ew = "'.$ew.'", exam_location = "'.$exam_location.'", exam_date = "'.$exam_date.'", exam_time = "'.$exam_time.'", branch_id = "'.$ato_branch_id.'", branch_op_id = "'.$ato_op_id.'", modified = "'.date('Y-m-d H:i:s').'", remark = "'.$remark.'" WHERE id = "'.$id.'"');
+			$query = $this->db->query('UPDATE ato SET pre_post = "'.$pre_post.'", class_code = "'.$class_code.'", attendance = "'.$attendance.'", post_change_date = "'.$post_change_date.'", el = "'.$el.'", er = "'.$er.'", en = "'.$en.'", es = "'.$es.'", ew = "'.$ew.'", exam_location = "'.$exam_location.'", exam_date = "'.$exam_date.'", exam_time = "'.$exam_time.'", branch_id = "'.$ato_branch_id.'", branch_op_id = "'.$ato_op_id.'", ato_modified = "'.date('Y-m-d H:i:s').'", ato_remark = "'.$remark.'" WHERE id = "'.$id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;

@@ -114,13 +114,13 @@
 													'</div>' + 
 													'<div class="row">' + 
 														'<div class="col-xs-4">'+ 
-															'<div>Created: ' + reply[key].created + '</div>' +
+															'<div>Created: ' + reply[key].ato_created + '</div>' +
 														'</div>' + 
 														'<div class="col-xs-4">' +
-															'<div>Modified: ' + reply[key].modified + '</div>' + 
+															'<div>Modified: ' + reply[key].ato_modified + '</div>' + 
 														'</div>' +
 														'<div class="col-xs-4">' +
-															'<div>Remark: '+ reply[key].remark + '</div>' + 
+															'<div>Remark: '+ reply[key].ato_remark + '</div>' + 
 														'</div>' +
 													'</div>' + 
 												'</div>' + 

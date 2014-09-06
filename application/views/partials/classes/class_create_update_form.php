@@ -420,11 +420,11 @@
 	<hr>
 </form>
 <div class="row">
-	<div class="col-xs-8"></div>
+	<div class="col-xs-7"></div>
 	<div class="col-xs-2">
 		<a class="button glow button-rounded button-flat" id="class_new_submit">新建</a>
 	</div>
-	<div class="col-xs-2">
+	<div class="col-xs-3">
 		<a class="button glow button-rounded button-flat" id="class_update_submit">更新班级信息</a>
 	</div>
 </div>
