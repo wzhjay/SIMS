@@ -574,11 +574,11 @@
 		<hr>
 	</form>
 	<div class="row">
-		<div class="col-xs-8"></div>
+		<div class="col-xs-7"></div>
 		<div class="col-xs-2">
 			<a class="button glow button-rounded button-flat" id="student_exam_record_create">新建</a>
 		</div>
-		<div class="col-xs-2">
+		<div class="col-xs-3">
 			<a class="button glow button-rounded button-flat" id="student_exam_record_update">更新学生信息</a>
 		</div>
 	</div>

@@ -78,7 +78,7 @@
 													'<h4 class="panel-title">' +
 														'<div class="row">' +
 															'<div class="col-xs-8">' +
-																'<a data-toggle="collapse" data-parent="reg_record_collapse_'+key+'" href="#reg_record_collapse_body_'+key+'">Reg Record ' + num + '  /  Reg Date: <b>' + reply[key].reg_date + '</b>' + '  /  IC: <b>' + reply[key].ic + '</b>' + '  /  Reg Number: <b>' + reply[key].reg_no + '</b>' + '</a>' + 
+																'<a data-toggle="collapse" data-parent="reg_record_collapse_'+key+'" href="#reg_record_collapse_body_'+key+'">Record ' + num + '  /  Reg Date: <b>' + reply[key].reg_date + '</b>' + '  /  IC: <b>' + reply[key].ic + '</b>' + '  /  Reg NO.: <b>' + reply[key].reg_no + '</b>' + '</a>' + 
 															'</div>' + 
 															'<div class="col-xs-2">' +
 																'<a class="button glow button-rounded button-flat" id="reg_search_update_'+reply[key].reg_id+'" >Update</a>' + 

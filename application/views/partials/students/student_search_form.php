@@ -47,10 +47,10 @@
 												'<div id="student_search_class_info_collapse_body_'+key+'" class="panel-collapse collapse">' + 
 													'<div class="panel-body">' + 
 														'<div class="row">' + 
-															'<div class="col-xs-3">'+ 
+															'<div class="col-xs-6">'+ 
 																'<div>Class Start Date: ' + reply[key].start_date + '</div>' +
 															'</div>' + 
-															'<div class="col-xs-3">'+ 
+															'<div class="col-xs-6">'+ 
 																'<div>Class End Date: ' + reply[key].end_date + '</div>' +
 															'</div>' + 
 														'</div>' +
@@ -225,23 +225,20 @@
 																'<div>Exam Type: ' + reply[key].pre_post + '</div>' +
 															'</div>' + 
 															'<div class="col-xs-3">' +
-																'<div>Class Start Date: ' + reply[key].class_start_date + '</div>' + 
-															'</div>' +
-															'<div class="col-xs-3">' +
-																'<div>Class End Date: '+ reply[key].class_end_date + '</div>' + 
-															'</div>' +
-															'<div class="col-xs-3">' +
 																'<div>Class Code: '+ reply[key].class_code + '</div>' + 
 															'</div>' +
-														'</div>' + 
-														'<div class="row">' + 
-															'<div class="col-xs-4">'+ 
+															'<div class="col-xs-3">'+ 
 																'<div>Attendance: ' + reply[key].attendance + '</div>' +
 															'</div>' + 
-															'<div class="col-xs-4">' +
-																'<div>Exam Date&Time: '+ reply[key].exam_date + ' ' + reply[key].exam_time + '</div>' + 
+															'<div class="col-xs-3">'+ 
+																'<div>Change Day: ' + reply[key].post_change_day + '</div>' +
+															'</div>' + 
+														'</div>' + 
+														'<div class="row">' + 
+															'<div class="col-xs-6">' +
+																'<div>Exam Date / Time: '+ reply[key].exam_date + ' / ' + reply[key].exam_time + '</div>' + 
 															'</div>' +
-															'<div class="col-xs-4">' +
+															'<div class="col-xs-6">' +
 																'<div>Exam Location: '+ reply[key].exam_location + '</div>' + 
 															'</div>' +
 														'</div>' + 

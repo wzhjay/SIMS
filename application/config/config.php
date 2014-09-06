@@ -14,8 +14,8 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://sims.com/SIMS';
-// $config['base_url']	= 'http://changchun.edu.sg/system';
+// $config['base_url']	= 'http://sims.com/SIMS';
+$config['base_url']	= 'http://changchun.edu.sg/system';
 
 /*
 |--------------------------------------------------------------------------

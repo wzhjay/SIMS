@@ -56,6 +56,13 @@
  			$('#remove_student_confirm').on('click', function() {
  				remove_student_from_class(selected_remove_student_id, selected_class_id);
  			});
+
+ 			$('#class_search_class_student_management_middle_section .btn').on('click', function() {
+				$.each($('#class_search_student_search_results option:selected'), function() {
+					var student_id = $(this).attr('id').split('_')[3];
+					assign_student_to_class(student_id);
+				});
+			});
 		});
 
  		function remove_student_from_class(selected_remove_student_id, selected_class_id) {
@@ -433,13 +440,6 @@
 			        }
 			    },
 			});//End ajax
-
-			$('#class_search_class_student_management_middle_section .btn').on('click', function() {
-				$.each($('#class_search_student_search_results option:selected'), function() {
-					var student_id = $(this).attr('id').split('_')[3];
-					assign_student_to_class(student_id);
-				});
-			});
  		}
 
  		function search_student_by_multiple_var() {
@@ -483,13 +483,6 @@
 			        }
 			    },
 			});//End ajax
-
-			$('#class_search_class_student_management_middle_section .btn').on('click', function() {
-				$.each($('#class_search_student_search_results option:selected'), function() {
-					var student_id = $(this).attr('id').split('_')[3];
-					assign_student_to_class(student_id);
-				});
-			});
  		}
 
  		function assign_student_to_class(student_id) {
