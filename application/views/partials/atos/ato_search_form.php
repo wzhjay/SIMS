@@ -58,7 +58,7 @@
 													'<h4 class="panel-title">' +
 														'<div class="row">' +
 															'<div class="col-xs-8">' +
-																'<a data-toggle="collapse" data-parent="ato_search_collapse_'+key+'" href="#ato_search_collapse_body_'+key+'">Search ATO ' + num + '  /  IC: <b>' + reply[key].ic + '</b>' + '  /  Name: <b>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</b>' + '  /  Exam Type: <b>' + reply[key].pre_post + '</b>' + '</a>' + 
+																'<a data-toggle="collapse" data-parent="ato_search_collapse_'+key+'" href="#ato_search_collapse_body_'+key+'">Search ATO ' + num + '  /  IC: <b>' + reply[key].ic + '</b>' + '  /  Name: <b>' + reply[key].firstname + ' ' + reply[key].lastname + '</b>' + '  /  Exam Type: <b>' + reply[key].pre_post + '</b>' + '</a>' + 
 															'</div>' + 
 															'<div class="col-xs-2">' +
 																'<a class="button glow button-rounded button-flat" id="ato_search_update_'+reply[key].id+'" >Update</a>' + 

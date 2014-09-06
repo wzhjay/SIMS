@@ -49,7 +49,7 @@
 													'<h4 class="panel-title">' +
 														'<div class="row">' +
 															'<div class="col-xs-10">' +
-																'<a data-toggle="collapse" data-parent="student_info_record_collapse_'+key+'" href="#student_info_record_collapse_body_'+key+'">Student Record ' + num + '  /  IC: <b>' + reply[key].ic + '</b>  /  Name: <b>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  Tel: <b>' + reply[key].tel + '</b>/  Branch: <b>' + reply[key].name + '</b></a>' + 
+																'<a data-toggle="collapse" data-parent="student_info_record_collapse_'+key+'" href="#student_info_record_collapse_body_'+key+'">Student Record ' + num + '  /  IC: <b>' + reply[key].ic + '</b>  /  Name: <b>' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  Tel: <b>' + reply[key].tel + '</b>/  Branch: <b>' + reply[key].name + '</b></a>' + 
 															'</div>' + 
 															'<div class="col-xs-2">' +
 																'<a class="button glow button-rounded button-flat" id="search_all_students_delete_'+reply[key].student_id+'" data-toggle="modal" data-target="#student-delete-modal">Delete</a>' + 
@@ -64,7 +64,7 @@
 																'<div>IC: ' + reply[key].ic + '</div>' +
 															'</div>' + 
 															'<div class="col-xs-4">' +
-																'<div>Name: ' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname +'</div>' + 
+																'<div>Name: ' + reply[key].firstname + ' ' + reply[key].lastname +'</div>' + 
 															'</div>' +
 															'<div class="col-xs-4">' +
 																'<div>Tel: '+ reply[key].tel + '</div>' + 
@@ -75,7 +75,7 @@
 																'<div>Registration Date: ' + reply[key].reg_date + '</div>' +
 															'</div>' + 
 															'<div class="col-xs-3">' +
-																'<div>Registration Number: ' + reply[key].reg_num +'</div>' + 
+																'<div>Registration Number: ' + reply[key].reg_no +'</div>' + 
 															'</div>' +
 															'<div class="col-xs-3">' +
 																'<div>Tel Home: '+ reply[key].tel_home + '</div>' + 
@@ -170,7 +170,7 @@
 													'<h4 class="panel-title">' +
 														'<div class="row">' +
 															'<div class="col-xs-10">' +
-																'<a data-toggle="collapse" data-parent="student_info_record_collapse_'+key+'" href="#student_info_record_collapse_body_'+key+'">Student Record ' + num + '  /  IC: <b>' + reply[key].ic + '</b>  /  Name: <b>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  Tel: <b>' + reply[key].tel + '</b>/  Branch: <b>' + reply[key].name + '</b></a>' + 
+																'<a data-toggle="collapse" data-parent="student_info_record_collapse_'+key+'" href="#student_info_record_collapse_body_'+key+'">Student Record ' + num + '  /  IC: <b>' + reply[key].ic + '</b>  /  Name: <b>' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  Tel: <b>' + reply[key].tel + '</b>/  Branch: <b>' + reply[key].name + '</b></a>' + 
 															'</div>' + 
 															'<div class="col-xs-2">' +
 																'<a class="button glow button-rounded button-flat" id="search_all_students_delete_'+reply[key].student_id+'" data-toggle="modal" data-target="#student-delete-modal">Delete</a>' + 

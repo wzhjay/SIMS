@@ -395,7 +395,7 @@
 											'<div class="panel panel-default">' + 
 												'<div class="panel-heading">' +
 													'<h6 class="panel-title">' +
-														'<a data-toggle="collapse" data-parent="class_all_student_collapse_'+key+'" href="#class_all_student_collapse_body_'+key+'">Student ' + num + '  / Name: <b>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  IC: <b>' + reply[key].ic + '</b>  /  Tel: <b>' + reply[key].tel + '</b></a><input id="class_students_student_' + reply[key].student_id + '_' + reply[key].ic + '" style="float:right;padding:3px;" type="checkbox" checked>' + 
+														'<a data-toggle="collapse" data-parent="class_all_student_collapse_'+key+'" href="#class_all_student_collapse_body_'+key+'">Student ' + num + '  / Name: <b>' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  IC: <b>' + reply[key].ic + '</b>  /  Tel: <b>' + reply[key].tel + '</b></a><input id="class_students_student_' + reply[key].student_id + '_' + reply[key].ic + '" style="float:right;padding:3px;" type="checkbox" checked>' + 
 													' </h6>' +
 												'</div>' +
 												'<div id="class_all_student_collapse_body_'+key+'" class="panel-collapse collapse">' + 

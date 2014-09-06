@@ -323,7 +323,7 @@
 										'</div>' + 
 										'<div class="col-xs-3">' + 
 											'<label for="student_new_ic_check_model_student_name">Name</label>' + 
-											'<div class="form-control" id="student_new_ic_check_model_student_name">' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</div>' + 
+											'<div class="form-control" id="student_new_ic_check_model_student_name">' + reply[key].firstname + ' ' + reply[key].lastname + '</div>' + 
 										'</div>' +
 										'<div class="col-xs-3">' +
 											'<label for="student_new_ic_check_model_student_tel">Tel</label>' +

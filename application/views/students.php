@@ -28,7 +28,13 @@
 		<div class="tab-content">
 		  	<div class="tab-pane fade in active" id="tab-1">
 		  		<h3>添加或更新注册信息</h3><hr>
-				<?php $this->load->view('partials/students/registration_form') ?>
+		  		<?php
+					if($this->apis->check_user_role() == 'admin') {
+						$this->load->view('partials/students/registration_form');
+					} else if($this->apis->check_user_role() == 'operator'){
+						$this->load->view('partials/students/registration_form_operator');
+					}
+				?>
 				<br><br>
 				<h3>查询所有注册信息</h3><hr>
 				<?php $this->load->view('partials/students/registration_search') ?>

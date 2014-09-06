@@ -238,7 +238,7 @@
 										'</div>' + 
 										'<div class="col-xs-4">' + 
 											'<label for="receipt_student_ic_check_model_student_name">Name</label>' + 
-											'<div class="form-control" id="receipt_student_ic_check_model_student_name">' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</div>' + 
+											'<div class="form-control" id="receipt_student_ic_check_model_student_name">' + reply[key].firstname + ' ' + reply[key].lastname + '</div>' + 
 										'</div>' +
 										'<div class="col-xs-4">' +
 											'<label for="receipt_student_ic_check_model_student_tel">Tel</label>' +

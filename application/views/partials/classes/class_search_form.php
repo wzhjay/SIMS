@@ -285,7 +285,7 @@
 											'<div class="panel panel-default">' + 
 												'<div class="panel-heading">' +
 													'<h6 class="panel-title">' +
-														'<a data-toggle="collapse" data-parent="class_all_student_collapse_'+key+'" href="#class_all_student_collapse_body_'+key+'">Student ' + num + '  / Name: <b>' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  IC: <b>' + reply[key].ic + '</b>  /  Tel: <b>' + reply[key].tel + '</b></a><button id="class_students_student_' + reply[key].student_id + '" style="float:right;padding:3px;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#student-delete-modal">Delete</button>' + 
+														'<a data-toggle="collapse" data-parent="class_all_student_collapse_'+key+'" href="#class_all_student_collapse_body_'+key+'">Student ' + num + '  / Name: <b>' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  IC: <b>' + reply[key].ic + '</b>  /  Tel: <b>' + reply[key].tel + '</b></a><button id="class_students_student_' + reply[key].student_id + '" style="float:right;padding:3px;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#student-delete-modal">Delete</button>' + 
 													' </h6>' +
 												'</div>' +
 												'<div id="class_all_student_collapse_body_'+key+'" class="panel-collapse collapse">' + 
@@ -425,7 +425,7 @@
 				    			if (reply.hasOwnProperty(key)) {
 				            		// target.append(JSON.stringify(reply[key]));
 				            		target.append(
-				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ')' +'</option>'
+				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].firstname + ' ' + reply[key].lastname + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ')' +'</option>'
 									);
 				            	}
 				            }
@@ -475,7 +475,7 @@
 				    			if (reply.hasOwnProperty(key)) {
 				            		// target.append(JSON.stringify(reply[key]));
 				            		target.append(
-				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ')' +'</option>'
+				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].firstname + ' ' + reply[key].lastname + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ')' +'</option>'
 									);
 				            	}
 				            }

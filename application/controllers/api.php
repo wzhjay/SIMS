@@ -156,7 +156,11 @@ class Api extends CI_Controller
 	function createNewRegistrationInfo() {
 		$ic = $this->input->post('ic');
 		$reg_date = $this->input->post('reg_date');
-		$student_branch_id = $this->input->post('student_branch_id');
+		if($this->apis->check_user_role() == 'admin') {
+			$student_branch_id = $this->input->post('student_branch_id');
+		} else if($this->apis->check_user_role() == 'operator'){
+			$student_branch_id = $this->apis->get_user_branch_id();
+		}
 		// $reg_branch_id = $this->input->post('reg_branch_id');
 		// $reg_op_id = $this->input->post('reg_op_id');
 		$reg_branch_id = $this->apis->get_user_branch_id();
@@ -189,7 +193,11 @@ class Api extends CI_Controller
 		$reg_id = $this->input->post('reg_id');
 		$ic = $this->input->post('ic');
 		$reg_date = $this->input->post('reg_date');
-		$student_branch_id = $this->input->post('student_branch_id');
+		if($this->apis->check_user_role() == 'admin') {
+			$student_branch_id = $this->input->post('student_branch_id');
+		} else if($this->apis->check_user_role() == 'operator'){
+			$student_branch_id = $this->apis->get_user_branch_id();
+		}
 		// $reg_branch_id = $this->input->post('reg_branch_id');
 		// $reg_op_id = $this->input->post('reg_op_id');
 		$reg_branch_id = $this->apis->get_user_branch_id();
@@ -612,7 +620,7 @@ class Api extends CI_Controller
 			$have_class = 'NO';
 		}
 		$students = $this->apis->search_class_students_by_multiple_var_download($course_type, $level, $slot, $from, $to, $have_class);
-		$rowArray = array('收据类型', '收据时间', '收据号码', '收费金额', '学员IC', '付款人姓名', '学员电话', '是否补交学费', '是否老学员', '课程类型', '收款人', '分部', '备注');
+		$rowArray = array('来源', '注册号', 'IC', '分部', '姓', '名', '其他名字', '电话', '家里电话', '性别', '称呼', '生日', '年龄', 'IC类型', '公民类型', '国籍', '种族', '华文水平', '教育水平', '语言', '政府信', '工作状态', '公司名字', '公司类型', '公司注册号', '行业', '职称', '工资水平', 'Block', '街道', 'Building', '邮编', '备注');
 		if($students != NULL) {
 			$this->excel->getActiveSheet()
 			    ->fromArray(
@@ -1119,7 +1127,11 @@ class Api extends CI_Controller
 	function createNewClass() {
 		$code = $this->input->post('code').trim(" ");
 		$class_name = $this->input->post('class_name');
-		$branch_id = $this->input->post('branch_id');
+		if($this->apis->check_user_role() == 'admin') {
+			$branch_id = $this->input->post('branch_id');
+		} else if($this->apis->check_user_role() == 'operator'){
+			$branch_id = $this->apis->get_user_branch_id();
+		}
 		$type = $this->input->post('type');
 		$level = $this->input->post('level');
 		$status = $this->input->post('status');
@@ -1185,7 +1197,11 @@ class Api extends CI_Controller
 		$class_id = $this->input->post('class_id');
 		$code = $this->input->post('code').trim(" ");
 		$class_name = $this->input->post('class_name');
-		$branch_id = $this->input->post('branch_id');
+		if($this->apis->check_user_role() == 'admin') {
+			$branch_id = $this->input->post('branch_id');
+		} else if($this->apis->check_user_role() == 'operator'){
+			$branch_id = $this->apis->get_user_branch_id();
+		}
 		$type = $this->input->post('type');
 		$level = $this->input->post('level');
 		$status = $this->input->post('status');

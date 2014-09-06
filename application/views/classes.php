@@ -34,7 +34,13 @@
 				</div>
 			  	<div class="tab-pane fade" id="tab-2">
 			  		<h3>添加或更新班级信息</h3><hr>
-					<?php $this->load->view('partials/classes/class_create_update_form') ?>
+			  		<?php
+						if($this->apis->check_user_role() == 'admin') {
+							$this->load->view('partials/classes/class_create_update_form');
+						} else if($this->apis->check_user_role() == 'operator'){
+							$this->load->view('partials/classes/class_create_update_form_operator');
+						}
+					?>
 					<br><br>
 			  	</div>
 			</div>

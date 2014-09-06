@@ -56,11 +56,11 @@
 			var ew_pt = 0;
 			var en_pt = 0;
 			
-			if(er == "UN" || er == "EXE" || er == "B1" || er == "PENDING") {	er_pt = 0;	} else {	er_pt = parseInt(er);	}
-			if(el == "UN" || el == "EXE" || el == "B1" || el == "PENDING") {	el_pt = 0;	} else {	el_pt = parseInt(el);	}
-			if(es == "UN" || es == "EXE" || es == "B1" || es == "PENDING") {	es_pt = 0;	} else {	es_pt = parseInt(es);	}
-			if(ew == "UN" || ew == "EXE" || ew == "B1" || ew == "PENDING") {	ew_pt = 0;	} else {	ew_pt = parseInt(ew);	}
-			if(en == "UN" || en == "EXE" || en == "B1" || en == "PENDING") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
+			if(er == "UN" || er == "EXE" || er == "B1" || er == "PENDING" || er == "N/A") {	er_pt = 0;	} else {	er_pt = parseInt(er);	}
+			if(el == "UN" || el == "EXE" || el == "B1" || el == "PENDING" || el == "N/A") {	el_pt = 0;	} else {	el_pt = parseInt(el);	}
+			if(es == "UN" || es == "EXE" || es == "B1" || es == "PENDING" || es == "N/A") {	es_pt = 0;	} else {	es_pt = parseInt(es);	}
+			if(ew == "UN" || ew == "EXE" || ew == "B1" || ew == "PENDING" || ew == "N/A") {	ew_pt = 0;	} else {	ew_pt = parseInt(ew);	}
+			if(en == "UN" || en == "EXE" || en == "B1" || en == "PENDING" || en == "N/A") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
 			var cmp_pt = er_pt + el_pt + es_pt + ew_pt;
 			if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	}
 			if(es_pt<3) {	con = "BEGINNERS";	} else if (es_pt<5) {	con = "INTERMEDIATE";	} else { con = "ADVANCED";	}
@@ -120,11 +120,11 @@
 			var ew_pt = 0;
 			var en_pt = 0;
 			
-			if(er == "UN" || er == "EXE" || er == "B1" || er == "PENDING") {	er_pt = 0;	} else {	er_pt = parseInt(er);	}
-			if(el == "UN" || el == "EXE" || el == "B1" || el == "PENDING") {	el_pt = 0;	} else {	el_pt = parseInt(el);	}
-			if(es == "UN" || es == "EXE" || es == "B1" || es == "PENDING") {	es_pt = 0;	} else {	es_pt = parseInt(es);	}
-			if(ew == "UN" || ew == "EXE" || ew == "B1" || ew == "PENDING") {	ew_pt = 0;	} else {	ew_pt = parseInt(ew);	}
-			if(en == "UN" || en == "EXE" || en == "B1" || en == "PENDING") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
+			if(er == "UN" || er == "EXE" || er == "B1" || er == "PENDING" || er == "N/A") {	er_pt = 0;	} else {	er_pt = parseInt(er);	}
+			if(el == "UN" || el == "EXE" || el == "B1" || el == "PENDING" || el == "N/A") {	el_pt = 0;	} else {	el_pt = parseInt(el);	}
+			if(es == "UN" || es == "EXE" || es == "B1" || es == "PENDING" || es == "N/A") {	es_pt = 0;	} else {	es_pt = parseInt(es);	}
+			if(ew == "UN" || ew == "EXE" || ew == "B1" || ew == "PENDING" || ew == "N/A") {	ew_pt = 0;	} else {	ew_pt = parseInt(ew);	}
+			if(en == "UN" || en == "EXE" || en == "B1" || en == "PENDING" || en == "N/A") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
 
 			var cmp_pt = er_pt + el_pt + es_pt + ew_pt;
 			if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	}

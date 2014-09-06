@@ -327,7 +327,7 @@
 																'<div>IC Number: ' + reply[key].ic + '</div>' +
 															'</div>' + 
 															'<div class="col-xs-3">' +
-																'<div>Name: ' + reply[key].salutation + ' ' + reply[key].firstname + ' ' + reply[key].lastname + '</div>' + 
+																'<div>Name: ' + reply[key].firstname + ' ' + reply[key].lastname + '</div>' + 
 															'</div>' +
 															'<div class="col-xs-3">' +
 																'<div>Register Date: '+ reply[key].reg_date + '</div>' + 

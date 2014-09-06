@@ -227,16 +227,44 @@
 										'</div>' + 
 										'<div class="col-xs-2">' + 
 											'<label for="student_ato_ic_check_model_exam_date">考试时间</label>' + 
-											'<div class="form-control" id="student_ato_ic_check_model_exam_date">' + reply[key].exam_date + '</div>' + 
+											'<div class="form-control" id="student_ato_ic_check_model_exam_date">' + reply[key].exam_date + ' ' + reply[key].exam_time + '</div>' + 
 										'</div>' +
 										'<div class="col-xs-2">' + 
 											'<label for="student_ato_ic_check_model_exam_type">考试类型</label>' + 
 											'<div class="form-control" id="student_ato_ic_check_model_exam_type">' + reply[key].pre_post + '</div>' + 
 										'</div>' +
-										// '<div class="col-xs-2">' + 
-										// 	'<label for="student_ato_ic_check_model_recommend_level">推荐等级</label>' + 
-										// 	'<div class="form-control" id="student_ato_ic_check_model_recommend_level">' + reply[key].recommend_level + '</div>' + 
-										// '</div>' +
+										'<div class="col-xs-2">' + 
+											'<label for="student_ato_ic_check_model_exam_location">考试地点</label>' + 
+											'<div class="form-control" id="student_ato_ic_check_model_exam_location">' + reply[key].exam_location + '</div>' + 
+										'</div>' +
+										'<div class="col-xs-2">' + 
+											'<label for="student_ato_ic_check_model_exam_change_date">考试地点</label>' + 
+											'<div class="form-control" id="student_ato_ic_check_model_exam_change_date">' + reply[key].post_change_date + '</div>' + 
+										'</div>' +
+									'</div>' +
+									'<div class="row">' + 
+										'<div class="col-xs-2">'+ 
+											'<label>EL</label>' +
+											'<div class="form-control">' + reply[key].el + '</div>' +
+										'</div>' + 
+										'<div class="col-xs-2">'+ 
+											'<label>ER</label>' +
+											'<div class="form-control">' + reply[key].er + '</div>' +
+										'</div>' + 
+										'<div class="col-xs-2">'+ 
+											'<label>EN</label>' +
+											'<div class="form-control">' + reply[key].en + '</div>' +
+										'</div>' + 
+										'<div class="col-xs-2">'+ 
+											'<label>ES</label>' +
+											'<div class="form-control">' + reply[key].es + '</div>' +
+										'</div>' + 
+										'<div class="col-xs-2">'+ 
+											'<label>EW</label>' +
+											'<div class="form-control">' + reply[key].ew + '</div>' +
+										'</div>' + 
+									'</div>' +
+									'<div class="row">' + 
 										'<div class="col-xs-6">' +
 											'<label for="student_ato_ic_check_model_remark">备注</label>' +
 											'<div class="form-control" id="student_ato_ic_check_model_remark">'+ reply[key].remark + '</div>' + 
@@ -409,7 +437,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_ato_ic">*IC Number(考试类型)</label>
+			<label for="input_ato_ic">*IC Number(准证号)</label>
 			<input class="form-control" id="input_ato_ic" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-2">

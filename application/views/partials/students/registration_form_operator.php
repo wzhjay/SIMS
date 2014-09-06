@@ -11,7 +11,7 @@
 			});
 
 			// reg_load_admin_users();
-			reg_load_branches();
+			// reg_load_branches();
 
 			$('#reg_new_create').on('click', function() {
 				create_new_reg();
@@ -49,29 +49,29 @@
 		// 	});//End ajax
 		// }
 
-		function reg_load_branches() {
-			// var branches = $('#input_reg_branch');
-			var branches_stu = $('#input_reg_branch_student');
-			$.ajax({
-				type:"post",
-			    url:window.api_url + "getAllBranches",
-			    data:{},
-			    success:function(json){
-			    	branches_stu.children().remove();
-			    	if(json != null) {
-			    		var reply = $.parseJSON(json);
-			    		for (var key in reply) {
-			    			if (reply.hasOwnProperty(key)) {
-			    				// branches.append('<option id="reg_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
-			    				branches_stu.append('<option id="reg_branch_stu_'+ reply[key].id +'">' + reply[key].name + '</option>');
-			    			}
-			    		}
-			        }else{
-			        	toastr.error("Fail to load braches!");
-			        }
-			    },
-			});//End ajax
-		}
+		// function reg_load_branches() {
+		// 	// var branches = $('#input_reg_branch');
+		// 	var branches_stu = $('#input_reg_branch_student');
+		// 	$.ajax({
+		// 		type:"post",
+		// 	    url:window.api_url + "getAllBranches",
+		// 	    data:{},
+		// 	    success:function(json){
+		// 	    	branches_stu.children().remove();
+		// 	    	if(json != null) {
+		// 	    		var reply = $.parseJSON(json);
+		// 	    		for (var key in reply) {
+		// 	    			if (reply.hasOwnProperty(key)) {
+		// 	    				// branches.append('<option id="reg_branch_'+ reply[key].id +'">' + reply[key].name + '</option>');
+		// 	    				branches_stu.append('<option id="reg_branch_stu_'+ reply[key].id +'">' + reply[key].name + '</option>');
+		// 	    			}
+		// 	    		}
+		// 	        }else{
+		// 	        	toastr.error("Fail to load braches!");
+		// 	        }
+		// 	    },
+		// 	});//End ajax
+		// }
 
 		function create_new_reg() {
 			var ic = $('#input_reg_ic').val();
@@ -81,8 +81,8 @@
 			var reg_no = $('#input_reg_no').val();
 			// var reg_op = $('#input_reg_op option:selected').attr('id').split('_');
 			// var reg_op_id = reg_op[2];
-			var reg_branch_stu = $('#input_reg_branch_student option:selected').attr('id').split('_');
-			var reg_branch_stu_id = reg_branch_stu[3];
+			// var reg_branch_stu = $('#input_reg_branch_student option:selected').attr('id').split('_');
+			// var reg_branch_stu_id = reg_branch_stu[3];
 			var reg_remark = $('#input_reg_remark').val();
 
 			// class time
@@ -102,7 +102,7 @@
 			    url:window.api_url + "createNewRegistrationInfo",
 			    data:{	ic:ic,
 			    		reg_date:reg_date, 
-			    		student_branch_id:reg_branch_stu_id, 
+			    		// student_branch_id:reg_branch_stu_id, 
 			    		// reg_branch_id:reg_branch_id, 
 			    		// reg_op_id:reg_op_id, 
 			    		reg_no:reg_no, 
@@ -144,8 +144,8 @@
 			var reg_no = $('#input_reg_no').val();
 			// var reg_op = $('#input_reg_op option:selected').attr('id').split('_');
 			// var reg_op_id = reg_op[2];
-			var reg_branch_stu = $('#input_reg_branch_student option:selected').attr('id').split('_');
-			var reg_branch_stu_id = reg_branch_stu[3];
+			// var reg_branch_stu = $('#input_reg_branch_student option:selected').attr('id').split('_');
+			// var reg_branch_stu_id = reg_branch_stu[3];
 			var reg_remark = $('#input_reg_remark').val();
 
 			// class time
@@ -166,7 +166,7 @@
 			    data:{	reg_id:reg_id,
 			    		ic:ic,
 			    		reg_date:reg_date, 
-			    		student_branch_id:reg_branch_stu_id, 
+			    		// student_branch_id:reg_branch_stu_id, 
 			    		// reg_branch_id:reg_branch_id, 
 			    		// reg_op_id:reg_op_id, 
 			    		reg_no:reg_no, 
@@ -265,7 +265,7 @@
 								// $('#input_reg_branch option[id="reg_branch_'+reply[key].reg_branch_id+'"]').attr('selected', 'selected');
 								$('#input_reg_no').val(reply[key].reg_no);
 								// $('#input_reg_branch option[id="new_user_'+reply[key].reg_op_id+'"]').attr('selected', 'selected');
-								$('#input_reg_branch_student option[id="reg_branch_stu_'+reply[key].student_branch_id+'"]').attr('selected', 'selected');
+								// $('#input_reg_branch_student option[id="reg_branch_stu_'+reply[key].student_branch_id+'"]').attr('selected', 'selected');
 								$('#input_reg_remark').val(reply[key].reg_remark);
 
 								(reply[key].any_am == "1") ? $('#input_reg_any_am').prop('checked', true) : $('#input_reg_any_am').prop('checked', false);
@@ -324,10 +324,10 @@
 			<label for="input_reg_date">*Register Date(报名日期)</label>
 			<input class="form-control" id="input_reg_date" data-parsley-trigger="blur" required>
 		</div>
-		<div class="col-xs-4">
+<!-- 		<div class="col-xs-4">
 			<label for="input_reg_branch_student">*Student Branch(学生所在分部)</label>
 			<select class="form-control" id="input_reg_branch_student" data-parsley-trigger="blur" required></select>
-		</div>
+		</div> -->
 		<div class="col-xs-4">
 			<label for="input_reg_no">*Register Number(报名号码)</label>
 			<input class="form-control" id="input_reg_no" data-parsley-trigger="blur" required>
