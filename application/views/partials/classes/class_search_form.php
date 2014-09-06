@@ -535,6 +535,8 @@
 			     	<option value="BEGINNERS">初级</option>
 			      	<option value="INTERMEDIATE">中级</option>
 			      	<option value="ADVANCED">高级</option>
+			      	<option value="LV1">LEVEL 1</option>
+			      	<option value="LV3">LEVEL 3</option>
 		    	</select>
 		    </div>
 		</div>
