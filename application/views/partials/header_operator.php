@@ -36,7 +36,7 @@ function load_public_message() {
                         }
                         modalBody.append(
                             '<div class="bs-callout bs-callout-info">' +
-                                '<span class="label label-danger publics_message_delete" id="publics_message_' + reply[key].id + '" style="float:right;cursor:pointer;">X</span>' +
+                                '<span class="label label-danger publics_message_delete" id="publics_message_' + reply[key].id + '"></span>' +
                                 '<h4><span class="label label-info">' + reply[key].publics_title + '</span></h4>' +
                                 '<div>' + reply[key].publics_content + '</div>' +
                             '</div>'
@@ -48,67 +48,10 @@ function load_public_message() {
             else {
             }
             $('#today_message_count').text(message_count);
-
-            $('.publics_message_delete').on('click', function() {
-                var id = $(this).attr('id').split('_')[2];
-                delete_public_message(id);
-            });
         }
     });//End ajax
 }
 
-function create_new_public_message() {
-    var title = $('#input_public_message_title').val();
-    var content = $('#input_public_message_content').val();
-
-    $.ajax({
-        type:"post",
-        url:window.api_url + "createNewPublicMessage",
-        data:{title:title,content:content},
-        success:function(json){
-            if(json.trim() != "") {
-                var reply = $.parseJSON(json);
-                if(reply == '1') {
-                    toastr.success("Create public message success!");
-                    clear_public_message_inputs();
-                    load_public_message();
-                }else{
-                    toastr.error("Fail to create public message");
-                }
-            }
-            else {
-                toastr.error("Fail to call api");
-            }
-        }
-    });//End ajax
-}
-
-function delete_public_message(id) {
-    $.ajax({
-        type:"post",
-        url:window.api_url + "deletePublicMessage",
-        data:{id:id},
-        success:function(json){
-            if(json.trim() != "") {
-                var reply = $.parseJSON(json);
-                if(reply == '3') {
-                    toastr.success("Delete public message success!");
-                    load_public_message();
-                }else{
-                    toastr.error("Fail to delete public message");
-                }
-            }
-            else {
-                toastr.error("Fail to call api");
-            }
-        }
-    });//End ajax
-}
-
-function clear_public_message_inputs() {
-    $('#input_public_message_title').val('');
-    $('#input_public_message_content').val('');
-}
 
 </script>
 </head>
@@ -165,7 +108,7 @@ function clear_public_message_inputs() {
 
 <!-- Info Modal -->
 <div class="modal fade" id="office-info-modal" tabindex="-1" role="dialog" aria-labelledby="office_info_modal_label" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -173,34 +116,10 @@ function clear_public_message_inputs() {
       </div>
       <div class="modal-body">
         <div class='row'>
-            <div class="col-xs-6" id="publics-message-section" style="height: 600px;overflow-y: scroll;">
+            <div id="publics-message-section" style="height: 600px;overflow-y: scroll;">
                 <div class="bs-callout bs-callout-info">
                     <h5>大叔爱叽叽 <3</h5>
                     <p><code>注意！！这不是演习！！</code></p>
-                </div>
-            </div>
-            <div class="col-xs-6" id='publics-admin-section'>
-                <div class="highlight">
-                    <div class='row'>
-                        <div class="col-xs-1"></div>
-                        <div class="col-xs-10">
-                            <div class='row'>
-                                <label for="input_public_message_title">*Title (标题)</label>
-                                <input class="form-control" id="input_public_message_title">
-                            </div>
-                            <div class='row'>
-                                <label for="input_public_message_content">*Content (内容)</label>
-                                <textarea class="form-control" id="input_public_message_content" rows="10"></textarea>
-                            </div>
-                            <dic class="row">
-                                <div class="col-xs-7"></div>
-                                <div class="col-xs-5">
-                                    <a class="button glow button-rounded button-flat" id="input_public_message_publish">发布</a>
-                                </div>
-                            </dic>
-                        </div>
-                        <div class="col-xs-1"></div>
-                    </div>
                 </div>
             </div>
       </div>
@@ -208,4 +127,5 @@ function clear_public_message_inputs() {
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
+  </div>
   </div>

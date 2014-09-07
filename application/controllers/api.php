@@ -1859,4 +1859,44 @@ class Api extends CI_Controller
 			}
 		}
 	}
+
+	/* =================== header =================== */
+
+	/**
+	 *  create new public message
+	 */
+	function createNewPublicMessage() {
+		$title = $this->input->post('title');
+		$content = $this->input->post('content');
+		// create
+		$create = $this->apis->create_new_public_message($title, $content);
+		if($create) {
+			echo 1;
+		}
+		else echo 0;
+	}
+
+	/**
+	 *  get all public message within one week
+	 */
+	function getPublicMessageOneWeek() {
+		$messages = $this->apis->get_public_message_one_week();
+		if($messages != NULL) {
+			echo json_encode($messages);
+		}
+		echo NULL;
+	}
+
+	/**
+	 *  delete public message by giving message id
+	 */
+	function deletePublicMessage() {
+		$id = $this->input->post('id');
+		// create
+		$delete = $this->apis->delete_public_message($id);
+		if($delete) {
+			echo 3;
+		}
+		else echo 0;
+	}
 }

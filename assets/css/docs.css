@@ -420,3 +420,16 @@ background: rgb(228, 228, 228);
 .cal_days_bef_aft {
 background: rgb(246, 248, 240);
 }
+
+.bs-callout {
+font-size: 13px;
+padding: 10px 10px 10px 10px;
+border: 1px solid #eee;
+border-left-width: 5px;
+border-radius: 3px;
+margin-bottom: 10px;
+}
+
+.bs-callout-info {
+border-left-color: #5bc0de;
+}

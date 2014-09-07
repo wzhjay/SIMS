@@ -48,14 +48,14 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'mysql';
-// $db['default']['hostname'] = 'localhost';
-// $db['default']['username'] = 'root';
-$db['default']['username'] = 'changchun';
-// $db['default']['password'] = 'wzh369258147';
-$db['default']['password'] = 'gcvwSYDs';
-$db['default']['database'] = 'changchun';
-// $db['default']['database'] = 'sims';
+// $db['default']['hostname'] = 'mysql';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+// $db['default']['username'] = 'changchun';
+$db['default']['password'] = 'wzh369258147';
+// $db['default']['password'] = 'gcvwSYDs';
+// $db['default']['database'] = 'changchun';
+$db['default']['database'] = 'sims';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

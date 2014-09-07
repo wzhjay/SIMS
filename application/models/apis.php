@@ -902,7 +902,7 @@ class Apis extends CI_Model
 	 * @param	reg_id
 	 * @return	bool
 	 */
-	function delete_ato_info($id) {
+	function deletes_info($id) {
 		if($this->session->userdata('session_id')) {
 			$query = $this->db->query('DELETE FROM ato WHERE id = "'.$id.'"');
 			if ($this->db->affected_rows()) return TRUE;
@@ -1451,5 +1451,46 @@ class Apis extends CI_Model
 			}
 		}
 		return 0;
+	}
+
+	/**
+	 * insert new record into publics
+	 * @param	$title, $content
+	 * @return	bool
+	 */
+	function create_new_public_message($title, $content) {
+		if($this->session->userdata('session_id')) {
+			$branch_id = $this->apis->get_user_branch_id();
+			$branch_op_id = $this->tank_auth->get_user_id();
+			$query = $this->db->query('INSERT INTO publics (publics_title, publics_content, branch_id, branch_op_id, created, modified) VALUES ("'.$title.'", "'.$content.'", "'.$branch_id.'", "'.$branch_op_id.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'")');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * get pass seven days' message
+	 * @param	null
+	 * @return	null or array
+	 */
+	function get_public_message_one_week() {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('SELECT * FROM publics p WHERE p.modified >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) ORDER BY p.modified DESC');
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
+	 * delete record from table publics by id
+	 * @param	id
+	 * @return	bool
+	 */
+	function delete_public_message($id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('DELETE FROM publics WHERE id = "'.$id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
 	}
 }

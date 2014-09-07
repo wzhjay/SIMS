@@ -274,8 +274,8 @@
 					 					// menegement class student
 					 					load_class_students(class_id);
 					 					$(document).ready(function(){
-					 						ato_class_load_branches();
-					 						ato_class_load_admin_users();
+					 						// ato_class_load_branches();
+					 						// ato_class_load_admin_users();
 					 						$('#input_ato_class_exam_date').datepicker({
 												format: 'yyyy-mm-dd',
 												todayHighlight: true
