@@ -222,14 +222,15 @@
 	</script>
 </head>
 <div class="highlight">
+<form action="<?php echo $this->config->base_url(); ?>index.php/api/searchRegistrationInfoDownload" method="POST" target="_blank">
 	<h4>注册报名时间</h4><hr>
 	<div class="row">
 		<div class="input-daterange" id="reg_datepicker">
 			<div class="col-xs-4">
-				<input class="form-control" id="input_reg_search_from" placeholder="From">
+				<input name="from" class="form-control" id="input_reg_search_from" placeholder="From">
 			</div>
 			<div class="col-xs-4">
-				<input class="form-control" id="input_reg_search_to" placeholder="To">
+				<input name="to" class="form-control" id="input_reg_search_to" placeholder="To">
 			</div>
 		</div>
 	</div>
@@ -238,21 +239,21 @@
 		<div class="col-xs-4">
 			<div class="checkbox">
 		        <label for="input_reg_search_any_am">
-		          	<input type="checkbox" id="input_reg_search_any_am"> 平时早上
+		          	<input name="any_am" type="checkbox" id="input_reg_search_any_am" value="1"> 平时早上
 		        </label>
 		    </div>
 		</div>
 		<div class="col-xs-4">
 			<div class="checkbox">
 		        <label for="input_reg_search_any_pm">
-		          	<input type="checkbox" id="input_reg_search_any_pm"> 平时下午
+		          	<input name="any_pm" type="checkbox" id="input_reg_search_any_pm" value="1"> 平时下午
 		        </label>
 		    </div>
 		</div>
 		<div class="col-xs-4">
 			<div class="checkbox">
 		        <label for="input_reg_search_any_eve">
-		          	<input type="checkbox" id="input_reg_search_any_eve"> 平时晚上
+		          	<input name="any_eve" type="checkbox" id="input_reg_search_any_eve" value="1"> 平时晚上
 		        </label>
 		    </div>
 		</div>
@@ -261,21 +262,21 @@
 		<div class="col-xs-4">
 			<div class="checkbox">
 		        <label for="input_reg_search_sat_am">
-		          	<input type="checkbox" id="input_reg_search_sat_am"> 拜六早上
+		          	<input name="sat_am" type="checkbox" id="input_reg_search_sat_am" value="1"> 拜六早上
 		        </label>
 		    </div>
 		</div>
 		<div class="col-xs-4">
 			<div class="checkbox">
 		        <label for="input_reg_search_sat_pm">
-		          	<input type="checkbox" id="input_reg_search_sat_pm"> 拜六下午
+		          	<input name="sat_pm" type="checkbox" id="input_reg_search_sat_pm" value="1"> 拜六下午
 		        </label>
 		    </div>
 		</div>
 		<div class="col-xs-4">
 			<div class="checkbox">
 		        <label for="input_reg_search_sat_eve">
-		          	<input type="checkbox" id="input_reg_search_sat_eve"> 拜六晚上
+		          	<input name="sat_eve" type="checkbox" id="input_reg_search_sat_eve" value="1"> 拜六晚上
 		        </label>
 		    </div>
 		</div>
@@ -284,21 +285,21 @@
 		<div class="col-xs-4">
 			<div class="checkbox">
 		        <label for="input_reg_search_sun_am">
-		          	<input type="checkbox" id="input_reg_search_sun_am"> 拜天早上
+		          	<input name="sun_am" type="checkbox" id="input_reg_search_sun_am" value="1"> 拜天早上
 		        </label>
 		    </div>
 		</div>
 		<div class="col-xs-4">
 			<div class="checkbox">
 		        <label for="input_reg_search_sun_pm">
-		          	<input type="checkbox" id="input_reg_search_sun_pm"> 拜天下午
+		          	<input name="sun_pm" type="checkbox" id="input_reg_search_sun_pm" value="1"> 拜天下午
 		        </label>
 		    </div>
 		</div>
 		<div class="col-xs-4">
 			<div class="checkbox">
 		        <label for="input_reg_search_sun_eve">
-		          	<input type="checkbox" id="input_reg_search_sun_eve"> 拜天晚上
+		          	<input name="sun_eve" type="checkbox" id="input_reg_search_sun_eve" value="1"> 拜天晚上
 		        </label>
 		    </div>
 		</div>
@@ -307,7 +308,7 @@
 		<div class="col-xs-4">
 			<div class="checkbox">
 		        <label for="input_reg_search_anytime">
-		          	<input type="checkbox" id="input_reg_search_anytime"> 任意时间
+		          	<input name="anytime" type="checkbox" id="input_reg_search_anytime" value="1"> 任意时间
 		        </label>
 		    </div>
 		</div>
@@ -318,9 +319,10 @@
 			<a class="button glow button-rounded button-flat" id="reg_search_submit">Search</a>
 		</div>
 		<div class="col-xs-2">
-			<a class="button glow button-rounded button-flat" id="reg_to_excel">To Excel</a>
+			<input type="submit" value="To Excel" class="button glow button-rounded button-flat" id="reg_to_excel">
 		</div>
 	</div>
+</form>
 	<div id="reg_search_results"></div>
 </div>
 

@@ -264,11 +264,63 @@ class Api extends CI_Controller
 		$anytime = $this->input->post('anytime');
 		// $from = '2014-05-12';
 		// $to = '2014-06-07';
-		$courses = $this->apis->search_reg_info($from,$to,$any_am,$any_pm,$any_eve,$sat_am,$sat_pm,$sat_eve,$sun_am,$sun_pm,$sun_eve,$anytime);
-		if($courses != NULL) {
-			echo json_encode($courses);
+		$records = $this->apis->search_reg_info($from,$to,$any_am,$any_pm,$any_eve,$sat_am,$sat_pm,$sat_eve,$sun_am,$sun_pm,$sun_eve,$anytime);
+		if($records != NULL) {
+			echo json_encode($records);
 		}
 		echo NULL;
+	}
+
+	/**
+	 *  search registration info
+	 */
+	function searchRegistrationInfoDownload() {
+		$from = $_POST['from'];
+		$to = $_POST['to'];
+		if(trim($from) == "") {
+			$from = '2000-01-01';
+		}
+
+		if(trim($to) == "") {
+			$to = '2100-01-01';
+		}
+		if(isset($_POST['any_am']) && $_POST['any_am'] == "1") { $any_am = "1"; } else { $any_am = "0"; }
+		if(isset($_POST['any_pm']) && $_POST['any_pm'] == "1") { $any_pm = "1"; } else { $any_pm = "0"; }
+		if(isset($_POST['any_eve']) && $_POST['any_eve'] == "1") { $any_eve = "1"; } else { $any_eve = "0"; }
+		if(isset($_POST['sat_am']) && $_POST['sat_am'] == "1") { $sat_am = "1"; } else { $sat_am = "0"; }
+		if(isset($_POST['sat_pm']) && $_POST['sat_pm'] == "1") { $sat_pm = "1"; } else { $sat_pm = "0"; }
+		if(isset($_POST['sat_eve']) && $_POST['sat_eve'] == "1") { $sat_eve = "1"; } else { $sat_eve = "0"; }
+		if(isset($_POST['sun_am']) && $_POST['sun_am'] == "1") { $sun_am = "1"; } else { $sun_am = "0"; }
+		if(isset($_POST['sun_pm']) && $_POST['sun_pm'] == "1") { $sun_pm = "1"; } else { $sun_pm = "0"; }
+		if(isset($_POST['sun_eve']) && $_POST['sun_eve'] == "1") { $sun_eve = "1"; } else { $sun_eve = "0"; }
+		if(isset($_POST['anytime']) && $_POST['anytime'] == "1") { $anytime = "1"; } else { $anytime = "0"; }
+		// $from = '2014-05-12';
+		// $to = '2014-06-07';
+
+		$records = $this->apis->search_reg_info_download($from,$to,$any_am,$any_pm,$any_eve,$sat_am,$sat_pm,$sat_eve,$sun_am,$sun_pm,$sun_eve,$anytime);
+		$rowArray = array('IC', '注册日期', '注册号', '分部', '备注');
+		if($records != NULL) {
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $rowArray,   // The data to set
+			        NULL
+			    );
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $records,   // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'A3'         // Top left coordinate of the worksheet range where
+		                     //    we want to set these values (default is A1)
+			    );
+			$filename = 'Registrations_'.date('Y-m-d H:i:s').'.xls';	
+			
+			header('Content-Type: application/vnd.ms-excel'); //mime type
+			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+			header('Cache-Control: max-age=0'); //no cache
+			             
+			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+			$objWriter->save('php://output');
+		}
 	}
 
 	/**

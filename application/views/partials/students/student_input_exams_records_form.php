@@ -66,10 +66,10 @@
 			if(ew == "UN" || ew == "EXE" || ew == "B1" || ew == "PENDING" || ew == "N/A") {	ew_pt = 0;	} else {	ew_pt = parseInt(ew);	}
 			if(en == "UN" || en == "EXE" || en == "B1" || en == "PENDING" || en == "N/A") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
 			var cmp_pt = er_pt + el_pt + es_pt + ew_pt;
-			if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	}
-			if(es_pt<3) {	con = "BEGINNERS";	} else if (es_pt<5) {	con = "INTERMEDIATE";	} else { con = "ADVANCED";	}
-			if(ew_pt<3) {	wri = "BEGINNERS";	} else if (ew_pt<5) {	wri = "INTERMEDIATE";	} else { wri = "ADVANCED";	}
-			if(en_pt<3) {	wpn = "BEGINNERS";	} else if (en_pt<5) {	wpn = "INTERMEDIATE";	} else { wpn = "ADVANCED";	}
+			if(er == "N/A" || el == "N/A" || es == "N/A" || ew == "N/A") { cmp = "N/A" } else { if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	} }
+			if(es == "N/A") { con = "N/A" } else { if(es_pt<3) {	con = "BEGINNERS";	} else if (es_pt<5) {	con = "INTERMEDIATE";	} else { con = "ADVANCED";	} }
+			if(ew == "N/A") { wri = "N/A" } else { if(ew_pt<3) {	wri = "BEGINNERS";	} else if (ew_pt<5) {	wri = "INTERMEDIATE";	} else { wri = "ADVANCED";	} }
+			if(en == "N/A") { wpn = "N/A" } else { if(en_pt<3) {	wpn = "BEGINNERS";	} else if (en_pt<5) {	wpn = "INTERMEDIATE";	} else { wpn = "ADVANCED";	} }
 
 
 			$.ajax({
@@ -146,10 +146,10 @@
 			if(en == "UN" || en == "EXE" || en == "B1" || en == "PENDING" || en == "N/A") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
 
 			var cmp_pt = er_pt + el_pt + es_pt + ew_pt;
-			if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	}
-			if(es_pt<3) {	con = "BEGINNERS";	} else if (es_pt<5) {	con = "INTERMEDIATE";	} else { con = "ADVANCED";	}
-			if(ew_pt<3) {	wri = "BEGINNERS";	} else if (ew_pt<5) {	wri = "INTERMEDIATE";	} else { wri = "ADVANCED";	}
-			if(en_pt<3) {	wpn = "BEGINNERS";	} else if (en_pt<5) {	wpn = "INTERMEDIATE";	} else { wpn = "ADVANCED";	}
+			if(er == "N/A" || el == "N/A" || es == "N/A" || ew == "N/A") { cmp = "N/A" } else { if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	} }
+			if(es == "N/A") { con = "N/A" } else { if(es_pt<3) {	con = "BEGINNERS";	} else if (es_pt<5) {	con = "INTERMEDIATE";	} else { con = "ADVANCED";	} }
+			if(ew == "N/A") { wri = "N/A" } else { if(ew_pt<3) {	wri = "BEGINNERS";	} else if (ew_pt<5) {	wri = "INTERMEDIATE";	} else { wri = "ADVANCED";	} }
+			if(en == "N/A") { wpn = "N/A" } else { if(en_pt<3) {	wpn = "BEGINNERS";	} else if (en_pt<5) {	wpn = "INTERMEDIATE";	} else { wpn = "ADVANCED";	} }
 
 
 			$.ajax({

@@ -160,6 +160,7 @@ class Apis extends CI_Model
 	function delete_single_admin_user($user_id) {
 		if($this->session->userdata('session_id')) {
 			$query = $this->db->query('DELETE FROM admin_users WHERE user_id = "'.$user_id.'"');
+			$query = $this->db->query('DELETE FROM users WHERE id = "'.$user_id.'"');
 			if ($this->db->affected_rows()) return TRUE;
 		}
 		return FALSE;
@@ -257,6 +258,42 @@ class Apis extends CI_Model
 			} else {
 				$op_branch_id = $this->apis->get_user_branch_id();
 				$query = $this->db->query('SELECT r.reg_id, r.ic, r.reg_date, r.reg_no, b1.name AS reg_branch, b2.name AS assigned_branch, r.reg_remark, u.username, r.created, r.modified, r.any_am, r.any_pm, r.any_eve, r.sat_am, r.sat_pm, r.sat_eve, r.sun_am, r.sun_pm, r.sun_eve, r.anytime  FROM registration r, branch b1, branch b2, users u WHERE (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (r.reg_branch_id = b1.id) AND (r.student_branch_id = b2.id) AND (r.reg_op_id = u.id) AND ('.$query_partial.') AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
+			}
+			if ($query->num_rows() > 0) return $query->result_array();
+		}
+		return NULL;
+	}
+
+	/**
+	 * search registration info by setting time range for download
+	 *
+	 * @param	from, to
+	 * @return	array or NULL
+	 */
+	function search_reg_info_download($from, $to, $any_am, $any_pm, $any_eve, $sat_am, $sat_pm, $sat_eve, $sun_am, $sun_pm, $sun_eve, $anytime) {
+		if($this->session->userdata('session_id')) {
+			$query_partial = "";
+			if($any_am == "0" && $any_pm == "0" && $any_eve == "0" && $sat_am == "0" && $sat_pm == "0" && $sat_eve == "0" && $sun_am == "0" && $sun_pm == "0" && $sun_eve == "0" && $anytime == "0") {
+				$query_partial.="1";
+			}
+			else {
+				$query_partial.= "0 ";
+				if($any_am == "1") { $query_partial.=" OR r.any_am = 1"; };
+				if($any_pm == "1") { $query_partial.=" OR r.any_pm = 1"; };
+				if($any_eve == "1") { $query_partial.=" OR r.any_eve = 1"; };
+				if($sat_am == "1") { $query_partial.=" OR r.sat_am = 1"; };
+				if($sat_pm == "1") { $query_partial.=" OR r.sat_pm = 1"; };
+				if($sat_eve == "1") { $query_partial.=" OR r.sat_eve = 1"; };
+				if($sun_am == "1") { $query_partial.=" OR r.sun_am = 1"; };
+				if($sun_pm == "1") { $query_partial.=" OR r.sun_pm = 1"; };
+				if($sun_eve == "1") { $query_partial.=" OR r.sun_eve = 1"; };
+				if($anytime == "1") { $query_partial.=" OR r.anytime = 1"; };
+			}
+			if($this->apis->check_user_role() == 'admin') {
+				$query = $this->db->query('SELECT r.ic, r.reg_date, r.reg_no, b.name, r.reg_remark FROM registration r, branch b WHERE (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (r.student_branch_id = b.id) AND ('.$query_partial.') ORDER BY -DATE(r.reg_date)');
+			} else {
+				$op_branch_id = $this->apis->get_user_branch_id();
+				$query = $this->db->query('SELECT r.ic, r.reg_date, r.reg_no, b.name, r.reg_remark FROM registration r, branch b WHERE (DATE(r.reg_date) BETWEEN "'.$from.'" AND "'.$to.'") AND (r.student_branch_id = b.id) AND ('.$query_partial.') AND (r.student_branch_id = "'.$op_branch_id.'") ORDER BY -DATE(r.reg_date)');
 			}
 			if ($query->num_rows() > 0) return $query->result_array();
 		}

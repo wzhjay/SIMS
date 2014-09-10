@@ -116,7 +116,7 @@ function load_public_message() {
       </div>
       <div class="modal-body">
         <div class='row'>
-            <div id="publics-message-section" style="height: 600px;overflow-y: scroll;">
+            <div id="publics-message-section" style="height: 600px;overflow-y: scroll;padding:10px">
                 <div class="bs-callout bs-callout-info">
                     <h5>大叔爱叽叽 <3</h5>
                     <p><code>注意！！这不是演习！！</code></p>
