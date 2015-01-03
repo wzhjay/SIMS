@@ -20,7 +20,7 @@
 
 
 		function search_reg_info() {
-			var from = '2000-01-01';
+			var from = '0000-00-00';
 			var to  = '2100-01-01';
 			if($('#input_reg_search_from').val().trim() != "") {
 				from = $('#input_reg_search_from').val();

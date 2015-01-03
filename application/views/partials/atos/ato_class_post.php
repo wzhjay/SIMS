@@ -56,6 +56,20 @@
  			$('#ato_class_post_build_ato').on('click', function(){
 				build_ato_of_class();
 			});
+
+			$('#ato_class_post_build_select_all').on('click', function(){ 
+				var checkboxs = $('#class_search_class_student_management_class_section').find('input');
+				$.each(checkboxs, function(i, e) {
+					$(e).prop("checked", true);
+				});
+			});
+
+			$('#ato_class_post_build_select_null').on('click', function(){ 
+				var checkboxs = $('#class_search_class_student_management_class_section').find('input');
+				$.each(checkboxs, function(i, e) {
+					$(e).prop("checked", false);
+				});
+			});
 		});
 
  	// 	function ato_class_load_admin_users() {
@@ -156,9 +170,9 @@
  			var branch = $('#input_class_search_branch option:selected').attr('id').split('_');
  			var branch_id = branch[3];
 
- 			var start_from = '2000-01-01';
+ 			var start_from = '0000-00-00';
 			var start_to  = '2100-01-01';
-			var end_from = '2000-01-01';
+			var end_from = '0000-00-00';
 			var end_to = '2100-01-01';
 			
 			if($('#input_class_search_start_from').val().trim() != "") {
@@ -674,6 +688,12 @@
 	      			<div class="row">
 	      				<div class="col-xs-8">
 	      					<label>班级所有学生</label>
+						</div>
+						<div class="col-xs-2">
+	      					<button type="button" class="btn btn-primary" id="ato_class_post_build_select_all">全选</button>
+						</div>
+						<div class="col-xs-2">
+	      					<button type="button" class="btn btn-primary" id="ato_class_post_build_select_null">全不选</button>
 						</div>
 					</div>
 					<br>

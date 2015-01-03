@@ -362,7 +362,7 @@
 			<label for="input_financial_receipt_type">*收据类型</label>
 			<select class="form-control" id="input_financial_receipt_type">
             	<option value="SSA">SSA</option>
-	            <option value="Link1" selected="selected">Link1</option>
+	            <option value="Link1" selected="selected">A2I</option>
     	        <option value="Changchun">Changchun</option>
           	</select>
 		</div>

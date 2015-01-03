@@ -3,6 +3,7 @@
 
 	<script>
 		var selected_class_id = 0;
+		var selected_class_name = "";
 		var selected_remove_student_id = 0;
 		$(document).ready(function($) {
 			event.preventDefault();
@@ -137,9 +138,9 @@
  			var branch = $('#input_class_search_branch option:selected').attr('id').split('_');
  			var branch_id = branch[3];
 
- 			var start_from = '2000-01-01';
+ 			var start_from = '0000-00-00';
 			var start_to  = '2100-01-01';
-			var end_from = '2000-01-01';
+			var end_from = '0000-00-00';
 			var end_to = '2100-01-01';
 			
 			if($('#input_class_search_start_from').val().trim() != "") {
@@ -196,6 +197,14 @@
 												'</div>' +
 												'<div id="class_search_collapse_body_'+key+'" class="panel-collapse collapse">' + 
 												'<div class="panel-body">' + 
+													'<div class="row">' + 
+														'<div class="col-xs-6">'+ 
+															'<div>Name: ' + reply[key].class_name + '</div>' +
+														'</div>' + 
+														'<div class="col-xs-6">'+ 
+															'<div>Code: ' + reply[key].code + '</div>' +
+														'</div>' + 
+													'</div>' +
 													'<div class="row">' + 
 														'<div class="col-xs-3">'+ 
 															'<div>Type: ' + reply[key].type + '</div>' +
@@ -254,12 +263,17 @@
 					 				var el_id = $(this).attr('id').split('_');
 					 				var class_id = el_id[4];
 					 				selected_class_id = class_id;
+					 				selected_class_name = $(this).closest('.row').find('.col-xs-8').find( "b:first-child" ).text();
 					 				if(el_id[3] == "management") {
 					 					// menegement class student
 					 					load_class_students(class_id);
 					 				} else if(el_id[3] == "delete") {
 					 					// delete class
 					 					get_class_student_by_id(class_id);
+
+					 					$('#class_del_confirm_btn').on('click', function() {
+					 						delete_class_by_id(class_id);
+					 					});
 					 				}
 					 			});
 				            }
@@ -269,10 +283,30 @@
 			});//End ajax
  		}
 
+ 		function delete_class_by_id(class_id) {
+ 			$.ajax({
+				type:"post",
+			    url:window.api_url + "deleteClassByID",
+			    data:{id:class_id},
+			    success:function(json){
+			    	if(json.trim() == '3') {
+					    toastr.success("Delete success!");
+					    
+					    // clear deleted element
+					    $('#class_search_class_delete_' + class_id).closest('.panel-group').remove();
+					}else{
+						//toastr.error("Fail to delete ATO info!");
+					}
+			    }
+			});//End ajax
+ 		}
+
  		function load_class_students(class_id) {
  			var target = $('#class_all_students_list');
  			target.empty();
 			target.append('<div class="loading"></div>');
+			$('#class_id_to_excel').val(class_id);
+			$('#class_name_to_excel').val(selected_class_name);
 			$.ajax({
 				type:"post",
 			    url:window.api_url + "getClassStudentsByClassID",
@@ -292,7 +326,7 @@
 											'<div class="panel panel-default">' + 
 												'<div class="panel-heading">' +
 													'<h6 class="panel-title">' +
-														'<a data-toggle="collapse" data-parent="class_all_student_collapse_'+key+'" href="#class_all_student_collapse_body_'+key+'">Student ' + num + '  / Name: <b>' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  IC: <b>' + reply[key].ic + '</b>  /  Tel: <b>' + reply[key].tel + '</b></a><button id="class_students_student_' + reply[key].student_id + '" style="float:right;padding:3px;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#student-delete-modal">Delete</button>' + 
+														'<a data-toggle="collapse" data-parent="class_all_student_collapse_'+key+'" href="#class_all_student_collapse_body_'+key+'">Student ' + num + '  / Name: <b>' + reply[key].othername + '</b>  /  IC: <b>' + reply[key].ic + '</b>  /  Tel: <b>' + reply[key].tel + '</b></a><button id="class_students_student_' + reply[key].student_id + '" style="float:right;padding:3px;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#student-delete-modal">Delete</button>' + 
 													' </h6>' +
 												'</div>' +
 												'<div id="class_all_student_collapse_body_'+key+'" class="panel-collapse collapse">' + 
@@ -327,7 +361,7 @@
 																			'<div>Exam Date: ' + reply2[key2].exam_date + '</div>' +
 																		'</div>' + 
 																		'<div class="col-xs-6">'+ 
-																			'<div>Remark: '+ reply2[key2].remark + '</div>' + 
+																			'<div>Remark: '+ reply2[key2].exam_remark + '</div>' + 
 																		'</div>' +
 																	'</div>' + 
 																	'<div class="row">' + 
@@ -432,7 +466,7 @@
 				    			if (reply.hasOwnProperty(key)) {
 				            		// target.append(JSON.stringify(reply[key]));
 				            		target.append(
-				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].firstname + ' ' + reply[key].lastname + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ')' +'</option>'
+				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].othername + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ', Reg No.: ' + reply[key].reg_no +'</option>'
 									);
 				            	}
 				            }
@@ -447,7 +481,7 @@
  			var level = $('#input_class_search_student_level').val();
  			var slot = $('#input_class_search_class_time').val();
 
- 			var from = '2000-01-01';
+ 			var from = '0000-00-00';
 			var to  = '2100-01-01';
 			if($('#input_class_search_from').val().trim() != "") {
 				from = $('#input_class_search_from').val();
@@ -475,7 +509,7 @@
 				    			if (reply.hasOwnProperty(key)) {
 				            		// target.append(JSON.stringify(reply[key]));
 				            		target.append(
-				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].firstname + ' ' + reply[key].lastname + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ')' +'</option>'
+				            			'<option id="searched_student_id_'+reply[key].student_id+'">' + reply[key].othername + ', IC: ' + reply[key].ic + ', Tel: ' + reply[key].tel + ', Reg No.: ' + reply[key].reg_no +'</option>'
 									);
 				            	}
 				            }
@@ -574,7 +608,7 @@
 		<div class="row">
 			<div class="col-xs-8"></div>
 			<div class="col-xs-2">
-				<a class="button glow button-rounded button-flat" id="class_info_search_submit">Search</a>
+				<a class="button glow button-rounded button-flat" id="class_info_search_submit">Search [前100]</a>
 			</div>
 			<div class="col-xs-2">
 				<input type="submit" value="To Excel" class="button glow button-rounded button-flat" id="class_info_to_excel">
@@ -667,6 +701,7 @@
 								<label for="input_class_search_class_time">想上课时间</label>
 								<select class="form-control" id="input_class_search_class_time">
 									<option value="NA">请选择</option>
+									<option value="anytime">任意时间</option>
 									<option value="any_am">平时早上</option>
 				                	<option value="any_pm">平时下午</option>
 				                	<option value="any_eve">平时晚上</option>
@@ -707,7 +742,17 @@
       	</div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      	<form action="<?php echo $this->config->base_url(); ?>index.php/api/getClassStudentsByClassIDToExcel" method="POST" target="_blank">
+      		<div class="row">
+      			<div class="col-xs-8"><input name="class_id" id="class_id_to_excel" style="visibility:hidden;"><input name="class_name" id="class_name_to_excel" style="visibility:hidden;"></div>
+      			<div class="col-xs-2">
+      				<input type="submit" value="To Excel" class="btn btn-primary">
+      			</div>
+      			<div class="col-xs-2">
+	      			<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+	      		</div>
+      		</div>
+      	</form>
       </div>
     </div>
   </div>
@@ -725,7 +770,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Confirm</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="class_del_confirm_btn">Confirm</button>
       </div>
     </div>
   </div>

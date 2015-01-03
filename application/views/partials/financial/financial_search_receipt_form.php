@@ -73,7 +73,7 @@
 			var receipt_no = $('#input_financial_search_receipt_num').val();
 			var receipt_branch = $('#input_financial_search_receipt_branch option:selected').attr('id').split('_')[3];
 			var course_type = $('#input_financial_search_receipt_course_type option:selected').val();
-			var receipt_date_from = '2000-01-01';
+			var receipt_date_from = '0000-00-00';
 			var receipt_date_to  = '2100-01-01';
 
 			if($('#input_financial_search_receipt_date_from').val().trim() != "") {

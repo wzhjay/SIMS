@@ -22,7 +22,7 @@
 		  <li><a href="#tab-2" data-toggle="tab">基本信息</a></li>
 		  <li><a href="#tab-3" data-toggle="tab">查看学员信息</a></li>
 		  <li><a href="#tab-4" data-toggle="tab">全部学员管理</a></li>
-		  <li><a href="#tab-5" data-toggle="tab">输入成绩</a></li>
+		  <li><a href="#tab-5" data-toggle="tab">学生成绩管理</a></li>
 		</ul>
 
 		<div class="tab-content">
@@ -54,6 +54,9 @@
 		  	<div class="tab-pane fade" id="tab-5">
 		  		<h3>输入学生成绩信息</h3><hr>
 				<?php $this->load->view('partials/students/student_input_exams_records_form') ?>
+				<br><br>
+				<h3>学生成绩信息查询</h3><hr>
+				<?php $this->load->view('partials/students/student_exams_search') ?>
 				<br><br>
 				<h3>导入学生成绩信息</h3><hr>
 				<?php $this->load->view('partials/students/student_upload_exams_records_form') ?>

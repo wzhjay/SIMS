@@ -19,8 +19,77 @@
 		    });
 		});
 
-		function search_student_info_download() {
-
+		function get_receipt_by_student_ic(key_word, target) {
+			$.ajax({
+				type:"post",
+				url:window.api_url + "getStudentRecepitsByIC",
+				data:{ic:key_word},
+				success:function(json){
+					if(json != null) {
+						var reply = $.parseJSON(json);
+						if(reply.length > 0 ) {
+							target.append('<h4>Sutdent Class Information (学生收费信息)</h4><hr>');
+							for (var key in reply) {
+								var num = parseInt(key) + 1;
+								if (reply.hasOwnProperty(key)) {
+									target.append(
+										'<div class="panel-group" id="student_search_receipt_info_collapse_'+key+'">' +
+											'<div class="panel panel-default">' + 
+												'<div class="panel-heading">' +
+													'<h4 class="panel-title">' +
+														'<a data-toggle="collapse" data-parent="student_search_receipt_info_collapse_'+key+'" href="#student_search_receipt_info_collapse_body_'+key+'">Receipt No.: <b>' + reply[key].receipt_no + '</b>  /  Receipt Date: <b>' + reply[key].receipt_date + '</b>  /  Amount: <b>' + reply[key].receipt_amount + '</b>  /  Type: <b>' + reply[key].receipt_type + '</b></a>' + 
+													' </h4>' +
+												'</div>' +
+												'<div id="student_search_receipt_info_collapse_body_'+key+'" class="panel-collapse collapse">' + 
+													'<div class="panel-body">' + 
+														'<div class="row">' + 
+															'<div class="col-xs-6">'+ 
+																'<div>Receipt No.(收据号): ' + reply[key].receipt_no + '</div>' +
+															'</div>' + 
+															'<div class="col-xs-6">'+ 
+																'<div>Receipt Date(收款日期):' + reply[key].receipt_date + '</div>' +
+															'</div>' + 
+														'</div>' +
+														'<hr>' +  
+														'<div class="row">' + 
+															'<div class="col-xs-4">'+ 
+																'<div>Receipt Type(收据类型): ' + reply[key].receipt_type + '</div>' +
+															'</div>' + 
+															'<div class="col-xs-4">' +
+																'<div>Amount(收款额): ' + reply[key].receipt_amount + '</div>' + 
+															'</div>' +
+															'<div class="col-xs-4">' +
+																'<div>Payee Name(付款人): '+ reply[key].payee_name + '</div>' + 
+															'</div>' +
+														'</div>' + 
+														'<hr>' + 
+														'<div class="row">' + 
+															'<div class="col-xs-4">' +
+																'<div>Make Up(是否补交): '+ reply[key].make_up + '</div>' + 
+															'</div>' +
+															'<div class="col-xs-4">'+ 
+																'<div>Student Before(是否老学员): ' + reply[key].student_before + '</div>' +
+															'</div>' + 
+															'<div class="col-xs-4">' +
+																"<div>Course(收款相关课程): " + reply[key].course_type +'</div>' + 
+															'</div>' +
+														'</div>' + 
+													'</div>' + 
+												'</div>' + 
+											'</div>' +
+										'</div>'
+									);
+								}
+							}
+							target.append('<br>');
+						} else {
+							target.append('<p>No Class Records found</p><br>');
+						}
+					}else {
+						toastr.error("fail to call search api");
+					}
+				}
+			});//End ajax
 		}
 
 		function get_class_by_student_ic(key_word, target) {
@@ -450,6 +519,7 @@
 					        search_get_student_ato_by_ic(key_word, target);
 					        search_get_student_record_by_ic(key_word, target);
 					        get_class_by_student_ic(key_word, target);
+					        get_receipt_by_student_ic(key_word, target);
 						}
 			        }else {
 			        	toastr.error("fail to call search api");
@@ -469,14 +539,14 @@
 				<div class="col-xs-4">
 					<input name="keyword" class="form-control" id="input_student_search_ic">
 				</div>
-				<div class="col-xs-2"></div>
+				<div class="col-xs-4"></div>
 			</div>
 			<div class="col-xs-2">
 				<a class="button glow button-rounded button-flat" id="student_search_submit">Search</a>
 			</div>
-			<div class="col-xs-2">
+<!-- 			<div class="col-xs-2">
 				<input type="submit" value="To Excel" class="button glow button-rounded button-flat" id="student_to_excel">
-			</div>
+			</div> -->
 		</div>
 	</form>
 	<div id="student_search_results"></div>

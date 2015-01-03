@@ -27,6 +27,9 @@
 				<h3>输入或更新学员ATO信息</h3><hr>
 				<?php $this->load->view('partials/atos/ato_post_form') ?>
 				<br><br>
+				<h3>信息不完整(姓名/电话/postcode/年龄/国籍)学生IC</h3><hr>
+				<?php $this->load->view('partials/atos/ato_student_info_warning_form') ?>
+				<br><br>
 		  		<h3>查询并生成ATO信息</h3><hr>
 		  		<?php $this->load->view('partials/atos/ato_search_form') ?>
 			</div>

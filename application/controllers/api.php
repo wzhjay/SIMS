@@ -278,7 +278,7 @@ class Api extends CI_Controller
 		$from = $_POST['from'];
 		$to = $_POST['to'];
 		if(trim($from) == "") {
-			$from = '2000-01-01';
+			$from = '0000-00-00';
 		}
 
 		if(trim($to) == "") {
@@ -522,7 +522,7 @@ class Api extends CI_Controller
 	function searchStudentInfoDownload() {
 		$keyword = $_POST['keyword'];
 		$students = $this->apis->search_single_students_by_keyword_download($keyword);
-		$rowArray1 = array('来源', '注册号', 'IC', '分部', '姓', '名', '其他名字', '电话', '家里电话', '性别', '称呼', '生日', '年龄', 'IC类型', '公民类型', '国籍', '种族', '华文水平', '教育水平', '语言', '政府信', '工作状态', '公司名字', '公司类型', '公司注册号', '行业', '职称', '工资水平', 'Block', '街道', 'Building', '邮编', '备注');
+		$rowArray1 = array('来源', '注册号', 'IC', '分部', '姓', '名', '其他名字/全名', '电话', '家里电话', '性别', '称呼', '生日', '年龄', 'IC类型', '公民类型', '国籍', '种族', '华文水平', '教育水平', '语言', '政府信', '工作状态', '公司名字', '公司类型', '公司注册号', '行业', '职称', '工资水平', 'Block', 'Floor_Unit', '街道', 'Building', '邮编', '备注');
 		if($students != NULL) {
 			$this->excel->getActiveSheet()
 			    ->fromArray(
@@ -632,7 +632,7 @@ class Api extends CI_Controller
 	function searchStudentInfoDownload1() {
 		$keyword = $_POST['keyword'];
 		$students = $this->apis->search_students_by_keyword_download($keyword);
-		$rowArray = array('来源', '注册号', 'IC', '分部', '姓', '名', '其他名字', '电话', '家里电话', '性别', '称呼', '生日', '年龄', 'IC类型', '公民类型', '国籍', '种族', '华文水平', '教育水平', '语言', '政府信', '工作状态', '公司名字', '公司类型', '公司注册号', '行业', '职称', '工资水平', 'Block', '街道', 'Building', '邮编', '备注');
+		$rowArray = array('来源', '注册号', 'IC', '分部', '姓', '名', '其他名字/全名', '电话', '家里电话', '性别', '称呼', '生日', '年龄', 'IC类型', '公民类型', '国籍', '种族', '华文水平', '教育水平', '语言', '政府信', '工作状态', '公司名字', '公司类型', '公司注册号', '行业', '职称', '工资水平', 'Block', 'Floor_Unit', '街道', 'Building', '邮编', '备注');
 		if($students != NULL) {
 			$this->excel->getActiveSheet()
 			    ->fromArray(
@@ -667,11 +667,11 @@ class Api extends CI_Controller
 		$from = $_POST['from'];
 		$to = $_POST['to'];
 		if(trim($from) == "") {
-			$from = '2000-01-01';
+			$from = '0000-00-00';
 		}
 
 		if(trim($to) == "") {
-			$to = '2100-01-01';
+			$to = '0000-00-00';
 		}
 		if(isset($_POST['have_class'])) {
 			$have_class = 'YES';
@@ -679,7 +679,7 @@ class Api extends CI_Controller
 			$have_class = 'NO';
 		}
 		$students = $this->apis->search_class_students_by_multiple_var_download($course_type, $level, $slot, $from, $to, $have_class);
-		$rowArray = array('来源', '注册号', 'IC', '分部', '姓', '名', '其他名字', '电话', '家里电话', '性别', '称呼', '生日', '年龄', 'IC类型', '公民类型', '国籍', '种族', '华文水平', '教育水平', '语言', '政府信', '工作状态', '公司名字', '公司类型', '公司注册号', '行业', '职称', '工资水平', 'Block', '街道', 'Building', '邮编', '备注');
+		$rowArray = array('来源', '注册号', 'IC', '分部', '姓', '名', '其他名字/全名', '电话', '家里电话', '性别', '称呼', '生日', '年龄', 'IC类型', '公民类型', '国籍', '种族', '华文水平', '教育水平', '语言', '政府信', '工作状态', '公司名字', '公司类型', '公司注册号', '行业', '职称', '工资水平', 'Block', 'Floor_Unit', '街道', 'Building', '邮编', '备注');
 		if($students != NULL) {
 			$this->excel->getActiveSheet()
 			    ->fromArray(
@@ -1028,7 +1028,7 @@ class Api extends CI_Controller
 		$to = $_POST["to"];
 
 		if(trim($from) == "") {
-			$from = '2000-01-01';
+			$from = '0000-00-00';
 		}
 
 		if(trim($to) == "") {
@@ -1051,7 +1051,7 @@ class Api extends CI_Controller
 		if($pi_14[0] == NULL) { $pi_14[0] = array(NULL); };
 		$pi_19 = $this->apis->search_atos_by_time_download($from, $to, $class_code, 'PY', '19');
 		if($pi_19[0] == NULL) { $pi_19[0] = array(NULL); };
-		$title_row = array('Pre / Post Assessment', 'Exam Location', 'Class ID', 'Training Start Date (DD/MM/YYYY)', 'Training End Date (DD/MM/YYYY)', 'Course Code', 'Attendance Percentage', 'EL', 'ER', 'EN', 'ES', 'EW', 'NRIC/Fin No.', 'ID Type (Select from dropdown list)', 'Salutation', 'SurName', 'GivenName', 'OtherName', 'Gender', 'DOB (DD/MM/YYYY)', 'Age', 'Citizenship', 'Nationality', 'Ethnic Group', 'Highest Chinese Education Level', 'Highest Education Level', 'Language Proficiency', 'Blk', 'Street Name', '#Floor - Unit No', 'Building Name', 'Postal Code', 'Contact No', 'Employment Status', 'Company Registration Type', 'Company Name', 'Company Registration No', 'Industry Sector', 'Designation', 'Salary Range', 'Contact Email');
+		$title_row = array('Exam Date', 'Pre / Post Assessment', 'Class ID', 'Training Start Date (DD/MM/YYYY)', 'Training End Date (DD/MM/YYYY)', 'Course Code', 'Attendance Percentage', 'Transfer Flag (Yes/No)', 'Training Recommendation', 'ATO Org ID', 'EL', 'ER', 'EN', 'ES', 'EW', 'Salutation', 'ID Type (Select from dropdown list)', 'NRIC/Fin No.', 'Expiry Date (DD/MM/YYYY)', 'SurName', 'GivenName', 'Name', 'Gender', 'DOB (DD/MM/YYYY)', 'Age', 'Citizenship', 'Nationality', 'Ethnic Group', 'Highest Chinese Education Level', 'Highest Education Level', 'Language Proficiency', 'Blk', 'Street Name', '#Floor - Unit No', 'Building Name', 'Postal Code', 'Contact No', 'Contact Email', 'Employment Status', 'Company Registration Type', 'Company Name', 'Company Registration No', 'Industry Sector', 'Designation', 'Salary Range');
 		$arrayData = array(
 		    $title_row,
 		    array(NULL),
@@ -1160,6 +1160,132 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  search ato info by ic and download as excel file
+	 */
+	function searchATOByICInfoDownload() {
+		$ic = $_POST["ic"];
+
+		//activate worksheet number 1
+		$this->excel->setActiveSheetIndex(0);
+		//name the worksheet
+		$this->excel->getActiveSheet()->setTitle('ATO');
+		$je_09 = $this->apis->search_atos_by_ic_download($ic, 'JE', '09');
+		if($je_09[0] == NULL) { $je_09[0] = array(NULL); };
+		$je_14 = $this->apis->search_atos_by_ic_download($ic, 'JE', '14');
+		if($je_14[0] == NULL) { $je_14[0] = array(NULL); };
+		$je_19 = $this->apis->search_atos_by_ic_download($ic, 'JE', '19');
+		if($je_19[0] == NULL) { $je_19[0] = array(NULL); };
+		$pi_09 = $this->apis->search_atos_by_ic_download($ic, 'PY', '09');
+		if($pi_09[0] == NULL) { $pi_09[0] = array(NULL); };
+		$pi_14 = $this->apis->search_atos_by_ic_download($ic, 'PY', '14');
+		if($pi_14[0] == NULL) { $pi_14[0] = array(NULL); };
+		$pi_19 = $this->apis->search_atos_by_ic_download($ic, 'PY', '19');
+		if($pi_19[0] == NULL) { $pi_19[0] = array(NULL); };
+		$title_row = array('Pre / Post Assessment', 'Class ID', 'Training Start Date (DD/MM/YYYY)', 'Training End Date (DD/MM/YYYY)', 'Course Code', 'Attendance Percentage', 'Transfer Flag (Yes/No)', 'Training Recommendation', 'ATO Org ID', 'EL', 'ER', 'EN', 'ES', 'EW', 'Salutation', 'ID Type (Select from dropdown list)', 'NRIC/Fin No.', 'Expiry Date (DD/MM/YYYY)', 'SurName', 'GivenName', 'Name', 'Gender', 'DOB (DD/MM/YYYY)', 'Age', 'Citizenship', 'Nationality', 'Ethnic Group', 'Highest Chinese Education Level', 'Highest Education Level', 'Language Proficiency', 'Blk', 'Street Name', '#Floor - Unit No', 'Building Name', 'Postal Code', 'Contact No', 'Contact Email', 'Employment Status', 'Company Registration Type', 'Company Name', 'Company Registration No', 'Industry Sector', 'Designation', 'Salary Range');
+		$arrayData = array(
+		    $title_row,
+		    array(NULL),
+		    array('JE'),
+		    array('09:00'),
+		);
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $arrayData,   // The data to set
+		        NULL
+		    );
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $je_09,   // The data to set
+		        NULL,
+		        'A5'
+		    );
+		$start = 5 + sizeof($je_09); + 1;
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		       	array('14:00'),   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += 1; 
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $je_14,   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += sizeof($je_14);
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		       	array('19:00'),   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += 1; 
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $je_19,   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += sizeof($je_19);
+		$arrayData = array(
+		    array(NULL),
+		    array('PY'),
+		    array('09:00'),
+		);
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $arrayData,   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += 3;
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $pi_09,   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += sizeof($pi_09);
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		       	array('14:00'),   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += 1; 
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $pi_14,   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += sizeof($pi_14);
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		       	array('19:00'),   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += 1;
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $pi_19,   // The data to set
+		        NULL,
+		        'A'.$start
+		    );
+		$start += sizeof($pi_19);
+		$filename = 'ATO_IC_'.$ic.'_Date_'.date('Y-m-d H:i:s').'.xls';	
+		
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		             
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+		$objWriter->save('php://output');
+	}
+
+	/**
 	 *  delete ato info
 	 */
 	function deleteATOByID() {
@@ -1207,13 +1333,13 @@ class Api extends CI_Controller
 		$end_from = $_POST['end_from'];
 		$end_to = $_POST['end_to'];
 		if(trim($start_from) == "") {
-			$start_from = '2000-01-01';
+			$start_from = '0000-00-00';
 		}
 		if(trim($start_to) == "") {
 			$start_to = '2100-01-01';
 		}
 		if(trim($end_from) == "") {
-			$end_from = '2000-01-01';
+			$end_from = '0000-00-00';
 		}
 		if(trim($end_to) == "") {
 			$end_to = '2100-01-01';
@@ -1238,6 +1364,7 @@ class Api extends CI_Controller
 			        'A3'         // Top left coordinate of the worksheet range where
 		                     //    we want to set these values (default is A1)
 			    );
+
 			$filename = 'Classes_'.date('Y-m-d H:i:s').'.xls';	
 			
 			header('Content-Type: application/vnd.ms-excel'); //mime type
@@ -1377,6 +1504,19 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  delete class by class id
+	 */
+	function deleteClassByID() {
+		$id = $this->input->post('id');
+		// delete
+		$delete = $this->apis->delete_class_info($id);
+		if($delete){
+			echo 3;
+		}
+		else echo 0;
+	}
+
+	/**
 	 *  get all class students
 	 */
 	function getClassStudentsByClassID() {
@@ -1386,6 +1526,39 @@ class Api extends CI_Controller
 			echo json_encode($students);
 		}
 		echo NULL;
+	}
+
+	function getClassStudentsByClassIDToExcel() {
+		$class_id = $_POST['class_id'];
+		$class_name = $_POST['class_name'];
+		//activate worksheet number 1
+		$this->excel->setActiveSheetIndex(0);
+		//name the worksheet
+		$this->excel->getActiveSheet()->setTitle('Class Students');
+		$students = $this->apis->get_all_class_students_by_class_id_to_excel($class_id);
+		$rowArray = array('来源', '注册号', 'IC', '分部', '名', '姓', '其他名字/全名', '电话', '家里电话', '性别', '称呼', '生日', '年龄', 'IC类型', '公民类型', '国籍', '种族', '华文水平', '教育水平', '语言', '政府信', '工作状态', '公司名字', '公司类型', '公司注册号', '行业', '职称', '工资水平', 'Block', 'Floor_Unit', '街道', 'Building', '邮编', '备注');
+		if($students != NULL) {
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $rowArray,   // The data to set
+			        NULL
+			    );
+			$this->excel->getActiveSheet()
+			    ->fromArray(
+			        $students,   // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'A3'         // Top left coordinate of the worksheet range where
+		                     //    we want to set these values (default is A1)
+			    );
+			$filename = 'Class_'.$class_name.'_Students_'.date('Y-m-d H:i:s').'.xls';	
+			
+			header('Content-Type: application/vnd.ms-excel'); //mime type
+			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+			header('Cache-Control: max-age=0'); //no cache
+			             
+			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+			$objWriter->save('php://output');
+		}
 	}
 
 	/**
@@ -1590,6 +1763,18 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  get receipt record by ic
+	 */
+	function getStudentRecepitsByIC() {
+		$ic = $this->input->post('ic');
+		$records = $this->apis->get_receipt_record_by_ic($ic);
+		if($records != NULL) {
+			echo json_encode($records);
+		}
+		echo NULL;
+	}
+
+	/**
 	 *  search receipt records and download as excel file
 	 */
 	function searchReceiptRecordsDownload() {
@@ -1601,7 +1786,7 @@ class Api extends CI_Controller
 		$receipt_date_to = $_POST['receipt_date_to'];
 
 		if(trim($receipt_date_from) == "") {
-			$receipt_date_from = '2000-01-01';
+			$receipt_date_from = '0000-00-00';
 		}
 
 		if(trim($receipt_date_to) == "") {
@@ -1912,6 +2097,58 @@ class Api extends CI_Controller
 		}
 	}
 
+	/**
+	 *  search exam info by exam time
+	 */
+	function searchExamInfo() {
+		$from = $this->input->post('from');
+		$to = $this->input->post('to');
+		$exams = $this->apis->search_exams_by_time($from, $to);
+		if($exams != NULL) {
+			echo json_encode($exams);
+		}
+		echo NULL;
+	}
+
+	function searchExamInfoDownload() {
+		$from = $_POST["from"];
+		$to = $_POST["to"];
+
+		if(trim($from) == "") {
+			$from = '0000-00-00';
+		}
+
+		if(trim($to) == "") {
+			$to = '2100-01-01';
+		}
+		//activate worksheet number 1
+		$this->excel->setActiveSheetIndex(0);
+		//name the worksheet
+		$this->excel->getActiveSheet()->setTitle('Exam Records');
+		$exams = $this->apis->search_exams_by_time_download($from, $to);
+		$title_row = array('IC', 'Last Name', 'First Name', 'Other Name/Full Name', 'Exam Date', 'EL', 'ER', 'EN', 'ES', 'EW', 'CMP', 'CON', 'WRI', 'WPN', 'Remark');
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $title_row,   // The data to set
+		        NULL
+		    );
+		$this->excel->getActiveSheet()
+		    ->fromArray(
+		        $exams,   // The data to set
+		        NULL,
+		        'A3'
+		    );
+		
+		$filename = 'Exams_Date_'.date('Y-m-d H:i:s').'.xls';	
+		
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		             
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+		$objWriter->save('php://output');
+	}
+
 	/* =================== header =================== */
 
 	/**
@@ -1950,5 +2187,16 @@ class Api extends CI_Controller
 			echo 3;
 		}
 		else echo 0;
+	}
+
+	/**
+	 *  get student imcomplated info name list
+	 */
+	function getStudentInfoWarningList() {
+		$results = $this->apis->get_student_info_warning_list();
+		if($results != NULL) {
+			echo json_encode($results);
+		}
+		echo NULL;
 	}
 }

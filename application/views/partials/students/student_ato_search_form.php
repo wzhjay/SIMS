@@ -24,7 +24,7 @@
 		});
 
 		function student_search_ato_info() {
-			var from = '2000-01-01';
+			var from = '0000-00-00';
 			var to  = '2100-01-01';
 			if($('#input_student_ato_search_from').val().trim() != "") {
 				from = $('#input_student_ato_search_from').val();

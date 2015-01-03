@@ -66,10 +66,10 @@
 			if(ew == "UN" || ew == "EXE" || ew == "B1" || ew == "PENDING" || ew == "N/A") {	ew_pt = 0;	} else {	ew_pt = parseInt(ew);	}
 			if(en == "UN" || en == "EXE" || en == "B1" || en == "PENDING" || en == "N/A") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
 			var cmp_pt = er_pt + el_pt + es_pt + ew_pt;
-			if(er == "N/A" || el == "N/A" || es == "N/A" || ew == "N/A") { cmp = "N/A" } else { if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	} }
-			if(es == "N/A") { con = "N/A" } else { if(es_pt<3) {	con = "BEGINNERS";	} else if (es_pt<5) {	con = "INTERMEDIATE";	} else { con = "ADVANCED";	} }
-			if(ew == "N/A") { wri = "N/A" } else { if(ew_pt<3) {	wri = "BEGINNERS";	} else if (ew_pt<5) {	wri = "INTERMEDIATE";	} else { wri = "ADVANCED";	} }
-			if(en == "N/A") { wpn = "N/A" } else { if(en_pt<3) {	wpn = "BEGINNERS";	} else if (en_pt<5) {	wpn = "INTERMEDIATE";	} else { wpn = "ADVANCED";	} }
+			if(er == "N/A" || el == "N/A" || es == "N/A" || ew == "N/A") { cmp = "N/A" } else if(er == "PENDING" || el == "PENDING" || es == "PENDING" || ew == "PENDING") { cmp = "PENDING" } else { if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	} }
+			if(es == "N/A") { con = "N/A" } else if(es == "PENDING") { con = "PENDING" } else { if(es_pt<3) {	con = "BEGINNERS";	} else if (es_pt<5) {	con = "INTERMEDIATE";	} else { con = "ADVANCED";	} }
+			if(ew == "N/A") { wri = "N/A" } else if(ew == "PENDING") { wri = "PENDING" } else { if(ew_pt<3) {	wri = "BEGINNERS";	} else if (ew_pt<5) {	wri = "INTERMEDIATE";	} else { wri = "ADVANCED";	} }
+			if(en == "N/A") { wpn = "N/A" } else if(en == "PENDING") { wpn = "PENDING" } else { if(en_pt<3) {	wpn = "BEGINNERS";	} else if (en_pt<5) {	wpn = "INTERMEDIATE";	} else { wpn = "ADVANCED";	} }
 
 
 			$.ajax({
@@ -146,10 +146,10 @@
 			if(en == "UN" || en == "EXE" || en == "B1" || en == "PENDING" || en == "N/A") {	en_pt = 0;	} else {	en_pt = parseInt(en);	}
 
 			var cmp_pt = er_pt + el_pt + es_pt + ew_pt;
-			if(er == "N/A" || el == "N/A" || es == "N/A" || ew == "N/A") { cmp = "N/A" } else { if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	} }
-			if(es == "N/A") { con = "N/A" } else { if(es_pt<3) {	con = "BEGINNERS";	} else if (es_pt<5) {	con = "INTERMEDIATE";	} else { con = "ADVANCED";	} }
-			if(ew == "N/A") { wri = "N/A" } else { if(ew_pt<3) {	wri = "BEGINNERS";	} else if (ew_pt<5) {	wri = "INTERMEDIATE";	} else { wri = "ADVANCED";	} }
-			if(en == "N/A") { wpn = "N/A" } else { if(en_pt<3) {	wpn = "BEGINNERS";	} else if (en_pt<5) {	wpn = "INTERMEDIATE";	} else { wpn = "ADVANCED";	} }
+			if(er == "N/A" || el == "N/A" || es == "N/A" || ew == "N/A") { cmp = "N/A" } else if(er == "PENDING" || el == "PENDING" || es == "PENDING" || ew == "PENDING") { cmp = "PENDING" } else { if(cmp_pt<12) {	cmp = "BEGINNERS";	} else if (cmp_pt<20) {	cmp = "INTERMEDIATE";	} else { cmp = "ADVANCED";	} }
+			if(es == "N/A") { con = "N/A" } else if(es == "PENDING") { con = "PENDING" } else { if(es_pt<3) {	con = "BEGINNERS";	} else if (es_pt<5) {	con = "INTERMEDIATE";	} else { con = "ADVANCED";	} }
+			if(ew == "N/A") { wri = "N/A" } else if(ew == "PENDING") { wri = "PENDING" } else { if(ew_pt<3) {	wri = "BEGINNERS";	} else if (ew_pt<5) {	wri = "INTERMEDIATE";	} else { wri = "ADVANCED";	} }
+			if(en == "N/A") { wpn = "N/A" } else if(en == "PENDING") { wpn = "PENDING" } else { if(en_pt<3) {	wpn = "BEGINNERS";	} else if (en_pt<5) {	wpn = "INTERMEDIATE";	} else { wpn = "ADVANCED";	} }
 
 
 			$.ajax({
@@ -318,7 +318,7 @@
 										'</div>' +
 										'<div class="col-xs-4">' +
 											'<label for="student_record_ic_check_exam_remark">Remark</label>' +
-											'<div class="form-control" id="student_record_ic_check_exam_remark">'+ reply[key].remark + '</div>' + 
+											'<div class="form-control" id="student_record_ic_check_exam_remark">'+ reply[key].exam_remark + '</div>' + 
 										'</div>' +
 										'<div class="col-xs-2">' +
 										'<br>' +
@@ -393,6 +393,8 @@
 								$('#input_student_exam_record_remark').val(reply[key].remark);
 			            	}
 			            }
+			            $("html, body").animate({ scrollTop: 0 }, "slow");
+			            toastr.info("Update exam record on above form!");
 			        }else{
 			        	toastr.error("fail to load student record");
 			        }
@@ -467,7 +469,7 @@
 			<div class="col-xs-4">
 				<label for="input_student_exam_record_er">*阅读ER</label>
 				<select class="form-control" id="input_student_exam_record_er">
-					<option value="N/A">请选择</option>
+					<option value="N/A">N/A</option>
 					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
@@ -485,7 +487,7 @@
 			<div class="col-xs-4">
 				<label for="input_student_exam_record_el">*听力EL</label>
 				<select class="form-control" id="input_student_exam_record_el">
-					<option value="N/A">请选择</option>
+					<option value="N/A">N/A</option>
 					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
@@ -503,7 +505,7 @@
 			<div class="col-xs-4">
 				<label for="input_student_exam_record_es">*会话ES</label>
 				<select class="form-control" id="input_student_exam_record_es">
-					<option value="N/A">请选择</option>
+					<option value="N/A">N/A</option>
 					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
@@ -523,7 +525,7 @@
 			<div class="col-xs-4">
 				<label for="input_student_exam_record_ew">*写作EW</label>
 				<select class="form-control" id="input_student_exam_record_ew">
-					<option value="N/A">请选择</option>
+					<option value="N/A">N/A</option>
 					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>
@@ -541,7 +543,7 @@
 			<div class="col-xs-4">
 				<label for="input_student_exam_record_en">*数学EN</label>
 				<select class="form-control" id="input_student_exam_record_en">
-					<option value="N/A">请选择</option>
+					<option value="N/A">N/A</option>
 					<option value="PENDING">PENDING</option>
 					<option value="UN">UN</option>
 					<option value="EXE">EXE</option>

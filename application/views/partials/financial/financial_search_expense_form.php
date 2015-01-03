@@ -24,7 +24,7 @@
 			var exp_name = $('#input_search_financial_exp_name').val();
 			var exp_sign_name = $('#input_search_financial_exp_sign_name').val();
 
-			var exp_date_from = '2000-01-01';
+			var exp_date_from = '0000-00-00';
 			var exp_date_to  = '2100-01-01';
 
 			if($('#input_search_financial_exp_date_from').val().trim() != "") {

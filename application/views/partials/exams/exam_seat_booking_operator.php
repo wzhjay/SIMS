@@ -10,7 +10,9 @@
 	var global_location_selected = '';
 	var global_time_selected = '';
 	var global_ic_selected = '';
+	var global_pre_post_selected = '';
 	$(document).ready(function($) {
+		$('#exam_student_new_info_form').parsley();
 		$('#input_student_new_bd').datepicker({
 			format: 'yyyy-mm-dd',
 			todayHighlight: true
@@ -45,6 +47,22 @@
 		// ato_load_branches($('#input_ato_branch'));
 		// student_info_load_admin_users($('#input_student_new_op'));
 		// student_info_load_branches($('#input_student_new_branch'));
+
+		$('#student_ato_ic_check2').on('click', function() {
+			get_ato_by_ic();
+		});
+
+		$('#student_ato_class_check2').on('click', function() {
+			get_class_by_class_code();
+		});
+
+		$('#seat_booking_pre_post_tab1').on('click',function(){
+			global_pre_post_selected = 'pre';
+		});
+
+		$('#seat_booking_pre_post_tab2').on('click',function(){
+			global_pre_post_selected = 'post';
+		});
 	});
 
 	function build_exam_booking_calender(_pre_next) {
@@ -322,6 +340,220 @@
 		// 	    }
 		// 	});//End ajax
 		// }
+	function get_ato_by_ic() {
+		var ic = $('#input_ato_ic2').val();
+		$.ajax({
+			type:"post",
+		    url:window.api_url + "getStudentATOInfoByIC",
+		    data:{ic:ic},
+		    success:function(json){
+		    	var modalBody = $('#student_ato_ic_check_modal_label').closest('.modal-content').find('.modal-body');
+		    	modalBody.empty();
+		    	if(json.trim() != "") {
+		    		var reply = $.parseJSON(json);
+			    	for (var key in reply) {
+				    	if (reply.hasOwnProperty(key)) {
+							modalBody.append(
+								'<div class="row">' + 
+									'<div class="col-xs-2" id="student_ato_ic_check_model_ic">'+ 
+										'<label>IC Number</label>' +
+										'<div class="form-control">' + ic + '</div>' +
+									'</div>' + 
+									'<div class="col-xs-3">' + 
+										'<label for="student_ato_ic_check_model_exam_date">考试时间</label>' + 
+										'<div class="form-control" id="student_ato_ic_check_model_exam_date">' + reply[key].exam_date + ' ' + reply[key].exam_time + '</div>' + 
+									'</div>' +
+									'<div class="col-xs-2">' + 
+										'<label for="student_ato_ic_check_model_exam_type">考试类型</label>' + 
+										'<div class="form-control" id="student_ato_ic_check_model_exam_type">' + reply[key].pre_post + '</div>' + 
+									'</div>' +
+									'<div class="col-xs-2">' + 
+										'<label for="student_ato_ic_check_model_exam_location">考试地点</label>' + 
+										'<div class="form-control" id="student_ato_ic_check_model_exam_location">' + reply[key].exam_location + '</div>' + 
+									'</div>' +
+									'<div class="col-xs-2">' + 
+										'<label for="student_ato_ic_check_model_exam_change_date">是否改期</label>' + 
+										'<div class="form-control" id="student_ato_ic_check_model_exam_change_date">' + reply[key].post_change_date + '</div>' + 
+									'</div>' +
+								'</div>' +
+								'<div class="row">' + 
+									'<div class="col-xs-2">'+ 
+										'<label>EL</label>' +
+										'<div class="form-control">' + reply[key].el + '</div>' +
+									'</div>' + 
+									'<div class="col-xs-2">'+ 
+										'<label>ER</label>' +
+										'<div class="form-control">' + reply[key].er + '</div>' +
+									'</div>' + 
+									'<div class="col-xs-2">'+ 
+										'<label>EN</label>' +
+										'<div class="form-control">' + reply[key].en + '</div>' +
+									'</div>' + 
+									'<div class="col-xs-2">'+ 
+										'<label>ES</label>' +
+										'<div class="form-control">' + reply[key].es + '</div>' +
+									'</div>' + 
+									'<div class="col-xs-2">'+ 
+										'<label>EW</label>' +
+										'<div class="form-control">' + reply[key].ew + '</div>' +
+									'</div>' + 
+								'</div>' +
+								'<div class="row">' + 
+									'<div class="col-xs-6">' +
+										'<label for="student_ato_ic_check_model_remark">备注</label>' +
+										'<div class="form-control" id="student_ato_ic_check_model_remark">'+ reply[key].ato_remark + '</div>' + 
+									'</div>' +
+									'<div class="col-xs-4"></div>' +
+									'<div class="col-xs-2">' +
+										'<br>' +
+										'<a class="button glow button-rounded button-flat" id="student_ato_ic_check_modal_update_' + reply[key].id + '">Update</a>' + 
+									'</div>' +
+								'</div>' +
+								'<hr>'
+							);
+				        }
+			    	}
+			    	$('#student-ato-modal a').on('click', function() {
+						var el_id = $(this).attr('id').split('_');
+						var ato_id = el_id[6];
+						selected_ato_id = ato_id;	// assign global var for late update submit
+
+						load_ato_info(ato_id);
+						$('#student-ato-modal').modal('hide');
+					});
+			    }
+			    else {
+			    	if(ic.trim() == "") {
+			    		ic='NULL';
+			    	};
+					modalBody.append(
+						'<div class="row">' + 
+							'<div class="col-xs-4" id="student_ato_ic_check_model_ic">'+ 
+								'<label>IC Number Input</label>' +
+								'<div class="form-control">' + ic + '</div>' +
+							'</div>' + 
+							'<div class="col-xs-8">' + 
+								'<label>Sorry, no related ATO info found!<br>Please input valid IC number.</label>' + 
+						'</div>'
+					);
+				}
+		    }
+		});//End ajax
+	}
+
+	function get_class_by_class_code() {
+		var class_code = $('#input_ato_class_code2').val().trim();
+		$.ajax({
+			type:"post",
+		    url:window.api_url + "getClassInfoByCode",
+		    data:{code:class_code},
+		    success:function(json){
+		    	var modalBody = $('#student_ato_class_check_modal_label').closest('.modal-content').find('.modal-body');
+		    	modalBody.empty();
+		    	if(json.trim() != "") {
+		    		var reply = $.parseJSON(json);
+			    	for (var key in reply) {
+				    	if (reply.hasOwnProperty(key)) {
+							modalBody.append(
+								'<div class="row">' + 
+									'<div class="col-xs-3">'+ 
+										'<label>Classs Code</label>' +
+										'<div class="form-control">' + class_code + '</div>' +
+									'</div>' + 
+									'<div class="col-xs-3">' + 
+										'<label>班级名字</label>' + 
+										'<div class="form-control">' + reply[key].class_name + '</div>' + 
+									'</div>' +
+									'<div class="col-xs-3">' + 
+										'<label>科目</label>' + 
+										'<div class="form-control">' + reply[key].type + '</div>' + 
+									'</div>' +
+									// '<div class="col-xs-3">' + 
+									// 	'<label>等级</label>' + 
+									// 	'<div class="form-control">' + reply[key].level + '</div>' + 
+									// '</div>' +
+								'</div>' +
+								'<div class="row">' + 
+									'<div class="col-xs-4">'+ 
+										'<label>课程日期</label>' +
+										'<div class="form-control">' + reply[key].start_date + " ~ " + reply[key].end_date + '</div>' +
+									'</div>' + 
+									'<div class="col-xs-4">' + 
+										'<label>课程时段</label>' + 
+										'<div class="form-control">' + reply[key].start_time + " ~ " + reply[key].end_time + '</div>' + 
+									'</div>' +
+									'<div class="col-xs-4">' + 
+										'<label>老师信息</label>' + 
+										'<div class="form-control">' + reply[key].teacher_name + '(' + reply[key].teacher_tel + ')' + '</div>' + 
+									'</div>' +
+								'</div>' +
+								'<div class="row">' + 
+									'<div class="col-xs-6">' +
+										'<label>备注</label>' +
+										'<div class="form-control">'+ reply[key].remark + '</div>' + 
+									'</div>' +
+								'</div>'
+							);
+				        }
+			    	}
+			    }
+			    else {
+			    	if(class_code.trim() == "") {
+			    		class_code='NULL';
+			    	};
+					modalBody.append(
+						'<div class="row">' + 
+							'<div class="col-xs-4">'+ 
+								'<label>Class Code Input</label>' +
+								'<div class="form-control">' + class_code + '</div>' +
+							'</div>' + 
+							'<div class="col-xs-8">' + 
+								'<label>Sorry, no related Class info found!<br>Please input valid class code.</label>' + 
+						'</div>'
+					);
+				}
+		    }
+		});//End ajax
+	}
+
+	function load_ato_info(ato_id) {
+		$.ajax({
+			type:"post",
+		    url:window.api_url + "getATOInfoByID",
+		    data:{id:ato_id},
+		    success:function(json){
+		    	if(json.trim() != "") {
+		    		var reply = $.parseJSON(json);
+		    		for (var key in reply) {
+		    			if (reply.hasOwnProperty(key)) {
+		            		$('#input_ato_ic2').val(reply[key].ic);
+							$('#input_ato_class_code2').val(reply[key].class_code);
+							$('#input_ato_attendance2').val(reply[key].attendance);
+							// (reply[key].post_change_date == "YES") ? $('#input_ato_post_change_date2').prop('checked', true) : $('#input_ato_post_change_date2').prop('checked', false);
+							(reply[key].el == "YES") ? $('#input_ato_el2').prop('checked', true) : $('#input_ato_el').prop('checked', false);
+							(reply[key].er == "YES") ? $('#input_ato_er2').prop('checked', true) : $('#input_ato_er').prop('checked', false);
+							(reply[key].en == "YES") ? $('#input_ato_en2').prop('checked', true) : $('#input_ato_en').prop('checked', false);
+							(reply[key].es == "YES") ? $('#input_ato_es2').prop('checked', true) : $('#input_ato_es').prop('checked', false);
+							(reply[key].ew == "YES") ? $('#input_ato_ew2').prop('checked', true) : $('#input_ato_ew').prop('checked', false);
+							$('#input_ato_exam_date2').val(reply[key].exam_date);
+							$('#input_ato_remark2').val(reply[key].ato_remark);
+
+							$('#input_ato_pre_post2 option[value="'+reply[key].pre_post+'"]').attr('selected', 'selected');
+							// $('#input_ato_recommend_level option[value="'+reply[key].recommend_level+'"]').attr('selected', 'selected');
+							$('#input_ato_exam_location2 option[value="'+reply[key].exam_location+'"]').attr('selected', 'selected');
+							$('#input_ato_exam_time2 option[value="'+reply[key].exam_time+'"]').attr('selected', 'selected');
+							// $('#input_ato_branch option[id="ato_branch_'+reply[key].branch_id+'"]').attr('selected', 'selected');
+							// $('#input_ato_op option[id="ato_user_'+reply[key].branch_op_id+'"]').attr('selected', 'selected');
+		            	}
+		            }
+		            $("html, body").animate({ scrollTop: 0 }, "slow");
+		            toastr.info("Update ato record on above form!");
+		        }else{
+		        	toastr.error("Fail to load ato info!");
+		        }
+		    }
+		});//End ajax
+	}
 
 	function clear_ato_inputs() {
 		$('#input_ato_ic').val('');
@@ -333,6 +565,18 @@
 		$('#input_ato_ew').prop('checked', false);
 		$('#input_ato_exam_date').val('');
 		$('#input_ato_remark').val('');
+	}
+
+	function clear_ato_inputs2() {
+		$('#input_ato_ic2').val('');
+		$('#input_ato_class_code2').val('');
+		$('#input_ato_el2').prop('checked', false);
+		$('#input_ato_er2').prop('checked', false);
+		$('#input_ato_en2').prop('checked', false);
+		$('#input_ato_es2').prop('checked', false);
+		$('#input_ato_ew2').prop('checked', false);
+		$('#input_ato_exam_date2').val('');
+		$('#input_ato_remark2').val('');
 	}
 
 	function clear_student_new_form_inputs() {
@@ -444,59 +688,108 @@
 	}
 
 	function insert_ato_info() {
-		var ic = $('#input_ato_ic').val();
-		var pre_post = $('#input_ato_pre_post').val();
-		// var recommend_level = $('#input_ato_recommend_level').val();
-		var class_code = '0';
-		var attendance = '0';
-		var post_change_date = 'NO';
-		var el = $('#input_ato_el').is(':checked') ? 'YES' : 'NO';
-		var er = $('#input_ato_er').is(':checked') ? 'YES' : 'NO';
-		var en = $('#input_ato_en').is(':checked') ? 'YES' : 'NO';
-		var es = $('#input_ato_es').is(':checked') ? 'YES' : 'NO';
-		var ew = $('#input_ato_ew').is(':checked') ? 'YES' : 'NO';
-		var exam_location = global_location_selected;
-		var exam_date = global_year + '-' + month_selected + '-' + global_day_selected;
-		var exam_time = global_time_selected;
-		// var ato_branch = $('#input_ato_branch option:selected').attr('id').split('_');
-		// var ato_branch_id = ato_branch[2];
-		// var ato_op = $('#input_ato_op option:selected').attr('id').split('_');
-		// var ato_op_id = ato_op[2];
-		var remark  = $('#input_ato_remark').val();
+		if(global_pre_post_selected == 'pre') {
+			var ic = $('#input_ato_ic').val();
+			var pre_post = $('#input_ato_pre_post').val();
+			// var recommend_level = $('#input_ato_recommend_level').val();
+			var class_code = '0';
+			var attendance = '0';
+			var post_change_date = 'NO';
+			var el = $('#input_ato_el').is(':checked') ? 'YES' : 'NO';
+			var er = $('#input_ato_er').is(':checked') ? 'YES' : 'NO';
+			var en = $('#input_ato_en').is(':checked') ? 'YES' : 'NO';
+			var es = $('#input_ato_es').is(':checked') ? 'YES' : 'NO';
+			var ew = $('#input_ato_ew').is(':checked') ? 'YES' : 'NO';
+			var exam_location = global_location_selected;
+			var exam_date = global_year + '-' + month_selected + '-' + global_day_selected;
+			var exam_time = global_time_selected;
+			var remark  = $('#input_ato_remark').val();
 
-		$.ajax({
-			type:"post",
-		    url:window.api_url + "createATOInfo",
-		    data:{	ic:ic,
-		    		pre_post:pre_post, 
-		    		// recommend_level:recommend_level, 
-		    		class_code:class_code, 
-		    		attendance:attendance,
-		    		post_change_date:post_change_date,
-		    		el:el,
-		    		er:er,
-		    		en:en,
-		    		es:es,
-		    		ew:ew, 
-		    		exam_location:exam_location,
-		    		exam_date:exam_date,
-		    		exam_time:exam_time,
-		    		// ato_branch_id:ato_branch_id,
-		    		// ato_op_id:ato_op_id,
-		    		remark:remark},
-		    success:function(json){
-		    	if(json.trim() == '1') {
-				    toastr.success("Insert success!");
-				    clear_ato_inputs();
-				    $('#seat-booking-modal').modal('hide');
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "createATOInfo",
+			    data:{	ic:ic,
+			    		pre_post:pre_post, 
+			    		// recommend_level:recommend_level, 
+			    		class_code:class_code, 
+			    		attendance:attendance,
+			    		post_change_date:post_change_date,
+			    		el:el,
+			    		er:er,
+			    		en:en,
+			    		es:es,
+			    		ew:ew, 
+			    		exam_location:exam_location,
+			    		exam_date:exam_date,
+			    		exam_time:exam_time,
+			    		// ato_branch_id:ato_branch_id,
+			    		// ato_op_id:ato_op_id,
+			    		remark:remark},
+			    success:function(json){
+			    	if(json.trim() == '1') {
+					    toastr.success("Insert success!");
+					    clear_ato_inputs();
+					    $('#seat-booking-modal').modal('hide');
 
-				    // update seat available number
-				    update_seat_available_number();
-				}else{
-					toastr.error("Fail to insert ato info!");
-				}
-		    }
-		});//End ajax
+					    // update seat available number
+					    update_seat_available_number();
+					}else{
+						toastr.error("Fail to insert ato info! Might due to rule of cannot create PRE ATO if exist booking with in 7 days.");
+					}
+			    }
+			});//End ajax
+		} else if(global_pre_post_selected == 'post') {
+			var ic = $('#input_ato_ic2').val();
+			var pre_post = $('#input_ato_pre_post2').val();
+			// var recommend_level = $('#input_ato_recommend_level').val();
+			var class_code = $('#input_ato_class_code2').val();
+			var attendance = $('#input_ato_attendance2').val();
+			var post_change_date = 'YES';
+			var el = $('#input_ato_el2').is(':checked') ? 'YES' : 'NO';
+			var er = $('#input_ato_er2').is(':checked') ? 'YES' : 'NO';
+			var en = $('#input_ato_en2').is(':checked') ? 'YES' : 'NO';
+			var es = $('#input_ato_es2').is(':checked') ? 'YES' : 'NO';
+			var ew = $('#input_ato_ew2').is(':checked') ? 'YES' : 'NO';
+			var exam_location = global_location_selected;
+			var exam_date = global_year + '-' + month_selected + '-' + global_day_selected;
+			var exam_time = global_time_selected;
+			var remark  = $('#input_ato_remark2').val();
+
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "createATOInfo",
+			    data:{	ic:ic,
+			    		pre_post:pre_post, 
+			    		// recommend_level:recommend_level, 
+			    		class_code:class_code, 
+			    		attendance:attendance,
+			    		post_change_date:post_change_date,
+			    		el:el,
+			    		er:er,
+			    		en:en,
+			    		es:es,
+			    		ew:ew, 
+			    		exam_location:exam_location,
+			    		exam_date:exam_date,
+			    		exam_time:exam_time,
+			    		// ato_branch_id:ato_branch_id,
+			    		// ato_op_id:ato_op_id,
+			    		remark:remark},
+			    success:function(json){
+			    	if(json.trim() == '1') {
+					    toastr.success("Insert success!");
+					    clear_ato_inputs2();
+					    $('#seat-booking-modal').modal('hide');
+
+					    // update seat available number
+					    update_seat_available_number();
+					}else{
+						toastr.error("Fail to insert ato info!");
+						$('#seat-booking-modal').modal('hide');
+					}
+			    }
+			});//End ajax
+		} else {;}
 	}
 
 	function create_new_student_basic_info() {
@@ -712,7 +1005,11 @@
 	}
 
 	function loading_student_basic_info() {
-		var ic = $('#input_ato_ic').val();
+		if(global_pre_post_selected == 'pre') {
+			var ic = $('#input_ato_ic').val();
+		} else if(global_pre_post_selected == 'post') {
+			var ic = $('#input_ato_ic2').val();
+		} else {;}
 		global_ic_selected = ic;
 		// listen to confirm button
 		$.ajax({
@@ -984,124 +1281,176 @@
       </div>
       <div class="modal-body">
       	<div class="highlight">
-			<form role="form">
-				<h4>ATO信息</h4><hr>
-				<div class="row">
-					<div class="col-xs-4">
-						<label for="input_ato_pre_post">Exam Type</label>
-						<select class="form-control" id="input_ato_pre_post">
-					      <!-- <option value="NA">请选择</option> -->
-					      <option value="PRE">PRE CAT</option>
-					      <!-- <option value="POST">POST CAT</option> -->
-					    </select>
-					</div>
-					<div class="col-xs-4">
-						<label for="input_ato_ic">IC Number</label>
-						<input class="form-control" id="input_ato_ic" >
-					</div>
-				</div>
-<!-- 				<div class="row">
-					<div class="col-xs-4">
-						<label for="input_ato_recommend_level">Recommend Level</label>
-						<select class="form-control" id="input_ato_recommend_level">
-			            	<option value="NA">请选择</option>
-			                <option value="Waiting for the result">PRE CAT等成绩</option>
-			                <option value="BEGINNERS">初级</option>
-			                <option value="INTERMEDIATE">中级</option>
-			                <option value="ADVANCED">高级</option>
-			            </select>
-					</div>
-				</div> -->
-				<h4>考试科目</h4><hr>
-				<div class="row">
-					<div class="col-xs-4">
-						<div class="checkbox">
-						    <label for="input_ato_el">
-						    	<input type="checkbox" id="input_ato_el"> 听力EL
-						    </label>
+  		   <ul id="seat_booking_pre_post_tabs" class="nav nav-tabs" role="tablist">
+		      <li class="active"><a href="#seat_booking_pre_post_tab1" role="tab" data-toggle="tab">PRE</a></li>
+		      <li class=""><a href="#seat_booking_pre_post_tab2" role="tab" data-toggle="tab">POST</a></li>
+		      <div id="ato_tabs_content" class="tab-content">
+		      <div class="tab-pane fade active in" id="seat_booking_pre_post_tab1">
+		      	<br>
+		      	<form role="form">
+					<h4>ATO信息</h4><hr>
+					<div class="row">
+						<div class="col-xs-4">
+							<label for="input_ato_pre_post">Exam Type</label>
+							<select class="form-control" id="input_ato_pre_post">
+						      <!-- <option value="NA">请选择</option> -->
+						      <option value="PRE">PRE CAT</option>
+						      <!-- <option value="POST">POST CAT</option> -->
+						    </select>
+						</div>
+						<div class="col-xs-4">
+							<label for="input_ato_ic">IC Number</label>
+							<input class="form-control" id="input_ato_ic" >
 						</div>
 					</div>
-					<div class="col-xs-4">
-						<div class="checkbox">
-					    	<label for="input_ato_er">
-					    		<input type="checkbox" id="input_ato_er"> 阅读ER
-					    	</label>
+					<h4>考试科目</h4><hr>
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="checkbox">
+							    <label for="input_ato_el">
+							    	<input type="checkbox" id="input_ato_el"> 听力EL
+							    </label>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="checkbox">
+						    	<label for="input_ato_er">
+						    		<input type="checkbox" id="input_ato_er"> 阅读ER
+						    	</label>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="checkbox">
+							    <label for="input_ato_en">
+							    	<input type="checkbox" id="input_ato_en"> 数学EN
+							    </label>
+							</div>
 						</div>
 					</div>
-					<div class="col-xs-4">
-						<div class="checkbox">
-						    <label for="input_ato_en">
-						    	<input type="checkbox" id="input_ato_en"> 数学EN
-						    </label>
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="checkbox">
+						    	<label for="input_ato_es">
+						    		<input type="checkbox" id="input_ato_es"> 会话ES
+						    	</label>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="checkbox">
+							    <label for="input_ato_ew">
+							    	<input type="checkbox" id="input_ato_ew"> 写作EW
+							    </label>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-4">
-						<div class="checkbox">
-					    	<label for="input_ato_es">
-					    		<input type="checkbox" id="input_ato_es"> 会话ES
-					    	</label>
+					<div class="row">
+						<div class="col-xs-4">
+							<label for="input_ato_remark">Remark</label>
+							<textarea class="form-control" id="input_ato_remark" rows="3"></textarea>
 						</div>
 					</div>
-					<div class="col-xs-4">
-						<div class="checkbox">
-						    <label for="input_ato_ew">
-						    	<input type="checkbox" id="input_ato_ew"> 写作EW
-						    </label>
+					<hr>
+				</form>
+		      </div>
+		      <div class="tab-pane fade" id="seat_booking_pre_post_tab2">
+		      	<br>
+		      	<form role="form" id="ato_post_form">
+					<h4>ATO信息</h4><hr>
+					<div class="row">
+						<div class="col-xs-4">
+							<label for="input_ato_pre_post2">*Exam Type(考试类型)</label>
+							<select class="form-control" id="input_ato_pre_post2">
+						      <!-- <option value="NA">请选择</option> -->
+						      <!-- <option value="PRE">PRE CAT</option> -->
+						      <option value="POST">POST CAT</option>
+						    </select>
 						</div>
 					</div>
-				</div>
-<!-- 				<h4>考试信息</h4><hr>
-				<div class="row">
-					<div class="col-xs-4">
-						<label for="input_ato_exam_location">Exam Location</label>
-						<select class="form-control" id="input_ato_exam_location">
-							<option value="NA">请选择</option>
-				      		<option value="JE">Jurong East</option>
-				      		<option value="UN">EUNOS</option>
-				      	</select>
+					<div class="row">
+						<div class="col-xs-4">
+							<label for="input_ato_ic2">*IC Number(准证号)</label>
+							<input class="form-control" id="input_ato_ic2" data-parsley-trigger="blur" required>
+						</div>
+						<div class="col-xs-2">
+							<br>
+							<a class="button glow button-rounded button-flat" id="student_ato_ic_check2" data-toggle="modal" data-target="#student-ato-modal">Check</a>
+						</div>
 					</div>
-					<div class="col-xs-4">
-						<label for="input_ato_exam_date">Exam Date</label>
-						<input class="form-control" id="input_ato_exam_date">
+					<div class="row">
+						<div class="col-xs-4">
+							<label for="input_ato_class_code2">*Class Code(班级代码)</label>
+							<input class="form-control" id="input_ato_class_code2" data-parsley-trigger="blur" required>
+						</div>
+						<div class="col-xs-2">
+							<br>
+							<a class="button glow button-rounded button-flat" id="student_ato_class_check2" data-toggle="modal" data-target="#student-ato-class-modal">Check</a>
+						</div>
 					</div>
-					<div class="col-xs-4">
-						<label for="input_ato_exam_time">Exam Time</label>
-						<select class="form-control" id="input_ato_exam_time">
-			                <option value="NA">请选择</option>
-			                <option value="09">上午九点</option>
-			                <option value="14">下午两点</option>
-			                <option value="19">晚上七点</option>
-			            </select>
+					<div class="row">
+						<div class="col-xs-4">
+							<label for="input_ato_attendance2">Attendance(出席率)</label>
+							<input class="form-control" id="input_ato_attendance2">
+						</div>
+						<div class="col-xs-2"></div>
+						<div class="col-xs-4">
+							<div class="checkbox">
+							    <label for="input_ato_post_change_date2">
+							    	<input type="checkbox" id="input_ato_post_change_date2" checked> 是否改期
+							    </label>
+							</div>
+						</div>
 					</div>
-				</div> -->
-				<div class="row">
-<!-- 					<div class="col-xs-4">
-						<label for="input_ato_branch">ATO Branch</label>
-						<select class="form-control" id="input_ato_branch"></select>
+					<h4>考试科目</h4><hr>
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="checkbox">
+							    <label for="input_ato_el2">
+							    	<input type="checkbox" id="input_ato_el2"> 听力EL
+							    </label>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="checkbox">
+						    	<label for="input_ato_er2">
+						    		<input type="checkbox" id="input_ato_er2"> 阅读ER
+						    	</label>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="checkbox">
+							    <label for="input_ato_en2">
+							    	<input type="checkbox" id="input_ato_en2"> 数学EN
+							    </label>
+							</div>
+						</div>
 					</div>
-					<div class="col-xs-4">
-						<label for="input_ato_op">ATO Operator</label>
-						<select class="form-control" id="input_ato_op"></select>
-					</div> -->
-					<div class="col-xs-4">
-						<label for="input_ato_remark">Remark</label>
-						<textarea class="form-control" id="input_ato_remark" rows="3"></textarea>
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="checkbox">
+						    	<label for="input_ato_es2">
+						    		<input type="checkbox" id="input_ato_es2"> 会话ES
+						    	</label>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="checkbox">
+							    <label for="input_ato_ew2">
+							    	<input type="checkbox" id="input_ato_ew2"> 写作EW
+							    </label>
+							</div>
+						</div>
 					</div>
-				</div>
-				<hr>
-			</form>
-<!-- 			<div class="row">
-				<div class="col-xs-8"></div>
-				<div class="col-xs-2">
-					<a class="button glow button-rounded button-flat" id="ato_create_submit">Create</a>
-				</div>
-				<div class="col-xs-2">
-					<a class="button glow button-rounded button-flat" id="ato_update_submit">Update</a>
-				</div>
-			</div> -->
-			</div>
+					<div class="row">
+						<div class="col-xs-4">
+							<label for="input_ato_remark2">Remark</label>
+							<textarea class="form-control" id="input_ato_remark2" rows="3"></textarea>
+						</div>
+					</div>
+					<hr>
+				</form>
+		      </div>
+		    </ul>
+		</div>
       </div>
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button> -->
@@ -1113,7 +1462,7 @@
 
 <!-- Class delete Modal -->
 <div class="modal fade" id="seat-booking-student-info-modal" tabindex="-1" role="dialog" aria-labelledby="seat_booking_student_info_modal_label" aria-hidden="true">
-  <div class="modal-dialog modal-xlg">
+  <div class="modal-dialog modal-xxlg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -1121,11 +1470,11 @@
       </div>
       <div class="modal-body">
       	<div class="highlight">
-			<form role="form" id="student_new_info_form">
+			<form role="form" id="exam_student_new_info_form">
 				<h4>基本信息</h4><hr>
 				<div class="row">
 					<div class="col-xs-4">
-						<label for="input_student_new_source">学生来源</label>
+						<label for="input_student_new_source">*学生来源</label>
 						<select class="form-control" id="input_student_new_source">
 			            	<option value="SSA">SSA</option>
 				            <option value="Link1" selected="selected">Link1</option>
@@ -1143,11 +1492,11 @@
 				</div><hr>
 				<div class="row">
 					<div class="col-xs-4">
-						<label for="input_student_new_ic">IC Number</label>
+						<label for="input_student_new_ic">*IC Number(准证号码)</label>
 						<input class="form-control" id="input_student_new_ic" data-parsley-trigger="blur" required>
 					</div>
 					<div class="col-xs-4">
-						<label for="input_student_new_ic_type">IC Type</label>
+						<label for="input_student_new_ic_type">*IC Type(准证类型)</label>
 					    <select class="form-control" id="input_student_new_ic_type">
 					      <option value="0">请选择</option>
 					      <option value="1">NRIC</option>
@@ -1159,31 +1508,31 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-4">
-						<label for="input_student_new_fn">First Name</label>
+						<label for="input_student_new_fn">*First Name(名)</label>
 						<input class="form-control" id="input_student_new_fn" data-parsley-trigger="blur" required>
 					</div>
 					<div class="col-xs-4">
-						<label for="input_student_new_ln">Last Name</label>
+						<label for="input_student_new_ln">*Last Name(姓)</label>
 						<input class="form-control" id="input_student_new_ln" data-parsley-trigger="blur" required>
 					</div>
 					<div class="col-xs-4">
-						<label for="input_student_new_on">Other Name</label>
+						<label for="input_student_new_on">*Full Name(全名)</label>
 						<input class="form-control" id="input_student_new_on">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-4">
-						<label for="input_student_new_tel">Tel</label>
-						<input class="form-control" id="input_student_new_tel">
+						<label for="input_student_new_tel">*Tel(电话)</label>
+						<input class="form-control" id="input_student_new_tel" data-parsley-trigger="blur" required>
 					</div>
 					<div class="col-xs-4">
-						<label for="input_student_new_tel_home">Tel Home</label>
+						<label for="input_student_new_tel_home">Tel Home(家里电话)</label>
 						<input class="form-control" id="input_student_new_tel_home">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-4">
-						<label for="input_student_new_gender">Gender</label>
+						<label for="input_student_new_gender">*Gender(性别)</label>
 						<select class="form-control" id="input_student_new_gender">
 					      <option value="NA">请选择</option>
 					      <option value="M">Male（男）</option>
@@ -1191,8 +1540,8 @@
 					    </select>
 					</div>
 					<div class="col-xs-4">
-						<label for="input_student_new_sal">Salutation</label>
-						<select class="form-control" id="input_student_new_sal">
+						<label for="input_student_new_sal">*Salutation(称呼)</label>
+						<select class="form-control" id="input_student_new_sal" >
 					      <option value="NA">请选择</option>
 					      <option value="0">先生</option>
 					      <option value="1">太太</option>
@@ -1203,17 +1552,17 @@
 					    </select>
 					</div>
 					<div class="col-xs-4">
-						<label for="input_student_new_bd">Birthday</label>
-						<input class="form-control" id="input_student_new_bd">
+						<label for="input_student_new_bd">*Birthday(生日)</label>
+						<input class="form-control" id="input_student_new_bd" data-parsley-trigger="blur" required>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-4">
-						<label for="input_student_new_age">Age</label>
-						<input class="form-control" id="input_student_new_age">
+						<label for="input_student_new_age">*Age(年龄)</label>
+						<input class="form-control" id="input_student_new_age" data-parsley-trigger="blur" required>
 					</div>
 					<div class="col-xs-4">
-						<label for="input_student_new_citizenship">Citizenship</label>
+						<label for="input_student_new_citizenship">*Citizenship(身份)</label>
 						<select class="form-control" id="input_student_new_citizenship">
 							<option value="NA">请选择</option>
 			                <option value="SG">新加坡公民</option>
@@ -1227,7 +1576,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-4">
-						<label for="input_student_new_nationality">Nationality</label>
+						<label for="input_student_new_nationality">*Nationality(国籍)</label>
 						<select class="form-control" id="input_student_new_nationality">
 				            <option value="NA">请选择</option>
 				            <option value="SG">Singapore Citizen </option>
@@ -1462,7 +1811,7 @@
 						</select>
 					</div>
 					<div class="col-xs-4">
-						<label for="input_student_new_race">Race</label>
+						<label for="input_student_new_race">*Race(种族)</label>
 						<select class="form-control" id="input_student_new_race">
 			            	<option value="NA">请选择</option>
 				            <option value="CN">Chinese(华人)</option>
@@ -1473,7 +1822,7 @@
 						</select>
 					</div>
 					<div class="col-xs-4">
-						<label for="input_student_new_cnlevel">华文学历</label>
+						<label for="input_student_new_cnlevel">*华文学历</label>
 			            <select class="form-control" id="input_student_new_cnlevel">
 				            <option value="NA">请选择</option>
 				            <option value="01">No Formal Qualification &amp; Lowe</option>
@@ -1491,7 +1840,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-4">
-						<label for="input_student_new_edulevel">教育水平</label>
+						<label for="input_student_new_edulevel">*教育水平</label>
 							<select class="form-control" id="input_student_new_edulevel">
 					            <option value="NA">请选择</option>
 					            <option value="01">No Formal Qualification &amp; Lower Primary </option>
@@ -1519,7 +1868,7 @@
 				            </select>
 					</div>
 					<div class="col-xs-4">
-						<label for="input_student_new_lang">使用语言</label>
+						<label for="input_student_new_lang">*使用语言</label>
 						<select class="form-control" id="input_student_new_lang">
 				            <option value="NA">请选择</option>
 				            <option value="Chinese">Chinese(中文)</option>
@@ -1687,6 +2036,40 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="seat_booking_student_info_fail_modal_label">Information</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Student ATO IC Check Modal -->
+<div class="modal fade" id="student-ato-modal" tabindex="-1" role="dialog" aria-labelledby="student_ato_ic_check_modal_label" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="student_ato_ic_check_modal_label">ATO Information</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ATO CLASS Check Modal -->
+<div class="modal fade" id="student-ato-class-modal" tabindex="-1" role="dialog" aria-labelledby="student_ato_class_check_modal_label" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="student_ato_class_check_modal_label">Class Information</h4>
       </div>
       <div class="modal-body">
       </div>

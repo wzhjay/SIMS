@@ -31,7 +31,7 @@
 											'<div class="panel panel-default">' + 
 												'<div class="panel-heading">' +
 													'<h4 class="panel-title">' +
-														'<a data-toggle="collapse" data-parent="class_all_collapse_'+key+'" href="#class_all_collapse_body_'+key+'">Class ' + num + '  /  Class Name: <b>' + reply[key].class_name + '</b>  /  Code: <b>' + reply[key].code + '</b>  /  Course: <b>' + reply[key].type + '</b>  /  Status: <b>' + reply[key].status + '</b></a>' + 
+														'<a data-toggle="collapse" data-parent="class_all_collapse_'+key+'" href="#class_all_collapse_body_'+key+'">Class ' + num + '  /  Class Name: <b>' + reply[key].class_name + '</b>  /  Code: <b>' + reply[key].code + '</b>  /  Course: <b>' + reply[key].type + '</b>  /  Status: <b>' + reply[key].status + '</b> /  Branch: <b>' + reply[key].name + '</b></a>' + 
 													' </h4>' +
 												'</div>' +
 												'<div id="class_all_collapse_body_'+key+'" class="panel-collapse collapse">' + 

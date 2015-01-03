@@ -3,6 +3,7 @@
 
 	<script>
 		var selected_student_id = 0;
+		var student_reg_status = -1; // 0 : student registered and basic info exist; 1: registered, no basic info, 2, not registered yet
 		$(document).ready(function($) {
 			event.preventDefault();
 			$('#student_new_info_form').parsley();
@@ -19,7 +20,12 @@
 			});
 
 			$('#student_new_create').on('click', function() {
-				create_new_student_basic_info();
+				check_student_ic();
+				if(student_reg_status == 1) {
+					create_new_student_basic_info();
+				} else {
+					$('#stundet-check-modal').modal('show');
+				}
 			});
 
 			$('#student_new_update').on('click', function() {
@@ -387,6 +393,8 @@
 								$('#stundet-check-modal').modal('hide');
 							});
 				    	}
+
+				    	student_reg_status = 0;
 				    }
 				    else {
 				    	// check from registration table, insert bisic info for this new student
@@ -422,6 +430,8 @@
 											);
 								        }
 							    	}
+
+							    	student_reg_status = 1;
 							    }
 							    else {
 							    	// no result found in student and registartion table
@@ -439,6 +449,8 @@
 											'</div>' + 
 										'</div>'
 									);
+
+									student_reg_status = 2;
 								}
 						    }
 						});//End ajax
@@ -539,15 +551,15 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4">
-			<label for="input_student_new_fn">*First Name(姓)</label>
+			<label for="input_student_new_fn">*First Name(名)</label>
 			<input class="form-control" id="input_student_new_fn" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_ln">*Last Name(名)</label>
+			<label for="input_student_new_ln">*Last Name(姓)</label>
 			<input class="form-control" id="input_student_new_ln" data-parsley-trigger="blur" required>
 		</div>
 		<div class="col-xs-4">
-			<label for="input_student_new_on">Other Name</label>
+			<label for="input_student_new_on">*Full Name(全名)</label>
 			<input class="form-control" id="input_student_new_on">
 		</div>
 	</div>

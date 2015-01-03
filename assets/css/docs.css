@@ -333,6 +333,10 @@ width: 900px;
 width: 1100px;
 }
 
+.modal-xxlg {
+width: 100%;
+}
+
 .modal-dialog a {
 color: #666666;
 text-decoration: none;

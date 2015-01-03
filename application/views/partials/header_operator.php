@@ -2,8 +2,8 @@
 <meta charset="utf-8">
 <script>
 var fullDate = new Date()
-var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
-var twoDigitDate = ((fullDate.getDate().length+1) === 1)? (fullDate.getDate()) : '0' + (fullDate.getDate());
+var twoDigitMonth = (fullDate.getMonth().toString().length === 2)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+var twoDigitDate = (fullDate.getDate().toString().length === 2)? (fullDate.getDate()) : '0' + (fullDate.getDate());
 var currentDate = fullDate.getFullYear() + "-" + twoDigitMonth + "-" + twoDigitDate;
 
 $(document).ready(function() {

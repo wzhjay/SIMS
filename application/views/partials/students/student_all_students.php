@@ -49,7 +49,7 @@
 													'<h4 class="panel-title">' +
 														'<div class="row">' +
 															'<div class="col-xs-10">' +
-																'<a data-toggle="collapse" data-parent="student_info_record_collapse_'+key+'" href="#student_info_record_collapse_body_'+key+'">Student Record ' + num + '  /  IC: <b>' + reply[key].ic + '</b>  /  Name: <b>' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  Tel: <b>' + reply[key].tel + '</b>/  Branch: <b>' + reply[key].name + '</b></a>' + 
+																'<a data-toggle="collapse" data-parent="student_info_record_collapse_'+key+'" href="#student_info_record_collapse_body_'+key+'">Student Record ' + num + '  /  IC: <b>' + reply[key].ic + '</b>  /  Name: <b>' + reply[key].othername + '</b>  /  Tel: <b>' + reply[key].tel + '</b>/  Branch: <b>' + reply[key].name + '</b></a>' + 
 															'</div>' + 
 															'<div class="col-xs-2">' +
 																'<a class="button glow button-rounded button-flat" id="search_all_students_delete_'+reply[key].student_id+'" data-toggle="modal" data-target="#student-delete-modal">Delete</a>' + 
@@ -64,7 +64,7 @@
 																'<div>IC: ' + reply[key].ic + '</div>' +
 															'</div>' + 
 															'<div class="col-xs-4">' +
-																'<div>Name: ' + reply[key].firstname + ' ' + reply[key].lastname +'</div>' + 
+																'<div>Name: ' + reply[key].othername +'</div>' + 
 															'</div>' +
 															'<div class="col-xs-4">' +
 																'<div>Tel: '+ reply[key].tel + '</div>' + 
@@ -136,7 +136,7 @@
  			var course_type = $('#input_student_search_all_students_search_course_type').val();
  			var level = $('#input_student_search_all_students_student_level').val();
  			var slot = $('#input_student_search_all_students_class_time').val();
- 			var from = '2000-01-01';
+ 			var from = '0000-00-00';
 			var to  = '2100-01-01';
 			if($('#input_student_search_all_students_from').val().trim() != "") {
 				from = $('#input_student_search_all_students_from').val();
@@ -170,7 +170,7 @@
 													'<h4 class="panel-title">' +
 														'<div class="row">' +
 															'<div class="col-xs-10">' +
-																'<a data-toggle="collapse" data-parent="student_info_record_collapse_'+key+'" href="#student_info_record_collapse_body_'+key+'">Student Record ' + num + '  /  IC: <b>' + reply[key].ic + '</b>  /  Name: <b>' + reply[key].firstname + ' ' + reply[key].lastname + '</b>  /  Tel: <b>' + reply[key].tel + '</b>/  Branch: <b>' + reply[key].name + '</b></a>' + 
+																'<a data-toggle="collapse" data-parent="student_info_record_collapse_'+key+'" href="#student_info_record_collapse_body_'+key+'">Student Record ' + num + '  /  IC: <b>' + reply[key].ic + '</b>  /  Name: <b>' + reply[key].othername + '</b>  /  Tel: <b>' + reply[key].tel + '</b>/  Branch: <b>' + reply[key].name + '</b></a>' + 
 															'</div>' + 
 															'<div class="col-xs-2">' +
 																'<a class="button glow button-rounded button-flat" id="search_all_students_delete_'+reply[key].student_id+'" data-toggle="modal" data-target="#student-delete-modal">Delete</a>' + 

@@ -267,7 +267,7 @@
 									'<div class="row">' + 
 										'<div class="col-xs-6">' +
 											'<label for="student_ato_ic_check_model_remark">备注</label>' +
-											'<div class="form-control" id="student_ato_ic_check_model_remark">'+ reply[key].remark + '</div>' + 
+											'<div class="form-control" id="student_ato_ic_check_model_remark">'+ reply[key].ato_remark + '</div>' + 
 										'</div>' +
 										'<div class="col-xs-4"></div>' +
 										'<div class="col-xs-2">' +
@@ -402,7 +402,7 @@
 								(reply[key].es == "YES") ? $('#input_ato_es').prop('checked', true) : $('#input_ato_es').prop('checked', false);
 								(reply[key].ew == "YES") ? $('#input_ato_ew').prop('checked', true) : $('#input_ato_ew').prop('checked', false);
 								$('#input_ato_exam_date').val(reply[key].exam_date);
-								$('#input_ato_remark').val(reply[key].remark);
+								$('#input_ato_remark').val(reply[key].ato_remark);
 
 								$('#input_ato_pre_post option[value="'+reply[key].pre_post+'"]').attr('selected', 'selected');
 								// $('#input_ato_recommend_level option[value="'+reply[key].recommend_level+'"]').attr('selected', 'selected');
