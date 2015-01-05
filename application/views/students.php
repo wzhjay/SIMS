@@ -42,6 +42,13 @@
 		  	<div class="tab-pane fade" id="tab-2">
 				<h3>输入或更新学员基本信息</h3><hr>
 				<?php $this->load->view('partials/students/student_info_form') ?>
+				<br><br>
+				<h3>上传学生信息</h3><hr>
+				<?php
+					if($this->apis->check_user_role() == 'admin') {
+						$this->load->view('partials/students/student_info_upload'); 
+					}
+				?>
 		  	</div>
 		  	<div class="tab-pane fade" id="tab-3">
 		  		<h3>查询学员信息</h3><hr>

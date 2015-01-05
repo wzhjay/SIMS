@@ -1684,4 +1684,9 @@ class Apis extends CI_Model
 		}
 		return NULL;
 	}
+
+	function _excelDateToDate($readDate){
+    	$phpexcepDate = $readDate-25569; //to offset to Unix epoch
+    	return strtotime("+$phpexcepDate days", mktime(0,0,0,1,1,1970));
+	}
 }

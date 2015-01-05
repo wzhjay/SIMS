@@ -1990,7 +1990,7 @@ class Api extends CI_Controller
 	}
 
 	/**
-	 *  upload file
+	 *  upload exam file, update student_records table
 	 */
 	function uploadExamResults() {
 		$config['upload_path'] = './uploads/';
@@ -2006,11 +2006,11 @@ class Api extends CI_Controller
 
 		if (!$this->upload->do_upload()) {
 			$result = array('result' => $this->upload->display_errors());
-			$this->load->view('/partials/students/student_exam_upload_result', $result);
+			$this->load->view('/partials/students/student_upload_result', $result);
 		}
 		else {
 			$result = array('result' => $this->upload->data());
-			$this->load->view('/partials/students/student_exam_upload_result', $result);
+			$this->load->view('/partials/students/student_upload_result', $result);
 
 			// read upload excel file (exams results), insert into database, delete the temp file
 			$path = "./uploads/";
@@ -2092,6 +2092,164 @@ class Api extends CI_Controller
 
 			// delete temple file
 			foreach (glob($path."exams*.*") as $filename) {
+			    unlink($filename);
+			}
+		}
+	}
+
+
+	/**
+	 *  upload student info file, update student table
+	 */
+	function uploadStudentBasicInfo() {
+		$config['upload_path'] = './uploads/';
+		// $config['allowed_types'] = 'xls|xlsx';
+		$config['allowed_types'] = '*';
+		$config['max_size']	= '2048';
+		$config['file_name']	= 'students.xls';
+		// $config['max_width']  = '1024';
+		// $config['max_height']  = '768';
+
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+
+		if (!$this->upload->do_upload()) {
+			$result = array('result' => $this->upload->display_errors());
+			$this->load->view('/partials/students/student_upload_result', $result);
+		}
+		else {
+			$result = array('result' => $this->upload->data());
+			$this->load->view('/partials/students/student_upload_result', $result);
+
+			// read upload excel file (students basic info), insert into database, delete the temp file
+			$path = "./uploads/";
+			$objPHPExcel = PHPExcel_IOFactory::load($path."students.xls");
+
+			//$branch_id = $this->apis->get_user_branch_id();
+			//$branch_op_id = $this->tank_auth->get_user_id();
+
+			foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+			    $worksheetTitle     = $worksheet->getTitle();
+			    $highestRow         = $worksheet->getHighestRow(); // e.g. 10
+			    $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
+			    $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+			    $nrColumns = ord($highestColumn) - 64;
+
+			    //$title = date_parse($worksheet->getTitle());
+			    //$test_data = $title["year"].'-'.$title["month"].'-'.$title["day"];
+			    echo "<br>The worksheet ".$worksheetTitle." has ";
+			    echo $nrColumns . ' columns (A-' . $highestColumn . ') ';
+			    echo ' and ' . $highestRow . ' row.';
+			    echo '<br>Data: <table border="1"><tr>';
+			    for ($row = 1; $row <= $highestRow; ++ $row) {
+			        echo '<tr>';
+			        $student = array();
+			        for ($col = 0; $col < $highestColumnIndex; ++ $col) {
+			            $cell = $worksheet->getCellByColumnAndRow($col, $row);
+			            $val = $cell->getValue();
+			            // $dataType = PHPExcel_Cell_DataType::dataTypeForValue($val);
+			            echo '<td>' . (string)$val . '<br></td>';
+
+			            // insert into array student, extract only the data
+			            if($row > 2 && $col > 0) {
+			            	array_push($student, (string)$val);
+			            }
+			        }
+			        echo '</tr>';
+
+			        if($row > 2) {
+				       	//get data from array student and insert into db
+				        $ic = $student[0];
+				        $firstname = $student[1];
+				        $lastname = $student[2];
+				        $othername = $student[3];
+				        $tel = $student[4];
+				        $tel_home = $student[5];
+				        if($student[6] == '') { $gender = 'NA'; } else { $gender = $student[6]; }
+				        if($student[7] == '') { $salutation = 'NA'; } else { $salutation = $student[7]; }
+				        //echo "<h3>".gmdate("Y-m-d", $UNIX_DATE)."</h3>";
+				        if($student[8] == '') {	
+				        	$birthday = '0000-00-00'; 
+				        } else {
+				        	$UNIX_DATE = ($student[8] - 25569) * 86400;
+			    			$birthday = gmdate("Y-m-d", $UNIX_DATE);
+			    			//echo "<h3>".$birthday."</h3>";
+				        }
+			    		$age = $student[9];
+			    		if($student[10] == '') { $ic_type = 'NA'; } else { $ic_type = $student[10]; }
+			    		if($student[11] == '') { $citizenship = 'NA'; } else { $citizenship = $student[11]; }
+			    		if($student[12] == '') { $nationality = 'NA'; } else { $nationality = $student[12]; }
+			    		if($student[13] == '') { $race = 'NA'; } else { $race = $student[13]; }
+						if($student[14] == '') { $cn_level = 'NA'; } else { $cn_level = $student[14]; }
+						if($student[15] == '') { $edu_level = 'NA'; } else { $edu_level = $student[15]; }
+						if($student[16] == '') { $lang = 'NA'; } else { $lang = $student[16]; }
+						if($student[17] == '') { $gov_letter = 'NO'; } else { $gov_letter = 'YES'; }
+						$remark = $student[18];
+						$status = 1;
+						$source = $student[22];
+						$emp_status = $student[23];
+						$company_name = $student[24];
+						if($student[25] == '') { $company_type = 'NA'; } else { $company_type = $student[25]; }
+						$company_reg_no = $student[26];
+						if($student[27] == '') { $industry = 'NA'; } else { $industry = $student[27]; }
+						if($student[28] == '') { $designation = 'NA'; } else { $designation = $student[28]; }
+						if($student[29] == '') { $salary_range = 'NA'; } else { $salary_range = $student[29]; }
+						$blk = $student[30];
+						$street = $student[31];
+						$floor_unit_no = $student[32];
+						$building = $student[33];
+						$postcode = $student[34];
+						$student_branch_id = $student[35];
+						$student_op_id = 1;
+						$student_remark = $student[37];
+				        
+				        //create
+						$create = $this->apis->create_new_student_basic_info(
+							$source,
+							$gov_letter,
+							$ic,
+							$ic_type,
+							$firstname,
+							$lastname,
+							$othername,
+							$tel,
+							$tel_home,
+							$gender,
+							$salutation,
+							$birthday,
+							$age,
+							$citizenship,
+							$nationality,
+							$race,
+							$cn_level,
+							$edu_level,
+							$lang,
+							$blk,
+							$street,
+							$floor_unit_no,
+							$building,
+							$postcode,
+							$emp_status,
+							$company_name,
+							$company_type,
+							$company_reg_no,
+							$industry,
+							$designation,
+							$salary_range,
+							$student_branch_id,
+							$student_op_id,
+							$student_remark);
+						if($create) {
+							echo '<p>Worksheet'.$worksheetTitle.' Record'.($row - 2).' insert successed!<p>';
+						}
+						else echo '<p>Worksheet'.$worksheetTitle.' Record'.($row - 2).' insert failed!<p>';
+			        }
+			    }
+			    echo '</table>';
+			}
+
+			// delete temple file
+			foreach (glob($path."students*.*") as $filename) {
 			    unlink($filename);
 			}
 		}
