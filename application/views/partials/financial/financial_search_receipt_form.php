@@ -181,7 +181,19 @@
 				 					load_receipt_record(receipt_record_id);
 				 				} else if(el_id[2] == "delete") {
 				 					// delete receipt record
-				 					delete_receipt_by_id(receipt_record_id);
+				 					var modalBody = $('#receipt_delete_modal_label').closest('.modal-content').find('.modal-body');
+									modalBody.empty();
+									modalBody.append(
+										'<div class="row">' + 
+											'<div class="col-xs-10">'+
+												'<label>Sure you want to delete this student receipt record?</label><br>' +
+												'<label>确定你要删除这条学生收据记录？</label>' +
+											'</div>' +	
+										'</div>'
+									); 
+				 					$('#receipt_delete_modal_confirm').on('click', function() {
+										delete_receipt_by_id(receipt_record_id);
+									});
 				 				}
 				 			});
 			        	}
@@ -232,7 +244,20 @@
 		}
 
 		function delete_receipt_by_id(receipt_record_id) {
-
+			$.ajax({
+				type:"post",
+			    url:window.api_url + "deleteReceiptInfoByID",
+			    data:{receipt_id:receipt_record_id},
+			    success:function(json){
+			    	if(json.trim() == '3') {
+					    toastr.success("Delete success!");
+					    // clear deleted element
+					    $('#receipt_search_delete_' + receipt_record_id).closest('.panel-group').remove();
+					}else{
+						toastr.error("Fail to delete student receipt info!");
+					}
+			    }
+			});//End ajax
 		}
 	</script>
 </head>
@@ -292,7 +317,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Confirm</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="receipt_delete_modal_confirm">Confirm</button>
       </div>
     </div>
   </div>

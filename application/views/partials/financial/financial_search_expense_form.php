@@ -121,6 +121,10 @@
 				 				} else if(el_id[2] == "delete") {
 				 					// delete expense record
 				 					get_expense_by_id(expense_record_id);
+
+				 					$('#expense_delete_modal_confirm').on('click', function() {
+										delete_expense_by_id(expense_record_id);
+									});
 				 				}
 				 			});
 			        	}
@@ -211,6 +215,24 @@
 			    }
 			});//End ajax
  		}
+
+ 		function delete_expense_by_id(expense_record_id) {
+ 			$.ajax({
+				type:"post",
+			    url:window.api_url + "deleteExpenseInfoByID",
+			    data:{expense_id:expense_record_id},
+			    success:function(json){
+			    	if(json.trim() == '3') {
+					    toastr.success("Delete success!");
+					    // clear deleted element
+					    $('#expense_search_delete_' + expense_record_id).closest('.panel-group').remove();
+					}else{
+						toastr.error("Fail to delete student expense info!");
+					}
+			    }
+			});//End ajax
+ 		}
+
 	</script>
 </head>
 <div class="highlight">
@@ -275,7 +297,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Confirm</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="expense_delete_modal_confirm">Confirm</button>
       </div>
     </div>
   </div>

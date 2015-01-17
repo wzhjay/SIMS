@@ -1654,6 +1654,19 @@ class Api extends CI_Controller
 	}
 
 	/**
+	 *  delete receipt record by receipt_id
+	 */
+	function deleteExpenseInfoByID() {
+		$expense_id = $this->input->post('expense_id');
+		// create
+		$delete = $this->apis->delete_student_expense_record($expense_id);
+		if($delete) {
+			echo 3;
+		}
+		else echo 0;
+	}
+
+	/**
 	 *  search expense records by tpes
 	 */
 	function searchExpenseRecords() {
@@ -1760,6 +1773,19 @@ class Api extends CI_Controller
 			echo json_encode($record);
 		}
 		echo NULL;
+	}
+
+	/**
+	 *  delete receipt record by receipt_id
+	 */
+	function deleteReceiptInfoByID() {
+		$receipt_id = $this->input->post('receipt_id');
+		// create
+		$delete = $this->apis->delete_student_receipt_record($receipt_id);
+		if($delete) {
+			echo 3;
+		}
+		else echo 0;
 	}
 
 	/**

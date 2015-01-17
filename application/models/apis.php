@@ -1298,6 +1298,20 @@ class Apis extends CI_Model
 	}
 
 	/**
+	 * delete expense record from expense table by ID
+	 *
+	 * @param	$expense_id
+	 * @return	bool
+	 */
+	function delete_student_expense_record($expense_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('DELETE FROM expense WHERE exp_id = "'.$expense_id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
 	 * search expense records by multiple variables
 	 *
 	 * @param	$exp_type, $exp_name, $exp_sign_name, $exp_date_from, $exp_date_to
@@ -1431,6 +1445,20 @@ class Apis extends CI_Model
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;	
+	}
+
+	/**
+	 * delete receipt record from receipt table by ID
+	 *
+	 * @param	$receipt_id
+	 * @return	bool
+	 */
+	function delete_student_receipt_record($receipt_id) {
+		if($this->session->userdata('session_id')) {
+			$query = $this->db->query('DELETE FROM receipt WHERE receipt_id = "'.$receipt_id.'"');
+			if ($this->db->affected_rows()) return TRUE;
+		}
+		return FALSE;
 	}
 
 	/**
@@ -1683,10 +1711,5 @@ class Apis extends CI_Model
 			if ($query->num_rows() > 0) return $query->result_array();
 		}
 		return NULL;
-	}
-
-	function _excelDateToDate($readDate){
-    	$phpexcepDate = $readDate-25569; //to offset to Unix epoch
-    	return strtotime("+$phpexcepDate days", mktime(0,0,0,1,1,1970));
 	}
 }
