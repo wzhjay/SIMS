@@ -1,9 +1,3 @@
-<!-- 
- * Wang Zihao
- * wzhjay@gmail.com
- * 02.05.2014 
- -->
-
 <head>
 	<meta charset="utf-8">
 	<script>

@@ -142,8 +142,8 @@
 		}
 
 		function update_admin_role_branch() {
-			var new_role_id = $('#input_system_assigned_role_edit option:selected').attr('id').substring(11,12);
-			var new_branch_id = $('#input_system_assigned_branch_edit option:selected').attr('id').substring(13,14);
+			var new_role_id = $('#input_system_assigned_role_edit option:selected').attr('id').split('_')[2];
+			var new_branch_id = $('#input_system_assigned_branch_edit option:selected').attr('id').split('_')[2];
 			var user = $('#input_system_assigned_user_edit').find('div').attr('id').split('_');
 			var user_id = user[3];
 			$.ajax({
@@ -154,10 +154,11 @@
 			        if(json != null) {
 			        	var reply = $.parseJSON(json);
 			            if(reply == '1') {
-
+			            	toastr.success("success to update admin role");
+			            	load_admin_users();
 			            }
 			            else {
-
+			            	toastr.error("fail to call update admin role");
 			            }
 			        }else {
 			        	toastr.error("fail to call update admin api");

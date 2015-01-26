@@ -1,9 +1,5 @@
 <!doctype html>
-<!-- 
- * Wang Zihao
- * wzhjay@gmail.com
- * 29.04.2014 
- -->
+
 <header>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title><?php $template['title'] ?></title>
@@ -28,7 +24,7 @@
 	<script type="text/javascript" src="<?php echo base_url() ?>assets/toastr/toastr.min.js"></script>
 	<script type="text/javascript">
 		window.api_url = "http://sims.com/SIMS/index.php/api/";
-		// window.api_url = "http://changchun.edu.sg/system/index.php/api/";
+		//window.api_url = "http://changchun.edu.sg/system/index.php/api/";
 
 		toastr.options = {
 		  "closeButton": false,
